@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS "Client";
+CREATE TABLE "Client" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "name" VARCHAR NOT NULL );
+DROP TABLE IF EXISTS "ClientQuestionResponse";
+CREATE TABLE "ClientQuestionResponse" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "question_id" INTEGER NOT NULL , "client_id" INTEGER NOT NULL , "response_id" INTEGER, "weight" INTEGER NOT NULL  DEFAULT 0);
+INSERT INTO "ClientQuestionResponse" VALUES(1,1,1,1,0);
+DROP TABLE IF EXISTS "Form";
+CREATE TABLE "Form" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "name" VARCHAR NOT NULL );
+INSERT INTO "Form" VALUES(1,'Business');
+DROP TABLE IF EXISTS "Question";
+CREATE TABLE "Question" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "text" VARCHAR NOT NULL , "form_id" INTEGER, "category" VARCHAR,  FOREIGN KEY(form_id) REFERENCES form(id));
+INSERT INTO "Question" VALUES(1,'Capture Business and Technical API measurements or metrics				Capture Business and Technical API measurements or metrics	',1,NULL);
+INSERT INTO "Question" VALUES(2,'Do you have Categories of Business and Technical API measurements or metrics',1,NULL);
+DROP TABLE IF EXISTS "Response";
+CREATE TABLE "Response" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "response" VARCHAR, "value" INTEGER NOT NULL );
+INSERT INTO "Response" VALUES(1,'Don''t do it',0);
