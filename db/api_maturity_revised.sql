@@ -1,0 +1,9 @@
+CREATE TABLE "Response" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "response" VARCHAR, "value" INTEGER NOT NULL , "category_id" INTEGER NOT NULL  DEFAULT 1, FOREIGN KEY(category_id) REFERENCES Category(id) );
+CREATE TABLE "Question" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "text" VARCHAR NOT NULL , "form_id" INTEGER, "category_id" INTEGER NOT NULL,  FOREIGN KEY(form_id) REFERENCES form(id), FOREIGN KEY (category_id) REFERENCES Category(id));
+CREATE TABLE "Form" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "name" VARCHAR NOT NULL );
+CREATE TABLE "ClientQuestionResponse" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "question_id" INTEGER NOT NULL , "client_id" INTEGER NOT NULL , "response_id" INTEGER, "weight" INTEGER NOT NULL  DEFAULT 0, FOREIGN KEY(question_id) REFERENCES Question(id), FOREIGN KEY(client_id) REFERENCES Client(id), FOREIGN KEY(response_id) REFERENCES Response(id));
+INSERT INTO `ClientQuestionResponse` (id,question_id,client_id,response_id,weight) VALUES (1,1,1,1,0),
+ (2,2,1,1,0);
+CREATE TABLE "Client" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "name" VARCHAR NOT NULL );
+CREATE TABLE "Category" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "name" VARCHAR NOT NULL  UNIQUE );
+COMMIT;
