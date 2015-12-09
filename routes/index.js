@@ -3,7 +3,7 @@ module.exports = function(app) {
       res.sendFile('__dirname' + '/public/index.html');
     });
 
-    app.get('/questions', function(req, res) {
+    app.get('/greg-questions', function(req, res) {
 
 
          var responses = [{
@@ -18,14 +18,14 @@ module.exports = function(app) {
             id: 3,
             text : 'Rose Smells.'
         }
-         ];        
+         ];
 
-         var questions = [{ 
-            id : 1, 
+         var questions = [{
+            id : 1,
             text : 'Capture Business and Technical API measurements or metrics',
             form_id : 1,
             response : responses
-        }, 
+        },
          {
             id : 2,
             text : 'Do you have Categories of Business and Technical API measurements or metrics',
@@ -39,8 +39,7 @@ module.exports = function(app) {
             response : responses
         }
         ];
-       
+
             res.send(questions);
     });
 }
-
