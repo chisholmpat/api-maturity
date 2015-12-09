@@ -6,7 +6,7 @@ module.controller('QuestionnaireController', ['$scope', 'QuestionStore', functio
 	// Get all questions from the backend.
 	$scope.questions = QuestionStore.allQuestionConn.query();
         // These are just hard coded but will have to be generated from the database.
-	$scope.responses = [{ id : 1, text :'Don\'t do it'},{id : 2, text : 'Planned'},{id: 3, text : 'Response 3.'}];
+	$scope.responses = QuestionStore.responseConn.query();// [{ id : 1, text :'Don\'t do it'},{id : 2, text : 'Planned'},{id: 3, text : 'Response 3.'}];
 	// Debug printing
         $scope.generateScore = function(questions) {                
                 for(i = 0; i < questions.length; i++)
