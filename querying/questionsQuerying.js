@@ -1,5 +1,5 @@
 var fs = require('fs');
-var file = "./db/api_maturity.sqlite";
+var file = "./db/api_maturity_revised.sqlite";
 var sqlite3 = require('sqlite3').verbose();
 var dbAdapter = new sqlite3.Database(file);
 
