@@ -25,8 +25,9 @@ module.exports = function(app) {
       var results_array;
       var form_id = req.body.form_id || 1;
       var client_id = req.body.client_id || 1;
+      var question_category = req.body.question_category || "QA";
 
-      questionsQuerying.getAllQuestionsClientForm(req, res, err_string, results_array, form_id, client_id, getAllQuestionsClientFormCallBack);
+      questionsQuerying.getAllQuestionsClientForm(req, res, err_string, results_array, form_id, client_id, question_category, getAllQuestionsClientFormCallBack);
     });
 
     // app.get('/questions/:form_id:category:client_id', function(req, res) {
