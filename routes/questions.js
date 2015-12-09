@@ -1,6 +1,6 @@
 var questionsQuerying = require('../querying/questionsQuerying.js');
 
-function getAllQuestionsCallBack(req, res, err_string, results_array){
+function getAllQuestionsClientFormCallBack(req, res, err_string, results_array){
     console.log(err_string);
     console.log(results_array);
     if(!err_string){
@@ -12,11 +12,21 @@ function getAllQuestionsCallBack(req, res, err_string, results_array){
 }
 
 module.exports = function(app) {
+
+    var bodyParser = require('body-parser');
+
+    app.use( bodyParser.json() );       // to support JSON-encoded bodies
+    app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+      extended: true
+    }));
+
     app.get('/questions', function(req, res, next) {
       var err_string;
       var results_array;
+      var form_id = req.body.form_id || 1;
+      var client_id = req.body.client_id || 1;
 
-      questionsQuerying.getAllQuestions(req, res, err_string, results_array, getAllQuestionsCallBack);
+      questionsQuerying.getAllQuestionsClientForm(req, res, err_string, results_array, form_id, client_id, getAllQuestionsClientFormCallBack);
     });
 
     // app.get('/questions/:form_id:category:client_id', function(req, res) {
