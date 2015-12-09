@@ -1,4 +1,4 @@
-var myApp = angular.module('app', ['ngRoute']);
+var myApp = angular.module('app', ['ngRoute', 'ngResource', 'questionnaireModule']);
 
 myApp.config(['$routeProvider',
   function($routeProvider) {
@@ -20,9 +20,6 @@ myApp.controller('HomePageController', function($scope) {
     $scope.message = 'This is the welcome page.';
 });
 
-myApp.controller('QuestionnaireController', function($scope) {
-        $scope.message = 'This is the questionnaire page.';
-});
 
 
 
