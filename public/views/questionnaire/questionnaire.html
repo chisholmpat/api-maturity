@@ -1,12 +1,12 @@
+<h1> Questionnaire </h1>
+
 <form ng-submit="generateScore(questions)">
 
 <div ng-repeat="question in questions"> 
-    <p> Question is {{question.text}} </p>
-    <p> Question answer  is {{question.response}} </p>
+    <p> {{ question.text }} </p>
     <select ng-model="question.response" ng-options="response.text for response in responses">
     </select>
 </div>
-
 
 <br>
 
