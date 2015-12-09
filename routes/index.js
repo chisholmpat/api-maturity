@@ -24,19 +24,22 @@ module.exports = function(app) {
             id : 1, 
             text : 'Capture Business and Technical API measurements or metrics',
             form_id : 1,
-            response : responses
+            responses : responses,
+            answer : ''
         }, 
          {
             id : 2,
             text : 'Do you have Categories of Business and Technical API measurements or metrics',
             form_id : 1,
-            response : responses
+            responses : responses,
+            answer : ''
          },
         {
             id : 3,
             text : 'Capture KPIs that determine the business value of applications',
             form_id : 1,
-            response : responses
+            responses : responses,
+            answer : ''
         }
         ];
        

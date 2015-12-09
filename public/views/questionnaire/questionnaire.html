@@ -1,8 +1,9 @@
-<form>
+<form ng-submit="generateScore(questions)">
+
 <div ng-repeat="question in questions"> 
-    <h3> {{question.text }} </h3>
-    <select>
-        <option ng-repeat="answer in question.response"> {{ answer.text }} </option>
+    
+    <p> {{question.text}} </p> 
+    <select ng-model='question.answer' ng-options="reponse as response.text for response in question.responses">
     </select>
 </div>
 
