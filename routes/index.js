@@ -3,24 +3,26 @@ module.exports = function(app) {
       res.sendFile('__dirname' + '/public/index.html');
     });
 
-    app.get('/data', function(req, res) {
+    app.get('/questions', function(req, res) {
               
-         var gems  = [{ 
-            name : 'Dodecahedron',
-            price : 2.95,
-            description : 'Awesome!',
-            canPurchase : true,
-            soldOut: false, 
+         var questions = [{ 
+            id : 1, 
+            text : 'Capture Business and Technical API measurements or metrics',
+            form_id : 1
         }, 
          {
-            name : 'Dodecahedron',
-            price : 2.95,
-            description : 'Awesome!',
-            canPurchase : true,
-            soldOut: false,
-         }];
+            id : 2,
+            text : 'Do you have Categories of Business and Technical API measurements or metrics',
+            form_id : 1
+         },
+        {
+            id : 3,
+            text : 'Capture KPIs that determine the business value of applications',
+            form_id : 1
+        }
+        ];
        
-            res.send(gems);
+            res.send(questions);
     });
 }
 

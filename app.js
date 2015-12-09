@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cfenv = require('cfenv');
+var sqlite = require('sqlite3').verbose();
 
 // route file includes
 var routes = require('./routes/index');
