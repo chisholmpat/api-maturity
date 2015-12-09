@@ -5,15 +5,22 @@ module.exports = function(app) {
 
     app.get('/data', function(req, res) {
               
-         var gem  = { 
+         var gems  = [{ 
             name : 'Dodecahedron',
             price : 2.95,
             description : 'Awesome!',
             canPurchase : true,
             soldOut: false, 
-        }
+        }, 
+         {
+            name : 'Dodecahedron',
+            price : 2.95,
+            description : 'Awesome!',
+            canPurchase : true,
+            soldOut: false,
+         }];
        
-            res.send(gem);
+            res.send(gems);
     });
 }
 
