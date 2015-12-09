@@ -24,11 +24,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 
-
-//Serve up index at root
-app.get('/', function(req, res) {
- res.sendFile(__dirname + '/public/index.html');
-});
+// Routes
+var calendar = require('./routes/index')(app);
 
 //Statically serve up necessary files
 app.use(express.static(path.join(__dirname, '/public')));
