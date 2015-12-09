@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "angular-resource": "^1.4.8",
     "body-parser": "~1.13.2",
     "bower": "^1.7.0",
     "cfenv": "^1.0.3",
