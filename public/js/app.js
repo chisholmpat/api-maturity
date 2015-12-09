@@ -3,6 +3,10 @@ var myApp = angular.module('app', ['ngRoute', 'ngResource', 'questionnaireModule
 myApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+      when('/', {
+        templateUrl: 'views/welcome/welcome.html',
+        controller: 'HomePageController'
+      }). 
       when('/home', {
         templateUrl: 'views/welcome/welcome.html',
         controller: 'HomePageController'
