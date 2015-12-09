@@ -24,6 +24,8 @@ myApp.controller('HomePageController', function($scope) {
     $scope.message = 'This is the welcome page.';
 });
 
+    
+
 
 
 

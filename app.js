@@ -25,7 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 
 // Routes
-var calendar = require('./routes/index')(app);
+var index = require('./routes/index')(app);
+var questions = require('./routes/questions')(app);
 
 //Statically serve up necessary files
 app.use(express.static(path.join(__dirname, '/public')));
