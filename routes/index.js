@@ -4,8 +4,16 @@ module.exports = function(app) {
     });
 
     app.get('/data', function(req, res) {
-             res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.write('This data came from the back end!');
+              
+         var gem  = { 
+            name : 'Dodecahedron',
+            price : 2.95,
+            description : 'Awesome!',
+            canPurchase : true,
+            soldOut: false, 
+        }
+       
+            res.send(gem);
     });
 }
 

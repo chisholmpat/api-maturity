@@ -1,7 +1,7 @@
 (function(){
-    var module = angular.module('questionnaireModule', ['questionServiceModule'])
+    var module = angular.module('questionnaireModule', ['questionnaireServiceModule'])
 
-    module.controller('QuestionnaireController', function($scope) {
-            $scope.message = 'This is the questionnaire page.';
-    });
+    module.controller('QuestionnaireController', ['$scope', 'QuestionStore', function($scope, QuestionStore) {
+            $scope.message = QuestionStore.sampleDataConn.get();
+    }]);
 })();
