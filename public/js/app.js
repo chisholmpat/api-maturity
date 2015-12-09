@@ -7,16 +7,20 @@ myApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'views/welcome/welcome.html',
+        templateUrl: '/views/welcome/welcome.html',
         controller: 'HomePageController'
       }). 
       when('/home', {
-        templateUrl: 'views/welcome/welcome.html',
+        templateUrl: '/views/welcome/welcome.html',
         controller: 'HomePageController'
       }).
       when('/questionnaire', {
-        templateUrl: 'views/questionnaire/questionnaire.html',
+        templateUrl: '/views/questionnaire/questionnaire.html',
         controller: 'QuestionnaireController'
+      }).
+      when('/questionnaire/:clientid/:formid', {
+        templateUrl: '/views/questionnaire/questionnaire.html',
+        controller: 'QuestionController' // For testing route parameters.
       }).
       otherwise({
         redirectTo: '/home'
