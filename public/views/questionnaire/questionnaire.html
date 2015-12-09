@@ -1,3 +1,14 @@
+<form>
 <div ng-repeat="question in questions"> 
     <h3> {{question.text }} </h3>
+    <select>
+        <option ng-repeat="answer in question.response"> {{ answer.text }} </option>
+    </select>
 </div>
+
+
+<br>
+
+<input type="submit"/> 
+<form>
+    
