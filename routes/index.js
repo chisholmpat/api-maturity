@@ -13,10 +13,11 @@ module.exports = function(app) {
 
       var responses = req.body.user_responses
       console.log(responses);
+      console.log(req.body.client_id);
 
 
       for(i = 0; i < responses.length; i++) {
-        console.log("Response ID = " + responses[i].response.id +    "Question ID = " + responses[i].id )
+        console.log("Response ID = " + responses[i].response.id +    "Question ID = " + responses[i].id + "Client ID = " + req.body.client_id)
       }
       res.send("Success");
     });
