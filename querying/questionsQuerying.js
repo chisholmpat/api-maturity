@@ -34,3 +34,22 @@ exports.getAllResponses = function (req, res, err_string, results_array, callBac
     );
   });
 }
+
+exports.getDataForScore = function (req, res, err_string, results_array, form_id, client_id, callBack) {
+
+   dbAdapter.serialize(function(){
+    //Perform SELECT Operation
+    dbAdapter.all("SELECT Question.text, Question.id, ClientQuestionResponse.response_id,\
+                   ClientQuestionResponse.weight, Question.category_id, Response.id, Response.value Response.response\
+                   FROM ClientQuestionResponse \
+                   INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id \
+                   INNER JOIN Response ON ClientQuestionResponse.response_id=Response.id WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?", form_id, client_id,
+                   function(err,rows){
+                      //query result dumped as an array into results_array;
+                      err_string = err;
+                      results_array = rows;
+                      callBack(req, res, err_string, results_array);
+                   }
+    );
+  });
+}

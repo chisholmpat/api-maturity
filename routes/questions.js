@@ -36,6 +36,21 @@ module.exports = function(app) {
       );
     });
 
+
+		app.get('/score/:client_id/:form_id', function(req, res, next) {
+
+			var err_string;
+			var results_array;
+			var form_id = req.params.form_id || 1;
+			var client_id = req.params.client_id || 1;
+
+			questionsQuerying.getDataForScore(
+				req, res, err_string, results_array,
+				form_id, client_id,
+				queryCallback
+			);
+		});
+
     app.get('/responses', function(req, res, next) {
 
 	    var err_string;
