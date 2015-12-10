@@ -21,10 +21,9 @@ module.controller('QuestionnaireController', ['$scope', 'QuestionStore', 'items'
         }
     };
 	
-	
         $scope.generateScore = function(questions) {                
                 for(i = 0; i < questions.length; i++)
-                    console.log(questions[i].response);
+                    console.log(questions);
 		    items.add(questions);
 		    $scope.changeRoute('#/results')
         }

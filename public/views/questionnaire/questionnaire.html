@@ -3,9 +3,12 @@
 <form ng-submit="generateScore(questions)">
 
 <div ng-repeat="question in questions"> 
-    <p> {{ question.text }} </p>
-    <select ng-model="question.response" ng-options="response.response for response in responses">
+    <p> Question TEXT = {{ question.text }} </p>
+    <p> Question RESPONSE ID = {{ question.response_id }} </p>
+    <select ng-model="question.response"  > 
+       <option ng-repeat="response in responses" title="{{response.response}}" ng-selected="{{question.response_id == response.id}}" value="{{response.id}}">{{response.response}} ID={{response.id}}</option>
     </select>
+</div> 
 </div>
 
 <br>
