@@ -7,10 +7,10 @@
 	<th> Weight</th>
 	<th> Score</th>
   </thead>
-  <tr ng-repeat="result in list()[0]">
+  <tr ng-repeat="result in results">
     <td>{{result.text }}</td>
-    <td>{{result.response.response }}</td>
-    <td>{{result.response.value }}</td>
+    <td>{{result.response }}</td>
+    <td>{{result.value }}</td>
     <td>{{result.weight}}</td>
   </tr>
 </table>
