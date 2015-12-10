@@ -1,8 +1,22 @@
 <h1> Results </h1>
 
 
-<div ng-repeat="result in results"> 
-{{ result }}
+<table class="table">
+  <thead>
+	<th> Question </th>
+	<th> Response </th>
+	<th> Value </th>
+	<th> Weight</th>
+	
+	
+  </thead>
+  <tr ng-repeat="result in list()[0]">
+    <td>{{result.text }}</td>
+    <td>{{ result.response.response }}</td>
+    <td>{{ result.response.value }}</td>
+  </tr>
+</table>
+
 
 </div>
 
