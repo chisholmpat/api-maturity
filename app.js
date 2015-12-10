@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 var index = require('./routes/index')(app);
 var questions = require('./routes/questions')(app);
+var addAnswers = require('./routes/addAnswers')(app);
 
 //Statically serve up necessary files
 app.use(express.static(path.join(__dirname, '/public')));
