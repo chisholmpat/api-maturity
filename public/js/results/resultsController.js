@@ -1,12 +1,12 @@
 (function(){
 
-var module = angular.module('resultsModule', ['questionnaireServiceModule']);
+var module = angular.module('resultsModule', ['resultsServiceModule']);
 
-module.controller('ResultsController', ['$scope', 'items', function($scope, items) {
+module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', function($scope, $routeParams, ResultStore) {
 
-	$scope.list = items.list;
-	console.log(items.list());
-	
+	$scope.answers = ResultStore.scoreConn.get({client_id: $routeParams.client_id, form_id : $routeParams.form_id});
+	console.log($scope.answers);
+
 }]);
 
 })();

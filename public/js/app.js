@@ -18,7 +18,7 @@ myApp.config(['$routeProvider',
         templateUrl: '/views/questionnaire/questionnaire.html',
         controller: 'QuestionnaireController'
       }).
-      when('/results', {
+      when('/results/:client_id/:form_id', {
         templateUrl: '/views/results/results.html',
         controller: 'ResultsController'
       }).
