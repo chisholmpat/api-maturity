@@ -3,8 +3,7 @@
 <form ng-submit="generateScore(questions)">
 
 <div ng-repeat="question in questions"> 
-    <p> Question TEXT = {{ question.text }} </p>
-    <p> Question RESPONSE ID = {{ question.response_id }} </p>
+    <p>{{ question.text }} </p>
    <select ng-model="question.response" ng-options="response.response for response in responses">
        
     </select>
