@@ -20,11 +20,11 @@ exports.getAllQuestionsClientForm = function (req, res, err_string, results_arra
   });
 }
 
-exports.getAllResponses = function (req, res, err_string, results_array, category_id, callBack) {
+exports.getAllResponses = function (req, res, err_string, results_array, callBack) {
 
    dbAdapter.serialize(function(){
     //Perform SELECT Operation
-    dbAdapter.all("SELECT id, response, value FROM Response WHERE category_id = ?", category_id,
+    dbAdapter.all("SELECT * FROM Response",
       function(err,rows){
         //query result dumped as an array into results_array;
         err_string = err;

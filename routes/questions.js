@@ -40,10 +40,8 @@ module.exports = function(app) {
 
 	    var err_string;
 	    var results_array;
-	    var response_category_id = req.body.response_category || 1;
 	    questionsQuerying.getAllResponses(
 	  		req, res, err_string, results_array,
-	  		response_category_id,
 	  		queryCallback
 			);
 	  });
