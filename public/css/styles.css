@@ -1,0 +1,35 @@
+.red {
+    background-color: lightsalmon;
+}
+
+.blue {
+    background-color: lightblue;
+}
+
+/* Apply borders to all elements inside a .borders div parent - just for demo */
+.borders, .borders * {
+    border: 1px solid black;
+}
+.header, .footer {
+    text-align: center;
+    background-color: lightgray;
+}
+
+/*
+    * 3-panel system = table layout
+    */
+.outerTable {
+    width: 100%;
+    display: table;
+}
+.left {
+    display: table-cell;
+    width: 200px;
+}
+.middle {
+    display: table-cell;
+}
+.right {
+    display: table-cell;
+    width: 200px;
+}
