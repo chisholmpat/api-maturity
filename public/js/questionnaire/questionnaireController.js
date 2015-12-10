@@ -1,11 +1,12 @@
 (function() {
     var module = angular.module('questionnaireModule', ['questionnaireServiceModule'])
 
-    module.controller('QuestionnaireController', ['$scope', 'QuestionStore', 'items', function($scope, QuestionStore, items) {
+    module.controller('QuestionnaireController', ['$scope', 'QuestionStore', 'items','$routeParams', function($scope, QuestionStore, items, $routeParams) {
 
-        // Get the questions and responses from the data base.
-        $scope.questions = QuestionStore.allQuestionConn.query();
-        $scope.responses = QuestionStore.responseConn.query(); // [{ id : 1, text :'Don\'t do it'},{id : 2, text : 'Planned'},{id: 3, text : 'Response 3.'}];
+        console.log($routeParams.client_id + $routeParams.form_id);
+        // Get questions and responses from database
+        $scope.questions = QuestionStore.allQuestionConn.query({client_id: $routeParams.client_id, form_id : $routeParams.form_id});
+        $scope.responses = QuestionStore.responseConn.query();
 
         // For re-routing the request
         $scope.changeRoute = function(url, forceReload) {
@@ -19,16 +20,7 @@
         };
 
         $scope.generateScore = function(questions) {
-            // For viewing contents of questions
-            for (i = 0; i < questions.length; i++)
-                console.log(questions);
-            // Store the answered questions in our service (for now).
             items.add(questions);
-            // Redirect to our results page.
-
-
-
-
             QuestionStore.addAnswersConn.save({ user_responses : questions});
             $scope.changeRoute('#/results')
         }

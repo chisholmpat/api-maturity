@@ -16,7 +16,7 @@ module.exports = function(app) {
 
 
       for(i = 0; i < responses.length; i++) {
-        console.log("Response ID = " + responses[i].response.id +    "Question ID = " + responses[i].question_id )
+        console.log("Response ID = " + responses[i].response.id +    "Question ID = " + responses[i].id )
       }
       res.send("Success");
     });

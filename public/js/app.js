@@ -9,12 +9,12 @@ myApp.config(['$routeProvider',
       when('/', {
         templateUrl: '/views/welcome/welcome.html',
         controller: 'HomePageController'
-      }). 
+      }).
       when('/home', {
         templateUrl: '/views/welcome/welcome.html',
         controller: 'HomePageController'
       }).
-      when('/questionnaire', {
+      when('/questionnaire/:client_id/:form_id', {
         templateUrl: '/views/questionnaire/questionnaire.html',
         controller: 'QuestionnaireController'
       }).
@@ -35,7 +35,7 @@ myApp.config(['$routeProvider',
 
 // Method for sharing items between controllers.
 myApp.factory('items', function() {
-    
+
     var items = [];
     var itemsService = {};
 
@@ -53,9 +53,3 @@ myApp.factory('items', function() {
 myApp.controller('HomePageController', function($scope) {
     $scope.message = 'This is the welcome page.';
 });
-
-    
-
-
-
-
