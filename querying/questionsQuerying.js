@@ -3,26 +3,28 @@ var file = "./db/api_maturity_revised.sqlite";
 var sqlite3 = require('sqlite3').verbose();
 var dbAdapter = new sqlite3.Database(file);
 
-exports.getAllQuestionsClientForm = function (req, res, err_string, results_array, form_id, client_id, question_category_id, callBack) {
-   
+exports.getAllQuestionsClientForm = function (req, res, err_string, results_array, form_id, client_id, callBack) {
+
    dbAdapter.serialize(function(){
     //Perform SELECT Operation
-    dbAdapter.all("SELECT Question.text, ClientQuestionResponse.response_id, ClientQuestionResponse.weight FROM ClientQuestionResponse INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ? AND Question.category_id = ?; ", form_id, client_id, question_category_id,
-      function(err,rows){
-        //query result dumped as an array into results_array;
-        err_string = err;
-        results_array = rows;
-        callBack(req, res, err_string, results_array);
-      }
+    dbAdapter.all("SELECT Question.text, ClientQuestionResponse.response_id, ClientQuestionResponse.weight, Question.category_id\
+                   FROM ClientQuestionResponse INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id \
+                   WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?", form_id, client_id,
+                   function(err,rows){
+                      //query result dumped as an array into results_array;
+                      err_string = err;
+                      results_array = rows;
+                      callBack(req, res, err_string, results_array);
+                   }
     );
   });
 }
 
-exports.getAllResponses = function (req, res, err_string, results_array, category_id, callBack) {
-   
+exports.getAllResponses = function (req, res, err_string, results_array, callBack) {
+
    dbAdapter.serialize(function(){
     //Perform SELECT Operation
-    dbAdapter.all("SELECT id, response, value FROM Response WHERE category_id = ?", category_id,
+    dbAdapter.all("SELECT * FROM Response",
       function(err,rows){
         //query result dumped as an array into results_array;
         err_string = err;
