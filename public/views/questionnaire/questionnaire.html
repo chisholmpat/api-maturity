@@ -1,17 +1,19 @@
 <h1> Questionnaire </h1>
 
 <form ng-submit="generateScore(questions)">
-
-<div ng-repeat="question in questions"> 
-    <p>{{ question.text }} </p>
-   <select ng-model="question.response" ng-options="response.response for response in responses">
-       
-    </select>
-</div> 
+<h3> QA Questions </h3>
+<div ng-repeat="question in questions |  filter: { category_id: '1' }">
+    <p> {{ question.text }} </p>
+   <select ng-model="question.response" ng-options="response.response for response in responses | filter: { category_id: '1' }">
+   </select>
 </div>
 
+<h3> SA Questions </h3>
+<div ng-repeat="question in questions |  filter: { category_id: '2' }">
+<p> {{ question.text }} </p>
+   <select ng-model="question.response" ng-options="response.response for response in responses | filter: { category_id: '2' }">
+   </select>
+</div>
 <br>
-
-<input type="submit"/> 
+<input type="submit"/>
 <form>
-    
