@@ -4,10 +4,21 @@ module.exports = function(app) {
     });
 
     app.get('/greg-questions/:someNumber', function(req, res) {
-
-       var someNumber = req.params.someNumber; 
-       
-            res.send(someNumber);
+       var someNumber = req.params.someNumber;
+       res.send(someNumber);
     });
-}
 
+    // example of posting
+    app.post('/addAnswers', function(req, res){
+
+      var responses = req.body.user_responses
+      console.log(responses);
+
+
+      for(i = 0; i < responses.length; i++) {
+        console.log("Response ID = " + responses[i].response.id +    "Question ID = " + responses[i].question_id )
+      }
+      res.send("Success");
+    });
+
+};
