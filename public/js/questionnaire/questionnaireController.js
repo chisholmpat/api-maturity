@@ -3,15 +3,12 @@
 
 module.controller('QuestionnaireController', ['$scope', 'QuestionStore', 'items', function($scope, QuestionStore, items) {
 	
-	
-	console.log(items.list());
-	// Get all questions from the backend.
-	$scope.questions = QuestionStore.allQuestionConn.query();
-        // These are just hard coded but will have to be generated from the database.
+	// Get the questions and responses from the data base.
+    $scope.questions = QuestionStore.allQuestionConn.query();
 	$scope.responses = QuestionStore.responseConn.query();// [{ id : 1, text :'Don\'t do it'},{id : 2, text : 'Planned'},{id: 3, text : 'Response 3.'}];
 	
-	// Debug printing
-	$scope.changeRoute = function(url, forceReload) {
+	// For re-routing the request
+    $scope.changeRoute = function(url, forceReload) {
         $scope = $scope || angular.element(document).scope();
         if(forceReload || $scope.$$phase) { // that's right TWO dollar signs: $$phase
             window.location = url;
@@ -21,11 +18,14 @@ module.controller('QuestionnaireController', ['$scope', 'QuestionStore', 'items'
         }
     };
 	
-        $scope.generateScore = function(questions) {                
-                for(i = 0; i < questions.length; i++)
-                    console.log(questions);
-		    items.add(questions);
-		    $scope.changeRoute('#/results')
+    $scope.generateScore = function(questions) {                
+        // For viewing contents of questions
+        for(i = 0; i < questions.length; i++)
+                console.log(questions);
+		// Store the answered questions in our service (for now).
+        items.add(questions);
+        // Redirect to our results page.
+		$scope.changeRoute('#/results')
         }
     }]);
 
