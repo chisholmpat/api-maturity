@@ -28,7 +28,6 @@
 
     // Backend does not currently support this. Will implement tomorrow.
     module.controller('QuestionController', ['$scope', 'QuestionStore', '$routeParams', function($scope, QuestionStore, $routeParams) {
-        console.log($routeParams.clientid);
     }]);
 
 })();
