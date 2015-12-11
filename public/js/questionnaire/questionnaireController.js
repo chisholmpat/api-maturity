@@ -22,7 +22,6 @@
         };
 
         $scope.generateScore = function(questions) {
-            items.add(questions);
             QuestionStore.addAnswersConn.save({ user_responses : questions, client_id : $routeParams.client_id});
             $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
         }
