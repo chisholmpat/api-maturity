@@ -8,6 +8,8 @@ module.exports = {
   
   if(!connection) {
   
+  
+  
   if (process.env.VCAP_SERVICES) {
 		var services = JSON.parse(process.env.VCAP_SERVICES);
 		
@@ -33,6 +35,10 @@ module.exports = {
 		database : 'ad_a9e53e0371a808b'
 	});
   }
+  
+  setInterval(function () {
+    connection.query('SELECT 1');
+}, 5000);
 }
 
 	return connection;
