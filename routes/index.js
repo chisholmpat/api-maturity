@@ -1,4 +1,11 @@
+// TODO Move to single place and get VCAP variables.
+
+
+
+
 module.exports = function(app) {
+
+
     app.get('/', function(req, res, next) {
       res.sendFile('__dirname' + '/public/index.html');
     });
@@ -20,5 +27,22 @@ module.exports = function(app) {
       }
       res.send("Success");
     });
+    
+    
+    app.get('/dbtest', function(req, res) {
+
+
+	// TODO Move to one spot.
+	var mysql   = require('mysql');
+	var db = require('../db/db.js');
+	var connection = db.getConnection();
+	connection.connect()
+	connection.query('SELECT * from Client', function(err, rows, fields) {
+		console.log('The solution is: ', rows[0]);
+		connection.end();
+	});
+    });
+    
 
 };
+
