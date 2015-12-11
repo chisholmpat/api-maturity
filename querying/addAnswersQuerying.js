@@ -1,19 +1,21 @@
-var fs = require('fs');
-var file = "./db/api_maturity_revised.sqlite";
-var sqlite3 = require('sqlite3').verbose();
-var dbAdapter = new sqlite3.Database(file);
+var db = require ("../db/db.js");
 
-exports.addAllAnswersClientForm = function (req, res, err_string, client_id, response_id, question_id) {
+exports.addAnswers = function(response_id, question_id, client_id, req, res, finished, callback) {
 
-    dbAdapter.serialize(function(){
-      //Perform SELECT Operation
-      dbAdapter.all("UPDATE ClientQuestionResponse\
-                     SET response_id = ?\
-                     WHERE question_id = ? AND client_id = ?", response_id, question_id, client_id,
-                     function(err){
-                        //query result dumped as an array into results_array;
-                        err_string += err;
-                     }
-      );
+  var sql = "UPDATE ClientQuestionResponse\
+                 SET response_id = ?\
+                 WHERE question_id = ? AND client_id = ?"
+
+  var pool = db.getPool();
+  // get a connection from the pool
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(res, err, results); return; }
+    // make the query
+    connection.query(sql, [response_id, question_id, client_id, function(err, results) {
+      if(finished)
+      connection.release();
+      if(err) { console.log(err); callback(res, err, results); return; }
+      callback(res, err, results);
     });
+});
 }

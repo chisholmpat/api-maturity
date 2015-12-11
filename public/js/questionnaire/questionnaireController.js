@@ -3,13 +3,15 @@
 
     module.controller('QuestionnaireController', ['$scope', 'QuestionStore', 'items','$routeParams', function($scope, QuestionStore, items, $routeParams) {
 
-		
+
         console.log($routeParams.client_id + $routeParams.form_id);
-	
+
         // Get questions and responses from database
     $scope.questions = QuestionStore.allQuestionConn.query({client_id: $routeParams.client_id, form_id : $routeParams.form_id});
+
 	$scope.responses = QuestionStore.responseConn.query();
-	
+  console.log(QuestionStore.responseConn.query());
+
         // For re-routing the request
         $scope.changeRoute = function(url, forceReload) {
             $scope = $scope || angular.element(document).scope();
