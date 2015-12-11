@@ -16,7 +16,7 @@ module.exports = function(app) {
     });
 
     // example of posting
-    app.post('/addAnswers', function(req, res){
+    app.post('/baddAnswers', function(req, res){
 
       var responses = req.body.user_responses
       console.log(responses);

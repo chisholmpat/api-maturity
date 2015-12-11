@@ -33,28 +33,8 @@ module.exports = {
 		database : 'ad_a9e53e0371a808b'
 	});
   }
-  
-  }
-	
+}
+
 	return connection;
   }};
   
-
-
-/*
-       // look for a service starting with 'mysql'.  Didn't work so I switched it to cleardb
-       for (var svcName in services) {
-     //    if (svcName.match(/^mysql/)) {
-         if (svcName.match(/^cleardb/)) {
-            var mysqlCreds = services[svcName][0]['credentials'];
-         db = mysql.createPool({
-         host: mysqlCreds.host,
-             port: mysqlCreds.port,
-             user: mysqlCreds.user,
-             password: mysqlCreds.password,
-             database: mysqlCreds.name
-                 });
-            }
-     }
-	 
-	 */

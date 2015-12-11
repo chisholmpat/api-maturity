@@ -1,27 +1,31 @@
+function queryCallback(req, res, err_string, results_array, isFinished){
+	
+	if(isFinished) {
+	if(!err_string){
+		res.send("Sucess");
+	}
+	else{
+		res.send(err_string);
+	}}
+	
+}
 
 module.exports = function(app) {
   app.post('/addAnswers', function(req, res) {
 
     var err_string = "";
     var responses = req.body.user_responses;
-    var addAnswersQuerying = require('../querying/addAnswersQuerying.js');
-
+	var mysql   = require('mysql');
+	var db = require('../db/db.js');
+	var connection = db.getConnection();
+	
+	console.log(req.body.user_responses);
     for(i = 0; i < responses.length; i++) {
-	console.log("Attempting to add answer!");
-			connection.query("UPDATE ClientQuestionResponse\
-                     SET response_id = ?\
-                     WHERE question_id = ? AND client_id = ?", [response_id, question_id, client_id], function(err){
-                        //query result dumped as an array into results_array;
-                        err_string += err;
-						console.log(err);
-	})}
-    if(err_string != ""){
-      res.send(err_string);
-      console.log(err_string);
-    }
-    else{
-      console.log("Success");
-    }
 
+			connection.query("UPDATE ClientQuestionResponse\
+							SET response_id = ?\ WHERE question_id = ? AND client_id = ?", 
+							[responses[i].response.id, responses[i].id, responses[i].client_id], function(err, results){
+								queryCallback(req, res, err, results, i == responses.length - 1);
+						})}
   });
 }

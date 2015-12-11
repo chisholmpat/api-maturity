@@ -1,5 +1,3 @@
-var questionsQuerying = require('../querying/questionsQuerying.js');
-
 
 // Call back function from the database call. Used to send either the results
 // to the response or to send an error string to the response.
@@ -33,7 +31,7 @@ module.exports = function(app) {
 		var form_id = req.params.form_id || 1;
 		var client_id = req.params.client_id || 1;
 
-		var query = connection.query('SELECT Question.text, Question.category_id, ClientQuestionResponse.response_id, ClientQuestionResponse.weight\
+		var query = connection.query('SELECT ClientQuestionResponse.client_id, Question.id, Question.text, Question.category_id, ClientQuestionResponse.response_id, ClientQuestionResponse.weight\
 			FROM ClientQuestionResponse INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id\
 			WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?; ', 
 			[form_id, client_id], function (error, results) {
