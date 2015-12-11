@@ -1,3 +1,5 @@
+// TODO
+//http://stackoverflow.com/questions/20210522/nodejs-mysql-error-connection-lost-the-server-closed-the-connection 
  
 module.exports = {
   
@@ -7,8 +9,6 @@ module.exports = {
   var connection = null;
   
   if(!connection) {
-  
-  
   
   if (process.env.VCAP_SERVICES) {
 		var services = JSON.parse(process.env.VCAP_SERVICES);
@@ -35,12 +35,14 @@ module.exports = {
 		database : 'ad_a9e53e0371a808b'
 	});
   }
-  
-  setInterval(function () {
-    connection.query('SELECT 1');
-}, 5000);
 }
 
+setInterval(function () {
+    connection.query('SELECT 1');
+}, 5000);
+
+	
 	return connection;
+	
   }};
   
