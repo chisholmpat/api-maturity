@@ -36,11 +36,16 @@ module.exports = function(app) {
 	var mysql   = require('mysql');
 	var db = require('../db/db.js');
 	var connection = db.getConnection();
+	var form_id = 1;
+	var client_id = 1;
+	var question_category_id = 1;
 	connection.connect()
-	connection.query('SELECT * from Client', function(err, rows, fields) {
-		console.log('The solution is: ', rows[0]);
-		connection.end();
-	});
+
+	
+//	connection.query('SELECT * from Client', function(err, rows, fields) {
+//		console.log('The solution is: ', rows[0]);
+//		connection.end();
+//	});
     });
     
 

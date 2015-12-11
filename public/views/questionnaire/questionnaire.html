@@ -11,7 +11,8 @@
 <h3> SA Questions </h3>
 <div ng-repeat="question in questions |  filter: { category_id: '2' }">
 <p> {{ question.text }} </p>
-   <select ng-model="question.response" ng-options="response.response for response in responses | filter: { category_id: '2' }">
+   <select ng-model="question.response" ng-options="response.response for response in responses | filter: { category_id: '2'}" ng-selected="true">
+
    </select>
 </div>
 <br>

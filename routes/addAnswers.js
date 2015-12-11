@@ -7,10 +7,14 @@ module.exports = function(app) {
     var addAnswersQuerying = require('../querying/addAnswersQuerying.js');
 
     for(i = 0; i < responses.length; i++) {
-      addAnswersQuerying.addAllAnswersClientForm(
-        req, res, err_string, req.body.client_id, responses[i].response.id, responses[i].id//responses[i].id = question_id
-      );
-    }
+	console.log("Attempting to add answer!");
+			connection.query("UPDATE ClientQuestionResponse\
+                     SET response_id = ?\
+                     WHERE question_id = ? AND client_id = ?", [response_id, question_id, client_id], function(err){
+                        //query result dumped as an array into results_array;
+                        err_string += err;
+						console.log(err);
+	})}
     if(err_string != ""){
       res.send(err_string);
       console.log(err_string);
