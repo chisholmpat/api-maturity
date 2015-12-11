@@ -31,6 +31,5 @@ if (process.env.VCAP_SERVICES) {
 
    // Get records from a city
    exports.getPool = function() {
-     console.log(pool);
      return pool;
    }
