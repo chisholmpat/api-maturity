@@ -13,7 +13,7 @@ exports.getAllQuestions = function (client_id, form_id, res, callback) {
 };
 
 exports.getAllAnswers = function (client_id, form_id, res, callback) {
-    
+
 
     var sql = "SELECT Response.response, Response.value, Question.text, Question.id, ClientQuestionResponse.response_id,\
     ClientQuestionResponse.weight, Question.category_id, Question.group_id, Grouping.name\
