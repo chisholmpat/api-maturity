@@ -1,32 +1,31 @@
-var _ = require('underscore');
 
-function callback(res, err_string){
-	res.send('200')
+function callback(res,err_string) {
+    if(err_string){
+        console.log(err_string)
+    }
+    res.send('200')
 }
-module.exports = function(app) {
+module.exports = function (app) {
 
-  app.post('/insertAnswers', function(req, res) {
+    app.post('/insertAnswers', function (req, res) {
 
-	  console.log("Entering Insert Method");
+        console.log("Entering Insert Method");
 
-	  // Update ClientQuestionResponseSET response_id = CASE WHEN question_id =1 AND client_id = 1 THEN 4 ELSE  response_id END
-	  var queries = require('../querying/insertAnswersQuerying');
-	  var responses = req.body.user_responses;
+        // Update ClientQuestionResponseSET response_id = CASE WHEN question_id =1 AND client_id = 1 THEN 4 ELSE  response_id END
+        var queries = require('../querying/insertAnswersQuerying');
+        var responses = req.body.user_responses;
 
+        var query = " Update ClientQuestionResponse SET response_id = CASE ";
 
-	  var query = " Update ClientQuestionResponse SET response_id = CASE ";
+        for (i = 0; i < responses.length; i++) {
+            console.log(responses[i]);
+            query += "  WHEN question_id =" + responses[i].id +
+                " AND client_id = " + responses[i].client_id + " THEN " + responses[i].response_id
+        }
 
-	  for (i = 0 ; i < responses.length; i++){
-		  console.log(responses[i]);
-		  query += "  WHEN question_id =" + responses[i].id +
-			  " AND client_id = " + responses[i].client_id + " THEN " + responses[i].response_id
-	  }
+        query += " ELSE response_id END";
 
-	  query += " ELSE response_id END";
-
-	  console.log(query);
-
-	  queries.addAnswers(query, res, callback);
-
-})
+        queries.addAnswers( res, callback, query);
+        
+    })
 };
