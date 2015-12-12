@@ -17,11 +17,11 @@ module.exports = function(app) {
 	  for (i = 0 ; i < responses.length; i++){
 		  if (_.has(responses[i], 'response')){
 		  query += "SET response_id = CASE WHEN question_id =" + responses[i].id +
-			  " AND client_id = " + responses[i].client_id + " THEN " + responses[i].response.id +
-			  " ELSE  response_id ";
+			  " AND client_id = " + responses[i].client_id + " THEN " + responses[i].response.id
+
 	  }}
 
-	  query += "END";
+	  query += " ELSE response_id  END";
 
 	  console.log(query);
 
