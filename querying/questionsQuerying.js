@@ -21,9 +21,10 @@ exports.getAllQuestions = function(client_id, form_id, res, callback) {
 exports.getAllAnswers = function(client_id, form_id, res, callback) {
 
   var sql = "SELECT Response.response, Response.value, Question.text, Question.id, ClientQuestionResponse.response_id,\
-    ClientQuestionResponse.weight, Question.category_id\
+    ClientQuestionResponse.weight, Question.category_id, Grouping.name\
     FROM ClientQuestionResponse\
     INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id \
+    INNER JOIN Grouping ON Question.group_id=Grouping.id \
     LEFT  JOIN Response ON ClientQuestionResponse.response_id=Response.id \
     WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?";
 
