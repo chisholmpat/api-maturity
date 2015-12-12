@@ -12,16 +12,17 @@ module.exports = function(app) {
 	  // Update ClientQuestionResponseSET response_id = CASE WHEN question_id =1 AND client_id = 1 THEN 4 ELSE  response_id END
 	  var queries = require('../querying/insertAnswersQuerying');
 	  var responses = req.body.user_responses;
-	  var query = " Update ClientQuestionResponse ";
+
+
+	  var query = " Update ClientQuestionResponse SET response_id = CASE ";
 
 	  for (i = 0 ; i < responses.length; i++){
-		  if (_.has(responses[i], 'response')){
-		  query += "SET response_id = CASE WHEN question_id =" + responses[i].id +
-			  " AND client_id = " + responses[i].client_id + " THEN " + responses[i].response.id
+		  console.log(responses[i]);
+		  query += "  WHEN question_id =" + responses[i].id +
+			  " AND client_id = " + responses[i].client_id + " THEN " + responses[i].response_id
+	  }
 
-	  }}
-
-	  query += " ELSE response_id  END";
+	  query += " ELSE response_id END";
 
 	  console.log(query);
 

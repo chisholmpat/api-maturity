@@ -7,10 +7,9 @@
         console.log($routeParams.client_id + $routeParams.form_id);
 
         // Get questions and responses from database
-    $scope.questions = QuestionStore.allQuestionConn.query({client_id: $routeParams.client_id, form_id : $routeParams.form_id});
+    $scope.questions = QuestionStore.allQuestionConn.query({client_id: $routeParams.client_id, form_id : $routeParams.form_id}, function() {     console.log($scope.questions);});
 
 	$scope.responses = QuestionStore.responseConn.query();
-  console.log(QuestionStore.responseConn.query());
 
         // For re-routing the request
         $scope.changeRoute = function(url, forceReload) {
@@ -30,8 +29,23 @@
         }
     }]);
 
-    // Backend does not currently support this. Will implement tomorrow.
-    module.controller('QuestionController', ['$scope', 'QuestionStore', '$routeParams', function($scope, QuestionStore, $routeParams) {
-    }]);
+
+
+    // For handling key presses.
+    module.directive("select", function() {
+        return {
+            restrict: "E",
+            require: "?ngModel",
+            scope: false,
+            link: function (scope, element, attrs, ngModel) {
+                if (!ngModel) {
+                    return;
+                }
+                element.bind("keyup", function() {
+                    element.triggerHandler("change");
+                })
+            }
+        }
+    })
 
 })();
