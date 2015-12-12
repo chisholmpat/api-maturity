@@ -1,19 +1,22 @@
-function callback(res, err_string, results_array, isFinished){
+var _ = require('underscore');
 
-	if(isFinished) {
-	if(!err_string){
-		res.send("Sucess");
-	}
-	else{
-		res.send(err_string);
-	}}
-
+function callback(res, err_string, isFinished){
+	if(isFinished)
+	res.send('200')
 }
 module.exports = function(app) {
+
   app.post('/insertAnswers', function(req, res) {
-		var queries = require('../querying/insertAnswersQuerying');
-    var responses = req.body.user_responses;
-    for(i = 0; i < responses.length; i++)
-		queries.addAnswers(responses[i].response.id, responses[i].id, responses[i].client_id, res, callback,  i == responses.length - 1);
+
+	  console.log("Entering Insert Method");
+
+	  var queries = require('../querying/insertAnswersQuerying');
+	  var responses = req.body.user_responses;
+
+	  for (i = 0 ; i < responses.length; i++){
+	 	 if (_.has(responses[i], 'response'))  { // handle empty "response field in object
+			 console.log("Attempting to insert " + responses[i]);
+			 queries.addAnswers(responses[i].response.id, responses[i].id, responses[i].client_id, res, callback, i == responses.length - 1);
+  		}};
 })
-}
+};
