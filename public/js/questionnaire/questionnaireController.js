@@ -1,7 +1,7 @@
 (function() {
     var module = angular.module('questionnaireModule', ['questionnaireServiceModule'])
 
-    module.controller('QuestionnaireController', ['$scope', 'QuestionStore', 'items','$routeParams', function($scope, QuestionStore, items, $routeParams) {
+    module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window','$routeParams', function($scope, QuestionStore, $window, $routeParams) {
 
 
         console.log($routeParams.client_id + $routeParams.form_id);
@@ -24,8 +24,9 @@
         };
 
         $scope.generateScore = function(questions) {
-            QuestionStore.addAnswersConn.save({ user_responses : questions, client_id : $routeParams.client_id});
-            $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
+            QuestionStore.addAnswersConn.save({ user_responses : questions, client_id : $routeParams.client_id} ,
+                function(){
+                $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)});
         }
     }]);
 
