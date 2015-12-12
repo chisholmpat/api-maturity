@@ -1,5 +1,15 @@
 <h1> Results </h1>
 
+<p> QA </p>
+<div ng-repeat="average in averages | filter:{ category_id: 1 }">
+        Group : {{average.name}} || Average : {{average.average}} <br>
+</div>
+
+<p> SA </p>
+<div ng-repeat="average in averages | filter:{ category_id: 2 }">
+    Group : {{average.name}} || Average : {{average.average}} <br>
+</div>
+
 <h2 ng-click="doSomething($event)"> QA Scores </h2>
 <div class="qa_scores">
     <table class="table">

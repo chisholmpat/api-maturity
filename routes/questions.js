@@ -1,6 +1,8 @@
 // Call back function from the database call. Used to send either the results
 // to the response or to send an error string to the response.
 function callback(res, err_string, results_array) {
+
+    console.log(results_array);
     if (!err_string) {
         res.send(results_array);
     }
