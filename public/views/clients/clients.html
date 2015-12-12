@@ -1,1 +1,11 @@
 <h1> Clients </h1>
+
+
+<h3 ng-repeat="client in clients">
+
+    {{client.name }}
+    <ul ng-repeat="form in forms |  filter:{ client_id: client.id }">
+        <br>
+        <li><em><a href="/#/questionnaire/{{client.id}}/{{form.id}}"> {{form.name}} </a></em></li>
+    </ul>
+</h3>

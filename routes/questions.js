@@ -30,6 +30,15 @@ module.exports = function (app) {
     });
 
     app.get('/forms/:client_id', function (req, res) {
-        queries.getAllForms(req.params.client_id, res, callback);
+        queries.getAllFormsByClient(req.params.client_id, res, callback);
     });
+
+    app.get('/get_clients', function (req, res) {
+        queries.getClients(res, callback);
+    });
+
+    app.get('/get_forms', function (req, res) {
+        queries.getAllForms(res, callback);
+    });
+
 };

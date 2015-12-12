@@ -38,17 +38,18 @@ exports.getPool = function () {
 
 exports.callQuery = function( res, callback, sql, params){
 
+    console.log("Executing: " + sql);
 // get a connection from the pool
 pool.getConnection(function (err, connection) {
     if (err) {
-        console.log(err);
+        console.log(err + sql);
         callback(res, err, results);
         return;
     }
     // make the query
     connection.query(sql, params, function (err, results) {
         connection.release();
-        if (err) {
+        if (err + sql) {
             console.log(err);
             callback(res, err, results);
             return;

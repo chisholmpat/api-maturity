@@ -6,9 +6,7 @@ exports.getAllQuestions = function (client_id, form_id, res, callback) {
     FROM ClientQuestionResponse INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id\
     WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?";
 
-    var params = [client_id, form_id];
-
-    db.callQuery(res, callback, sql, params);
+    db.callQuery(res, callback, sql, [client_id, form_id]);
 
 };
 
@@ -22,8 +20,7 @@ exports.getAllAnswers = function (client_id, form_id, res, callback) {
     LEFT  JOIN Response ON ClientQuestionResponse.response_id=Response.id \
     WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?";
 
-    var params = [client_id, form_id];
-    db.callQuery(res, callback, sql, params);
+    db.callQuery(res, callback, sql, [client_id, form_id]);
 };
 
 exports.getAllResponses = function (res, callback) {
@@ -32,5 +29,30 @@ exports.getAllResponses = function (res, callback) {
     db.callQuery(res,callback, sql);
 };
 
+exports.getAllFormsByClient = function (client_id, res, callback) {
 
+    var sql = "SELECT DISTINCT Form.id, Form.name FROM Form\
+    INNER JOIN Question on Form.id=Question.form_id\
+    INNER JOIN ClientQuestionResponse on Question.id = ClientQuestionResponse.question_id\
+    WHERE  ClientQuestionResponse.client_id = ?"
+
+    db.callQuery(res,callback, sql, [client_id]);
+};
+
+
+exports.getAllForms = function (res, callback) {
+
+    var sql = "SELECT DISTINCT Form.id, Form.name, ClientQuestionResponse.client_id FROM Form\
+    INNER JOIN Question on Form.id=Question.form_id\
+    INNER JOIN ClientQuestionResponse on Question.id = ClientQuestionResponse.question_id"
+
+    db.callQuery(res,callback, sql);
+};
+
+
+exports.getClients = function (res, callback) {
+    var sql = "SELECT Client.id, Client.name from Client";
+    console.log(sql);
+    db.callQuery(res,callback, sql);
+};
 

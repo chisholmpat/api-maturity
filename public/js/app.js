@@ -1,6 +1,6 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
-var myApp = angular.module('app', ['ngRoute', 'ngResource', 'questionnaireModule', 'resultsModule']);
+var myApp = angular.module('app', ['ngRoute', 'ngResource', 'questionnaireModule', 'clientsModule', 'resultsModule']);
 
 // Configure the views/controller for each of the pages within the application.
 myApp.config(['$routeProvider',
@@ -25,6 +25,10 @@ myApp.config(['$routeProvider',
         when('/questionnaire/:clientid/:formid', {
             templateUrl: '/views/questionnaire/questionnaire.html',
             controller: 'QuestionController' // For testing route parameters.
+        }).
+        when('/clients', {
+            templateUrl: '/views/clients/clients.html',
+            controller: 'ClientsController'
         }).
         otherwise({
             redirectTo: '/home'
