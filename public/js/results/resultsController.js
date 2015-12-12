@@ -30,11 +30,10 @@
 
     function calcAverages(results){
 
-        // Get Unique Groups
+
         SA = {};
         QA = {};
         averages = [];
-
 
         for(i = 0; i < results.length;i++){
             SA[results[i].name] = {group_id : results[i].group_id, name: results[i].name,  total: 0, count: 0};

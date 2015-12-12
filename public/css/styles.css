@@ -15,6 +15,27 @@
     background-color: lightgray;
 }
 
+.Business {
+    background-color: lightgreen;
+}
+
+.Provider {
+    background-color: pink;
+}
+
+.Adhoc {
+    background-color: yellow;
+}
+
+.Market {
+    background-color: peachpuff;
+}
+
+.Consumer {
+    background-color: powderblue;
+}
+
+
 /*
     * 3-panel system = table layout
     */
@@ -32,4 +53,8 @@
 .right {
     display: table-cell;
     width: 200px;
+}
+
+p.Provider {
+background-color: lightgray;
 }

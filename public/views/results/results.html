@@ -26,7 +26,7 @@
             <td>{{result.value }}</td>
             <td>{{result.weight}}</td>
 
-            <td>{{result.score}}</td>
+            <td ng-class="result.name">{{result.score}}</td>
         </tr>
     </table>
 </div>
@@ -47,7 +47,7 @@
         <td>{{result.response }}</td>
         <td>{{result.value }}</td>
         <td>{{result.weight}}</td>
-        <td>{{result.score}}</td>
+        <td ng-class="result.name">{{result.score}}</td>
     </tr>
 </table>
 
