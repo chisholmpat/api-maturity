@@ -1,5 +1,6 @@
 <h1> Questionnaire </h1>
 
+<h2> Form: {{questions[0].form_name}}</h2>
 <form ng-submit="generateScore(questions)">
     <h3> QA Questions </h3>
     <div ng-repeat="question in questions |  filter: { category_id: '1' }">
