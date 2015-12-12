@@ -32,3 +32,5 @@ exports.getAllResponses = function (res, callback) {
     db.callQuery(res,callback, sql);
 };
 
+
+
