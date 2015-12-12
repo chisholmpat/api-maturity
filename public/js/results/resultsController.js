@@ -16,11 +16,23 @@
     function getGraphScores(results){
 
       var array_length = results.length;
+      var groupedup_array_one = [[],[],[],[],[]];
+      var groupedup_array_two = [[],[],[],[],[]];
+      var group_name;
 
       //Calculate Scores
       for(i=0; i<array_length; i++){
           results[i].score = calculateAllScores(results[i].value, results[i].weight);
+          if(results[i].category_id ==1){
+            groupedup_array_one[results[i].group_id -1].push(results[i].score);
+          }
+          else {
+            groupedup_array_two[results[i].group_id -1].push(results[i].score);
+          }
       }
+      //get the average for each group sharing a group_id
+
+
     }
 
 
