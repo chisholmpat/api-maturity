@@ -1,14 +1,22 @@
 <h1> Results </h1>
 
-<p> QA </p>
-<div ng-repeat="average in averages | filter:{ category_id: 1 }">
-        Group : {{average.name}} || Average : {{average.average}} <br>
-</div>
+<p> QA Input Values to Graph</p>
+<table class="table">
+  <tr>
+    <td ng-repeat="graphValue in results.graphingArrayCategoryOne track by $index">
+      {{graphValue}}
+    </td>
+  </tr>
+</table>
 
-<p> SA </p>
-<div ng-repeat="average in averages | filter:{ category_id: 2 }">
-    Group : {{average.name}} || Average : {{average.average}} <br>
-</div>
+<p> SA Input Values to Graph</p>
+<table class="table">
+  <tr>
+    <td ng-repeat="graphValue in results.graphingArrayCategoryTwo track by $index">
+      {{graphValue}}
+    </td>
+  </tr>
+</table>
 
 <h2 ng-click="doSomething($event)"> QA Scores </h2>
 <div class="qa_scores">
@@ -26,7 +34,6 @@
             <td>{{result.value }}</td>
             <td>{{result.weight}}</td>
             <td>{{result.score}}</td>
-
             <td ng-class="result.name">{{result.score}}</td>
         </tr>
     </table>
@@ -50,20 +57,6 @@
         <td>{{result.weight}}</td>
         <td ng-class="result.name">{{result.score}}</td>
     </tr>
-  <thead>
-	<th> Question </th>
-	<th> Response </th>
-	<th> Value </th>
-	<th> Weight</th>
-	<th> Score</th>
-  </thead>
-  <tr ng-repeat="result in results">
-    <td>{{result.text }}</td>
-    <td>{{result.response }}</td>
-    <td>{{result.value }}</td>
-    <td>{{result.weight}}</td>
-    <td>{{result.score}}</td>
-  </tr>
 </table>
 
 
