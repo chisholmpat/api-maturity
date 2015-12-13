@@ -57,7 +57,7 @@
       var averages_array_one =[];
       var graph_input_one =[];
       var graph_input_two =[];
-      var group_name;
+
 
       //Calculate Scores
       for(i=0; i<array_length; i++){
@@ -74,6 +74,8 @@
       averages_array_one = getAverages(groupedup_array_one);
       graph_input_one = getGraphInputs(averages_array_one);
 
+      results.graphingArrayCategoryOne = graph_input_one;//QA's graph input
+      results.graphingArrayCategoryTwo = graph_input_two; //SA'sgraph inpu
 
     }
 
@@ -82,19 +84,15 @@
     var module = angular.module('resultsModule', ['resultsServiceModule']);
     module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', function($scope, $routeParams, ResultStore) {
 
-        var i=0;
-        var array_length;
-        var results;
-        var forAveragesArray;
-        var current_array;
-
         //Get the data
         console.log("Hi");
 				$scope.results = ResultStore.scoreConn.query({
             client_id: $routeParams.client_id,
             form_id: $routeParams.form_id,
           },function(){
-            getGraphScores($scope.results);
+            graphingArray = getGraphScores($scope.results);
+            console.log($scope.results.graphingArrayCategoryOne);
+            console.log($scope.results.graphingArrayCategoryTwo);
           }
         );
     }]);
