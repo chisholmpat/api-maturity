@@ -25,6 +25,7 @@
             <td>{{result.response }}</td>
             <td>{{result.value }}</td>
             <td>{{result.weight}}</td>
+            <td>{{result.score}}</td>
 
             <td ng-class="result.name">{{result.score}}</td>
         </tr>
@@ -49,8 +50,21 @@
         <td>{{result.weight}}</td>
         <td ng-class="result.name">{{result.score}}</td>
     </tr>
+  <thead>
+	<th> Question </th>
+	<th> Response </th>
+	<th> Value </th>
+	<th> Weight</th>
+	<th> Score</th>
+  </thead>
+  <tr ng-repeat="result in results">
+    <td>{{result.text }}</td>
+    <td>{{result.response }}</td>
+    <td>{{result.value }}</td>
+    <td>{{result.weight}}</td>
+    <td>{{result.score}}</td>
+  </tr>
 </table>
 
 
 <h1> Graphs </h1>
-

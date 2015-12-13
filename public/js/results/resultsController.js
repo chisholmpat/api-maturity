@@ -1,69 +1,99 @@
+
+
 (function() {
 
 
 	  // Retrieve all information required to generate score.
-    var module = angular.module('resultsModule', ['resultsServiceModule']);
-    module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', function($scope, $routeParams, ResultStore) {
-				$scope.results = ResultStore.scoreConn.query({
-            client_id: $routeParams.client_id,
-            form_id: $routeParams.form_id
-        }, function() {
-                    $scope.results = calcScores($scope.results);
-                    $scope.averages = calcAverages($scope.results);
 
-                });
-    }]);
+    function calculateAllScores(response_value, question_weight){
 
+      if( (response_value==1||response_value==2) && (question_weight==1||question_weight==2) ){
+        return response_value-1;
+      }
+      else{
+        return response_value;
+      }
+    }
 
-    // Calculate Scores
-    function calcScores (results) {
-        for(i=0; i<results.length; i++){
-            if((results[i].value == 1 || results[i].value == 2)
-                && (results[i].weight == 1 || results.weight == 2))
-                results[i].score = results[i].value - 1;
-            else
-                results[i].score = results[i].value;
+    function getAverages(groupedup_array){
+      var i,j;
+      var internalArrayLength = 0;
+      var maxGraphPoints = 5;
+      var total;
+      var averages_array = [];
+      for(i=0;i<maxGraphPoints;i++){
+        internalArrayLength = groupedup_array[i].length;
+        total =0;
+        for(j=0;j<internalArrayLength;j++){
+          total+=groupedup_array[i][j];
         }
+        averages_array.push(total/(j+1));
+      }
+      return averages_array;
+    }
 
-        return results;
-    };
+    function getGraphInputs(averages_array){
+      var graphInputsArray = [];
+      var array_length = averages_array.length;
+      var i;
 
-    function calcAverages(results){
-
-
-        SA = {};
-        QA = {};
-        averages = [];
-
-        for(i = 0; i < results.length;i++){
-            SA[results[i].name] = {group_id : results[i].group_id, name: results[i].name,  total: 0, count: 0};
-            QA[results[i].name] = {group_id : results[i].group_id, name: results[i].name, total: 0, count: 0};
+      for(i=0; i<array_length; i++){
+        if(averages_array[i] <1.1){
+            graphInputsArray[i] =0;
         }
-
-        for(i = 0; i < results.length;i++) {
-            if(results[i].category_id == 1)
-                var group = QA[results[i].name];
-            else
-                var group = SA[results[i].name];
-
-            group.total += results[i].score;
-            group.count += 1;
+        else if(1<averages_array[i]<2.5){
+            graphInputsArray[i] = 1;
         }
-
-        for(group in QA) {
-           averages.push( {name :QA[group].name, category_id : 1, average : QA[group].total / QA[group].count })
+        else{
+            graphInputsArray[i] = 2;
         }
-
-        for(group in SA) {
-            averages.push( {name :SA[group].name, category_id : 2, average : SA[group].total / SA[group].count })
-        }
-
-        console.log(averages);
-
-        return averages;
-
+      }
+      return graphInputsArray;
     }
 
 
+    function getGraphScores(results){
 
+      var array_length = results.length;
+      var groupedup_array_one = [[],[],[],[],[]];
+      var averages_array_one =[];
+      var graph_input_one =[];
+      var graph_input_two =[];
+
+
+      //Calculate Scores
+      for(i=0; i<array_length; i++){
+          results[i].score = calculateAllScores(results[i].value, results[i].weight);
+          if(results[i].category_id ==1){//Consider changing to category_name == "QA"
+            groupedup_array_one[results[i].group_id -1].push(results[i].score);
+          }
+          else {
+            graph_input_two.push(results[i].value);
+          }
+      }
+      console.log(groupedup_array_one);
+      //get the average for each group sharing a group_id and convert to graphInput for category_id =1
+      averages_array_one = getAverages(groupedup_array_one);
+      graph_input_one = getGraphInputs(averages_array_one);
+
+      results.graphingArrayCategoryOne = graph_input_one;//QA's graph input
+      results.graphingArrayCategoryTwo = graph_input_two; //SA'sgraph inpu
+
+    }
+
+    var module = angular.module('resultsModule', ['resultsServiceModule']);
+    module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', function($scope, $routeParams, ResultStore) {
+
+        //Get the data
+        console.log("Hi");
+				$scope.results = ResultStore.scoreConn.query({
+            client_id: $routeParams.client_id,
+            form_id: $routeParams.form_id
+          },function(){
+            graphingArray = getGraphScores($scope.results);
+            console.log($scope.results.graphingArrayCategoryOne);
+            console.log($scope.results.graphingArrayCategoryTwo);
+          }
+        );
+    }]);
 })();
