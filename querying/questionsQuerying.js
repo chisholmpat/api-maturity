@@ -57,4 +57,3 @@ exports.getClients = function (res, callback) {
     var sql = "SELECT Client.id, Client.name from Client";
     db.callQuery(res,callback, sql);
 };
-

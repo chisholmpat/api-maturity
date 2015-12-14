@@ -3,8 +3,13 @@
 <p> QA Input Values to Graph</p>
 <table class="table">
   <tr>
-    <td ng-repeat="graphValue in results.graphingArrayCategoryOne track by $index">
-      {{graphValue}}
+    <td ng-repeat="(key, value) in results.graphingArrayCategoryOne">
+      {{key}}
+    </td>
+  </tr>
+  <tr>
+    <td ng-repeat="(key, value) in results.graphingArrayCategoryOne">
+      {{value}}
     </td>
   </tr>
 </table>
@@ -12,8 +17,13 @@
 <p> SA Input Values to Graph</p>
 <table class="table">
   <tr>
-    <td ng-repeat="graphValue in results.graphingArrayCategoryTwo track by $index">
-      {{graphValue}}
+    <td ng-repeat="(key, value) in results.graphingArrayCategoryTwo">
+      {{key}}
+    </td>
+  </tr>
+  <tr>
+    <td ng-repeat="(key, value) in results.graphingArrayCategoryTwo">
+      {{value}}
     </td>
   </tr>
 </table>
@@ -59,5 +69,7 @@
     </tr>
 </table>
 
-
 <h1> Graphs </h1>
+<h2> Graphs </h2>
+<button class="btn" ng-click="graphingFunctionQA()">Show QA Graph </button>
+<button class="btn" ng-click="graphingFunctionSA()">Show SA Graph </button>
