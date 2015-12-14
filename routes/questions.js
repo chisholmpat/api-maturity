@@ -2,7 +2,6 @@
 // to the response or to send an error string to the response.
 function callback(res, err_string, results_array) {
 
-    console.log(results_array);
     if (!err_string) {
         res.send(results_array);
     }
@@ -13,8 +12,6 @@ function callback(res, err_string, results_array) {
 
 module.exports = function (app) {
 
-    // Dependencies
-    var mysql = require('mysql');;
     var queries = require('../querying/questionsQuerying');
 
     // Return all questions by client and form id

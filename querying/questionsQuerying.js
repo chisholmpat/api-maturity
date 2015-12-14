@@ -55,7 +55,6 @@ exports.getAllForms = function (res, callback) {
 
 exports.getClients = function (res, callback) {
     var sql = "SELECT Client.id, Client.name from Client";
-    console.log(sql);
     db.callQuery(res,callback, sql);
 };
 

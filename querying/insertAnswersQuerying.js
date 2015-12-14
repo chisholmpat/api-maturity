@@ -6,7 +6,6 @@ exports.addAnswers = function (res, callback, responses) {
     var query = " Update ClientQuestionResponse SET response_id = CASE ";
 
     for (i = 0; i < responses.length; i++) {
-        console.log(responses[i]);
         query += "  WHEN question_id =" + responses[i].id +
             " AND client_id = " + responses[i].client_id + " THEN " + responses[i].response_id
     }
