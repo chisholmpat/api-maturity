@@ -10,9 +10,8 @@ function callback(res, err_string, results_array) {
 }
 
 module.exports = function (app) {
-
     // Dependencies
-    var mysql = require('mysql');;
+    var mysql = require('mysql');
     var queries = require('../querying/questionsQuerying');
 
     // Return all questions by client and form id

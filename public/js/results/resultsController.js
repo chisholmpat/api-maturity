@@ -21,6 +21,7 @@
       var maxGraphPoints = 5;
       var total;
       var averages_array = [];
+
       for(i=0;i<maxGraphPoints;i++){
         internalArrayLength = groupedup_array[i].length;
         total =0;

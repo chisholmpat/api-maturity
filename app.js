@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cfenv = require('cfenv');
-var sqlite = require('sqlite3').verbose();
 var mySQL = require('mysql');
 var db = require('./db/db.js');
 
@@ -43,9 +42,7 @@ app.listen(appEnv.port , function() {
 });
 
 // Handle DB Connections on manual shutdown
-process.on('SIGINT', function() {
-    console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
-	db.getConnection().end();
+process.on('SIGINT', function() {;
 	console.log("Exiting...");
 	process.exit();
 });
