@@ -83,6 +83,43 @@
 
     }
 
+
+    function makeGraphs(graph_array, id_name){
+
+      var canv = document.createElement("canvas");
+      var buyerData;
+      var keyArray = [];
+      var dataArray = [];
+      var key;
+
+      for(key in graph_array){
+        keyArray.push(key);
+        dataArray.push(graph_array[key]);
+      }
+
+      // Radar chart data
+      var graphData = {
+          labels : [keyArray[0], keyArray[1], keyArray[2], keyArray[3], keyArray[4]],
+          datasets : [
+          {
+              label: id_name,
+              fillColor : "rgba(172,194,132,0.4)",
+              strokeColor : "#ACC26D",
+              pointColor : "#fff",
+              pointStrokeColor : "#9DB86D",
+              data : [dataArray[0], dataArray[1], dataArray[2], dataArray[3], dataArray[4]]
+          }
+          ]
+      }
+      canv.setAttribute('id', id_name);
+      document.body.appendChild(canv);
+      // get radar chart canvas
+      var radarChart = document.getElementById(id_name).getContext('2d');
+      // draw radar chart
+      new Chart(radarChart).Radar(graphData);
+
+    }
+
     var module = angular.module('resultsModule', ['resultsServiceModule']);
     module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', function($scope, $routeParams, ResultStore) {
 
@@ -93,8 +130,12 @@
             form_id: $routeParams.form_id
           },function(){
             graphingArray = getGraphScores($scope.results);
-            console.log($scope.results.graphingArrayCategoryOne);
-            console.log($scope.results.graphingArrayCategoryTwo);
+              $scope.graphingFunctionQA = function(){
+                 makeGraphs($scope.results.graphingArrayCategoryOne, "QAgraph");
+              }
+              $scope.graphingFunctionSA = function(){
+                 makeGraphs($scope.results.graphingArrayCategoryTwo, "SAgraph");
+              }
           }
         );
     }]);

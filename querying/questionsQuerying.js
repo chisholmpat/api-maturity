@@ -58,4 +58,3 @@ exports.getClients = function (res, callback) {
     console.log(sql);
     db.callQuery(res,callback, sql);
 };
-
