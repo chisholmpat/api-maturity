@@ -33,3 +33,7 @@
     display: table-cell;
     width: 200px;
 }
+
+.table-nonfluid {
+   width: auto !important;
+}

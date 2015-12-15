@@ -48,6 +48,7 @@ pool.getConnection(function (err, connection) {
     // make the query
     connection.query(sql, params, function (err, results) {
         connection.release();
+        console.log(results)
         if (err + sql) {
             console.log(err);
             callback(res, err, results);
@@ -56,3 +57,24 @@ pool.getConnection(function (err, connection) {
         callback(res, err, results);
     });
 })};
+
+
+exports.callQueryWithNoCallBackOrParams = function(sql){
+
+// get a connection from the pool
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log(err + sql);
+            return;
+        }
+        // make the query
+        connection.query(sql, [], function (err, results) {
+            connection.release();
+        ;
+            if (err + sql) {
+                console.log(err);
+                return;
+            }
+        });
+    })};
+
