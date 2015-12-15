@@ -48,6 +48,7 @@ pool.getConnection(function (err, connection) {
     // make the query
     connection.query(sql, params, function (err, results) {
         connection.release();
+        console.log(results)
         if (err + sql) {
             console.log(err);
             callback(res, err, results);
@@ -69,6 +70,7 @@ exports.callQueryWithNoCallBackOrParams = function(sql){
         // make the query
         connection.query(sql, [], function (err, results) {
             connection.release();
+        ;
             if (err + sql) {
                 console.log(err);
                 return;

@@ -8,7 +8,7 @@ exports.getAllQuestions = function (client_id, form_id, res, callback) {
     INNER JOIN Form On Question.form_id = Form.id\
     WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?";
 
-    db.callQuery(res, callback, sql, [client_id, form_id]);
+    db.callQuery(res, callback, sql, [ form_id, client_id,]);
 
 };
 
@@ -21,7 +21,7 @@ exports.getAllAnswers = function (client_id, form_id, res, callback) {
     INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id \
     INNER JOIN Grouping ON Question.group_id=Grouping.id \
     LEFT  JOIN Response ON ClientQuestionResponse.response_id=Response.id \
-    WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?";
+    WHERE  ClientQuestionResponse.client_id = ?  AND Question.form_id = ?";
 
     db.callQuery(res, callback, sql, [client_id, form_id]);
 };
