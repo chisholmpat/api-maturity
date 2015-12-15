@@ -30,6 +30,10 @@ myApp.config(['$routeProvider',
             templateUrl: '/views/clients/clients.html',
             controller: 'ClientsController'
         }).
+        when('/userLogin', {
+            templateUrl: '/views/user/user.html',
+            controller: 'UserController'
+        }).
         otherwise({
             redirectTo: '/home'
         });
