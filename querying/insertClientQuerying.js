@@ -18,7 +18,7 @@ exports.insertClient = function (name, res, callback) {
     db.callQueryWithNoCallBackOrParams(sql);
 
     var sql = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
-               SELECT DISTINCT id , LAST_INSERT_ID(), 8 from Question WHERE Question.category_id = 2"
+               SELECT DISTINCT id , (SELECT MAX(id) from Client), 8 from Question WHERE Question.category_id = 2"
 
     db.callQueryWithNoCallBackOrParams(sql);
 
