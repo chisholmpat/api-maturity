@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var cfenv = require('cfenv');
 var mySQL = require('mysql');
 var db = require('./db/db.js');
+var passport = require('passport');
 
 // route file includes
 var routes = require('./routes/index');
@@ -23,11 +24,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 var index = require('./routes/index')(app);
 var questions = require('./routes/questions')(app);
 var addAnswers = require('./routes/insertAnswers')(app);
+var userLogin = require('./routes/userLogin')(app, passport);
+
 
 //Statically serve up necessary files
 app.use(express.static(path.join(__dirname, '/public')));
