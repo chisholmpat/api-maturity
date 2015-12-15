@@ -3,7 +3,7 @@ var pool = db.getPool();
 
 exports.addAnswers = function (res, callback, responses) {
 
-    var query = " Update ClientQuestionResponse SET response_id = CASE ";
+    var query = " Update ClientQuestion SET response_id = CASE ";
 
     for (i = 0; i < responses.length; i++) {
         query += "  WHEN question_id =" + responses[i].id +
