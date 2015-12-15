@@ -20,7 +20,7 @@ module.exports = function (app) {
     });
 
     // Return all scores
-    app.get('/score/:client_id/:form_id', function (req, res) {;
+    app.get('/score/:client_id/:form_id', function (req, res) {
         queries.getAllAnswers(req.params.client_id, req.params.form_id, res, callback);
     });
 
