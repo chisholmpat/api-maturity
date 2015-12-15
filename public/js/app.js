@@ -1,10 +1,7 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
-<<<<<<< HEAD
-var myApp = angular.module('app', ['ngRoute', 'ngResource', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
-=======
-var myApp = angular.module('app', ['ngRoute', 'ngResource', 'questionnaireModule', 'clientsModule', 'resultsModule', 'addClientModule']);
->>>>>>> master
+var myApp = angular.module('app', ['ngRoute', 'ngResource', 'questionnaireModule', 'clientsModule', 'resultsModule', 'addClientModule', 'userModule']);
+
 
 // Configure the views/controller for each of the pages within the application.
 myApp.config(['$routeProvider',
@@ -33,10 +30,11 @@ myApp.config(['$routeProvider',
         when('/clients', {
             templateUrl: '/views/clients/clients.html',
             controller: 'ClientsController'
-        }).=
+        }).
         when('/userLogin', {
             templateUrl: '/views/user/user.html',
             controller: 'userController'
+        }).
         when('/add_client', {
           templateUrl: '/views/add_client/add_client.html',
           controller: 'AddClientController'
