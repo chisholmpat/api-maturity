@@ -11,6 +11,15 @@
 
 	$scope.responses = QuestionStore.responseConn.query();
 
+  // For Creating a numeric range for the weight option
+  $scope.Range = function(start, end) {
+    var result = [];
+    for (var i = start; i <= end; i++) {
+        result.push(i);
+    }
+    return result;
+};
+
         // For re-routing the request
         $scope.changeRoute = function(url, forceReload) {
             $scope = $scope || angular.element(document).scope();

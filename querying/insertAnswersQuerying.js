@@ -15,5 +15,18 @@ exports.addAnswers = function (res, callback, responses) {
 
     query += " ELSE response_id END";
 
+
+    db.callQueryWithNoCallBackOrParams(query);
+
+    var query = "Update ClientQuestionResponse SET weight = CASE ";
+
+    for (i = 0; i < responses.length; i++) {
+        query += " WHEN question_id =" + responses[i].id +
+            " AND client_id = " + responses[i].client_id + " THEN " + responses[i].weight
+    }
+
+    query += " ELSE weight END";
+
     db.callQuery(res, callback, query);
+
 };

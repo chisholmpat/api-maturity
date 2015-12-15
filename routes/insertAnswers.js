@@ -9,8 +9,10 @@ function callback(res,err_string) {
 }
 module.exports = function (app) {
 
+
     app.post('/insertAnswers', function (req, res) {
+      console.log(req.body.user_responses);
         queries.addAnswers( res, callback,  req.body.user_responses);
-        
+
     })
 };
