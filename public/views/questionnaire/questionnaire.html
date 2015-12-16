@@ -5,10 +5,16 @@
     <h3> QA Questions </h3>
     <div ng-repeat="question in questions |  filter: { category_id: '1' }">
         <p> {{ question.text }} </p>
-        <select ng-model="question.response_id"
-                ng-options="response.id as response.response for response in responses  | filter: { category_id: '1' }">
-        </select>
-                <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
+
+        <select ng-model="question.response_id" ng-options="response.id as response.response for response in responses  | filter: { category_id: '1' }"> </select>
+        <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
+
+        <a ng-click="showText = !showText">Add Note</a>
+
+    <div ng-init="showText = false" ng-show="showText" id="replyForm">
+  <input type="text" name="" class="form-control" ng-model="question.note">
+
+</div>
     </div>
 
     <h3> SA Questions </h3>
@@ -20,6 +26,13 @@
         </select>
 
             <select  ng-hide="true" ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
+
+            <a ng-click="showText = !showText">Add Note</a>
+
+        <div ng-init="showText = false" ng-show="showText" id="replyForm">
+      <input type="text" name="" class="form-control" ng-model="question.note">
+
+    </div>
     </div>
 
     <br>

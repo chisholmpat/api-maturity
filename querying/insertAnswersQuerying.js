@@ -27,6 +27,23 @@ exports.addAnswers = function (res, callback, responses) {
 
     query += " ELSE weight END";
 
+
+    var query = "Update ClientQuestionResponse SET note = CASE ";
+
+
+    for (i = 0; i < responses.length; i++) {
+      if(responses[i].note !== null) {
+        query += " WHEN question_id =" + responses[i].id +
+            " AND client_id = " + responses[i].client_id + " THEN '" + responses[i].note + "'"
+        }
+    }
+
+
+    query += " ELSE note END";
+
+        console.log(query);
+
+
     db.callQuery(res, callback, query);
 
 };

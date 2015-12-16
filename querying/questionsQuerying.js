@@ -2,7 +2,7 @@ var db = require("../db/db.js");
 
 exports.getAllQuestions = function (client_id, form_id, res, callback) {
 
-    var sql = "SELECT ClientQuestionResponse.client_id, Form.name as form_name, Question.id, Question.text, Question.category_id, ClientQuestionResponse.response_id, ClientQuestionResponse.weight\
+    var sql = "SELECT ClientQuestionResponse.client_id, ClientQuestionResponse.note, Form.name as form_name, Question.id, Question.text, Question.category_id, ClientQuestionResponse.response_id, ClientQuestionResponse.weight\
     FROM ClientQuestionResponse \
     INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id\
     INNER JOIN Form On Question.form_id = Form.id\
