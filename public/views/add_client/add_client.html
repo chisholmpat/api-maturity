@@ -1,7 +1,7 @@
 <!-- FORM -->
 
 <!-- pass in the variable if our form is valid or invalid -->
-<form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+<form name="userForm"  novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
 
   <!-- CLIENT NAME -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
@@ -46,6 +46,7 @@
   </div>
 
   <!-- SUBMIT BUTTON -->
+  <button data-ng-disabled="!userForm.$valid" data-ng-click="submit(client)" class="btn btn-default">Submit</button>
   <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>

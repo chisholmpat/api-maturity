@@ -1,10 +1,11 @@
 var db = require("../db/db.js");
 
-exports.insertClient = function (name, res, callback) {
+exports.insertClient = function (client, res, callback) {
 
-    var sql = "INSERT INTO Client(name) VALUES(?)";
+    var sql = "INSERT INTO Client(name, industry, country, contact, email, phone) VALUES(?,?,?,?,?,?)";
 
-    db.callQuery(res, callback, sql, [name]);
+    db.callQuery(res, callback, sql, [client.name, client.industry,
+      client.country, client.contact, client.email, client.phone]);
 
     // This call handles a database design flaw which will be sorted soon.
     // For now if a new client is created they need to have records created
@@ -23,5 +24,3 @@ exports.insertClient = function (name, res, callback) {
     db.callQueryWithNoCallBackOrParams(sql);
 
 };
-
-
