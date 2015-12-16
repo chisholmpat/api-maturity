@@ -71,5 +71,12 @@
 
 <h1> Graphs </h1>
 <h2> Graphs </h2>
-<button class="btn" ng-click="graphingFunctionQA()">Show QA Graph </button>
-<button class="btn" ng-click="graphingFunctionSA()">Show SA Graph </button>
+
+<button class="btn" ng-click="graphingFunction('QAgraph', 'SAgraph')">Show QA Graph </button>
+<button class="btn" ng-click="graphingFunction('SAgraph', 'QAgraph')">Show SA Graph </button>
+<table>
+  <tr>
+    <td><canvas id='QAgraph'> </canvas></td>
+    <td><canvas id='SAgraph'> </canvas></td>
+  </tr>
+</table>

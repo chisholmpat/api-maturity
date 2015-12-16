@@ -21,7 +21,7 @@
       var maxGraphPoints = 5;
       var total;
       var averages_array = {};
-      
+
       for(key in groupedup_array){
         internalArrayLength = groupedup_array[key].length;
         total =0;
@@ -85,13 +85,14 @@
     }
 
 
-    function makeGraphs(graph_array, id_name){
+    function makeGraphs(graph_array, showGraph, hideGraph){
 
-      var canv = document.createElement("canvas");
       var buyerData;
       var keyArray = [];
       var dataArray = [];
       var key;
+      var showGraphId;
+      var hideGraphId;
 
       for(key in graph_array){
         keyArray.push(key);
@@ -103,7 +104,7 @@
           labels : [keyArray[0], keyArray[1], keyArray[2], keyArray[3], keyArray[4]],
           datasets : [
           {
-              label: id_name,
+              label: showGraph,
               fillColor : "rgba(172,194,132,0.4)",
               strokeColor : "#ACC26D",
               pointColor : "#fff",
@@ -112,12 +113,18 @@
           }
           ]
       }
-      canv.setAttribute('id', id_name);
-      document.body.appendChild(canv);
+
+      showGraphId = document.getElementById(showGraph);
+      hideGraphId = document.getElementById(hideGraph);
       // get radar chart canvas
-      var radarChart = document.getElementById(id_name).getContext('2d');
+      var radarChart = document.getElementById(showGraph).getContext('2d');
+
       // draw radar chart
       new Chart(radarChart).Radar(graphData);
+
+      // //hide the other canvas
+      // hideGraphId.style.display = "none";
+      // showGraphId.style.display = "block";
 
     }
 
@@ -130,12 +137,14 @@
             client_id: $routeParams.client_id,
             form_id: $routeParams.form_id
           },function(){
-            graphingArray = getGraphScores($scope.results);
-              $scope.graphingFunctionQA = function(){
-                 makeGraphs($scope.results.graphingArrayCategoryOne, "QAgraph");
-              }
-              $scope.graphingFunctionSA = function(){
-                 makeGraphs($scope.results.graphingArrayCategoryTwo, "SAgraph");
+              graphingArray = getGraphScores($scope.results);
+              $scope.graphingFunction= function(showGraph, hideGraph){
+                 if(showGraph == 'QAgraph'){
+                    makeGraphs($scope.results.graphingArrayCategoryOne, showGraph, hideGraph);
+                 }
+                 else if(showGraph == 'SAgraph'){
+                    makeGraphs($scope.results.graphingArrayCategoryTwo, showGraph, hideGraph);
+                }
               }
           }
         );
