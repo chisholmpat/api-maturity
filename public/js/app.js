@@ -36,7 +36,7 @@ myApp.config(['$routeProvider',
             controller: 'userController'
         }).
         when('/add_client', {
-          templateUrl: '/views/add_client/add_client.html',
+          templateUrl: '/views/clients/add_client.html',
           controller: 'AddClientController'
         }).
         otherwise({
