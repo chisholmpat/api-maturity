@@ -24,3 +24,16 @@ exports.insertClient = function (client, res, callback) {
     db.callQueryWithNoCallBackOrParams(sql);
 
 };
+
+
+exports.updateClient = function (client, res, callback) {
+
+  console.log(client);
+  var sql = "Update Client\
+  set name=?, industry=?, country=?, contact=?, email=?, phone=? \
+  WHERE Client.id=?"
+
+  db.callQuery(res, callback, sql, [client.name, client.industry,
+    client.country, client.contact, client.email, client.phone, client.id]);
+
+};

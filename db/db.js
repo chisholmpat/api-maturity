@@ -38,6 +38,8 @@ exports.getPool = function () {
 
 exports.callQuery = function( res, callback, sql, params){
 
+console.log(sql);
+
 // get a connection from the pool
 pool.getConnection(function (err, connection) {
     if (err) {
@@ -77,4 +79,3 @@ exports.callQueryWithNoCallBackOrParams = function(sql){
             }
         });
     })};
-

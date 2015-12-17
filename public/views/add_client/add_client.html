@@ -3,50 +3,52 @@
 <!-- pass in the variable if our form is valid or invalid -->
 <form name="userForm"  novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
 
+
+
   <!-- CLIENT NAME -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
       <label>Client Name</label>
-      <input type="text" name="name" class="form-control" ng-model="client.name" required>
+      <input type="text" name="name" class="form-control" ng-model="editing.name" required>
       <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Client name is required.</p>
   </div>
 
   <!-- CLIENT INDUSTRY -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
       <label>Industry</label>
-      <input type="text" name="industry" class="form-control" ng-model="client.industry" required>
+      <input type="text" name="industry" class="form-control" ng-model="editing.industry" required>
       <p ng-show="userForm.industry.$invalid && !userForm.industry.$pristine" class="help-block">Industry is required.</p>
   </div>
 
   <!-- CLIENT COUNTRY -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
       <label>Country</label>
-      <input type="text" name="industry" class="form-control" ng-model="client.country" required>
+      <input type="text" name="industry" class="form-control" ng-model="editing.country" required>
       <p ng-show="userForm.industry.$invalid && !userForm.industry.$pristine" class="help-block">Industry is required.</p>
   </div>
 
   <!-- CLIENT CONTACT -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.contact.$invalid && !userForm.contact.$pristine }">
       <label>Contact</label>
-      <input type="text" name="industry" class="form-control" ng-model="client.contact" required>
+      <input type="text" name="industry" class="form-control" ng-model="editing.contact" required>
       <p ng-show="userForm.industry.$invalid && !userForm.industry.$pristine" class="help-block">Industry is required.</p>
   </div>
 
   <!-- CLIENT CONTACT EMAIL -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
       <label>Email</label>
-      <input type="email" name="email" class="form-control" ng-model="client.email">
+      <input type="email" name="email" class="form-control" ng-model="editing.email">
       <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
   </div>
 
   <!-- CLIENT CONTACT PHONE -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">
       <label>Phone</label>
-      <input type="text" placeholder="902-555-5555" name="phone" ng-pattern="phoneNumbr" ng-model="client.phone" class="form-control"  />
+      <input type="text" placeholder="902-555-5555" name="phone" ng-pattern="phoneNumbr" ng-model="editing.phone" class="form-control"  />
       <p ng-show="userForm.phone.$invalid && !userForm.phone.$pristine" class="help-block">Format: 902-555-5555 </p>
   </div>
 
   <!-- SUBMIT BUTTON -->
-  <button data-ng-disabled="!userForm.$valid" data-ng-click="submit(client)" class="btn btn-default">Submit</button>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button data-ng-disabled="!userForm.$valid" data-ng-click="submit()" class="btn btn-default">Submit</button>
+  <select ng-model="client" ng-options="client.name for client in clients" ng-change="onChange()"> <option value="">New Client</option></select>
 
 </form>
