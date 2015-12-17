@@ -8,7 +8,6 @@
 
         // Get questions and responses from database
     $scope.questions = QuestionStore.allQuestionConn.query({client_id: $routeParams.client_id, form_id : $routeParams.form_id}, function() {     console.log($scope.questions);});
-
 	$scope.responses = QuestionStore.responseConn.query();
 
   // For Creating a numeric range for the weight option
