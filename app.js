@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var cfenv = require('cfenv');
 var mySQL = require('mysql');
 var db = require('./db/db.js');
-var passport = require('passport');
+var passport = require('passport');;
+var session = require('express-session');
 
 // route file includes
 var routes = require('./routes/index');
@@ -21,8 +22,9 @@ app.set('view engine', 'html');
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
