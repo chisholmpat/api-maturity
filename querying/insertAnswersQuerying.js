@@ -1,9 +1,11 @@
 var db = require("../db/db.js");
-var pool = db.getPool();
 
-
+// This method takes each response submitted and updates the
+// corresponding record in the CQResponse table. TODO: Right
+// now a series of queries need to be called. My plan is to
+// move these into a stored procedure, reduce the reduncancy
+// and normalize the database so that only a single call is required.
 exports.addAnswers = function (res, callback, responses) {
-
 
     var query = " Update ClientQuestionResponse SET response_id = CASE ";
 
@@ -15,7 +17,7 @@ exports.addAnswers = function (res, callback, responses) {
 
     query += " ELSE response_id END";
 
-    db.callQueryWithNoCallBackOrParams(query);
+    db.callQueryWithNoCallBack(query);
 
     var query = "Update ClientQuestionResponse SET weight = CASE ";
 
@@ -40,7 +42,6 @@ exports.addAnswers = function (res, callback, responses) {
     query += " ELSE note END";
 
         console.log(query);
-
 
     db.callQuery(res, callback, query);
 
