@@ -13,4 +13,10 @@ module.exports = function (app) {
       res.send("200");
         queries.insertClient(req.body.client, res, callback);
     })
+
+    app.post('/updateClient', function (req, res) {
+      console.log("Updating Client")
+      console.log(req.body.client);
+      queries.updateClient(req.body.client, res, callback);
+    })
 };

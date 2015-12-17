@@ -1,9 +1,26 @@
 (function () {
 
-  var module = angular.module('addClientModule', ['addClientServiceModule'])
-
+  var module = angular.module('addClientModule', ['addClientServiceModule']);
   module.controller('AddClientController', ['$scope', 'AddClientStore', '$window',
     function ($scope, AddClientStore, $window) {
+
+      $scope.clients = AddClientStore.getClientsConn.query({}, function() {
+        console.log($scope.clients);
+      });
+
+      $scope.editing = {};
+
+      $scope.onChange = function() {
+          if ($scope.client){
+            for(key in ($scope.client))
+              $scope.editing[key] = $scope.client[key];
+          } else {
+            $scope.editing = {};
+          }
+
+          console.log($scope.editing);
+
+      }
 
     // Regex for Canadian phone number.
     // TODO: This should be moved into some sort of regex
@@ -15,9 +32,21 @@
     // will pass to the back end for processing.
     // [ "name", "industry", "country", "contact", "email", "phone" ]
     $scope.submit = function (clientData) {
-      AddClientStore.addClientConn.save({ client : clientData }, function() {
-        $scope.changeRoute('#/clients/');
-      });
+      if($scope.client){
+
+          console.log($scope.client);
+
+                AddClientStore.updateClientsConn.save({ client : $scope.editing }, function() {
+                    $scope.changeRoute('#/clients/');
+                  });
+
+      } else {
+
+        AddClientStore.addClientConn.save({ client : $scope.editing }, function() {
+            $scope.changeRoute('#/clients/');
+          });
+        }
+
     }
 
     // For re-routing the request.

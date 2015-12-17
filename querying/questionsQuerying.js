@@ -2,7 +2,7 @@ var db = require("../db/db.js");
 
 exports.getAllQuestions = function (client_id, form_id, res, callback) {
 
-    var sql = "SELECT ClientQuestionResponse.client_id, Form.name as form_name, Question.id, Question.text, Question.category_id, ClientQuestionResponse.response_id, ClientQuestionResponse.weight\
+    var sql = "SELECT ClientQuestionResponse.client_id, ClientQuestionResponse.note, Form.name as form_name, Question.id, Question.text, Question.category_id, ClientQuestionResponse.response_id, ClientQuestionResponse.weight\
     FROM ClientQuestionResponse \
     INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id\
     INNER JOIN Form On Question.form_id = Form.id\
@@ -44,16 +44,14 @@ exports.getAllFormsByClient = function (client_id, res, callback) {
 
 
 exports.getAllForms = function (res, callback) {
-
     var sql = "SELECT DISTINCT Form.id, Form.name, ClientQuestionResponse.client_id FROM Form\
     INNER JOIN Question on Form.id=Question.form_id\
     INNER JOIN ClientQuestionResponse on Question.id = ClientQuestionResponse.question_id"
-
     db.callQuery(res,callback, sql);
 };
 
 
 exports.getClients = function (res, callback) {
-    var sql = "SELECT Client.id, Client.name from Client";
+    var sql = "SELECT Client.id, Client.name, Client.industry, Client.phone, Client.contact, Client.country, Client.email from Client";
     db.callQuery(res,callback, sql);
 };
