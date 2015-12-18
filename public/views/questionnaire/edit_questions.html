@@ -1,0 +1,11 @@
+<h1> Questions</h1>
+
+<form ng-submit="generateScore(questions)">
+
+ <div ng-repeat="question in questions |  filter: { category_id: '1' }">
+        <input type="text" class="form-control" ng-model="question.text">
+ </div>
+
+  <input type="submit" />
+
+</form>

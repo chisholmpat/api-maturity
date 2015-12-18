@@ -39,6 +39,10 @@ myApp.config(['$routeProvider',
           templateUrl: '/views/clients/add_client.html',
           controller: 'AddClientController'
         }).
+        when('/edit_questions/:form_id', {
+            templateUrl: '/views/questionnaire/edit_questions.html',
+            controller: 'EditQuestionsController'
+        }).
         otherwise({
             redirectTo: '/home'
         });

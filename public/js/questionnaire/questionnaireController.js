@@ -37,6 +37,12 @@
         }
     }]);
 
+    module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams', function($scope, QuestionStore, $window, $routeParams) {
+        $scope.questions = QuestionStore.questionConn.query({form_id: $routeParams.form_id }, function() {
+            console.log($scope.questions)
+        })
+    }]);
+
 
 
     // For handling key presses.
