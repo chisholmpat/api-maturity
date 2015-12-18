@@ -28,6 +28,7 @@ exports.addAnswers = function (res, callback, responses) {
 
     query += " ELSE weight END";
 
+    db.callQueryWithNoCallBack(query);
 
     var query = "Update ClientQuestionResponse SET note = CASE ";
 

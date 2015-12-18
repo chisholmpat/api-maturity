@@ -81,3 +81,41 @@ exports.getForms = function (res, callback) {
     db.callQuery(res,callback, sql);
 };
 
+
+exports.updateQuestions = function (res, callback, questions) {
+
+
+    /*
+     { id: 242,
+     text: 'Market',
+     category_id: 2,
+     form_id: 12,
+     group_id: 5,
+     name: 'Architecture' } ]
+     */
+
+    var query = " Update Question SET text = CASE ";
+
+    for (i = 0; i < questions.length; i++) {
+
+        query += "  WHEN id =" + questions[i].id +
+           " THEN '" + questions[i].text + "'";
+    }
+
+    query += " ELSE text END";
+
+    db.callQueryWithNoCallBack(query);
+
+    var query = " Update Question SET group_id = CASE ";
+
+    for (i = 0; i < questions.length; i++) {
+
+        query += "  WHEN id =" + questions[i].id +
+            " THEN " + questions[i].group_id;
+    }
+
+    query += " ELSE group_id END";;
+
+    db.callQuery(res, callback, query);
+
+}

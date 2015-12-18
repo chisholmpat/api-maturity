@@ -59,5 +59,12 @@ module.exports = function (app) {
         queries.getGroupings(res, callback);
     });
 
+    // Update questions
+    app.post("/update_questions", function (req, res) {
+        console.log(req.body.questions)
+        queries.updateQuestions(res, callback, req.body.questions);
+    });
+
+
 
 };
