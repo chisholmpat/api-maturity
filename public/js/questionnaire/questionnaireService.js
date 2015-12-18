@@ -5,6 +5,8 @@
         this.responseConn = $resource('/responses');
         this.addAnswersConn = $resource('/insertAnswers');
         this.questionConn = $resource('/questions/:form_id');
+        this.groupingsConn = $resource('/groupings');
+        this.formsConn = $resource('/forms');
     }]);
 
 })();

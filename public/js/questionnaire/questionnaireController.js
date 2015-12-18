@@ -39,9 +39,26 @@
 
     module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams', function($scope, QuestionStore, $window, $routeParams) {
         $scope.questions = QuestionStore.questionConn.query({form_id: $routeParams.form_id }, function() {
-            console.log($scope.questions)
-        })
+
+        });
+
+        $scope.groupings = QuestionStore.groupingsConn.query({ }, function() {
+                console.log("Retrieving groupings!")
+                console.log($scope.groupings);
+        });
+
     }]);
+
+
+    module.controller('ListFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams', function($scope, QuestionStore, $window, $routeParams) {
+        $scope.forms = QuestionStore.formsConn.query({}, function() {
+                console.log($scope.forms)
+        });
+
+
+
+    }]);
+
 
 
 

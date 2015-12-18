@@ -1,11 +1,26 @@
-<h1> Questions</h1>
+<h1> {{questions[0].name}}</h1>
 
 <form ng-submit="generateScore(questions)">
 
- <div ng-repeat="question in questions |  filter: { category_id: '1' }">
-        <input type="text" class="form-control" ng-model="question.text">
- </div>
+    <table class="table borderless">
+        <thead>
+        <th> Question </th>
+        <th> Groupings </th>
+        </thead>
+        <tbody ng-repeat="question in questions |  filter: { category_id: '1' }">
+        <tr>
+            <td> <input type="text" class="form-control" ng-model="question.text"> </td>
+                <td><select ng-model="question.group_id" ng-options="grouping.id as grouping.name for grouping in groupings"></select>
+            </td>
 
-  <input type="submit" />
+        </tr>
+        </tbody>
+        </table>
+
+    <button>Add Question</button> <input type="submit" />
+
+
+
+
 
 </form>

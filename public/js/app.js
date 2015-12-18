@@ -43,6 +43,10 @@ myApp.config(['$routeProvider',
             templateUrl: '/views/questionnaire/edit_questions.html',
             controller: 'EditQuestionsController'
         }).
+        when('/forms/', {
+            templateUrl: '/views/questionnaire/list_forms.html',
+            controller: 'ListFormsController'
+        }).
         otherwise({
             redirectTo: '/home'
         });

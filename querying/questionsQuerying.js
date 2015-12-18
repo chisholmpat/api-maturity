@@ -50,9 +50,14 @@ exports.getAllForms = function (res, callback) {
     db.callQuery(res,callback, sql);
 };
 
+
+
+
 // Get all the questions for a given form.
 exports.getQuestionsByForm = function(form_id, res, callback) {
-    var sql = "SELECT * from Question WHERE Question.form_id = ?";
+    var sql = "SELECT Question.*, Form.name from Question " +
+        " INNER JOIN Form on Question.form_id=Form.id " +
+        "WHERE Question.form_id = ?";
     console.log(sql);
     console.log(form_id);
     db.callQuery(res, callback, sql, [form_id]);
@@ -63,3 +68,16 @@ exports.getClients = function (res, callback) {
     var sql = "SELECT Client.id, Client.name, Client.industry, Client.phone, Client.contact, Client.country, Client.email from Client";
     db.callQuery(res,callback, sql);
 };
+
+// Return a list of clients.
+exports.getGroupings = function (res, callback) {
+    var sql = "SELECT * FROM Grouping";
+    db.callQuery(res,callback, sql);
+};
+
+// Return a list of forms.
+exports.getForms = function (res, callback) {
+    var sql = "SELECT * FROM Form";
+    db.callQuery(res,callback, sql);
+};
+
