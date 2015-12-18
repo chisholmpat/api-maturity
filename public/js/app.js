@@ -1,7 +1,7 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
 
-var myApp = angular.module('app', ['ngRoute', 'ngResource', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
+var myApp = angular.module('app', ['ngRoute', 'ngResource', ,'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
 
 // Configure the views/controller for each of the pages within the application.
 myApp.config(['$routeProvider',
@@ -56,6 +56,9 @@ myApp.config(['$routeProvider',
         });
     }]);
 
+myApp.controller('MenuController', function($scope) {
+  $scope.isCollapsed = true;
+});
 // Example of a controller in the same file.
 myApp.controller('HomePageController', function ($scope) {
     $scope.message = 'This is the welcome page.';
