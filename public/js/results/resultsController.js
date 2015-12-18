@@ -121,6 +121,7 @@
 
       // draw radar chart
       new Chart(radarChart).Radar(graphData);
+      
 
       // //hide the other canvas
       // hideGraphId.style.display = "none";

@@ -70,13 +70,16 @@
 </table>
 
 <h1> Graphs </h1>
-<h2> Graphs </h2>
 
-<button class="btn" ng-click="graphingFunction('QAgraph', 'SAgraph')">Show QA Graph </button>
-<button class="btn" ng-click="graphingFunction('SAgraph', 'QAgraph')">Show SA Graph </button>
+{{graphingFunction('QAgraph', 'SAgraph')}}
+{{graphingFunction('SAgraph', 'QAgraph')}}
 <table>
   <tr>
-    <td><canvas id='QAgraph'> </canvas></td>
-    <td><canvas id='SAgraph'> </canvas></td>
+    <td><canvas id='QAgraph'>QA GRAPH </canvas></td>
+    <td><canvas id='SAgraph'>QA GRAPH  </canvas></td>
+  </tr>
+  <tr>
+    <td align="center"><b>QA Graph</b></td>
+    <td align="center"><b>SA Graph</b></td>
   </tr>
 </table>
