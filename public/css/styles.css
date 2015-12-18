@@ -63,7 +63,7 @@ background-color: lightgray;
   canvas styling
 */
 canvas {
-  width: 100%;
+  width: 40vw;
   height: 100%;
   padding-left: 0;
   padding-right: 0;

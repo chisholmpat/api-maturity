@@ -1,32 +1,28 @@
+
+
+
+
 <h1> Results </h1>
 
-<p> QA Input Values to Graph</p>
-<table class="table">
-  <tr>
-    <td ng-repeat="(key, value) in results.graphingArrayCategoryOne">
-      {{key}}
-    </td>
+<h2> Graphs </h2>
+
+{{graphingFunction('QAgraph', 'SAgraph')}}
+{{graphingFunction('SAgraph', 'QAgraph')}}
+<table width="100%">
+  <tr align= "center">
+    <td><canvas id='QAgraph'></canvas></td>
+    <td><canvas id='SAgraph'></canvas></td>
   </tr>
-  <tr>
-    <td ng-repeat="(key, value) in results.graphingArrayCategoryOne">
-      {{value}}
-    </td>
+  <tr align= "center">
+    <td><div id="QAgaugeGraph" class="gaugeGraph"></div></td>
+    <td><div id="SAgaugeGraph" class="gaugeGraph"></div></td>
+  </tr>
+  <tr align= "center">
+    <td><h3><b>QA Graph</b></h3></td>
+    <td><h3><b>SA Graph</b></h3></td>
   </tr>
 </table>
 
-<p> SA Input Values to Graph</p>
-<table class="table">
-  <tr>
-    <td ng-repeat="(key, value) in results.graphingArrayCategoryTwo">
-      {{key}}
-    </td>
-  </tr>
-  <tr>
-    <td ng-repeat="(key, value) in results.graphingArrayCategoryTwo">
-      {{value}}
-    </td>
-  </tr>
-</table>
 
 <h2 ng-click="doSomething($event)"> QA Scores </h2>
 <div class="qa_scores">
@@ -51,7 +47,7 @@
 
 <table class="table">
 
-    <h2> QA Scores </h2>
+    <h2> SA Scores </h2>
     <thead>
     <th> Category</th>
     <th> Response</th>
@@ -67,19 +63,4 @@
         <td>{{result.weight}}</td>
         <td ng-class="result.name">{{result.score}}</td>
     </tr>
-</table>
-
-<h1> Graphs </h1>
-
-{{graphingFunction('QAgraph', 'SAgraph')}}
-{{graphingFunction('SAgraph', 'QAgraph')}}
-<table>
-  <tr>
-    <td><canvas id='QAgraph'>QA GRAPH </canvas></td>
-    <td><canvas id='SAgraph'>QA GRAPH  </canvas></td>
-  </tr>
-  <tr>
-    <td align="center"><b>QA Graph</b></td>
-    <td align="center"><b>SA Graph</b></td>
-  </tr>
 </table>

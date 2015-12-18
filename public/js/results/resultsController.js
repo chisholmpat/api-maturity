@@ -87,7 +87,6 @@
 
     function makeGraphs(graph_array, showGraph, hideGraph){
 
-      var buyerData;
       var keyArray = [];
       var dataArray = [];
       var key;
@@ -101,7 +100,7 @@
 
       // Radar chart data
       var graphData = {
-          labels : [keyArray[0], keyArray[1], keyArray[2], keyArray[3], keyArray[4]],
+          labels : keyArray,
           datasets : [
           {
               label: showGraph,
@@ -109,7 +108,7 @@
               strokeColor : "#ACC26D",
               pointColor : "#fff",
               pointStrokeColor : "#9DB86D",
-              data : [dataArray[0], dataArray[1], dataArray[2], dataArray[3], dataArray[4]]
+              data : dataArray
           }
           ]
       }
@@ -121,11 +120,39 @@
 
       // draw radar chart
       new Chart(radarChart).Radar(graphData);
-      
+
 
       // //hide the other canvas
       // hideGraphId.style.display = "none";
       // showGraphId.style.display = "block";
+
+    }
+
+    function makeGaugeGraphs(graph_array, showGraph, hideGraph){
+
+      var graphData =[];
+      var showGraphId;
+      var hideGraphId;
+      var max_val=2;
+      var key;
+
+      graphData.push(['Label', 'Value']);
+      for(key in graph_array){
+        graphData.push([key, (graph_array[key]/max_val)*100 ]);//converting the value to a percentage
+      }
+
+      var data = google.visualization.arrayToDataTable(graphData);
+
+      var options = {
+        width: 400, height: 120,
+        redFrom: 90, redTo: 100,
+        yellowFrom:75, yellowTo: 90,
+        minorTicks: 5
+      };
+
+      var chart = new google.visualization.Gauge(document.getElementById(showGraph));
+
+       chart.draw(data, options);
 
     }
 
@@ -140,12 +167,10 @@
           },function(){
               graphingArray = getGraphScores($scope.results);
               $scope.graphingFunction= function(showGraph, hideGraph){
-                 if(showGraph == 'QAgraph'){
-                    makeGraphs($scope.results.graphingArrayCategoryOne, showGraph, hideGraph);
-                 }
-                 else if(showGraph == 'SAgraph'){
-                    makeGraphs($scope.results.graphingArrayCategoryTwo, showGraph, hideGraph);
-                }
+                  makeGraphs($scope.results.graphingArrayCategoryOne, 'QAgraph', 'SAgraph');
+                  makeGraphs($scope.results.graphingArrayCategoryTwo, 'SAgraph', 'QAgraph');
+                  makeGaugeGraphs($scope.results.graphingArrayCategoryOne, 'QAgaugeGraph', 'SAgaugeGraph');
+                  makeGaugeGraphs($scope.results.graphingArrayCategoryTwo, 'SAgaugeGraph', 'QAgaugeGraph');
               }
           }
         );
