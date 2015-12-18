@@ -50,6 +50,14 @@ exports.getAllForms = function (res, callback) {
     db.callQuery(res,callback, sql);
 };
 
+// Get all the questions for a given form.
+exports.getQuestionsByForm = function(form_id, res, callback) {
+    var sql = "SELECT * from Question WHERE Question.form_id = ?";
+    console.log(sql);
+    console.log(form_id);
+    db.callQuery(res, callback, sql, [form_id]);
+}
+
 // Return a list of clients.
 exports.getClients = function (res, callback) {
     var sql = "SELECT Client.id, Client.name, Client.industry, Client.phone, Client.contact, Client.country, Client.email from Client";

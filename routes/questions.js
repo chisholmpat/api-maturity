@@ -40,4 +40,8 @@ module.exports = function (app) {
         queries.getAllForms(res, callback);
     });
 
+    app.get("/questions/:form_id", function (req, res) {
+        queries.getQuestionsByForm(req.params.form_id, res, callback);
+    });
+
 };
