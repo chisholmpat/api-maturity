@@ -58,7 +58,19 @@
             QuestionStore.updateQuestionsConn.save({questions: $scope.questions}, function () {
                 $scope.changeRoute('#/forms/');
             });
+
         }
+
+        // For re-routing the request
+        $scope.changeRoute = function (url, forceReload) {
+            $scope = $scope || angular.element(document).scope();
+            if (forceReload || $scope.$$phase) { // that's right TWO dollar signs: $$phase
+                window.location = url;
+            } else {
+                $location.path(url);
+                $scope.$apply();
+            }
+        };
     }]);
 
 
