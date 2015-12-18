@@ -46,12 +46,9 @@ exports.getAllFormsByClient = function (client_id, res, callback) {
 exports.getAllForms = function (res, callback) {
     var sql = "SELECT DISTINCT Form.id, Form.name, ClientQuestionResponse.client_id FROM Form\
     INNER JOIN Question on Form.id=Question.form_id\
-    INNER JOIN ClientQuestionResponse on Question.id = ClientQuestionResponse.question_id"
+    INNER JOIN ClientQuestionResponse on Question.id = ClientQuestionResponse.question_id ORDER BY client_id;"
     db.callQuery(res,callback, sql);
 };
-
-
-
 
 // Get all the questions for a given form.
 exports.getQuestionsByForm = function(form_id, res, callback) {
@@ -65,7 +62,7 @@ exports.getQuestionsByForm = function(form_id, res, callback) {
 
 // Return a list of clients.
 exports.getClients = function (res, callback) {
-    var sql = "SELECT Client.id, Client.name, Client.industry, Client.phone, Client.contact, Client.country, Client.email from Client";
+    var sql = "SELECT * from Client";
     db.callQuery(res,callback, sql);
 };
 

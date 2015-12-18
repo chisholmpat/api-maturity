@@ -3,10 +3,12 @@ var db = require("../db/db.js");
 // Insert a new customer into the database.
 exports.insertClient = function (client, res, callback) {
 
-    var sql = "INSERT INTO Client(name, industry, country, contact, email, phone) VALUES(?,?,?,?,?,?)";
+    var sql = "INSERT INTO Client(name, industry, country, contact,\
+      email, phone, revenue, industry_segment, market_share, market_capitalization ) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
     db.callQueryWithNoCallBack(sql, [client.name, client.industry,
-      client.country, client.contact, client.email, client.phone]);
+      client.country, client.contact, client.email, client.phone,
+      client.revenue, client.industry_segment, client.market_share, client.market_capitalization, client.id]);
 
     // This call handles a database design flaw which will be sorted soon.
     // For now if a new client is created they need to have records created
@@ -25,11 +27,15 @@ exports.insertClient = function (client, res, callback) {
 
 };
 
+
+
+
+
 // Update a client.
 exports.updateClient = function (client, res, callback) {
   var sql = "Update Client set name=?, industry=?, country=?, contact=?,\
-  email=?, phone=? WHERE Client.id=?"
+  email=?, phone=?, revenue=?, industry_segment=?, market_share=?, market_capitalization=? WHERE Client.id=?"
   db.callQuery(res, callback, sql, [client.name, client.industry,
-    client.country, client.contact, client.email, client.phone, client.id]);
-
+    client.country, client.contact, client.email, client.phone,
+    client.revenue, client.industry_segment, client.market_share, client.market_capitalization, client.id]);
 };

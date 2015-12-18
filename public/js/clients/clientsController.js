@@ -8,6 +8,7 @@
         $scope.forms = ClientsStore.formsConn.query({});
     }]);
 
+
     module.controller('AddClientController', ['$scope', 'ClientsStore', '$window',
         function ($scope, ClientsStore, $window) {
 
@@ -25,6 +26,8 @@
                 } else {
                     $scope.editing = {};
                 }
+
+
             }
 
             // Regex for Canadian phone number.
@@ -50,7 +53,10 @@
                         $scope.changeRoute('#/clients/');
                     });
                 }
+                    console.log($scope.editing);
+                    console.log($scope.client);
             }
+
 
             // For re-routing the request.
             // TODO We use this routing function in other parts
@@ -69,5 +75,3 @@
         }])
 
 })();
-
-

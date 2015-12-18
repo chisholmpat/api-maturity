@@ -13,23 +13,30 @@
   </div>
 
   <!-- CLIENT INDUSTRY -->
-  <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+  <div class="form-group" ng-class="{ 'has-error' : userForm.industry.$invalid && !userForm.industry.$pristine }">
       <label>Industry</label>
       <input type="text" name="industry" class="form-control" ng-model="editing.industry" required>
       <p ng-show="userForm.industry.$invalid && !userForm.industry.$pristine" class="help-block">Industry is required.</p>
   </div>
 
+  <!-- CLIENT INDUSTRY -->
+  <div class="form-group" ng-class="{ 'has-error' : userForm.industry_segment.$invalid && !userForm.industry_segment.$pristine }">
+      <label>Industry Segment</label>
+      <input type="text" name="industry_segment" class="form-control" ng-model="editing.industry_segment" required>
+      <p ng-show="userForm.industry_segment.$invalid && !userForm.industry_segment.$pristine" class="help-block">Industry segment is required.</p>
+  </div>
+
   <!-- CLIENT COUNTRY -->
-  <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+  <div class="form-group" ng-class="{ 'has-error' : userForm.country.$invalid && !userForm.country.$pristine }">
       <label>Country</label>
-      <input type="text" name="industry" class="form-control" ng-model="editing.country" required>
+      <input type="text" name="country" class="form-control" ng-model="editing.country" required>
       <p ng-show="userForm.industry.$invalid && !userForm.industry.$pristine" class="help-block">Industry is required.</p>
   </div>
 
   <!-- CLIENT CONTACT -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.contact.$invalid && !userForm.contact.$pristine }">
       <label>Contact</label>
-      <input type="text" name="industry" class="form-control" ng-model="editing.contact" required>
+      <input type="text" name="contact" class="form-control" ng-model="editing.contact" required>
       <p ng-show="userForm.industry.$invalid && !userForm.industry.$pristine" class="help-block">Industry is required.</p>
   </div>
 
@@ -46,6 +53,37 @@
       <input type="text" placeholder="902-555-5555" name="phone" ng-pattern="phoneNumbr" ng-model="editing.phone" class="form-control"  />
       <p ng-show="userForm.phone.$invalid && !userForm.phone.$pristine" class="help-block">Format: 902-555-5555 </p>
   </div>
+
+
+  <!-- CLIENT COMPETITORS -->
+  <div class="form-group" ng-class="{ 'has-error' : userForm.competitors.$invalid && !userForm.competitors.$pristine }">
+      <label>Competitors <em>(CompOne,CompTwo)</em></label>
+      <input type="text" name="competitors" class="form-control" ng-model="editing.competitors" required>
+      <p ng-show="userForm.competitors.$invalid && !userForm.competitors.$pristine" class="help-block">Industry is required.</p>
+  </div>
+
+
+  <!-- CLIENT MARKET CAPITILZATION -->
+  <div class="form-group" ng-class="{ 'has-error' : userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine }">
+      <label>Market Capitalization</label>
+      <input type="text" name="market_capitalization" class="form-control" ng-model="editing.market_capitalization" required to-number >
+      <p ng-show="userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine" class="help-block">Capitlization is required.</p>
+  </div>
+
+  <!-- CLIENT REVUNUE SIZE  -->
+  <div class="form-group" ng-class="{ 'has-error' : userForm.revenue.$invalid && !userForm.revenue.$pristine }">
+      <label>Revenue</label>
+      <input type="text" name="competitors" class="form-control" ng-model="editing.revenue" required >
+      <p ng-show="userForm.revenue.$invalid && !userForm.revenue.$pristine" class="help-block">Revenue size is required.</p>
+  </div>
+
+  <!-- CLIENT MARKET SHARE  -->
+  <div class="form-group" ng-class="{ 'has-error' : userForm.market_share.$invalid && !userForm.market_share.$pristine }">
+      <label>Market Share</label>
+      <input type="text" name="competitors" class="form-control" ng-model="editing.market_share" required to-number >
+      <p ng-show="userForm.market_share.$invalid && !userForm.market_share.$pristine" class="help-block">Revenue size is required.</p>
+  </div>
+
 
   <!-- SUBMIT BUTTON -->
   <button data-ng-disabled="!userForm.$valid" data-ng-click="submit()" class="btn btn-default">Submit</button>

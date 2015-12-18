@@ -1,5 +1,7 @@
-<div ng-repeat="client in clients">
+
 <div class="container">
+
+  <div ng-repeat="client in clients">
 <table class="table table-condensed table-bordered">
   <thead>
     <tr>
@@ -10,7 +12,7 @@
       <th>Result</th>
     </tr>
   </thead>
-  <tbody ng-repeat="form in forms |  filter:{ client_id: client.id }">
+  <tbody ng-repeat="form in forms | filter:{ client_id:client.id}:true">
     <tr>
       <td> <a href="/#/questionnaire/{{client.id}}/{{form.id}}"> {{form.name}} </a> </td>
       <td> <a href="/#/results/{{client.id}}/{{form.id}}"> Scoring </a></td>
