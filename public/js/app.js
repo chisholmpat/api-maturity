@@ -47,6 +47,10 @@ myApp.config(['$routeProvider',
             templateUrl: '/views/questionnaire/list_forms.html',
             controller: 'ListFormsController'
         }).
+        when('/howto/', {
+            templateUrl: '/views/welcome/howto.html',
+            controller: 'HomePageController'
+        }).
         otherwise({
             redirectTo: '/home'
         });
