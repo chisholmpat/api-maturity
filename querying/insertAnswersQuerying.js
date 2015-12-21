@@ -27,7 +27,7 @@ exports.addAnswers = function(res, callback, responses) {
             // To avoid having an empty case statement.
             if (updateNoteQuery.length === 0)
                 updateNoteQuery = "Update ClientQuestionResponse SET note = CASE ";
-            
+
             updateNoteQuery += " WHEN question_id =" + responses[i].id +
                 " AND client_id = " + responses[i].client_id + " THEN '" + responses[i].note + "'"
         }

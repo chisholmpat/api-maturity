@@ -1,8 +1,9 @@
-var db = require("../db/db.js");
+var knex = require("../db/db.js").knex;
 
-exports.userLoginValidate = function (username, password, req, callback) {
-
-  // we are checking to see if the user trying to login already exists
-  var sql = "SELECT * from users where username = ? AND password =? ";
-  db.callQuery(req, callback, sql, [username, password]);
+exports.userLoginValidate = function(username, password, res, callback) {
+    knex.select('').from('users')
+        .where('username', username)
+        .where('password', password).asCallback(function(err, rows) {
+            callback(res, err, rows);
+        });
 };

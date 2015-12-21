@@ -1,41 +1,27 @@
-var db = require("../db/db.js");
+var knex = require("../db/db.js").knex;
 
 // Insert a new customer into the database.
-exports.insertClient = function (client, res, callback) {
+exports.insertClient = function(client, res, callback) {
 
-    var sql = "INSERT INTO Client(name, industry, country, contact,\
-      email, phone, revenue, industry_segment, market_share, market_capitalization ) VALUES(?,?,?,?,?,?,?,?,?,?)";
-
-    db.callQueryWithNoCallBack(sql, [client.name, client.industry,
-      client.country, client.contact, client.email, client.phone,
-      client.revenue, client.industry_segment, client.market_share, client.market_capitalization, client.id]);
-
-    // This call handles a database design flaw which will be sorted soon.
-    // For now if a new client is created they need to have records created
-    // in the client question response table so that they have a record which
-    // can be updated.
-
-    var sql = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
-               SELECT DISTINCT id , (SELECT MAX(id) from Client), 1 from Question WHERE Question.category_id = 1"
-
-    db.callQueryWithNoCallBack(sql, []);
-
-    var sql = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
+    var saQuestionQuery = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
                SELECT DISTINCT id , (SELECT MAX(id) from Client), 8 from Question WHERE Question.category_id = 2"
 
-    db.callQueryWithNoCallBack(sql, []);
 
+    var qaQuestionQuery = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
+               SELECT DISTINCT id , (SELECT MAX(id) from Client), 1 from Question WHERE Question.category_id = 1"
+
+    knex('Client').insert(client).asCallback(function(err, rows) {
+        knex.raw(saQuestionQuery).asCallback(function(err, rows) {
+            knex.raw(qaQuestionQuery).asCallback(function(err, rows) {
+                callback(res, err, rows);
+            });
+        });
+    });
 };
 
-
-
-
-
 // Update a client.
-exports.updateClient = function (client, res, callback) {
-  var sql = "Update Client set name=?, industry=?, country=?, contact=?,\
-  email=?, phone=?, revenue=?, industry_segment=?, market_share=?, market_capitalization=? WHERE Client.id=?"
-  db.callQuery(res, callback, sql, [client.name, client.industry,
-    client.country, client.contact, client.email, client.phone,
-    client.revenue, client.industry_segment, client.market_share, client.market_capitalization, client.id]);
+exports.updateClient = function(client, res, callback) {
+    knex('Client').where('Client.id', client.id).update(client).asCallback(function(err, rows) {
+        callback(res, err, rows);
+    });
 };

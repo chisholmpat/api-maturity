@@ -10,7 +10,6 @@ function callback(res,err_string) {
 module.exports = function (app) {
 
     app.post('/insertClient', function (req, res) {
-      res.send("200");
         queries.insertClient(req.body.client, res, callback);
     })
 
