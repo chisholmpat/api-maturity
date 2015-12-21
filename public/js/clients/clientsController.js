@@ -14,7 +14,7 @@
 
             $scope.clients = ClientsStore.getClientsConn.query();
             $scope.editing = {}; // model to hold edited fields
-
+            $scope.integerval = /^\d*$/;
             // Handles populating the "editing" model
             // with the proper fields from the selected
             // client in the select field or emptying it

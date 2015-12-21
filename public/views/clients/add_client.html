@@ -59,29 +59,29 @@
   <div class="form-group" ng-class="{ 'has-error' : userForm.competitors.$invalid && !userForm.competitors.$pristine }">
       <label>Competitors <em>(CompOne,CompTwo)</em></label>
       <input type="text" name="competitors" class="form-control" ng-model="editing.competitors" required>
-      <p ng-show="userForm.competitors.$invalid && !userForm.competitors.$pristine" class="help-block">Industry is required.</p>
+      <p ng-show="userForm.competitors.$invalid && !userForm.competitors.$pristine" class="help-block">Competitors required (Enter "None" for none).</p>
   </div>
 
 
   <!-- CLIENT MARKET CAPITILZATION -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine }">
       <label>Market Capitalization</label>
-      <input type="text" name="market_capitalization" class="form-control" ng-model="editing.market_capitalization" required to-number >
-      <p ng-show="userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine" class="help-block">Capitlization is required.</p>
+      <input type="text" name="market_capitalization" class="form-control" ng-model="editing.market_capitalization" required ng-pattern="integerval" >
+      <p ng-show="userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine" class="help-block">Capitlization is required. Enter only numbers.</p>
   </div>
 
   <!-- CLIENT REVUNUE SIZE  -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.revenue.$invalid && !userForm.revenue.$pristine }">
       <label>Revenue</label>
-      <input type="text" name="competitors" class="form-control" ng-model="editing.revenue" required >
-      <p ng-show="userForm.revenue.$invalid && !userForm.revenue.$pristine" class="help-block">Revenue size is required.</p>
+      <input type="text" name="revenue" class="form-control" ng-model="editing.revenue" required ng-pattern="integerval">
+      <p ng-show="userForm.revenue.$invalid && !userForm.revenue.$pristine" class="help-block">Revenue size is required. Enter only numbers.</p>
   </div>
 
   <!-- CLIENT MARKET SHARE  -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.market_share.$invalid && !userForm.market_share.$pristine }">
       <label>Market Share</label>
-      <input type="text" name="competitors" class="form-control" ng-model="editing.market_share" required to-number >
-      <p ng-show="userForm.market_share.$invalid && !userForm.market_share.$pristine" class="help-block">Revenue size is required.</p>
+      <input type="text" name="market_share" class="form-control" ng-model="editing.market_share" required ng-pattern="integerval">
+      <p ng-show="userForm.market_share.$invalid && !userForm.market_share.$pristine" class="help-block">Revenue size is required. Enter only numbers.</p>
   </div>
 
 
