@@ -1,49 +1,49 @@
-var db = require("../db/db.js");
+var knex = require("../db/db.js").knex;
 
 // This method takes each response submitted and updates the
 // corresponding record in the CQResponse table. TODO: Right
 // now a series of queries need to be called. My plan is to
 // move these into a stored procedure, reduce the reduncancy
 // and normalize the database so that only a single call is required.
-exports.addAnswers = function (res, callback, responses) {
+exports.addAnswers = function(res, callback, responses) {
 
-    var query = " Update ClientQuestionResponse SET response_id = CASE ";
+    var updateResponseQuery = " Update ClientQuestionResponse SET response_id = CASE ";
+    var updateWeightQuery = "Update ClientQuestionResponse SET weight = CASE ";
+    var updateNoteQuery = ''; //"Update ClientQuestionResponse SET note = CASE ";
 
     for (i = 0; i < responses.length; i++) {
-        console.log(responses[i].client_id)
-        query += "  WHEN question_id =" + responses[i].id +
+
+        // Construct response_id update query for multiple entries.
+        updateResponseQuery += "  WHEN question_id =" + responses[i].id +
             " AND client_id = " + responses[i].client_id + " THEN " + responses[i].response_id
-    }
 
-    query += " ELSE response_id END";
-
-    db.callQueryWithNoCallBack(query);
-
-    var query = "Update ClientQuestionResponse SET weight = CASE ";
-
-    for (i = 0; i < responses.length; i++) {
-        query += " WHEN question_id =" + responses[i].id +
+        // Construct weight update query for multiple entries
+        updateWeightQuery += " WHEN question_id =" + responses[i].id +
             " AND client_id = " + responses[i].client_id + " THEN " + responses[i].weight
-    }
 
-    query += " ELSE weight END";
+        // Construct note update query.
+        if (responses[i].note !== null && 0 !== responses[i].note.length) {
 
-    db.callQueryWithNoCallBack(query);
-
-    var query = "Update ClientQuestionResponse SET note = CASE ";
-
-
-    for (i = 0; i < responses.length; i++) {
-      if(responses[i].note !== null) {
-        query += " WHEN question_id =" + responses[i].id +
-            " AND client_id = " + responses[i].client_id + " THEN '" + responses[i].note + "'"
+            // To avoid having an empty case statement.
+            if (updateNoteQuery.length === 0)
+                updateNoteQuery = "Update ClientQuestionResponse SET note = CASE ";
+            
+            updateNoteQuery += " WHEN question_id =" + responses[i].id +
+                " AND client_id = " + responses[i].client_id + " THEN '" + responses[i].note + "'"
         }
+
     }
 
-    query += " ELSE note END";
+    updateResponseQuery += " ELSE response_id END";
+    updateWeightQuery += " ELSE weight END";
+    updateNoteQuery += " ELSE note END";
 
-        console.log(query);
-
-    db.callQuery(res, callback, query);
+    knex.raw(updateResponseQuery).asCallback(function(err, rows) {
+        knex.raw(updateWeightQuery).asCallback(function(err, rows) {
+            knex.raw(updateNoteQuery).asCallback(function(err, rows) {
+                callback(res, err, rows);
+            });
+        });
+    });
 
 };
