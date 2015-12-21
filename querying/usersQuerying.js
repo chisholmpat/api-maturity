@@ -1,9 +1,10 @@
 var knex = require("../db/db.js").knex;
 
-exports.userLoginValidate = function(username, password, res, callback) {
+// For retrieving users from the database.
+exports.userloginvalidate = function(username, password) {
     knex.select('').from('users')
         .where('username', username)
         .where('password', password).asCallback(function(err, rows) {
-            callback(res, err, rows);
+            return rows;
         });
 };

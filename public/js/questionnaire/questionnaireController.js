@@ -1,16 +1,15 @@
 (function() {
     var module = angular.module('questionnaireModule', ['questionnaireServiceModule'])
 
+    // Controller for handling filling out the form.
     module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
-
 
             // Get questions and responses from database
             $scope.questions = QuestionStore.allQuestionConn.query({
                 client_id: $routeParams.client_id,
                 form_id: $routeParams.form_id
-            }, function() {
-            });
+            }, function() {});
             $scope.responses = QuestionStore.responseConn.query();
 
             // For Creating a numeric range for the weight option
@@ -33,6 +32,7 @@
                 }
             };
 
+            // Persist the information to the database.
             $scope.generateScore = function(questions) {
                 QuestionStore.addAnswersConn.save({
                         user_responses: questions,
@@ -45,17 +45,19 @@
         }
     ]);
 
+    // Controller for handling the questions editing form.
     module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
+            
+            // Get the questions belonging to the form.
             $scope.questions = QuestionStore.questionConn.query({
                 form_id: $routeParams.form_id
-            }, function() {
-
             });
 
-            $scope.groupings = QuestionStore.groupingsConn.query({}, function() {
-            });
+            // Get the potential groupings for the grouping select.
+            $scope.groupings = QuestionStore.groupingsConn.query({}, function() {});
 
+            // Function for handling submission of form.
             $scope.editQuestions = function() {
                 QuestionStore.updateQuestionsConn.save({
                     questions: $scope.questions
@@ -78,14 +80,12 @@
         }
     ]);
 
-
+    // Controller for handling listing all the forms.
     module.controller('ListFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
-            $scope.forms = QuestionStore.formsConn.query({}, function() {
-            });
+            $scope.forms = QuestionStore.formsConn.query({}, function() {});
         }
     ]);
-
 
     // For handling key presses.
     module.directive("select", function() {

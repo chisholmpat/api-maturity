@@ -5,43 +5,35 @@ var mysql = require('mysql');
 var queries = require('../querying/usersQuerying');
 module.exports = function(passport) {
 
-    var LocalStrategy = require('passport-local').Strategy;
+    var LocalStrategy = require('passport-local').Strategy; // Define the strategy to be used by PassportJS
+    passport.use(new LocalStrategy(
+        function(username, password, done) {
+            console.log("Invoking local strategy!");
+            if (username === "admin" && password === "admin") // stupid example
+                return done(null, {
+                name: "admin"
+            });
 
-    passport.use('local-login', new LocalStrategy({
-            passReqToCallback: true
-        },
-        function(res, username, password, cb) {
-
-            var queryReturn;
-            var results_array;
-            var user = {};
-
-            queryReturn = queries.userLoginValidate(username, password, res, function(res, err_string, results_array) {
-                if (!err_string) {
-                    if (results_array.length != 0) {
-                        user.name = username;
-                        user.password = password;
-                        console.log("Valid User");
-                        return cb(null, user);
-                    } else {
-                        console.log("user-invalid");
-                        return cb(null, false);
-                    }
-                } else {
-                    console.log(err_string);
-                    return cb(null, false);
-                }
+            return done(null, false, {
+                message: 'Incorrect username.'
             });
         }
     ));
 
-    passport.serializeUser(function(user, cb) {
-        console.log("SerializingUser" + user.name);
-        cb(null, user);
+    // Serialized and deserialized methods when got from session
+    passport.serializeUser(function(user, done) {
+        done(null, user);
     });
 
-    passport.deserializeUser(function(id, cb) {
-        console.log("DeSerializingUser   " + id);
-        cb(null, id);
+    passport.deserializeUser(function(user, done) {
+        done(null, user);
     });
+
+    // Define a middleware function to be used for every secured routes
+    var auth = function(req, res, next) {
+        if (!req.isAuthenticated())
+            res.send(401);
+        else
+            next();
+    };
 };

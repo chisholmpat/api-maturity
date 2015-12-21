@@ -1,65 +1,143 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
 
-var myApp = angular.module('app', ['ngRoute', 'ngResource', ,'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
+var myApp = angular.module('app', ['ngRoute', 'ngResource', , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
 
-// Configure the views/controller for each of the pages within the application.
-myApp.config(['$routeProvider',
-    function ($routeProvider) {
-        $routeProvider.
-        when('/', {
-            templateUrl: '/views/welcome/welcome.html',
-            controller: 'HomePageController'
-        }).
-        when('/home', {
-            templateUrl: '/views/welcome/welcome.html',
-            controller: 'HomePageController'
-        }).
-        when('/questionnaire/:client_id/:form_id', {
-            templateUrl: '/views/questionnaire/questionnaire.html',
-            controller: 'QuestionnaireController'
-        }).
-        when('/results/:client_id/:form_id', {
-            templateUrl: '/views/results/results.html',
-            controller: 'ResultsController'
-        }).
-        when('/questionnaire/:clientid/:formid', {
-            templateUrl: '/views/questionnaire/questionnaire.html',
-            controller: 'QuestionController' // For testing route parameters.
-        }).
-        when('/clients', {
-            templateUrl: '/views/clients/clients.html',
-            controller: 'ClientsController'
-        }).
-        when('/userLogin', {
-            templateUrl: '/views/user/user.html',
-            controller: 'userController'
-        }).
-        when('/add_client', {
-          templateUrl: '/views/clients/add_client.html',
-          controller: 'AddClientController'
-        }).
-        when('/edit_questions/:form_id', {
-            templateUrl: '/views/questionnaire/edit_questions.html',
-            controller: 'EditQuestionsController'
-        }).
-        when('/forms/', {
-            templateUrl: '/views/questionnaire/list_forms.html',
-            controller: 'ListFormsController'
-        }).
-        when('/howto/', {
-            templateUrl: '/views/welcome/howto.html',
-            controller: 'HomePageController'
-        }).
-        otherwise({
-            redirectTo: '/home'
+myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
+
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+        $http.get('/loggedin').success(function(user) {
+
+            // Authenticated
+            if (user !== '0') {
+
+                /*$timeout(deferred.resolve, 0);*/
+                deferred.resolve();
+                $rootScope.isLoggedIn = true;
+            }
+
+            // Not Authenticated
+            else {
+                $rootScope.message = 'You need to log in.';
+                //$timeout(function(){deferred.reject();}, 0);
+                deferred.reject();
+                $rootScope.isLoggedIn = false;
+                $location.url('/login');
+            }
         });
-    }]);
+
+        return deferred.promise;
+    };
+
+    $httpProvider.interceptors.push(function($q, $location) {
+        return {
+            response: function(response) {
+                // do something on success
+                return response;
+            },
+            responseerror: function(response) {
+                if (response.status === 401)
+                    $location.url('/login');
+                return $q.reject(response);
+            }
+        };
+    });
+
+    $routeProvider.
+    when('/', {
+        templateUrl: '/views/welcome/welcome.html',
+        controller: 'HomePageController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/home', {
+        templateUrl: '/views/welcome/welcome.html',
+        controller: 'HomePageController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/questionnaire/:client_id/:form_id', {
+        templateUrl: '/views/questionnaire/questionnaire.html',
+        controller: 'QuestionnaireController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/results/:client_id/:form_id', {
+        templateUrl: '/views/results/results.html',
+        controller: 'ResultsController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/questionnaire/:clientid/:formid', {
+        templateUrl: '/views/questionnaire/questionnaire.html',
+        controller: 'QuestionController', // For testing route parameters.
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/clients', {
+        templateUrl: '/views/clients/clients.html',
+        controller: 'ClientsController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/login', {
+        templateUrl: '/views/user/user.html',
+        controller: 'UserController'
+    }).
+    when('/add_client', {
+        templateUrl: '/views/clients/add_client.html',
+        controller: 'AddClientController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/edit_questions/:form_id', {
+        templateUrl: '/views/questionnaire/edit_questions.html',
+        controller: 'EditQuestionsController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/forms/', {
+        templateUrl: '/views/questionnaire/list_forms.html',
+        controller: 'ListFormsController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    when('/howto/', {
+        templateUrl: '/views/welcome/howto.html',
+        controller: 'HomePageController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
+    otherwise({
+        redirectTo: '/home'
+    });
+}).run(function($rootScope, $http) {
+    $rootScope.message = '';
+
+    // logout function is available in any pages
+    $rootScope.logout = function() {
+        $rootScope.message = 'logged out.';
+        $http.post('/logout');
+    };
+
+});
+
 
 myApp.controller('MenuController', function($scope) {
-  $scope.isCollapsed = true;
+    $scope.isCollapsed = true;
 });
 // Example of a controller in the same file.
-myApp.controller('HomePageController', function ($scope) {
+myApp.controller('HomePageController', function($scope) {
     $scope.message = 'This is the welcome page.';
 });

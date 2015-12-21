@@ -1,24 +1,25 @@
+module.exports = function(app, passport) {
+    
+    var passportConfig = require('./passportConfig.js')(passport);
 
-// var connectEnsure = require('connect-ensure-login');
+    // route to test if the user is logged in or not
+    app.get('/loggedin', function(req, res) {
+        console.log("Checking to see if user is logged in!");
+        res.send(req.isAuthenticated() ? req.user : '0');
+    });
 
+    // route to log in
+    app.post('/login', passport.authenticate('local'), function(req, res) {
+        console.log("Logging user in!");
+        console.log("User: " + req.user);
+        res.send(req.user);
+    });
 
-
-module.exports = function (app, passport) {
-  var passportConfig = require('./passportConfig.js')(passport);
-  app.post('/userLogin',passport.authenticate('local-login', {session: true, failureRedirect: '/#/userLogin' }),
-    function(req, res) {
-      console.log("In  isAuthenticated request is: " + req.isAuthenticated());
-      res.redirect('/');
-  });
-
-  app.get('/login', function(req, res) {
-      res.redirect('/tryingToLogin');
-  });
-
-  app.get('/testLogin',
-    require('connect-ensure-login').ensureLoggedIn(),
-    function(req, res){
-        res.redirect('/testLoginSuccess');
-  });
+    // route to log out
+    app.post('/logout', function(req, res) {
+        console.log("Logging out!");
+        req.logOut();
+        res.send(200);
+    });
 
 };

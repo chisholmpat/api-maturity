@@ -1,11 +1,13 @@
-(function () {
-
+(function() {
+    // Service supporting client database operations.
     var module = angular.module('clientsServiceModule', ['ngResource']);
-    module.service('ClientsStore', ['$http', '$resource', function ($http, $resource) {
-        this.formsConn = $resource('/forms');
-        this.getClientsConn = $resource('/clients');
-        this.addClientConn = $resource('/insertClient');
-        this.updateClientsConn = $resource('/updateClient');
-    }]);
+    module.service('ClientsStore', ['$http', '$resource',
+        function($http, $resource) {
+            this.formsConn = $resource('/forms');
+            this.getClientsConn = $resource('/clients');
+            this.addClientConn = $resource('/insertClient');
+            this.updateClientsConn = $resource('/updateClient');
+        }
+    ]);
 
 })();

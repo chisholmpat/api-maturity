@@ -17,12 +17,9 @@
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand">
-          <a href="#">
+          <a href="#home">
                     API Maturity
                 </a>
-        </li>
-        <li>
-          <a href="#home">Home</a>
         </li>
         <li>
           <a href="#howto">How-To</a>
@@ -32,7 +29,7 @@
         </li>
         <div ng-controller="MenuController">
           <li>
-            <a class="brand" href="#" ng-click="isCollapsed = !isCollapsed">Admin</a>
+            <a class="brand" href="#forms" ng-click="isCollapsed = !isCollapsed">Admin</a>
             <div class="nav-collapse" collapse="isCollapsed">
               <ul class="nav">
                 <li><a href="#forms">Edit Forms</a>
@@ -44,7 +41,11 @@
           </li>
           </div>
           <li>
-            <a href="#userLogin">User Login</a>
+          <a href="#login" ng-show="!isLoggedIn">Login</a>
+
+          </li>
+          <li>
+          <a href="#/" ng-click="logout()" ng-show="isLoggedIn"> Logout </a>
           </li>
       </ul>
       </div>
