@@ -51,7 +51,8 @@ app.listen(appEnv.port , function() {
 // Handle DB Connections on manual shutdown
 process.on('SIGINT', function() {;
 	console.log("Exiting...");
-	process.exit();
+	db.knex.destroy();
+        process.exit();
 });
 
 module.exports = app;

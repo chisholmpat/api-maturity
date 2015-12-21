@@ -1,118 +1,137 @@
 // The database connection.
-var db = require("../db/db.js");
+var knex = require("../db/db.js").knex;
 
-// Get all the questions available to a client given a form and a client.
+// Get all the questions available to a client given a form and a client
+// TODO December 20th, 2015 : Reduce size/complexity of this query.
 exports.getAllQuestions = function (client_id, form_id, res, callback) {
-    var sql = "SELECT ClientQuestionResponse.client_id, ClientQuestionResponse.note, Form.name as form_name, Question.id, Question.text, Question.category_id, ClientQuestionResponse.response_id, ClientQuestionResponse.weight\
-    FROM ClientQuestionResponse \
-    INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id\
-    INNER JOIN Form On Question.form_id = Form.id\
-    WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?";
-    db.callQuery(res, callback, sql, [form_id, client_id]);
+	
+	knex.select('ClientQuestionResponse.client_id', 'ClientQuestionResponse.note',
+	'Form.name as form_name','Question.id', 'Question.text', 'Question.category_id',
+	 'ClientQuestionResponse.response_id', 'ClientQuestionResponse.weight')
+	.from('ClientQuestionResponse')
+	.innerJoin('Question', 'ClientQuestionResponse.question_id','Question.id')
+	.innerJoin('Form', 'Question.form_id', 'Form.id')
+	.where('Question.form_id', form_id)
+	.where('ClientQuestionResponse.client_id', client_id)
+	.asCallback(function(err, rows){
+		callback(res, err, rows);
+	})
 };
 
-// Get all the information required to generate a score on the results page.
-// TODO: This query is quite simular to "getAllQuestions" amd the application
-// should be refactored to just use a single query.
-exports.getAllAnswers = function (client_id, form_id, res, callback) {
-    var sql = "SELECT Response.response, Response.value, Question.text, Question.id, ClientQuestionResponse.response_id,\
-    ClientQuestionResponse.weight, Question.category_id, Question.group_id, Grouping.name\
-    FROM ClientQuestionResponse\
-    INNER JOIN Question ON ClientQuestionResponse.question_id=Question.id \
-    INNER JOIN Grouping ON Question.group_id=Grouping.id \
-    LEFT  JOIN Response ON ClientQuestionResponse.response_id=Response.id \
-    WHERE Question.form_id = ? AND ClientQuestionResponse.client_id = ?";
-    db.callQuery(res, callback, sql, [form_id, client_id]);
+// Function to retrieve all of the answers that a client has submitted to calculate score.
+// TODO December 20th, 2015 : Reduce size/completexity of this query.
+exports.getClientAnswers = function(client_id, form_id, res, callback) {
+	
+	knex.select('Response.response', 'Response.value', 'Question.text', 'Question.id', 
+	'ClientQuestionResponse.response_id','ClientQuestionResponse.weight', 
+	'Question.category_id', 'Question.group_id', 'Grouping.name')
+	.from('ClientQuestionResponse')
+	.innerJoin('Question', 'ClientQuestionResponse.question_id', 'Question.id')
+	.innerJoin('Grouping', 'Question.group_id', 'Grouping.id')
+	.leftJoin('Response', 'ClientQuestionResponse.response_id','Response.id')
+	.where('Question.form_id', form_id)
+	.where('ClientQuestionResponse.client_id', client_id)
+	.asCallback(function(err, rows){
+			callback(res, err, rows);
+	})
 };
 
-// Return all the responses to populate the answers in the question form.
+
+// Return all the possible responses to a question.
 exports.getAllResponses = function (res, callback) {
-    var sql = "SELECT * FROM RESPONSE";
-    db.callQuery(res,callback, sql);
+	knex.select().table('response').
+	asCallback(function (err, rows){
+		callback(res, err, rows);
+	});
 };
 
 // Return a list of forms for a given client. Right now every client has
 // every form but in the future there may be forms which are unique to a client.
+// TODO This query can be replaced by a more generic form query.
 exports.getAllFormsByClient = function (client_id, res, callback) {
-    var sql = "SELECT DISTINCT Form.id, Form.name FROM Form\
-    INNER JOIN Question on Form.id=Question.form_id\
-    INNER JOIN ClientQuestionResponse on Question.id = ClientQuestionResponse.question_id\
-    WHERE  ClientQuestionResponse.client_id = ?"
-    db.callQuery(res,callback, sql, [client_id]);
+	
+	// Select form information for client.
+	knex.select('Form.id', 'Form.name')
+	.from('Form').innerJoin('Question', 'Form.id', 'Question.form_id')
+	.innerJoin('ClientQuestionResponse', 'Question.id', 'ClientQuestionResponse.question_id')
+	.where('client_id',client_id)
+	.distinct('*').asCallback(function(err, rows) { 
+			callback(res, err, rows);
+		})
 };
 
 // TODO: Again the above method can probably be refactored to include the information
 // gathered from this query.
 exports.getAllForms = function (res, callback) {
-    var sql = "SELECT DISTINCT Form.id, Form.name, ClientQuestionResponse.client_id FROM Form\
-    INNER JOIN Question on Form.id=Question.form_id\
-    INNER JOIN ClientQuestionResponse on Question.id = ClientQuestionResponse.question_id ORDER BY client_id;"
-    db.callQuery(res,callback, sql);
+	knex.select().table('form')
+	.distinct('*')
+	.asCallback(function(err, rows){
+		callback(res, err, rows);
+	}) 
 };
 
 // Get all the questions for a given form.
 exports.getQuestionsByForm = function(form_id, res, callback) {
-    var sql = "SELECT Question.*, Form.name from Question " +
-        " INNER JOIN Form on Question.form_id=Form.id " +
-        "WHERE Question.form_id = ?";
-    console.log(sql);
-    console.log(form_id);
-    db.callQuery(res, callback, sql, [form_id]);
-}
-
-// Return a list of clients.
-exports.getClients = function (res, callback) {
-    var sql = "SELECT * from Client";
-    db.callQuery(res,callback, sql);
+	knex.select('Question.*', 'Form.name')
+	.from('Question')
+	.innerJoin('Form', 'Question.form_id', 'Form.id')
+	.where('Question.form_id', form_id)
+	.asCallback(function(err, rows) {
+		callback(res, err, rows);
+	})
 };
 
 // Return a list of clients.
+exports.getClients = function (res, callback) {
+	knex.select().table('client')
+	.asCallback(function(err, rows) {
+		callback(res, err, rows);
+	})
+};
+
+// Return a list of groupings.
 exports.getGroupings = function (res, callback) {
-    var sql = "SELECT * FROM Grouping";
-    db.callQuery(res,callback, sql);
+	knex.select().table('grouping')
+	.asCallback(function(err, rows){
+		callback(res, err, rows);
+	})
 };
 
 // Return a list of forms.
 exports.getForms = function (res, callback) {
-    var sql = "SELECT * FROM Form";
-    db.callQuery(res,callback, sql);
+	knex.select().table('form')
+	.asCallback(function(err, rows) {
+		callback(res, err, rows);
+	})
 };
 
-
+// TODO This query is rather hideous right now, there has
+// to be a more elegant way of performing multiple unique
+// updates against the database apart from a for-loop.
 exports.updateQuestions = function (res, callback, questions) {
 
+	var updateTextQuery = " Update Question SET text = CASE ";
+	var updateGroupQuery = " Update Question SET group_id = CASE ";
+	
+	for (i = 0; i < questions.length; i++) {
+		updateTextQuery += "  WHEN id =" + questions[i].id +
+			" THEN '" + questions[i].text + "'";
 
-    /*
-     { id: 242,
-     text: 'Market',
-     category_id: 2,
-     form_id: 12,
-     group_id: 5,
-     name: 'Architecture' } ]
-     */
+		updateGroupQuery += "  WHEN id =" + questions[i].id +
+			" THEN " + questions[i].group_id;
+	}
 
-    var query = " Update Question SET text = CASE ";
+	updateTextQuery += " ELSE text END";
+	updateGroupQuery += " ELSE group_id END";;
 
-    for (i = 0; i < questions.length; i++) {
-
-        query += "  WHEN id =" + questions[i].id +
-           " THEN '" + questions[i].text + "'";
-    }
-
-    query += " ELSE text END";
-
-    db.callQueryWithNoCallBack(query);
-
-    var query = " Update Question SET group_id = CASE ";
-
-    for (i = 0; i < questions.length; i++) {
-
-        query += "  WHEN id =" + questions[i].id +
-            " THEN " + questions[i].group_id;
-    }
-
-    query += " ELSE group_id END";;
-
-    db.callQuery(res, callback, query);
-
+	// TODO Fix this logic. Right now the callback 
+	// for the first query is the second query. Also
+	// There is the possibility for SQL injection here.
+	knex.raw(updateTextQuery)
+	.asCallback(function(err, rows) {
+		knex.raw(updateGroupQuery)
+		.asCallback(function(err,rows){
+			callback(res, err, rows);
+		})
+	});
 }

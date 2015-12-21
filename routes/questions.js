@@ -11,7 +11,6 @@ function callback(res, err_string, results_array) {
 
 module.exports = function (app) {
     // Dependencies
-    var mysql = require('mysql');
     var queries = require('../querying/questionsQuerying');
 
     // Return all questions by client and form id
@@ -21,7 +20,7 @@ module.exports = function (app) {
 
     // Return all scores
     app.get('/score/:client_id/:form_id', function (req, res) {
-        queries.getAllAnswers(req.params.client_id, req.params.form_id, res, callback);
+        queries.getClientAnswers(req.params.client_id, req.params.form_id, res, callback);
     });
 
     // Get all possible responses
@@ -35,23 +34,18 @@ module.exports = function (app) {
     });
 
     // Get a list of all the clients
-    app.get('/get_clients', function (req, res) {
+    app.get('/clients', function (req, res) {
         queries.getClients(res, callback);
     });
 
     // Get a list of all the forms.
-    app.get('/get_forms', function (req, res) {
-        queries.getAllForms(res, callback);
-    });
-
-    // Get a list of all the forms.
     app.get('/forms', function (req, res) {
-        queries.getForms(res, callback);
+        queries.getAllForms(res, callback);
     });
 
     // Get the questions associated with a form.
     app.get("/questions/:form_id", function (req, res) {
-        queries.getQuestionsByForm(req.params.form_id, res, callback);
+	queries.getQuestionsByForm(req.params.form_id, res, callback);
     });
 
     //
@@ -61,7 +55,6 @@ module.exports = function (app) {
 
     // Update questions
     app.post("/update_questions", function (req, res) {
-        console.log(req.body.questions)
         queries.updateQuestions(res, callback, req.body.questions);
     });
 

@@ -1,5 +1,3 @@
-
-
 module.exports = function (app) {
     // var passport = require(passport);
     // var passportConfig = require('./passportConfig.js')(passport);
