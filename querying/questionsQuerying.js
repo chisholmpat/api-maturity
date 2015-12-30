@@ -1,5 +1,4 @@
-// The database connection.
-var knex = require("../db/db.js").knex;
+var knex = require("../db/db.js").knex; // the database connection.
 
 // Get all the questions available to a client given a form and a client
 // TODO December 20th, 2015 : Reduce size/complexity of this query.
@@ -35,7 +34,6 @@ exports.getClientAnswers = function(client_id, form_id, res, callback) {
             callback(res, err, rows);
         })
 };
-
 
 // Return all the possible responses to a question.
 exports.getAllResponses = function(res, callback) {

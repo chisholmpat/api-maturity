@@ -1,32 +1,32 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
-
 var myApp = angular.module('app', ['ngRoute', 'ngResource', , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
 
+// Logic for handling login. 
 myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
+    // Function which gits the backend in order to get credentials.
     var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+        
         var deferred = $q.defer();
+
         $http.get('/loggedin').success(function(user) {
 
             // Authenticated
             if (user !== '0') {
-
-                /*$timeout(deferred.resolve, 0);*/
                 deferred.resolve();
                 $rootScope.isLoggedIn = true;
             }
 
             // Not Authenticated
             else {
-                $rootScope.message = 'You need to log in.';
-                //$timeout(function(){deferred.reject();}, 0);
                 deferred.reject();
                 $rootScope.isLoggedIn = false;
                 $location.url('/login');
             }
         });
 
+        // Return the promise
         return deferred.promise;
     };
 
@@ -123,17 +123,15 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         redirectTo: '/home'
     });
 }).run(function($rootScope, $http) {
-    $rootScope.message = '';
-
+    
     // logout function is available in any pages
     $rootScope.logout = function() {
-        $rootScope.message = 'logged out.';
         $http.post('/logout');
     };
 
 });
 
-
+// Controller for handling the collapsing of index menu page.
 myApp.controller('MenuController', function($scope) {
     $scope.isCollapsed = true;
 });

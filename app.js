@@ -1,3 +1,4 @@
+// imported libraries
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -18,8 +19,6 @@ var app = express();
 app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-
-// uncomment after placing your favicon in /public
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -43,6 +42,7 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 // hosting config
 var appEnv = cfenv.getAppEnv();
 var port = appEnv.port || '3000';
+
 // start server on the specified port and binding host
 app.listen(appEnv.port , function() {
     console.log("server starting on " + appEnv.url);
