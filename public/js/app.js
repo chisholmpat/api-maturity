@@ -6,10 +6,14 @@ var myApp = angular.module('app', ['ngRoute', 'ngResource', , 'ui.bootstrap', 'q
 myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
     // Function which gits the backend in order to get credentials.
+    // For more information about promises checkout this blog entry.
+    // http://johnmunsch.com/2013/07/17/angularjs-services-and-promises/
     var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
-        
-        var deferred = $q.defer();
 
+        var deferred = $q.defer(); // expose the promise object
+
+        // Perform a call to the backend to see if the user 
+        // credentials match those within the session.
         $http.get('/loggedin').success(function(user) {
 
             // Authenticated
@@ -30,6 +34,13 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         return deferred.promise;
     };
 
+    // INTERCEPTOR
+    // The interceptor takes the promise object and returns 
+    // the resolved promise (think of it as sort of like a callback.
+    // Below an interceptor is added to the array of interceptors.
+    // You can see in the route configuration that on each httpRequest
+    // what is being resolved is the return value of checkLoggedIn which
+    // is a promise.
     $httpProvider.interceptors.push(function($q, $location) {
         return {
             response: function(response) {
@@ -44,6 +55,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         };
     });
 
+    // ROUTES
     $routeProvider.
     when('/', {
         templateUrl: '/views/welcome/welcome.html',
@@ -122,13 +134,11 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     otherwise({
         redirectTo: '/home'
     });
+// http://stackoverflow.com/questions/20663076/angularjs-app-run-documentation
 }).run(function($rootScope, $http) {
-    
-    // logout function is available in any pages
     $rootScope.logout = function() {
         $http.post('/logout');
     };
-
 });
 
 // Controller for handling the collapsing of index menu page.

@@ -6,7 +6,8 @@ var knex = require("../db/db.js").knex; // database connection
 exports.userloginvalidate = function(username, password) {
     knex.select('').from('users')
         .where('username', username)
-        .where('password', password).asCallback(function(err, rows) {
-            return rows;
+        .where('password', password).ascallback(function(err, rows) {
+            console.log(rows.length !== 0);
+            return (rows.length !== 0)
         });
 };
