@@ -19,11 +19,13 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             // Authenticated
             if (user !== '0') {
                 deferred.resolve();
+                $rootScope.message = "Login Successful"
                 $rootScope.isLoggedIn = true;
             }
 
             // Not Authenticated
             else {
+                $rootScope.message = 'You need to log in.'; 
                 deferred.reject();
                 $rootScope.isLoggedIn = false;
                 $location.url('/login');
