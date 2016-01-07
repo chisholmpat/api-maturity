@@ -74,7 +74,6 @@
             graph_input_two[results[i].name] = results[i].value;
           }
       }
-      console.log(groupedup_array_one);
       //get the average for each group sharing a group_id and convert to graphInput for category_id =1
       averages_array_one = getAverages(groupedup_array_one);
       graph_input_one = getGraphInputs(averages_array_one);
@@ -85,7 +84,7 @@
     }
 
 
-    function makeGraphs(graph_array, showGraph, hideGraph){
+    function makeRadarGraphs(graph_array, showGraph, hideGraph){
 
       var keyArray = [];
       var dataArray = [];
@@ -164,9 +163,9 @@
             form_id: $routeParams.form_id
           },function(){
               graphingArray = getGraphScores($scope.results);
-              $scope.graphingFunction= function(showGraph, hideGraph){
-                  makeGraphs($scope.results.graphingArrayCategoryOne, 'QAgraph', 'SAgraph');
-                  makeGraphs($scope.results.graphingArrayCategoryTwo, 'SAgraph', 'QAgraph');
+              $scope.graphingFunction= function(){
+                  makeRadarGraphs($scope.results.graphingArrayCategoryOne, 'QAgraph', 'SAgraph');
+                  makeRadarGraphs($scope.results.graphingArrayCategoryTwo, 'SAgraph', 'QAgraph');
                   makeGaugeGraphs($scope.results.graphingArrayCategoryOne, 'QAgaugeGraph', 'SAgaugeGraph');
                   makeGaugeGraphs($scope.results.graphingArrayCategoryTwo, 'SAgaugeGraph', 'QAgaugeGraph');
               }
