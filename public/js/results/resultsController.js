@@ -164,10 +164,13 @@
           },function(){
               graphingArray = getGraphScores($scope.results);
               $scope.graphingFunction= function(){
-                  makeRadarGraphs($scope.results.graphingArrayCategoryOne, 'QAgraph', 'SAgraph');
-                  makeRadarGraphs($scope.results.graphingArrayCategoryTwo, 'SAgraph', 'QAgraph');
-                  makeGaugeGraphs($scope.results.graphingArrayCategoryOne, 'QAgaugeGraph', 'SAgaugeGraph');
-                  makeGaugeGraphs($scope.results.graphingArrayCategoryTwo, 'SAgaugeGraph', 'QAgaugeGraph');
+                function drawCharts() {
+                      makeRadarGraphs($scope.results.graphingArrayCategoryOne, 'QAgraph', 'SAgraph');
+                      makeRadarGraphs($scope.results.graphingArrayCategoryTwo, 'SAgraph', 'QAgraph');
+                      makeGaugeGraphs($scope.results.graphingArrayCategoryOne, 'QAgaugeGraph', 'SAgaugeGraph');
+                      makeGaugeGraphs($scope.results.graphingArrayCategoryTwo, 'SAgaugeGraph', 'QAgaugeGraph');
+                }
+                google.charts.setOnLoadCallback(drawCharts);//Only once charts loaded drawing charts is executed, this takes care of page refresh
               }
           }
         );
