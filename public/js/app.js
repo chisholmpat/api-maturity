@@ -2,7 +2,7 @@
 // the angular application, index.html, or you'll get a missing controller error.
 var myApp = angular.module('app', ['ngRoute', 'ngResource', , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
 
-// Logic for handling login. 
+// Logic for handling login.
 myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
     // Function which gits the backend in order to get credentials.
@@ -12,7 +12,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
         var deferred = $q.defer(); // expose the promise object
 
-        // Perform a call to the backend to see if the user 
+        // Perform a call to the backend to see if the user
         // credentials match those within the session.
         $http.get('/loggedin').success(function(user) {
 
@@ -25,7 +25,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
             // Not Authenticated
             else {
-                $rootScope.message = 'You need to log in.'; 
+                $rootScope.message = 'You need to log in.';
                 deferred.reject();
                 $rootScope.isLoggedIn = false;
                 $location.url('/login');
@@ -37,7 +37,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     };
 
     // INTERCEPTOR
-    // The interceptor takes the promise object and returns 
+    // The interceptor takes the promise object and returns
     // the resolved promise (think of it as sort of like a callback.
     // Below an interceptor is added to the array of interceptors.
     // You can see in the route configuration that on each httpRequest
@@ -102,6 +102,10 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         }
     }).
     when('/login', {
+        templateUrl: '/views/user/user.html',
+        controller: 'UserController'
+    }).
+    when('/IBMlogin', {
         templateUrl: '/views/user/user.html',
         controller: 'UserController'
     }).
