@@ -10,6 +10,13 @@ var mySQL = require('mysql');
 var db = require('./db/db.js');
 var passport = require('passport');;
 var session = require('express-session');
+var crypto = require('crypto');
+
+// Password encryption testing.
+var password = require('./helpers/password');
+
+// For generating random salts
+console.log(Math.random().toString(36).slice(2));
 
 // route file includes
 var routes = require('./routes/index');
