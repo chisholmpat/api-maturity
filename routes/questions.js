@@ -25,15 +25,15 @@ module.exports = function(app) {
 
         var sendCSV = function(res, err_string, results) {
             var headers = {};
-            for (key in results[0]) {
+            for (var key in results[0]) {
                 headers[key] = key;
             }
             
             var fileName = req.params.client_id + '_' + req.params.form_id + '.csv';
-            res.setHeader('Content-disposition', 'attachment; filename=' +fileName)
+            res.setHeader('Content-disposition', 'attachment; filename=' +fileName);
             results.unshift(headers);
             res.csv(results);
-        }
+        };
 
         queries.getClientAnswers(req.params.client_id, req.params.form_id, res, sendCSV);
 
