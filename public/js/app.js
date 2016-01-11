@@ -20,6 +20,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             if (user !== '0') {
                 deferred.resolve();
                 $rootScope.message = "Login Successful"
+                $rootScope.role = user.role;
+                console.log(user.role);
                 $rootScope.isLoggedIn = true;
             }
 
