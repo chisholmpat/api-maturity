@@ -23,7 +23,7 @@ exports.insertClient = function(client, res, callback) {
         // Once the FK constraint has been satisfied, add rows to CQR.
         knex.raw(saQuestionQuery).asCallback(function(err, rows) {
             knex.raw(qaQuestionQuery).asCallback(function(err, rows) {
-                callback(res, err, rows);
+                callback(err, res, rows);
             });
         });
     });
@@ -32,6 +32,6 @@ exports.insertClient = function(client, res, callback) {
 // Update a client.
 exports.updateClient = function(client, res, callback) {
     knex('Client').where('Client.id', client.id).update(client).asCallback(function(err, rows) {
-        callback(res, err, rows);
+        callback(err, res, rows);
     });
 };

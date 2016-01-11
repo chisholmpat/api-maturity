@@ -13,7 +13,7 @@ exports.getAllQuestions = function(client_id, form_id, res, callback) {
         .where('Question.form_id', form_id)
         .where('ClientQuestionResponse.client_id', client_id)
         .asCallback(function(err, rows) {
-            callback(res, err, rows);
+            callback(err, res, rows);
         })
 };
 
@@ -31,7 +31,7 @@ exports.getClientAnswers = function(client_id, form_id, res, callback) {
         .where('Question.form_id', form_id)
         .where('ClientQuestionResponse.client_id', client_id)
         .asCallback(function(err, rows) {
-            callback(res, err, rows);
+            callback(err, res, rows);
         })
 };
 
@@ -39,7 +39,7 @@ exports.getClientAnswers = function(client_id, form_id, res, callback) {
 exports.getAllResponses = function(res, callback) {
     knex.select().table('response').
     asCallback(function(err, rows) {
-        callback(res, err, rows);
+        callback(err, res, rows);
     });
 };
 
@@ -54,7 +54,7 @@ exports.getAllFormsByClient = function(client_id, res, callback) {
         .innerJoin('ClientQuestionResponse', 'Question.id', 'ClientQuestionResponse.question_id')
         .where('client_id', client_id)
         .distinct('*').asCallback(function(err, rows) {
-            callback(res, err, rows);
+            callback(err, res, rows);
         })
 };
 
@@ -64,7 +64,7 @@ exports.getAllForms = function(res, callback) {
     knex.select().table('form')
         .distinct('*')
         .asCallback(function(err, rows) {
-            callback(res, err, rows);
+            callback(err, res, rows);
         })
 };
 
@@ -75,7 +75,7 @@ exports.getQuestionsByForm = function(form_id, res, callback) {
         .innerJoin('Form', 'Question.form_id', 'Form.id')
         .where('Question.form_id', form_id)
         .asCallback(function(err, rows) {
-            callback(res, err, rows);
+            callback(err, res, rows);
         })
 };
 
@@ -83,7 +83,7 @@ exports.getQuestionsByForm = function(form_id, res, callback) {
 exports.getClients = function(res, callback) {
     knex.select().table('client')
         .asCallback(function(err, rows) {
-            callback(res, err, rows);
+            callback(err, res, rows);
         })
 };
 
@@ -91,7 +91,7 @@ exports.getClients = function(res, callback) {
 exports.getGroupings = function(res, callback) {
     knex.select().table('grouping')
         .asCallback(function(err, rows) {
-            callback(res, err, rows);
+            callback(err, res, rows);
         })
 };
 
@@ -99,7 +99,7 @@ exports.getGroupings = function(res, callback) {
 exports.getForms = function(res, callback) {
     knex.select().table('form')
         .asCallback(function(err, rows) {
-            callback(res, err, rows);
+            callback(err, res, rows);
         })
 };
 
@@ -129,7 +129,7 @@ exports.updateQuestions = function(res, callback, questions) {
         .asCallback(function(err, rows) {
             knex.raw(updateGroupQuery)
                 .asCallback(function(err, rows) {
-                    callback(res, err, rows);
+                    callback(err, res, rows);
                 })
         });
 }

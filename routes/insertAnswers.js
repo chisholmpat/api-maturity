@@ -1,8 +1,9 @@
 var queries = require('../querying/insertAnswersQuerying');
 
-function callback(res, err_string) {
-    if (err_string) {
-        console.log(err_string);
+function callback(err, res) {
+    if (err) {
+        console.log(err);
+        res.send('400');
     }
     res.send('200');
 }

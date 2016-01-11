@@ -1,10 +1,11 @@
 // Call back function from the database call. Used to send either the results
 // to the response or to send an error string to the response.
-function callback(res, err_string, results_array) {
-    if (!err_string) {
-        res.send(results_array);
+function callback(err, res, results) {
+    if (!err) {
+        res.send(results);
     } else {
-        console.log(err_string);
+        console.log(err);
+        res.send('400');
     }
 }
 
@@ -23,7 +24,7 @@ module.exports = function(app) {
     // so that the request will be formatted as /question/1/2.csv
     app.get('/questions/:client_id/:form_id/csv', function(req, res) {
 
-        var sendCSV = function(res, err_string, results) {
+        var sendCSV = function(err, res, results) {
             var headers = {};
             for (var key in results[0]) {
                 headers[key] = key;
@@ -70,7 +71,7 @@ module.exports = function(app) {
         queries.getQuestionsByForm(req.params.form_id, res, callback);
     });
 
-    //
+    // Get all groupings
     app.get("/groupings", function(req, res) {
         queries.getGroupings(res, callback);
     });

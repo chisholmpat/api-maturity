@@ -41,7 +41,7 @@ exports.addAnswers = function(res, callback, responses) {
     knex.raw(updateResponseQuery).asCallback(function(err, rows) {
         knex.raw(updateWeightQuery).asCallback(function(err, rows) {
             knex.raw(updateNoteQuery).asCallback(function(err, rows) {
-                callback(res, err, rows);
+                callback(err, res, rows);
             });
         });
     });

@@ -19,7 +19,7 @@ module.exports = function(passport) {
                     if (rows.length !== 0) {
                         user = rows[0];
                         passwordHelper.verify(password, user.password, user.salt, function(err, res) {
-                        console.log(user.role);
+                            console.log(user.role);
                             if (res) {
                                 return done(null, {
                                     name: username,

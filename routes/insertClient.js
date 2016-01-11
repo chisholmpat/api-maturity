@@ -1,9 +1,10 @@
 
 var queries = require('../querying/insertClientQuerying');
 
-function callback(res,err_string) {
+function callback(err, res) {
     if(err_string){
-        console.log(err_string);
+        console.log(err);
+        res.send('400');
     }
     res.send('200');
 }

@@ -8,8 +8,6 @@ module.exports = function(app, passport) {
         res.send(req.isAuthenticated() ? req.user : '0');
     });
 
-
-
     // route to log in
     app.post('/login', passport.authenticate('local'), function(req, res) {
         console.log("Logging user in!");
