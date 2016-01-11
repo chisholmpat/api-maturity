@@ -29,7 +29,7 @@
           <a href="#clients">Clients</a>
         </li>
         <div ng-controller="MenuController">
-          <li ng-show="role == admin">
+          <li ng-show="role === 'admin'">
             <a class="brand" href="#forms" ng-click="isCollapsed = !isCollapsed">Admin</a>
             <div class="nav-collapse" collapse="isCollapsed">
               <ul class="nav">
