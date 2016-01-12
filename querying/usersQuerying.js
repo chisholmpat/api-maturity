@@ -1,4 +1,5 @@
 var knex = require("../db/db.js").knex; // database connection
+var passwordHelper = require('../helpers/password');
 
 // For retrieving users from the database.
 // TODO Use some sort of encryption library here
@@ -16,8 +17,11 @@ exports.userloginvalidate = function(username, password) {
 exports.addUser = function(user, res, callback) { 
     
     user.salt = Math.random().toString(36).slice(2);
-    knex('users').insert(user).asCallback(function(err, rows){
-        callback(err, res, rows);        
+    passwordHelper.hash(user.password, user.salt, function(err, result) {
+        user.password = result;
+        knex('users').insert(user).asCallback(function(err, rows){
+            callback(err, res, rows);        
+        });
     });
 
 };

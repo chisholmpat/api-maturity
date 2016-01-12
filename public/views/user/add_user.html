@@ -1,6 +1,14 @@
   <form novalidate class="simple-form">
     Name: <input type="text" ng-model="newUser.username" /><br />
-    E-mail: <input type="email" ng-model="newUser.email" /><br />
-    Password: <input type="password" ng-model="newUser.password">
+    Password: <input type="password" ng-model="newUser.password"> <br />
+    <label data-ng-repeat="role in ['admin', 'user']">
+    <input
+        name="currentActivity"
+        type="radio"
+        value="{{role}}"
+        ng-model="newUser.role" />
+        {{role}}
+        <br /> </label> <br /> 
+
     <input type="submit" ng-click="saveUser(newUser)"/>
   </form>

@@ -26,7 +26,8 @@
 
     // Controller for adding users
     module.controller('AddUserController', function($scope, UserStore){ 
-           
+          
+            $scope.roles = ['admin', 'user']; 
             $scope.saveStatus = "";
             $scope.saveUser = function(newUser){
                 console.log(newUser);
