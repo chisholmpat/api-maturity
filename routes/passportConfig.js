@@ -72,6 +72,10 @@ module.exports = function(passport) {
                              process.nextTick(function() {
                                profile.accessToken = accessToken;
                                profile.refreshToken = refreshToken;
+
+                               profile.name = "Testing";
+                               profile.role = "admin";
+                               console.log(profile);
                                done(null, profile);
                              })
                      }

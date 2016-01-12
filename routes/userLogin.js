@@ -22,11 +22,11 @@ module.exports = function(app, passport) {
 
     app.get('/auth/sso/callback',function(req,res,next) {
 
-         var redirect_url = req.session.originalUrl;
+        //  var redirect_url = req.session.originalUrl;
 
          passport.authenticate('openidconnect', {
-             successRedirect: '/hello',
-             failureRedirect: '/failure',
+             successRedirect: '/#',
+             failureRedirect: 'http://bmix-essential.mybluemix.net/#/ibmlogin',
          })(req,res,next);
     });
 

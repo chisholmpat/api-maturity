@@ -25,10 +25,10 @@
     });
 
     // Controller for adding users
-    module.controller('AddUserController', function($scope, UserStore){ 
-          
+    module.controller('AddUserController', function($scope, UserStore){
+
             $scope.roles = ['admin', 'user'];
-            
+
             $scope.saveStatus = "";
             $scope.saveUser = function(newUser){
                 console.log(newUser);
@@ -40,11 +40,14 @@
                    console.log("Attempting to save user!");
                    console.log(err);
                    $scope.saveStatus = "Fail!";
-                }); 
-            }; 
+                });
+            };
     });
 
-    module.controller('EditUserController', function($scope, UserStore){
-
+    module.controller('EditUserController', function($scope, $rootScope, $location, $window){
+      $rootScope.$watch('isLoggedIn', function() {
+           if($rootScope.isLoggedIn)
+            $window.top.location = $window.location;
+       });
     });
 })();
