@@ -18,6 +18,7 @@ module.exports = function(app, passport) {
     // route to log into IBMlogin
     app.get('/ibmlogin', passport.authenticate('openidconnect', {}));
 
+
     app.get('/auth/sso/callback',function(req,res,next) {
 
          var redirect_url = req.session.originalUrl;

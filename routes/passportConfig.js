@@ -11,13 +11,16 @@ var passwordHelper = require('../helpers/password');
 // the document or sample of each service.
 
 var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
-var ssoConfig = services.SingleSignOn[0];
-var client_id = ssoConfig.credentials.clientId;
-var client_secret = ssoConfig.credentials.secret;
-var authorization_url = ssoConfig.credentials.authorizationEndpointUrl;
-var token_url = ssoConfig.credentials.tokenEndpointUrl;
-var issuer_id = ssoConfig.credentials.issuerIdentifier;
-var callback_url = "https://bmix-essential.mybluemix.net/auth/sso/callback";
+
+if (process.env.VCAP_SERVICES){
+    var ssoConfig = services.SingleSignOn[0];
+    var client_id = ssoConfig.credentials.clientId;
+    var client_secret = ssoConfig.credentials.secret;
+    var authorization_url = ssoConfig.credentials.authorizationEndpointUrl;
+    var token_url = ssoConfig.credentials.tokenEndpointUrl;
+    var issuer_id = ssoConfig.credentials.issuerIdentifier;
+    var callback_url = "https://bmix-essential.mybluemix.net/auth/sso/callback";
+}
 
 module.exports = function(passport) {
 
@@ -51,28 +54,30 @@ module.exports = function(passport) {
                 });
     }));;
 
-    var OpenIDConnectStrategy = require('passport-idaas-openidconnect').IDaaSOIDCStrategy;
-    var Strategy = new OpenIDConnectStrategy({
+    if (process.env.VCAP_SERVICES){
+        var OpenIDConnectStrategy = require('passport-idaas-openidconnect').IDaaSOIDCStrategy;
+        var Strategy = new OpenIDConnectStrategy({
 
-                 authorizationURL : authorization_url,
-                 tokenURL : token_url,
-                 clientID : client_id,
-                 scope: 'openid',
-                 response_type: 'code',
-                 clientSecret : client_secret,
-                 callbackURL : callback_url,
-                 skipUserProfile: true,
-                 issuer: issuer_id},
+                     authorizationURL : authorization_url,
+                     tokenURL : token_url,
+                     clientID : client_id,
+                     scope: 'openid',
+                     response_type: 'code',
+                     clientSecret : client_secret,
+                     callbackURL : callback_url,
+                     skipUserProfile: true,
+                     issuer: issuer_id},
 
-                 function(accessToken, refreshToken, profile, done) {
-                         process.nextTick(function() {
-                           profile.accessToken = accessToken;
-                           profile.refreshToken = refreshToken;
-                           done(null, profile);
-                         })
-                 }
-    );
-    passport.use(Strategy);
+                     function(accessToken, refreshToken, profile, done) {
+                             process.nextTick(function() {
+                               profile.accessToken = accessToken;
+                               profile.refreshToken = refreshToken;
+                               done(null, profile);
+                             })
+                     }
+        );
+        passport.use(Strategy);
+      }
 
     // Serialized and deserialized methods when got from session
     passport.serializeUser(function(user, done) {
