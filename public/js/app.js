@@ -105,9 +105,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/user/user.html',
         controller: 'UserController'
     }).
-    when('/IBMlogin', {
-        templateUrl: '/views/user/user.html',
-        controller: 'UserController'
+    when('/ibmlogin', {
+        templateUrl: '/views/user/ibmuser.html'
     }).
     when('/add_client', {
         templateUrl: '/views/clients/add_client.html',
