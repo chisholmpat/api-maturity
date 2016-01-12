@@ -23,4 +23,26 @@
                 });
         };
     });
+
+    // Controller for adding users
+    module.controller('AddUserController', function($scope, UserStore){ 
+           
+            $scope.saveStatus = "";
+            $scope.saveUser = function(newUser){
+                console.log(newUser);
+                UserStore.addUser.save({
+                    user : newUser
+                }, function() {
+                    console.log("Success!");
+                }, function(err) {
+                   console.log("Attempting to save user!");
+                   console.log(err);
+                   $scope.saveStatus = "Fail!";
+                }); 
+            }; 
+    });
+
+    module.controller('EditUserController', function($scope, UserStore){
+
+    });
 })();

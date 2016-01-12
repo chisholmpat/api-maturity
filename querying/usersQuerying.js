@@ -10,4 +10,14 @@ exports.userloginvalidate = function(username, password) {
             console.log(rows.length !== 0);
             return (rows.length !== 0)
         });
+
+};
+
+exports.addUser = function(user, res, callback) { 
+    
+    user.salt = Math.random().toString(36).slice(2);
+    knex('users').insert(user).asCallback(function(err, rows){
+        callback(err, res, rows);        
+    });
+
 };

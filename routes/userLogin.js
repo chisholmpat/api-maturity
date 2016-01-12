@@ -1,5 +1,6 @@
 module.exports = function(app, passport) {
-    
+
+    var queries = require('../querying/usersQuerying');
     var passportConfig = require('./passportConfig.js')(passport);
 
     // route to test if the user is logged in or not
@@ -20,6 +21,19 @@ module.exports = function(app, passport) {
         console.log("Logging out!");
         req.logOut();
         res.send(200);
+    });
+
+    // route to add user to the database
+    app.post('/add_user', function(req, res) {
+        queries.addUser(req.body.user, res, function(err, res) {
+            if (err) {
+                console.log(err);
+                res.send(400);
+            } else {
+                res.send(200);
+            }
+        });
+
     });
 
 };

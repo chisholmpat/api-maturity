@@ -125,6 +125,13 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin
         }
     }).
+    when('/add_user/', {
+        templateUrl: '/views/user/add_user.html',
+        controller: 'AddUserController',
+        resolve: {
+            loggedin: checkLoggedin
+        }
+    }).
     when('/forms/', {
         templateUrl: '/views/questionnaire/list_forms.html',
         controller: 'ListFormsController',
