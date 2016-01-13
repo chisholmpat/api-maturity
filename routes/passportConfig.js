@@ -33,7 +33,7 @@ module.exports = function(passport) {
                 .asCallback(function(err, rows) {
 
                     // If the user is found return a result for username.
-                    if (rows.length !== 0) {
+                    if (rows && rows.length !== 0) {
                         user = rows[0];
                         passwordHelper.verify(password, user.password, user.salt, function(err, res) {
                             console.log(user.role);

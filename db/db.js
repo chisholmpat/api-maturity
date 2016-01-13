@@ -25,6 +25,9 @@ if (process.env.VCAP_SERVICES) {
         database: 'ad_a9e53e0371a808b',
         multipleStatements: true,
         connectionLimit: 1
+    }, pool: {
+        min: 1,
+        max: 1
     }
 }
 

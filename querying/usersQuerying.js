@@ -14,8 +14,9 @@ exports.userloginvalidate = function(username, password) {
 
 };
 
+
+// Add a user to the DB
 exports.addUser = function(user, res, callback) { 
-    
     user.salt = Math.random().toString(36).slice(2);
     passwordHelper.hash(user.password, user.salt, function(err, result) {
         user.password = result;
@@ -23,5 +24,11 @@ exports.addUser = function(user, res, callback) {
             callback(err, res, rows);        
         });
     });
-
 };
+
+// Retrieve all users from the DB
+exports.getUsers = function(res, callback) {
+    knex('users').select('').asCallback(function(err, rows) {
+        callback(err, res, rows);
+    });
+}
