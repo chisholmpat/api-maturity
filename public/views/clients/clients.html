@@ -1,21 +1,35 @@
 
-<div class="container">
+<!-- <div class="container"> -->
 
-  <div ng-repeat="client in clients">
-<table class="table table-condensed table-bordered">
-  <thead>
+<div class="col-lg-8">
+<table class="table table-condensed clientStyle">
+  <thead ng-repeat-start="client in clients">
     <tr>
-      <th colspan="2"><h3>{{client.name}}</h3></th>
+      <td>{{client.name}}</td>
     </tr>
   </thead>
-  <tbody ng-repeat="form in forms">
-    <tr>
-      <td>
-        {{form.name}}
-      </td>
+  <tbody ng-repeat-end>
+    <tr ng-repeat="form in forms">
+      <td>{{form.name}}</td>
       <td> <a href="/#/questionnaire/{{client.id}}/{{form.id}}"> Survey </a> </td>
       <td> <a href="/#/results/{{client.id}}/{{form.id}}"> Results </a></td>
     </tr>
-  <tbody>
-  </table>
+  </tbody>
+</table>
+</div>
+<div class="col-lg-4">
+  <div class="clientInfo" ng-repeat="client in clients">
+    <table class="clientStyle">
+      <tbody>
+        <tr><td>Client Name</td><td>{{client.name}}</td></tr>
+        <tr><td>Industry</td><td>{{client.industry}}</td></tr>
+        <tr><td>Country</td><td>{{client.country}}</td></tr>
+        <tr><td>Contact</td><td>{{client.contact}}</td></tr>
+        <tr><td>Email</td><td>{{client.email}}</td></tr>
+        <tr><td>Phone</td><td>{{client.phone}}</td></tr>
+
+      </tbody>
+    </table>
+
+  </div>
 </div>
