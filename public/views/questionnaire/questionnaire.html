@@ -1,45 +1,39 @@
-<h1> Questionnaire </h1>
-
-<h2> Form: {{questions[0].form_name}}</h2>
+<div class="col-lg-12">
+<h2> SURVEY - {{questions[0].form_name}}</h2>
 <form ng-submit="generateScore(questions)">
-    <h3> QA Questions </h3>
-
-    <table class="table-condensed">
-      <thead>
-      <th> Question </th>
-      <th> Answer </th>
-      <th> Weight </th>
-    </thead>
-    <tbody ng-repeat="question in questions |  filter: { category_id: '1' }">
-      <tr >
-      <td> {{ question.text }} </td>
-      <td> <select ng-model="question.response_id" ng-options="response.id as response.response for response in responses  | filter: { category_id: '1' }"> </select>
-      <td> <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select></td>
-      <td><a ng-click="showText = !showText">Note</a></td>
-      <tr><td colspan="4">  <div ng-init="showText = false" ng-show="showText" id="replyForm"> <input type="text" name="" class="form-control" ng-model="question.note"> </div></td></tr>
-     </tr>
-  </tbody>
-</table>
-
 
 <h3> SA Questions </h3>
-  <table class="table-condensed">
-    <thead>
-    <th> Question </th>
-    <th> Answer </th>
-  </thead>
-  <tbody ng-repeat="question in questions |  filter: { category_id: '2' }">
-    <tr >
-    <td> {{ question.text }} </td>
-    <td> <select ng-model="question.response_id" ng-options="response.id as response.response for response in responses  | filter: { category_id: '2' }"> </select>
-    <td> <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)" ng-show=false></select></td>
-    <td><a ng-click="showText = !showText">Note</a></td>
-    <tr><td colspan="4">  <div ng-init="showText = false" ng-show="showText" id="replyForm"> <input type="text" name="" class="form-control" ng-model="question.note"> </div></td></tr>
-   </tr>
-</tbody>
+<div class="SAtext">
+  <p ng-repeat="question in questions |  filter: { category_id: '2' }"><span>Business</span>
+    <input type="radio" name="SAR1" value="checked" id="SAR1-1"> <label for="SAR1-1">Novice</label>
+    <input type="radio" name="SAR1" value="" id="SAR1-2"><label for="SAR1-2">Progressing</label>
+    <input type="radio" name="SAR1" value="" id="SAR1-3"><label for="SAR1-3">Mature</label>
+ </p>
+ </div>
+
+<h3>Quality Assesment</h3>
+<div class="QAtext">
+<div ng-repeat="question in questions |  filter: { category_id: '1' }">
+  <p>{{ question.text }} </p>
+
+ <div class="QAcheckboxes">
+   <div ng-repeat="response in responses  | filter: { category_id: '1' }" class="QACheckboxGroup">
+     <input type="radio" ng-model="question.response_id" name="response.id" id="response.id"><label for="response.id">{{response.response}}</label>
+   </div>
+
+   <div class="QACheckboxGroup">
+     <a ng-click="showText = !showText" >Options</a>
+   </div>
+ </div>
+ <div ng-init="showText = false" class="QAoptions" ng-show="showText">
+   <p>Notes</p>
+   <textarea></textarea>
+   <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
+ </div>
+</div>
+</div>
 
 
-  </table>
 
   <input type="submit"/>
-</form>
+</form></div>

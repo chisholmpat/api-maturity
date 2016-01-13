@@ -66,17 +66,13 @@ h3{
 }
 
 #sidebar-wrapper{
-	// 	display: block;
-	// 	position: absolute;
-	// 	top: 0;
-	// 	left: 0;
-	// 	height: 100%;
-  //
-	// width: 20%;
-	/*min-width: 30rem;*/
 	background-color: #3b4b54;
 	color: #fff;
 	padding-right: 3rem;
+
+  box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
+-moz-box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
+-webkit-box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
 
   div{
   	text-align: right;
@@ -275,16 +271,7 @@ form{
 
 /*Colour and Shadows*/
 #sideLeft{
-  box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
--moz-box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
--webkit-box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
-}
 
-div.clientInfo{
-  background-color: #728086;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
--moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
--webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
 }
 
 canvas {
