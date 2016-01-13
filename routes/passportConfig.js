@@ -12,7 +12,7 @@ var passwordHelper = require('../helpers/password');
 
 var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
 
-if (process.env.VCAP_SERVICES){
+if (process.env.VCAP_SERVICES) {
     var ssoConfig = services.SingleSignOn[0];
     var client_id = ssoConfig.credentials.clientId;
     var client_secret = ssoConfig.credentials.secret;
@@ -33,7 +33,7 @@ module.exports = function(passport) {
                 .asCallback(function(err, rows) {
 
                     // If the user is found return a result for username.
-                    if (rows.length !== 0) {
+                    if (rows && rows.length !== 0) {
                         user = rows[0];
                         passwordHelper.verify(password, user.password, user.salt, function(err, res) {
                             console.log(user.role);
@@ -52,36 +52,37 @@ module.exports = function(passport) {
                             message: 'Incorrect username.'
                         });
                 });
-    }));;
+        }));;
 
-    if (process.env.VCAP_SERVICES){
+    if (process.env.VCAP_SERVICES) {
         var OpenIDConnectStrategy = require('passport-idaas-openidconnect').IDaaSOIDCStrategy;
         var Strategy = new OpenIDConnectStrategy({
 
-                     authorizationURL : authorization_url,
-                     tokenURL : token_url,
-                     clientID : client_id,
-                     scope: 'openid',
-                     response_type: 'code',
-                     clientSecret : client_secret,
-                     callbackURL : callback_url,
-                     skipUserProfile: true,
-                     issuer: issuer_id},
+                authorizationURL: authorization_url,
+                tokenURL: token_url,
+                clientID: client_id,
+                scope: 'openid',
+                response_type: 'code',
+                clientSecret: client_secret,
+                callbackURL: callback_url,
+                skipUserProfile: true,
+                issuer: issuer_id
+            },
 
-                     function(accessToken, refreshToken, profile, done) {
-                             process.nextTick(function() {
-                               profile.accessToken = accessToken;
-                               profile.refreshToken = refreshToken;
+            function(accessToken, refreshToken, profile, done) {
+                process.nextTick(function() {
+                    profile.accessToken = accessToken;
+                    profile.refreshToken = refreshToken;
 
-                               profile.name = "Testing";
-                               profile.role = "admin";
-                               console.log(profile);
-                               done(null, profile);
-                             })
-                     }
+                    profile.name = "Testing";
+                    profile.role = "admin";
+                    console.log(profile);
+                    done(null, profile);
+                })
+            }
         );
         passport.use(Strategy);
-      }
+    }
 
     // Serialized and deserialized methods when got from session
     passport.serializeUser(function(user, done) {
