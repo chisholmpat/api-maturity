@@ -88,24 +88,16 @@ h3 {
   #sidebar-wrapper ul > li li:hover {
     text-decoration: underline; }
 
-#center {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80%;
-  /*height: 100%;*/
-  padding: 3rem; }
-  #center div.headerHeight h2 {
-    display: inline-block;
-    float: left;
-    margin: 0.8rem 1rem 0 0; }
-  #center div.headerHeight img {
-    display: inline-block; }
-  #center div.headerHeight div {
-    float: right; }
-  #center h2 {
-    margin-bottom: 3rem; }
+#page-content-wrapper div.headerHeight h2 {
+  display: inline-block;
+  float: left;
+  margin: 0.8rem 1rem 0 0; }
+#page-content-wrapper div.headerHeight img {
+  display: inline-block; }
+#page-content-wrapper div.headerHeight div {
+  float: right; }
+#page-content-wrapper h2 {
+  margin-bottom: 3rem; }
 
 #content table {
   font-size: 1.5rem; }

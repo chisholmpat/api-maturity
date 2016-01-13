@@ -118,15 +118,13 @@ h3{
   }
 
 } //#sideLeft
-#center{
-	display: block;
-	position: absolute;
-	top:0;
-	right: 0;
-	width: 80%;
-
-	/*height: 100%;*/
-	padding: 3rem;
+#page-content-wrapper{
+	// display: block;
+	// position: absolute;
+	// top:0;
+	// right: 0;
+	// width: 80%;
+	// padding: 3rem;
 
    div.headerHeight h2{
   	display: inline-block;
@@ -146,7 +144,7 @@ h3{
   	margin-bottom: 3rem;
   }
 
-}//#center
+}//#page-content-wrapper
 
 #content table {
 	font-size: 1.5rem;
