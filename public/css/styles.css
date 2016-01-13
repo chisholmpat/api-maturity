@@ -1,72 +1,235 @@
-.red {
-    background-color: lightsalmon;
-}
+/* style.scss
+	* copiled to ./stylesheets/style.css
+ * This file provides css styles.
+ */
+body, html {
+  background-color: #FFFFFF;
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  margin: 0 auto;
+  font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-weight: 300;
+  font-stretch: normal;
+  color: #575757;
+  font-size: 10px; }
 
-.blue {
-    background-color: lightblue;
-}
+p {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem; }
 
-/* Apply borders to all elements inside a .borders div parent - just for demo */
-.borders, .borders * {
-    border: 1px solid black;
-}
-.header, .footer {
-    text-align: center;
-    background-color: lightgray;
-}
+a {
+  text-decoration: none;
+  color: #00aed1; }
 
-.Business {
-    background-color: lightgreen;
-}
+a:hover {
+  text-decoration: underline; }
 
-.Provider {
-    background-color: pink;
-}
+h1 {
+  color: #FFF;
+  font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
+  font-weight: 100;
+  font-stretch: normal;
+  letter-spacing: .4rem;
+  font-size: 3rem; }
 
-.Adhoc {
-    background-color: yellow;
-}
+h2 {
+  font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
+  font-weight: 100;
+  font-stretch: normal;
+  font-size: 2.4rem;
+  letter-spacing: 0.4rem; }
 
-.Market {
-    background-color: peachpuff;
-}
+h3 {
+  font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
+  font-weight: 100;
+  font-stretch: normal;
+  font-size: 2rem;
+  margin-bottom: 2rem; }
 
-.Consumer {
-    background-color: powderblue;
-}
+.trackingWide {
+  letter-spacing: 0.3rem; }
 
+.black {
+  color: #000; }
 
-/*
-    * 3-panel system = table layout
-    */
-.outerTable {
-    width: 100%;
-    display: table;
-}
-.left {
-    display: table-cell;
-    width: 200px;
-}
-.middle {
-    display: table-cell;
-}
-.right {
-    display: table-cell;
-    width: 200px;
-}
+/*layout*/
+.headerHeight {
+  width: 100%;
+  height: 7.5rem; }
 
-p.Provider {
-background-color: lightgray;
-}
+#sidebar-wrapper {
+  /*min-width: 30rem;*/
+  background-color: #3b4b54;
+  color: #fff; }
+  #sidebar-wrapper div {
+    text-align: right;
+    padding-right: 3rem;
+    font-size: 2rem; }
+  #sidebar-wrapper div.headerHeight h2 {
+    color: #fff; }
+  #sidebar-wrapper h2 {
+    margin-bottom: 1rem; }
+  #sidebar-wrapper li {
+    font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
+    font-weight: 100;
+    font-stretch: normal;
+    cursor: pointer; }
+  #sidebar-wrapper ul > li {
+    letter-spacing: .3rem;
+    font-size: 2rem; }
+  #sidebar-wrapper ul li ul {
+    margin-top: .5rem;
+    margin-bottom: 1.5rem; }
+  #sidebar-wrapper ul > li li {
+    letter-spacing: normal;
+    font-size: 1.4rem;
+    margin-bottom: .6rem; }
+  #sidebar-wrapper ul > li li:hover {
+    text-decoration: underline; }
 
-/*
-  canvas styling
-*/
+#center {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80%;
+  /*height: 100%;*/
+  padding: 3rem; }
+  #center div.headerHeight h2 {
+    display: inline-block;
+    float: left;
+    margin: 0.8rem 1rem 0 0; }
+  #center div.headerHeight img {
+    display: inline-block; }
+  #center div.headerHeight div {
+    float: right; }
+  #center h2 {
+    margin-bottom: 3rem; }
+
+#content table {
+  font-size: 1.5rem; }
+
+#content table td {
+  padding: 1rem;
+  min-width: 4rem; }
+
+#content table tr > td:first-child {
+  border-right: 2px solid #67476b;
+  text-align: right; }
+
+#content thead {
+  font-size: 2.8rem;
+  color: #3a697e;
+  cursor: pointer; }
+
+#clientLinks thead, #clientLinks tbody {
+  display: block; }
+
+#clientLinks tr > td:first-child {
+  width: 250px; }
+
+#ClientInfoContainer {
+  float: right;
+  width: 40%;
+  /*height: 100%;*/
+  color: #fff;
+  font-size: 1.6rem; }
+
+#ClientInfoContainer div {
+  padding: 1.5rem 2.5rem;
+  background-color: #bbb; }
+
+.clientInfo table tr td {
+  margin: 1rem 0; }
+
+.clientInfo table tr > td:first-child {
+  text-align: right;
+  padding-right: 2rem; }
+
+/*SURVEY PAGE*/
+#sideLeftlinks a {
+  display: block;
+  color: #FFF;
+  font-size: 1.2rem;
+  font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
+  font-weight: 100;
+  font-stretch: normal;
+  margin-bottom: 1rem; }
+
+.SAtext, .QAtext {
+  margin-left: 4rem;
+  font-size: 1.5rem; }
+
+form {
+  display: inline-block; }
+
+.SAtext input {
+  margin-left: 8rem; }
+
+.SAtext span {
+  display: inline-block;
+  width: 7rem; }
+
+.QAcheckboxes {
+  margin-bottom: 3.5rem; }
+
+.QACheckboxGroup {
+  display: inline-block;
+  text-align: center;
+  font-size: 1.2rem;
+  /*width: 9rem;*/
+  margin-right: 4rem; }
+
+.QACheckboxGroup label {
+  display: block; }
+
+.QAoptions {
+  /*display:none;*/
+  margin: 3rem 0; }
+
+.QAoptions p {
+  font-size: 1.2rem;
+  margin: 0; }
+
+.QAoptions textarea {
+  width: 50%; }
+
+/*RESULTS PAGE*/
+#SAResults {
+  margin-bottom: 3rem; }
+
+#content #QAResultsTable tr > td:first-child {
+  text-align: left;
+  max-width: 50rem; }
+
+#content #QAResultsTable thead {
+  font-size: 2.5rem; }
+
+#graphs {
+  max-width: 90rem; }
+
+#graphs img {
+  margin: 0 3rem 3rem 0; }
+
+/*Colour and Shadows*/
+#sideLeft {
+  box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
+  -moz-box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
+  -webkit-box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38); }
+
+#ClientInfoContainer div.clientInfo {
+  background-color: #728086;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25); }
+
 canvas {
   width: 40vw;
   height: 100%;
   padding-left: 0;
   padding-right: 0;
   right: 50%;
-  display: block;
-}
+  display: block; }
+
+/*# sourceMappingURL=styles.css.map */
