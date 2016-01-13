@@ -25,7 +25,7 @@
             for (j = 0; j < internalArrayLength; j++) {
                 total += groupedup_array[key][j];
             }
-            averages_array[key] = (total / (j + 1));
+            averages_array[key] = (total / (internalArrayLength));
         }
         return averages_array;
     }
@@ -37,7 +37,7 @@
         for (key in averages_array) {
             if (averages_array[key] < 1.1) {
                 graphInputsArray[key] = 0;
-            } else if (1 < averages_array[i] < 2.5) {
+            } else if (averages_array[key] > 1 && averages_array[key] < 2.5) {
                 graphInputsArray[key] = 1;
             } else {
                 graphInputsArray[key] = 2;
@@ -72,19 +72,20 @@
         averages_array_one = getAverages(groupedup_array_one);
         graph_input_one = getGraphInputs(averages_array_one);
 
-        results.graphingArrayCategoryOne = graph_input_one; //QA's graph input
-        results.graphingArrayCategoryTwo = graph_input_two; //SA'sgraph inpu
+        results.radarGraphQA = graph_input_one;
+        results.radarGraphSQ = graph_input_two;
+        results.gaugeGraphQA = averages_array_one;
+        results.gaugeGraphSQ = graph_input_two;
 
     }
 
 
-    function makeRadarGraphs(graph_array, showGraph, hideGraph) {
+    function makeRadarGraphs(graph_array, showGraph) {
 
         var keyArray = [];
         var dataArray = [];
         var key;
         var showGraphId;
-        var hideGraphId;
 
         for (key in graph_array) {
             keyArray.push(key);
@@ -105,7 +106,6 @@
         }
 
         showGraphId = document.getElementById(showGraph);
-        hideGraphId = document.getElementById(hideGraph);
         // get radar chart canvas
         var radarChart = document.getElementById(showGraph).getContext('2d');
 
@@ -114,17 +114,15 @@
 
 
         // //hide the other canvas
-        // hideGraphId.style.display = "none";
         // showGraphId.style.display = "block";
 
     }
 
-    function makeGaugeGraphs(graph_array, showGraph, hideGraph) {
+    function makeGaugeGraphs(graph_array, showGraph) {
 
         var graphData = [];
         var showGraphId;
-        var hideGraphId;
-        var max_val = 2;
+        var max_val = 4;
         var key;
 
         graphData.push(['Label', 'Value']);
@@ -164,12 +162,14 @@
                 graphingArray = getGraphScores($scope.results);
                 $scope.graphingFunction = function() {
                     function drawCharts() {
-                        makeRadarGraphs($scope.results.graphingArrayCategoryOne, 'QAgraph', 'SAgraph');
-                        makeRadarGraphs($scope.results.graphingArrayCategoryTwo, 'SAgraph', 'QAgraph');
-                        makeGaugeGraphs($scope.results.graphingArrayCategoryOne, 'QAgaugeGraph', 'SAgaugeGraph');
-                        makeGaugeGraphs($scope.results.graphingArrayCategoryTwo, 'SAgaugeGraph', 'QAgaugeGraph');
+                        makeGaugeGraphs($scope.results.gaugeGraphQA, 'QAgaugeGraph');
+                        makeGaugeGraphs($scope.results.gaugeGraphSQ, 'SAgaugeGraph');
                     }
+
+                    makeRadarGraphs($scope.results.radarGraphQA, 'QAgraph');
+                    makeRadarGraphs($scope.results.radarGraphSQ, 'SAgraph');
                     google.charts.setOnLoadCallback(drawCharts); //Only once charts loaded drawing charts is executed, this takes care of page refresh
+
                 }
             });
         }
