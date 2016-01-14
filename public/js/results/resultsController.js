@@ -80,34 +80,49 @@
     }
 
 
-    function makeRadarGraphs(graph_array, showGraph) {
+    function makeRadarGraphs(qaGraphData, saGraphData) {
 
         var keyArray = [];
-        var dataArray = [];
+        var QAdataArray = [];
+        var SAdataArray = [];
         var key;
         var showGraphId;
+        var canvasName = "radarGraph";
 
-        for (key in graph_array) {
+        for (key in qaGraphData) {
             keyArray.push(key);
-            dataArray.push(graph_array[key]);
+            QAdataArray.push(qaGraphData[key]);
+            SAdataArray.push(saGraphData[key]);
         }
-
-        // Radar chart data
         var graphData = {
             labels: keyArray,
-            datasets: [{
-                label: showGraph,
-                fillColor: "rgba(172,194,132,0.4)",
-                strokeColor: "#ACC26D",
-                pointColor: "#fff",
-                pointStrokeColor: "#9DB86D",
-                data: dataArray
-            }]
-        }
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: QAdataArray
+                },
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: SAdataArray
+                }
+            ]
+        };
 
-        showGraphId = document.getElementById(showGraph);
+        showGraphId = document.getElementById(canvasName);
         // get radar chart canvas
-        var radarChart = document.getElementById(showGraph).getContext('2d');
+        var radarChart = document.getElementById(canvasName).getContext('2d');
 
         // draw radar chart
         new Chart(radarChart).Radar(graphData);
@@ -166,8 +181,7 @@
                         makeGaugeGraphs($scope.results.gaugeGraphSQ, 'SAgaugeGraph');
                     }
 
-                    makeRadarGraphs($scope.results.radarGraphQA, 'QAgraph');
-                    makeRadarGraphs($scope.results.radarGraphSQ, 'SAgraph');
+                    makeRadarGraphs($scope.results.radarGraphQA, $scope.results.radarGraphSQ);
                     google.charts.setOnLoadCallback(drawCharts); //Only once charts loaded drawing charts is executed, this takes care of page refresh
 
                 }
