@@ -1,6 +1,6 @@
 (function() {
     
-    var module = angular.module('userModule', ['userServiceModule'])
+    var module = angular.module('userModule', ['userServiceModule']);
 
     module.controller('UserController', function($scope, $rootScope, $http, $location) {
         // This object will be filled by the form
@@ -29,6 +29,7 @@
     module.controller('AddUserController', ['$scope', 'UserStore', '$window',
         function($scope, UserStore, $window) {
                 
+            $scope.result = "";
             $scope.editing = {}; // model to hold edited fields
             $scope.allUsers = UserStore.getUsers.query();
             console.log($scope.allUsers);            
@@ -52,17 +53,17 @@
                 if ($scope.newUser) {
                     
                     // Handle Updating Client
-                    //ClientsStore.updateClientsConn.save({
-                    //    client: $scope.editing
-                    //}, function() {
-                    //    $scope.changeRoute('#/clients/');
-                    //});
+                    UserStore.updateUser.save({
+                        client: $scope.editing
+                    }, function() {
+                        $scope.result = "User Updated";            
+                    })
 
                 } else {
                     UserStore.addUser.save({
                         user : $scope.editing
                     }, function() {
-                        console.log("User saved!");
+                        $scope.allUsers.push($scope.editing);
                     });
                 }
             }

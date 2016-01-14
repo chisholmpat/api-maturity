@@ -20,10 +20,17 @@ exports.addUser = function(user, res, callback) {
     passwordHelper.hash(user.password, user.salt, function(err, result) {
         user.password = result;
         knex('users').insert(user).asCallback(function(err, rows) {
-            callback(err, res, rows);
+            callback(err, res);
         });
     });
 };
+
+// Updating a user in the DB
+exports.updateUser = function(user, res, callback) {
+    knex('users').where('User.id', user,id).update(user).asCallback(function(err, rows) {
+        callback(err, res, rows);
+    });
+}
 
 // Retrieve all users from the DB
 exports.getUsers = function(res, callback) {
