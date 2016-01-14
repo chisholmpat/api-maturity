@@ -43,13 +43,14 @@
             // will pass to the back end for processing.
             // [ "name", "industry", "country", "contact", "email", "phone" ]
             $scope.submit = function(clientData) {
+                
                 if ($scope.client) {
+                    console.log("Updating Client");
                     ClientsStore.updateClientsConn.save({
                         client: $scope.editing
                     }, function() {
                         $scope.changeRoute('#/clients/');
                     });
-
                 } else {
                     ClientsStore.addClientConn.save({
                         client: $scope.editing

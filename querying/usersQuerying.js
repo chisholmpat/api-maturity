@@ -27,7 +27,9 @@ exports.addUser = function(user, res, callback) {
 
 // Updating a user in the DB
 exports.updateUser = function(user, res, callback) {
-    knex('users').where('User.id', user,id).update(user).asCallback(function(err, rows) {
+
+    console.log(JSON.stringify(user));
+    knex('users').where('id', user.id).update(user).asCallback(function(err, rows) {
         callback(err, res, rows);
     });
 }

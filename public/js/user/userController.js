@@ -33,6 +33,7 @@
             $scope.editing = {}; // model to hold edited fields
             $scope.allUsers = UserStore.getUsers.query();
             console.log($scope.allUsers);            
+            
             // Handles populating the "editing" model
             // with the proper fields from the selected
             // user in the select field or emptying it
@@ -48,21 +49,27 @@
 
             }
 
+            // Add or Update a client based on the content 
+            // of the select menu. If an existing client is 
+            // selected then it will update the client else
+            // it will add it.
             $scope.submit = function(newUser) {
-                
-                if ($scope.newUser) {
-                    
+                if ($scope.aUser) {
+                    console.log("Updating user."); 
                     // Handle Updating Client
                     UserStore.updateUser.save({
-                        client: $scope.editing
+                        user : $scope.editing
                     }, function() {
-                        $scope.result = "User Updated";            
+                        $scope.result = "User Updated";
+                        $scope.allUsers = UserStore.getUsers.query();
                     })
 
                 } else {
+                    console.log("Adding user.");
                     UserStore.addUser.save({
                         user : $scope.editing
                     }, function() {
+                        $scope.result = "User Added";
                         $scope.allUsers.push($scope.editing);
                     });
                 }
