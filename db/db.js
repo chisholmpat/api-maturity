@@ -14,7 +14,8 @@ exports.knex = require('knex')({
     client: 'mysql',
     connection: opts,
     pool: {
-        min: 1,
-        max: 1
+        min: (process.env.VCAP_SERVICES ? 2:1),
+        max: (process.env.VCAP_SERVICES ? 2:1)
     }
+
 });
