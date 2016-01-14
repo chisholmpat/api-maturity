@@ -4,6 +4,7 @@ var module = angular.module('userServiceModule', ['ngResource']);
         this.addUser = $resource('/add_user');
         this.userLogin = $resource('/userLogin');
         this.getUsers = $resource('/users');
+        this.updateUser = $resource('/update_user');
     }]);
 
 })();

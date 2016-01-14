@@ -1,6 +1,6 @@
 (function() {
     
-    var module = angular.module('userModule', ['userServiceModule'])
+    var module = angular.module('userModule', ['userServiceModule']);
 
     module.controller('UserController', function($scope, $rootScope, $http, $location) {
         // This object will be filled by the form
@@ -29,9 +29,11 @@
     module.controller('AddUserController', ['$scope', 'UserStore', '$window',
         function($scope, UserStore, $window) {
                 
+            $scope.result = "";
             $scope.editing = {}; // model to hold edited fields
             $scope.allUsers = UserStore.getUsers.query();
             console.log($scope.allUsers);            
+            
             // Handles populating the "editing" model
             // with the proper fields from the selected
             // user in the select field or emptying it
@@ -47,22 +49,28 @@
 
             }
 
+            // Add or Update a client based on the content 
+            // of the select menu. If an existing client is 
+            // selected then it will update the client else
+            // it will add it.
             $scope.submit = function(newUser) {
-                
-                if ($scope.newUser) {
-                    
+                if ($scope.aUser) {
+                    console.log("Updating user."); 
                     // Handle Updating Client
-                    //ClientsStore.updateClientsConn.save({
-                    //    client: $scope.editing
-                    //}, function() {
-                    //    $scope.changeRoute('#/clients/');
-                    //});
+                    UserStore.updateUser.save({
+                        user : $scope.editing
+                    }, function() {
+                        $scope.result = "User Updated";
+                        $scope.allUsers = UserStore.getUsers.query();
+                    })
 
                 } else {
+                    console.log("Adding user.");
                     UserStore.addUser.save({
                         user : $scope.editing
                     }, function() {
-                        console.log("User saved!");
+                        $scope.result = "User Added";
+                        $scope.allUsers.push($scope.editing);
                     });
                 }
             }
