@@ -21,6 +21,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                 deferred.resolve();
                 $rootScope.message = "Login Successful"
                 $rootScope.role = user.role;
+                $rootScope.isIBM = user.isIBM;
                 console.log(user.role);
                 $rootScope.isLoggedIn = true;
             }

@@ -76,6 +76,7 @@ module.exports = function(passport) {
 
                     profile.name = "Testing";
                     profile.role = "admin";
+                    profile.isIBM = '1';
                     console.log(profile);
                     done(null, profile);
                 })

@@ -57,14 +57,6 @@ module.exports = function(app, passport) {
         }
     }
 
-    app.get('/hello', ensureAuthenticated, function(req, res) {
-        res.send('Hello, ' + req.user['id'] + '!\n' + ' This is Bluemix Node JS Sample Application, This is protected using SSO Service');
-    });
-
-    app.get('/failure', function(req, res) {
-        res.send('login failed');
-    });
-
     // route to log out
     app.post('/logout', function(req, res) {
         console.log("Logging out!");
