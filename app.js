@@ -35,14 +35,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
+// routes
 var index = require('./routes/index')(app);
 var questions = require('./routes/questions')(app);
 var addAnswers = require('./routes/insertAnswers')(app);
 var userLogin = require('./routes/userLogin')(app, passport);
-var addClients = require('./routes/insertClient')(app)
+var addClients = require('./routes/insertClient')(app);
+var users = require('./routes/users')(app);
 
-//Statically serve up necessary files
+// statically serve up necessary files
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
@@ -55,7 +56,7 @@ app.listen(appEnv.port , function() {
     console.log("server starting on " + appEnv.url);
 });
 
-// Handle DB Connections on manual shutdown
+// handle DB Connections on manual shutdown
 process.on('SIGINT', function() {;
 	console.log("Exiting...");
 	db.knex.destroy();

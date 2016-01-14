@@ -8,7 +8,6 @@ exports.userloginvalidate = function(username, password) {
     knex.select('').from('users')
         .where('username', username)
         .where('password', password).ascallback(function(err, rows) {
-            console.log(rows.length !== 0);
             return (rows.length !== 0)
         });
 
@@ -17,12 +16,11 @@ exports.userloginvalidate = function(username, password) {
 
 // Add a user to the DB
 exports.addUser = function(user, res, callback) {
-    console.log("Adding User:" + user);
     user.salt = Math.random().toString(36).slice(2);
     passwordHelper.hash(user.password, user.salt, function(err, result) {
         user.password = result;
-        knex('users').insert(user).asCallback(function(err, rows){
-            callback(err, res, rows);        
+        knex('users').insert(user).asCallback(function(err, rows) {
+            callback(err, res, rows);
         });
     });
 };
@@ -30,8 +28,6 @@ exports.addUser = function(user, res, callback) {
 // Retrieve all users from the DB
 exports.getUsers = function(res, callback) {
     knex('users').select('').asCallback(function(err, rows) {
-        
-        console.log(rows);
         callback(err, res, rows);
     });
 }

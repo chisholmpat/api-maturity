@@ -36,7 +36,6 @@ module.exports = function(passport) {
                     if (rows && rows.length !== 0) {
                         user = rows[0];
                         passwordHelper.verify(password, user.password, user.salt, function(err, res) {
-                            console.log(user.role);
                             if (res) {
                                 return done(null, {
                                     name: username,
@@ -73,10 +72,8 @@ module.exports = function(passport) {
                 process.nextTick(function() {
                     profile.accessToken = accessToken;
                     profile.refreshToken = refreshToken;
-
                     profile.name = "Testing";
                     profile.role = "admin";
-                    console.log(profile);
                     done(null, profile);
                 })
             }
