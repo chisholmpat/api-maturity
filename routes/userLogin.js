@@ -40,12 +40,23 @@ module.exports = function(app, passport) {
         }
     }
 
-    app.get('/hello', ensureAuthenticated, function(req, res) {
-        res.send('Hello, ' + req.user['id'] + '!\n' + ' This is Bluemix Node JS Sample Application, This is protected using SSO Service');
+    // route to log out
+    app.post('/logout', function(req, res) {
+        console.log("Logging out!");
+        req.logOut();
+        res.send(200);
     });
 
-    app.get('/failure', function(req, res) {
-        res.send('login failed');
-    });
+    // route to add user to the database
+    app.post('/add_user', function(req, res) {
+        queries.addUser(req.body.user, res, function(err, res) {
+            if (err) {
+                console.log(err);
+                res.send(400);
+            } else {
+                res.send(200);
+            }
+        });
 
+    });
 };

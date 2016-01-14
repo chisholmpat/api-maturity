@@ -74,6 +74,7 @@ module.exports = function(passport) {
                     profile.refreshToken = refreshToken;
                     profile.name = "Testing";
                     profile.role = "admin";
+                    profile.isIBM = '1';
                     done(null, profile);
                 })
             }

@@ -51,7 +51,7 @@
           <a href="/ibmlogin" ng-show="!isLoggedIn">IBMLogin</a>
           </li>
           <li>
-          <a href="#/" ng-click="logout()" ng-show="isLoggedIn"> Logout </a>
+          <a href="#/" ng-click="logout()" ng-show="isLoggedIn" ng-hide="isIBM === '1'"> Logout </a>
           </li>
       </ul>
       </div>
