@@ -1,15 +1,30 @@
 <form novalidate class="simple-form">
-    Name:
-    <input type="text" ng-model="newUser.username" />
-    <br />Password:
-    <input type="password" ng-model="newUser.password">
-    <br />
-    <label data-ng-repeat="role in ['admin', 'user']">
-        <input name="currentActivity" type="radio" value="{{role}}" ng-model="newUser.role"
-        ng-checked="role == 'user'" />{{role}}
-        <br/>
-    </label>
-    <br />
+    
+    <!-- Username -->
+    Username:
+    <input type="text" ng-model="editing.username" /> <br />
+    
+    <!-- First Name -->
+    First Name:
+    <input type="text" ng-model="editing.firstname" /> </br />
 
-    <input type="submit" ng-click="saveUser(newUser)" />
+    <!-- Last Name -->
+    Last Name:
+    <input type="text" ng-model="editing.lastname" /> </br />
+    
+    <!-- Password -->
+    Password:
+    <input type="password" ng-model="editing.password"><br/>
+    
+    <!-- Role -->
+    <label data-ng-repeat="role in ['admin', 'user']">
+        <input name="currentActivity" type="radio" value="{{role}}" ng-model="editing.role" required />{{role}}<br/>
+    </label><br/>
+
+    <!-- Userlist -->
+    <select ng-model="aUser" ng-options="aUser.username for aUser in allUsers " ng-change="onChange()"> <option value="">New User</option></select>
+    
+    <input type="submit" ng-click="submit()" />
+
+
 </form>
