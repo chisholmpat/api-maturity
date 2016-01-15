@@ -7,6 +7,7 @@ module.exports = function(app) {
         if (!err) {
             res.send(results);
         } else {
+            console.log(err);
             res.send('400', err);
         }
     };

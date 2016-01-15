@@ -2,7 +2,7 @@
 var queries = require('../querying/insertClientQuerying');
 
 function callback(err, res) {
-    if(err_string){
+    if(err){
         console.log(err);
         res.send('400');
     }

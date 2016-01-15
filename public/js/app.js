@@ -33,6 +33,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                 $rootScope.isLoggedIn = false;
                 $location.url('/login');
             }
+
+            console.log($rootScope.isLoggedIn);
         });
 
         // Return the promise
