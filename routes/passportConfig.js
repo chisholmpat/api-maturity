@@ -39,7 +39,8 @@ module.exports = function(passport) {
                             if (res) {
                                 return done(null, {
                                     name: username,
-                                    role: user.role
+                                    role: user.role,
+                                    email: user.email
                                 });
                             } else {
                                 return done(null, false, {});
@@ -75,6 +76,8 @@ module.exports = function(passport) {
                     profile.name = "Testing";
                     profile.role = "admin";
                     profile.isIBM = '1';
+                    profile.email = profile.emailaddress;
+                    console.log(profile.emailaddress);
                     done(null, profile);
                 })
             }

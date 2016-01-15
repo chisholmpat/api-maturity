@@ -1,8 +1,8 @@
 // Call back function from the database call. Used to send either the results
 // to the response or to send an error string to the response.
 function callback(err, res, results) {
+    
     if (!err) {
-        console.log(results);
         res.send(results);
     } else {
         console.log(err);
@@ -54,12 +54,13 @@ module.exports = function(app) {
 
     // Get all forms for a particular client
     app.get('/forms/:client_id', function(req, res) {
-        queries.getAllFormsByClient(req.params.client_id, res, callback);
+        queries.getAllFormsByClient(req.params.client_id, req.email, res, callback);
     });
 
     // Get a list of all the clients
     app.get('/clients', function(req, res) {
-        queries.getClients(res, callback);
+        console.log(req.email);
+        queries.getClients(req.user.email, res, callback);
     });
 
     // Get a list of all the forms.

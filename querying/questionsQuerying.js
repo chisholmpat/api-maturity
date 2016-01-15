@@ -80,8 +80,8 @@ exports.getQuestionsByForm = function(form_id, res, callback) {
 };
 
 // Return a list of clients.
-exports.getClients = function(res, callback) {
-    knex.select().table('client')
+exports.getClients = function(email, res, callback) {
+    knex.select().table('client').where('created_by', email)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
         })
