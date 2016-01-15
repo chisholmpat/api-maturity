@@ -11,12 +11,6 @@ var db = require('./db/db.js');
 var passport = require('passport');;
 var session = require('express-session');
 var crypto = require('crypto');
-
-// Password encryption testing.
-var password = require('./helpers/password');
-
-// route file includes
-var routes = require('./routes/index');
 var app = express();
 
 // view engine setup
@@ -35,9 +29,9 @@ app.use(passport.session());
 // routes
 var index = require('./routes/index')(app);
 var questions = require('./routes/questions')(app);
-var addAnswers = require('./routes/insertAnswers')(app);
-var userLogin = require('./routes/userLogin')(app, passport);
-var addClients = require('./routes/insertClient')(app);
+var addAnswers = require('./routes/answers')(app);
+var userLogin = require('./routes/login')(app, passport);
+var addClients = require('./routes/clients')(app);
 var users = require('./routes/users')(app);
 
 // statically serve up necessary files

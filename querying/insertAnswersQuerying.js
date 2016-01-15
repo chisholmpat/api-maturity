@@ -5,7 +5,7 @@ var knex = require("../db/db.js").knex;
 // now a series of queries need to be called. My plan is to
 // move these into a stored procedure, reduce the reduncancy
 // and normalize the database so that only a single call is required.
-exports.addAnswers = function(res, callback, responses) {
+exports.addAnswers = function(res, responses, callback) {
 
     var updateResponseQuery = " Update ClientQuestionResponse SET response_id = CASE ";
     var updateWeightQuery = "Update ClientQuestionResponse SET weight = CASE ";

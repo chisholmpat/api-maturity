@@ -29,9 +29,33 @@ exports.insertClient = function(client, res, callback) {
     });
 };
 
-// Update a client.
+// update a client.
 exports.updateClient = function(client, res, callback) {
     knex('Client').where('Client.id', client.id).update(client).asCallback(function(err, rows) {
         callback(err, res, rows);
     });
+};
+
+// return a list of forms for a given client. Right now every client has
+// every form but in the future there may be forms which are unique to a client.
+// TODO This query can be replaced by a more generic form query.
+exports.getAllFormsByClient = function(client_id, res, callback) {
+
+    // Select form information for client.
+    knex.select('Form.id', 'Form.name')
+        .from('Form').innerJoin('Question', 'Form.id', 'Question.form_id')
+        .innerJoin('ClientQuestionResponse', 'Question.id', 'ClientQuestionResponse.question_id')
+        .where('client_id', client_id)
+        .distinct('*').asCallback(function(err, rows) {
+            callback(err, res, rows);
+        })
+};
+
+
+// return a list of clients.
+exports.getClients = function(email, res, callback) {
+    knex.select().table('client').where('created_by', email)
+        .asCallback(function(err, rows) {
+            callback(err, res, rows);
+        })
 };

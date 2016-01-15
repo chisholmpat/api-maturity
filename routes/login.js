@@ -1,44 +1,35 @@
+// routes for handling login operations
 module.exports = function(app, passport) {
 
-    var passportConfig = require('./passportConfig.js')(passport);
+    // defines the strategies for logins
+    var passportConfig = require('../config/passportConfig.js')(passport);
 
     // route to log out
     app.post('/logout', function(req, res) {
-        console.log("Logging out!");
         req.logOut();
         res.send(200);
     });
 
     // route to test if the user is logged in or not
     app.get('/loggedin', function(req, res) {
-        console.log("Checking to see if user is logged in!");
         res.send(req.isAuthenticated() ? req.user : '0');
     });
 
     // route to log in
     app.post('/login', passport.authenticate('local'), function(req, res) {
-        console.log("Authenticating User: " + req.user);
         res.send(req.user);
     });
 
     // route to log into IBMlogin
     app.get('/ibmlogin', passport.authenticate('openidconnect', {}));
 
+    // route used in sso redirect
     app.get('/auth/sso/callback', function(req, res, next) {
         passport.authenticate('openidconnect', {
             successRedirect: '/#',
             failureRedirect: 'http://bmix-essential.mybluemix.net/#/ibmlogin',
         })(req, res, next);
     });
-
-    function ensureAuthenticated(req, res, next) {
-        if (!req.isAuthenticated()) {
-            req.session.originalUrl = req.originalUrl;
-            res.redirect('/login');
-        } else {
-            return next();
-        }
-    }
 
     // route to log out
     app.post('/logout', function(req, res) {

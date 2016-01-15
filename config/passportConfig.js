@@ -24,13 +24,14 @@ if (process.env.VCAP_SERVICES) {
 
 module.exports = function(passport) {
 
-    var LocalStrategy = require('passport-local').Strategy; // Define the strategy to be used by PassportJS
+    var LocalStrategy = require('passport-local').Strategy;
     passport.use(new LocalStrategy(
         function(username, password, done) {
+
             // Query the DB for the user.
             knex.select('').from('users')
-                .where('username', username)
-                .asCallback(function(err, rows) {
+            .where('username', username)
+            .asCallback(function(err, rows) {
 
                     // If the user is found return a result for username.
                     if (rows && rows.length !== 0) {
@@ -85,7 +86,6 @@ module.exports = function(passport) {
         passport.use(Strategy);
     }
 
-    // Serialized and deserialized methods when got from session
     passport.serializeUser(function(user, done) {
         done(null, user);
     });
@@ -94,11 +94,4 @@ module.exports = function(passport) {
         done(null, user);
     });
 
-    // Define a middleware function to be used for every secured routes
-    var auth = function(req, res, next) {
-        if (!req.isAuthenticated())
-            res.send(401);
-        else
-            next();
-    };
 };
