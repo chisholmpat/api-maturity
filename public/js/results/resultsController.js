@@ -88,6 +88,7 @@
         var key;
         var showGraphId;
         var canvasName = "radarGraph";
+        var canvas = document.getElementById(canvasName);
 
         for (key in qaGraphData) {
             keyArray.push(key);
@@ -98,7 +99,7 @@
             labels: keyArray,
             datasets: [
                 {
-                    label: "My First dataset",
+                    label: "QA-Graph",
                     fillColor: "rgba(220,220,220,0.2)",
                     strokeColor: "rgba(220,220,220,1)",
                     pointColor: "rgba(220,220,220,1)",
@@ -108,7 +109,7 @@
                     data: QAdataArray
                 },
                 {
-                    label: "My Second dataset",
+                    label: "SA-Graph",
                     fillColor: "rgba(151,187,205,0.2)",
                     strokeColor: "rgba(151,187,205,1)",
                     pointColor: "rgba(151,187,205,1)",
@@ -120,17 +121,8 @@
             ]
         };
 
-        showGraphId = document.getElementById(canvasName);
-        // get radar chart canvas
-        var radarChart = document.getElementById(canvasName).getContext('2d');
-
-        // draw radar chart
-        new Chart(radarChart).Radar(graphData);
-
-
-        // //hide the other canvas
-        // showGraphId.style.display = "block";
-
+        var myRadarChart = new Chart(document.getElementById(canvasName).getContext("2d")).Radar(graphData);
+        document.getElementById("legendDiv").innerHTML = myRadarChart.generateLegend();
     }
 
     function makeGaugeGraphs(graph_array, showGraph) {
