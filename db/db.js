@@ -12,5 +12,9 @@ var opts = null;
 
 exports.knex = require('knex')({
     client: 'mysql',
-    connection: opts
+    connection: opts,
+    pool: {
+        min: 1,
+        max: 1
+    }
 });

@@ -1,28 +1,53 @@
+<div class="col-lg-12">
+ <h2>RESULTS - </h2>
 
-<h1> Results </h1>
+   <h3>Graphs</h3>
+  {{graphingFunction()}}
+<div class="row">
+    <div class="graph spiderGraph col-lg-6">
+    <h3>Quantitative Assessment</h3>
+    <canvas id="radarGraph" height="400" width="600"></canvas>
+    <div id="legendDiv"></div>
+    </div>
+</div>
+<div class="row">
+  <div class="graph gaugeGraph col-lg-6">
+    <h3>Quantitative Assessment</h3>
+    <div id="QAgaugeGraph"></div>
+  </div>
 
-<h2> Graphs </h2>
-
-{{graphingFunction()}}
-<table width="100%">
-  <tr align= "center">
-    <td><canvas id='QAgraph'></canvas></td>
-    <td><canvas id='SAgraph'></canvas></td>
-  </tr>
-  <tr align= "center">
-    <td><div id="QAgaugeGraph" class="gaugeGraph"></div></td>
-    <td><div id="SAgaugeGraph" class="gaugeGraph"></div></td>
-  </tr>
-  <tr align= "center">
-    <td><h3><b>QA Graph</b></h3></td>
-    <td><h3><b>SA Graph</b></h3></td>
-  </tr>
-</table>
+  <div class="graph gaugeGraph col-lg-6">
+    <h3>Self Assessment</h3>
+    <div id="SAgaugeGraph"></div>
+  </div>
+</div>
 
 
-<h2 ng-click="doSomething($event)"> QA Scores </h2>
+<div id="sa_score">
+      <h3> SA Scores </h3>
+  <table class="table clientStyle">
+    <thead>
+    <th> Category</th>
+    <th> Response</th>
+    <th> Value</th>
+    <th> Weight</th>
+    <th> Score</th>
+
+
+    </thead>
+    <tr ng-repeat="result in results | filter:{ category_id: 2 }">
+        <td>{{result.text }}</td>
+        <td>{{result.response }}</td>
+        <td class="number">{{result.value }}</td>
+        <td class="number">{{result.weight}}</td>
+        <td class="number" ng-class="result.name">{{result.score}}</td>
+    </tr>
+  </table>
+</div>
+
 <div class="qa_scores">
-    <table class="table">
+  <h3 ng-click="doSomething($event)"> QA Scores </h3>
+    <table class="table clientStyle">
         <thead>
         <th> Question</th>
         <th> Response</th>
@@ -33,32 +58,14 @@
         <tr ng-repeat="result in results | filter:{ category_id: 1 }">
             <td>{{result.text }}</td>
             <td>{{result.response }}</td>
-            <td>{{result.value }}</td>
-            <td>{{result.weight}}</td>
-            <td>{{result.score}}</td>
-            <td ng-class="result.name">{{result.score}}</td>
+            <td class="number">{{result.value }}</td>
+            <td class="number">{{result.weight}}</td>
+            <td ng-class="result.name" class="number">{{result.score}}</td>
         </tr>
     </table>
 </div>
 
-<table class="table">
 
-    <h2> SA Scores </h2>
-    <thead>
-    <th> Category</th>
-    <th> Response</th>
-    <th> Value</th>
-    <th> Weight</th>
-    <th> Score</th>
-
-    </thead>
-    <tr ng-repeat="result in results | filter:{ category_id: 2 }">
-        <td>{{result.text }}</td>
-        <td>{{result.response }}</td>
-        <td>{{result.value }}</td>
-        <td>{{result.weight}}</td>
-        <td ng-class="result.name">{{result.score}}</td>
-    </tr>
-</table>
 
 <a ng-href={{csvURL}}> CSV Export </a>
+</div>
