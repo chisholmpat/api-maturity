@@ -5,6 +5,7 @@ module.exports = function(app) {
     // callback for queries    
     function callback(err, res, results) {
         if (!err) {
+            console.log(results);
             res.send(results);
         } else {
             console.log(err);

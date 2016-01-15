@@ -2,6 +2,7 @@
 // to the response or to send an error string to the response.
 function callback(err, res, results) {
     if (!err) {
+        console.log(results);
         res.send(results);
     } else {
         console.log(err);
