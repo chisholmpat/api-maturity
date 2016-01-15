@@ -5,10 +5,10 @@
 <table class="table table-condensed clientStyle">
   <thead ng-repeat-start="client in clients">
     <tr>
-      <td>{{client.name}}</td>
+      <td ng-click="isCollapsed = !isCollapsed">{{client.name}}</td>
     </tr>
   </thead>
-  <tbody ng-repeat-end>
+  <tbody ng-repeat-end collapse="isCollapsed">
     <tr ng-repeat="form in forms">
       <td>{{form.name}}</td>
       <td> <a href="/#/questionnaire/{{client.id}}/{{form.id}}"> Survey </a> </td>
@@ -19,7 +19,7 @@
 </div>
 
 <div class="col-lg-4">
-  <div class="clientInfo" ng-repeat="client in clients">
+  <div class="clientInfo" ng-repeat="client in clients" collapse="isCollapsed">
     <table class="clientStyle">
       <tbody>
         <tr><td>Client Name</td><td>{{client.name}}</td></tr>
@@ -28,7 +28,6 @@
         <tr><td>Contact</td><td>{{client.contact}}</td></tr>
         <tr><td>Email</td><td>{{client.email}}</td></tr>
         <tr><td>Phone</td><td>{{client.phone}}</td></tr>
-
       </tbody>
     </table>
 
