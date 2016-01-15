@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-    var queries = require('../querying/insertAnswersQuerying');
+    var queries = require('../querying/answersQuerying');
     var dbUtils = require('../helpers/db_util');
 
     app.post('/insertAnswers', function(req, res) {
