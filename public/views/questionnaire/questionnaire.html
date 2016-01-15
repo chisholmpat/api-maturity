@@ -2,12 +2,10 @@
 <h2> SURVEY - {{questions[0].form_name}}</h2>
 <form ng-submit="generateScore(questions)">
 
-<h3> SA Questions </h3>
+<h3> Self Assesment </h3>
 <div class="SAtext">
-  <p ng-repeat="question in questions |  filter: { category_id: '2' }"><span>Business</span>
-    <input type="radio" name="SAR1" value="checked" id="SAR1-1"> <label for="SAR1-1">Novice</label>
-    <input type="radio" name="SAR1" value="" id="SAR1-2"><label for="SAR1-2">Progressing</label>
-    <input type="radio" name="SAR1" value="" id="SAR1-3"><label for="SAR1-3">Mature</label>
+  <p ng-repeat="question in questions |  filter: { category_id: '2' }"><span>{{question.text}}</span>
+    <label ng-repeat="response in responses  | filter: { category_id: '2' }"><input type="radio" ng-model="question.response_id" ng-value="response.id"><span>{{response.response}}</span></label>
  </p>
  </div>
 
@@ -18,7 +16,7 @@
 
  <div class="QAcheckboxes">
    <div ng-repeat="response in responses  | filter: { category_id: '1' }" class="QACheckboxGroup">
-     <input type="radio" ng-model="question.response_id" name="response.id" id="response.id"><label for="response.id">{{response.response}}</label>
+     <label><input type="radio" ng-model="question.response_id" ng-value="response.id"><span>{{response.response}}</span></label>
    </div>
 
    <div class="QACheckboxGroup">

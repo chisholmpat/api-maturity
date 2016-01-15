@@ -34,13 +34,14 @@
 
             // Persist the information to the database.
             $scope.generateScore = function(questions) {
-                QuestionStore.addAnswersConn.save({
-                        user_responses: questions,
-                        client_id: $routeParams.client_id
-                    },
-                    function() {
-                        $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
-                    });
+                console.log(questions);
+                // QuestionStore.addAnswersConn.save({
+                //         user_responses: questions,
+                //         client_id: $routeParams.client_id
+                //     },
+                //     function() {
+                //         $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
+                //     });
             }
         }
     ]);
@@ -48,7 +49,7 @@
     // Controller for handling the questions editing form.
     module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
-            
+
             // Get the questions belonging to the form.
             $scope.questions = QuestionStore.questionConn.query({
                 form_id: $routeParams.form_id

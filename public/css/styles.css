@@ -2,7 +2,8 @@
 	* copiled to ./stylesheets/style.css
  * This file provides css styles.
  */
-body, html {
+body,
+html {
   background-color: #FFFFFF;
   width: 100%;
   height: 100%;
@@ -26,17 +27,18 @@ a:hover {
   text-decoration: underline; }
 
 h1 {
-  color: #FFF;
   font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
   font-weight: 100;
   font-stretch: normal;
-  letter-spacing: .4rem;
-  font-size: 3rem; }
+  letter-spacing: 0.4rem;
+  font-size: 3rem;
+  margin: 0 0 3rem; }
 
 h2 {
   font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
   font-weight: 100;
   font-stretch: normal;
+  margin-top: 0;
   font-size: 2.4rem;
   letter-spacing: 0.4rem; }
 
@@ -47,11 +49,9 @@ h3 {
   font-size: 2rem;
   margin-bottom: 2rem; }
 
-.trackingWide {
-  letter-spacing: 0.3rem; }
-
-.black {
-  color: #000; }
+label {
+  margin: 0;
+  font-weight: 300; }
 
 /*layout*/
 .headerHeight {
@@ -61,14 +61,16 @@ h3 {
 #sidebar-wrapper {
   background-color: #3b4b54;
   color: #fff;
-  padding-right: 3rem;
-  box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
-  -moz-box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38);
-  -webkit-box-shadow: 4px 0px 10px rgba(79, 89, 92, 0.38); }
+  padding-top: 2rem;
+  box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
+  -moz-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
+  -webkit-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38); }
   #sidebar-wrapper div {
     text-align: right;
     font-size: 2rem; }
-  #sidebar-wrapper div.headerHeight h2 {
+  #sidebar-wrapper > div {
+    padding-right: 3rem; }
+  #sidebar-wrapper div.headerHeight a {
     color: #fff; }
   #sidebar-wrapper h2 {
     margin-bottom: 1rem; }
@@ -81,15 +83,15 @@ h3 {
     font-stretch: normal;
     cursor: pointer; }
   #sidebar-wrapper ul > li {
-    letter-spacing: .3rem;
+    letter-spacing: 0.3rem;
     font-size: 2rem; }
   #sidebar-wrapper ul li ul {
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     margin-bottom: 1.5rem; }
   #sidebar-wrapper ul > li li {
     letter-spacing: normal;
     font-size: 1.4rem;
-    margin-bottom: .6rem; }
+    margin-bottom: 0.6rem; }
   #sidebar-wrapper ul > li li:hover {
     text-decoration: underline; }
 
@@ -108,7 +110,8 @@ table.clientStyle {
   font-size: 1.5rem;
   width: inherit;
   border: 0; }
-  table.clientStyle tbody > tr > td, table.clientStyle thead > tr > td {
+  table.clientStyle tbody > tr > td,
+  table.clientStyle thead > tr > td {
     padding: 1rem;
     min-width: 4rem;
     border: 0; }
@@ -119,8 +122,15 @@ table.clientStyle {
     font-size: 2.8rem;
     color: #3a697e;
     cursor: pointer; }
+    table.clientStyle thead th {
+      font-size: 1.8rem;
+      cursor: default;
+      font-weight: 400; }
+  table.clientStyle .number {
+    text-align: right; }
 
-#clientLinks thead, #clientLinks tbody {
+#clientLinks thead,
+#clientLinks tbody {
   display: block; }
 
 #clientLinks tr > td:first-child {
@@ -151,16 +161,19 @@ div.clientInfo {
   font-stretch: normal;
   margin-bottom: 1rem; }
 
-.SAtext, .QAtext {
+.SAtext,
+.QAtext {
   margin-left: 4rem;
   font-size: 1.5rem; }
 
 form {
   display: inline-block; }
 
-.SAtext input {
+.SAtext label {
   margin-left: 8rem; }
-
+  .SAtext label span {
+    width: auto;
+    margin-left: 0.5rem; }
 .SAtext span {
   display: inline-block;
   width: 7rem; }
@@ -174,9 +187,8 @@ form {
   font-size: 1.2rem;
   /*width: 9rem;*/
   margin-right: 4rem; }
-
-.QACheckboxGroup label {
-  display: block; }
+  .QACheckboxGroup label span {
+    display: block; }
 
 .QAoptions {
   /*display:none;*/
@@ -190,21 +202,14 @@ form {
   width: 50%; }
 
 /*RESULTS PAGE*/
-#SAResults {
+.sa_score {
   margin-bottom: 3rem; }
 
-#content #QAResultsTable tr > td:first-child {
+.qa_scores table.clientStyle tr > td:first-child {
   text-align: left;
   max-width: 50rem; }
-
-#content #QAResultsTable thead {
+.qa_scores table.clientStyle thead {
   font-size: 2.5rem; }
-
-#graphs {
-  max-width: 90rem; }
-
-#graphs img {
-  margin: 0 3rem 3rem 0; }
 
 /*Colour and Shadows*/
 canvas {
