@@ -4,12 +4,12 @@ module.exports = function(app) {
     var dbUtils = require('../helpers/db_util');
 
     // add client
-    app.post('/insertClient', function(req, res) {
+    app.post('/insertClient', dbUtils.checkAuthenticated, function(req, res) {
         queries.insertClient(req.body.client, res, dbUtils.callback);
     });
 
     // update client
-    app.post('/updateClient', function(req, res) {
+    app.post('/updateClient', dbUtils.checkAuthenticated, function(req, res) {
         console.log(req.body.client);
         queries.updateClient(req.body.client, res, dbUtils.callback);
     });

@@ -10,7 +10,7 @@ module.exports = function(app) {
     });
 
     // route to add user to the database
-    app.post('/add_user', function(req, res) {
+    app.post('/add_user', dbUtils.checkAuthenticated, function(req, res) {
         queries.addUser(req.body.user, res, dbUtils.callbackNoResults);
     });
 
