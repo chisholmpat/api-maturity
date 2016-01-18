@@ -40,3 +40,15 @@ exports.getUsers = function(res, callback) {
         callback(err, res, rows);
     });
 }
+
+
+// Check to see if a user (identified by email has priviledges to view 
+// a particular user's information.
+exports.checkIfUserCanViewClient = function(client_id, email, res, callback) {
+    knex('clientusers').select('').where('client_id', client_id).where('email', email)
+    .asCallback(function(err, rows) {
+        console.log(rows);
+        callback(err, res, rows);
+    });
+
+}
