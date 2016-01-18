@@ -40,3 +40,4 @@ exports.getUsers = function(res, callback) {
         callback(err, res, rows);
     });
 }
+

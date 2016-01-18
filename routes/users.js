@@ -18,4 +18,18 @@ module.exports = function(app) {
     app.post("/update_user", function(req, res) {
         queries.updateUser(req.body.user, res, dbUtil.callbackNoResults);
     });
+
+    // return whether or not a particular user has rights to view 
+    // a client based on the user's email address.
+    app.get('/userauthd', function( req, res) {
+        console.log(req.query);
+        console.log("Email =", req.query.email);
+        console.log("Client =", req.query.client_id);
+        queries.checkIfUserCanViewClient(req.query.client_id, req.query.email, res, function(err, res, rows){
+            if(rows && rows.length == 1)
+                res.send('1');
+            else
+                res.send('0');        
+        });    
+    });
 }

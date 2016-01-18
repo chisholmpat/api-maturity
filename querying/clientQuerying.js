@@ -31,8 +31,9 @@ exports.insertClient = function(client, res, callback) {
 
 // update a client.
 exports.updateClient = function(client, res, callback) {
-    knex('Client').where('Client.id', client.id).update(client).asCallback(function(err, rows) {
+    knex('client').where('Client.id', client.id).update(client).asCallback(function(err, rows) {
         callback(err, res, rows);
+        console.log(rows);
     });
 };
 
@@ -51,11 +52,12 @@ exports.getAllFormsByClient = function(client_id, res, callback) {
         })
 };
 
-
 // return a list of clients.
 exports.getClients = function(email, res, callback) {
-    knex.select().table('client').where('created_by', email)
+    knex.select('Client.*').select('Client.id').from('client').where('userclients.email', email)
+    .innerJoin('userclients', 'client.id', 'userclients.client_id')
         .asCallback(function(err, rows) {
+            console.log(rows);
             callback(err, res, rows);
         })
 };

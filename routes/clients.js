@@ -1,6 +1,7 @@
 module.exports = function(app) {
 
     var queries = require('../querying/clientQuerying');
+    var userQueries = require('../querying/usersQuerying');
     var dbUtils = require('../helpers/db_util');
 
     // add client
@@ -10,8 +11,14 @@ module.exports = function(app) {
 
     // update client
     app.post('/updateClient', dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.body.client);
-        queries.updateClient(req.body.client, res, dbUtils.callback);
+        console.log('Incoming data!');
+        
+        dbUtils.userCanViewClient(req.body.client.id, req.user.email, function(err, permitted) {
+            if (permitted)
+                queries.updateClient(req.body.client, res, dbUtils.callbackNoReturn);
+            else
+                res.send('403');
+        })
     });
 
     // get all forms for a particular client
@@ -21,7 +28,6 @@ module.exports = function(app) {
 
     // get a list of all the clients
     app.get('/clients', dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.email);
         queries.getClients(req.user.email, res, dbUtils.callback);
     });
 };
