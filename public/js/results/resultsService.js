@@ -7,7 +7,7 @@
         this.scoreConn = $resource('/score/:client_id/:form_id');
     }]);
 
-    module.service('GraphScoresStore', ['$http', '$resource', function($http, $resource, valueWeightsArray) {
+    module.service('GraphScoresDataStore', ['$http', '$resource', function($http, $resource, valueWeightsArray) {
 
         function calculateAllScores(response_value, question_weight) {
 
@@ -17,6 +17,7 @@
                 return response_value;
             }
         }
+
         this.getGraphScores = function(valueWeightsArray){
 
           var score;
@@ -45,10 +46,6 @@
           return scoresArray;
         }
 
-
-    }]);
-
-    module.service('AverageGraphScoresStore', ['$http', '$resource', function($http, $resource, graphScoresArray) {
         this.getAverageGraphScores = function(graphScoresArray){
 
             var total;
@@ -65,9 +62,7 @@
             }
             return averages_array;
         }
-    }]);
 
-    module.service('MappedGraphScoresStore', ['$http', '$resource', function($http, $resource, averages_array) {
         this.getMappedGraphScoresScores = function(averages_array){
 
           var graphInputsArray = {};
@@ -83,9 +78,12 @@
           }
           return graphInputsArray;
         }
+
+
     }]);
 
-    module.service('MakeRadarGraphService', ['$http', '$resource', function($http, $resource, qaGraphData, saGraphData) {
+
+    module.service('GraphingFunctionsStore', ['$http', '$resource', function($http, $resource, qaGraphData, saGraphData) {
         this.makeRadarGraph = function(qaGraphData, saGraphData){
 
           var keyArray = [];
@@ -130,10 +128,7 @@
           document.getElementById("legendDiv").innerHTML = myRadarChart.generateLegend();
           return;
         }
-    }]);
 
-    module.service('MakeGaugeGraphService', ['$http', '$resource', function($http, $resource, QAGraphData, SAGraphData) {
-        
         this.makeGaugeGraphs = function(QAGraphData, SAGraphData){
 
           var qaMaxVal = 4;
@@ -142,6 +137,7 @@
           makeGaugeGraphs(QAGraphData, "QAgaugeGraph", qaMaxVal) ;
           makeGaugeGraphs(SAGraphData, "SAgaugeGraph", saMaxVal) ;
         }
+
         function makeGaugeGraphs(graph_array, showGraph, max_val) {
 
             var graphData = [];
@@ -169,14 +165,4 @@
 
         }
     }]);
-
 })();
-
-// //get the average for each group sharing a group_id and convert to graphInput for category_id =1
-// averages_array_one = getAverages(groupedup_array_one);
-// graph_input_one = getGraphInputs(averages_array_one);
-//
-// results.radarGraphQA = graph_input_one;
-// results.radarGraphSQ = graph_input_two;
-// results.gaugeGraphQA = averages_array_one;
-// results.gaugeGraphSQ = graph_input_two;

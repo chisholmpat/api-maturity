@@ -154,9 +154,8 @@
     // }
 
     var module = angular.module('resultsModule', ['resultsServiceModule']);
-    module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresStore', 'AverageGraphScoresStore',
-                      'MappedGraphScoresStore', 'MakeRadarGraphService', 'MakeGaugeGraphService',
-        function($scope, $routeParams, ResultStore, GraphScoresStore, AverageGraphScoresStore, MappedGraphScoresStore, MakeRadarGraphService, MakeGaugeGraphService) {
+    module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore',
+        function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore) {
 
             // URL for retrieving results as a CSV file
             $scope.csvURL = "questions/" + $routeParams.client_id + "/" + $routeParams.form_id + "/csv"
@@ -165,32 +164,25 @@
                 client_id: $routeParams.client_id,
                 form_id: $routeParams.form_id
             }, function(results) {
+
                 var valueWeightsArray = results;
-                var allGraphScores;
-                var averagesArray;
-                var mappedArray;
-                var QAaverages;
-                var SAaverages;
-                var QAmappedValues;
-                var QAGraphData;
-                var SAGraphData;
                 var categories = {
                   QA:1,
                   SA:2
                 }
                 //obtain all graph scores
-                allGraphScores = GraphScoresStore.getGraphScores(valueWeightsArray);
-                QAaverages = AverageGraphScoresStore.getAverageGraphScores(allGraphScores[categories.QA]);
-                QAmappedValues = MappedGraphScoresStore.getMappedGraphScoresScores(QAaverages);
+                var allGraphScores = GraphScoresDataStore.getGraphScores(valueWeightsArray);
+                var QAaverages = GraphScoresDataStore.getAverageGraphScores(allGraphScores[categories.QA]);
+                var QAmappedValues = GraphScoresDataStore.getMappedGraphScoresScores(QAaverages);
 
                 //get final data for the graphs
-                QAGraphData = QAmappedValues;
-                SAGraphData = allGraphScores[categories.SA];//SA does not get averaged or mapped
+                var QAGraphData = QAmappedValues;
+                var SAGraphData = allGraphScores[categories.SA];//SA does not get averaged or mapped
 
                 //draw radar graph
-                MakeRadarGraphService.makeRadarGraph(QAGraphData, SAGraphData);
+                GraphingFunctionsStore.makeRadarGraph(QAGraphData, SAGraphData);
                 //draw gauge graphs
-                MakeGaugeGraphService.makeGaugeGraphs(QAGraphData, SAGraphData); //Only once charts loaded drawing charts is executed
+                GraphingFunctionsStore.makeGaugeGraphs(QAGraphData, SAGraphData); //Only once charts loaded drawing charts is executed
 
             });
         }
