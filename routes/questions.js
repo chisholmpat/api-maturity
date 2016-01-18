@@ -78,7 +78,7 @@ module.exports = function(app) {
 
     // update questions
     app.post("/update_questions", dbUtils.checkAuthenticated, function(req, res) {
-        queries.updateQuestions(res, req.body.questions, dbUtils.callback);
+        queries.updateQuestions(res, req.body.questions, dbUtils.callbackNoReturn);
     });
 
 };
