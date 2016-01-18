@@ -51,11 +51,12 @@ exports.getAllFormsByClient = function(client_id, res, callback) {
         })
 };
 
-
 // return a list of clients.
 exports.getClients = function(email, res, callback) {
-    knex.select().table('client').where('created_by', email)
+    knex.select('*').select('Client.id').from('client').where('userclients.email', email)
+    .innerJoin('userclients', 'client.id', 'userclients.client_id')
         .asCallback(function(err, rows) {
+            console.log(rows);
             callback(err, res, rows);
         })
 };
