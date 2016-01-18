@@ -1,6 +1,6 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
-var myApp = angular.module('app', ['ngRoute', 'ngResource', , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
+var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource', , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
 
 // Logic for handling login.
 myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
@@ -106,6 +106,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin
         }
     }).
+
     when('/login', {
         templateUrl: '/views/user/user.html',
         controller: 'UserController'

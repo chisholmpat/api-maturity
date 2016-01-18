@@ -1,16 +1,22 @@
 (function() {
-    
+
     var module = angular.module('clientsModule', ['clientsServiceModule'])
 
     // Controller for "clients.html", for viewing the list of clients.
     module.controller('ClientsController', ['$scope', 'ClientsStore',
+
         function($scope, ClientsStore) {
+            $scope.oneAtATime = true;
+
+            $scope.collapsed = true;
+
             $scope.clients = ClientsStore.getClientsConn.query({}, function() {
                 console.log($scope.clients)
             })
             $scope.forms = ClientsStore.formsConn.query({});
         }
     ]);
+
 
     // Controller for "add_clients.html", for adding clients to DB.
     module.controller('AddClientController', ['$scope', 'ClientsStore', '$window',
@@ -43,7 +49,7 @@
             // will pass to the back end for processing.
             // [ "name", "industry", "country", "contact", "email", "phone" ]
             $scope.submit = function(clientData) {
-                
+
                 if ($scope.client) {
                     console.log("Updating Client");
                     ClientsStore.updateClientsConn.save({
