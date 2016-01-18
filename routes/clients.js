@@ -11,10 +11,11 @@ module.exports = function(app) {
 
     // update client
     app.post('/updateClient', dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.body.client);
-        dbUtils.userCanViewClient(req.body.client, req.body.client.id, req.user.email, function(err, permitted) {
+        console.log('Incoming data!');
+        
+        dbUtils.userCanViewClient(req.body.client.id, req.user.email, function(err, permitted) {
             if (permitted)
-                queries.updateClient(req.body.client, res, dbUtils.callback);
+                queries.updateClient(req.body.client, res, dbUtils.callbackNoReturn);
             else
                 res.send('403');
         })
@@ -27,7 +28,6 @@ module.exports = function(app) {
 
     // get a list of all the clients
     app.get('/clients', dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.email);
         queries.getClients(req.user.email, res, dbUtils.callback);
     });
 };
