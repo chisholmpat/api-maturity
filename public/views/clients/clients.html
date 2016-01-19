@@ -4,7 +4,8 @@
     <uib-accordion close-others="oneAtATime" class="clients">
         <uib-accordion-group ng-repeat="client in clients">
             <uib-accordion-heading>
-                {{client.name}}
+                {{client.name}}<br>
+                <input type="text" id="default" list="usersEamilList" placeholder="e.g. example@ca.ibm.com">
             </uib-accordion-heading>
             <div class="formTable">
                 <div ng-repeat="form in forms">
@@ -48,5 +49,10 @@
             </div>
         </uib-accordion-group>
     </uib-accordion>
+
+    <datalist  id="usersEamilList">
+         <option  ng-repeat="user in allUsers"  value="{{user.email}}">
+   </datalist>
+
 
 </div>

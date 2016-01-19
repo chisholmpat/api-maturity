@@ -12,7 +12,7 @@ module.exports = function(app) {
     // update client
     app.post('/updateClient', dbUtils.checkAuthenticated, function(req, res) {
         console.log('Incoming data!');
-        
+
         dbUtils.userCanViewClient(req.body.client.id, req.user.email, function(err, permitted) {
             if (permitted)
                 queries.updateClient(req.body.client, res, dbUtils.callbackNoReturn);
@@ -29,5 +29,10 @@ module.exports = function(app) {
     // get a list of all the clients
     app.get('/clients', dbUtils.checkAuthenticated, function(req, res) {
         queries.getClients(req.user.email, res, dbUtils.callback);
+    });
+
+    // get a list of all user Email IDs
+    app.get('/getAllUserEmails', dbUtils.checkAuthenticated, function(req, res) {
+        queries.getAllUserEmails(res, dbUtils.callback);
     });
 };

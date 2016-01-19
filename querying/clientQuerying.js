@@ -61,3 +61,14 @@ exports.getClients = function(email, res, callback) {
             callback(err, res, rows);
         })
 };
+
+// return a list of user Emails.
+exports.getAllUserEmails = function(res, callback) {
+    knex.distinct('email')
+      .select()
+        .from('userclients')
+          .asCallback(function(err, rows) {
+              console.log(rows);
+              callback(err, res, rows);
+          })
+};

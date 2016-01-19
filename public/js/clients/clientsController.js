@@ -14,6 +14,7 @@
                 console.log($scope.clients)
             })
             $scope.forms = ClientsStore.formsConn.query({});
+            $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
         }
     ]);
 
