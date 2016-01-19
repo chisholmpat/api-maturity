@@ -1,8 +1,8 @@
 (function() {
 
     var module = angular.module('resultsModule', ['resultsServiceModule']);
-    module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore',
-        function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore) {
+    module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore','FileFormatsConversionStore',
+        function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
 
             // URL for retrieving results as a CSV file
             $scope.csvURL = "questions/" + $routeParams.client_id + "/" + $routeParams.form_id + "/csv"
@@ -32,6 +32,10 @@
                 GraphingFunctionsStore.makeGaugeGraphs(QAGraphData, SAGraphData); //Only once charts loaded drawing charts is executed
 
             });
+            $scope.getPDF = function(results) {
+                FileFormatsConversionStore.convertToPDF($scope.results);
+            }
+
         }
     ]);
 })();
