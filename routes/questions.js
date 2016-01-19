@@ -17,7 +17,7 @@ module.exports = function(app) {
     // return the questions and responses for a client for in CSV
     app.get('/questions/:client_id/:form_id/csv', dbUtils.checkAuthenticated, function(req, res) {
 
-        dbUtils.userCanViewClient(req.body.client, id, req.user.email, function(err, permitted) {
+        dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, permitted) {
             if (permitted) {
 
                 var sendCSV = function(err, res, results) {

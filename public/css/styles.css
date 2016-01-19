@@ -1,5 +1,5 @@
-/* style.scss
-	* copiled to ./stylesheets/style.css
+/* styles.scss
+	* copiled to ./css/styles.css
  * This file provides css styles.
  */
 body,
@@ -15,12 +15,11 @@ html {
   color: #575757;
   font-size: 10px; }
 
-  body{
-      font-size: 1.6rem;
-  }
+body {
+  font-size: 1.5rem; }
 
-p {
-  margin-bottom: 1.5rem; }
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important; }
 
 a {
   text-decoration: none;
