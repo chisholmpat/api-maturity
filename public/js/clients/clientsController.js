@@ -15,6 +15,16 @@
             })
             $scope.forms = ClientsStore.formsConn.query({});
             $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
+            $scope.addUserToClient = function(clientID, divId) {
+
+              var txtbox = document.getElementById(divId);
+              var value = txtbox.value;
+
+              $scope.questions = ClientsStore.addUserToClient.query({
+                client_id: clientID,
+                user_email: value
+              }, function() {});
+            }
         }
     ]);
 

@@ -72,3 +72,14 @@ exports.getAllUserEmails = function(res, callback) {
               callback(err, res, rows);
           })
 };
+
+// Add user email and client ID
+exports.addClientToUser = function(client_id, user_email, res, callback) {
+
+  // Insert the clinet_id, user_email
+  knex('userclients').insert({client_id: client_id, email: user_email})
+    .asCallback(function(err, rows) {
+        console.log(rows);
+        callback(err, res, rows);
+    })
+};

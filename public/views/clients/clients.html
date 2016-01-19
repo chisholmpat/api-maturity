@@ -5,7 +5,9 @@
         <uib-accordion-group ng-repeat="client in clients">
             <uib-accordion-heading>
                 {{client.name}}<br>
-                <input type="text" id="default" list="usersEamilList" placeholder="e.g. example@ca.ibm.com">
+                <!-- capture whent the user presses enter -->
+                <input type="text" id="{{client.name}}" list="usersEmailList"
+                        ng-keypress="($event.which === 13)?addUserToClient(client.id, client.name):0" />
             </uib-accordion-heading>
             <div class="formTable">
                 <div ng-repeat="form in forms">
@@ -50,7 +52,7 @@
         </uib-accordion-group>
     </uib-accordion>
 
-    <datalist  id="usersEamilList">
+    <datalist  id="usersEmailList">
          <option  ng-repeat="user in allUsers"  value="{{user.email}}">
    </datalist>
 
