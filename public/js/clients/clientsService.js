@@ -7,6 +7,7 @@
             this.getClientsConn = $resource('/clients');
             this.addClientConn = $resource('/insertClient');
             this.updateClientsConn = $resource('/updateClient');
+            this.deleteClientConn = $resource('/deleteClient');
         }
     ]);
 

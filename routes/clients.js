@@ -11,7 +11,6 @@ module.exports = function(app) {
 
     // update client
     app.post('/updateClient', dbUtils.checkAuthenticated, function(req, res) {
-        console.log('Incoming data!');
         
         dbUtils.userCanViewClient(req.body.client.id, req.user.email, function(err, permitted) {
             if (permitted)
@@ -29,5 +28,15 @@ module.exports = function(app) {
     // get a list of all the clients
     app.get('/clients', dbUtils.checkAuthenticated, function(req, res) {
         queries.getClients(req.user.email, res, dbUtils.callback);
+    });
+
+    // used to set the status of the client to active or inactive
+    app.post('/deleteClient', dbUtils.checkAuthenticated, function(req, res) {
+        dbUtils.userCanViewClient(req.body.id, req.user.email, function(err, permitted) {
+            if (permitted)
+                queries.setClientInactive(req.body.id, req.body.status, res, dbUtils.callbackNoReturn);
+            else
+                res.send('403');
+        })
     });
 };
