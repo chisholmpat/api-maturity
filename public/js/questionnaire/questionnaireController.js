@@ -54,6 +54,18 @@
                 form_id: $routeParams.form_id
             });
 
+            // Sets a questions's active field to inactive
+            $scope.deleteQuestion = function(question) {
+                if (confirm('Are you sure you want to delete this?')){
+                    QuestionStore.deleteQuestionConn.save({
+                       id: question.id
+                    }, function() {
+                          var index = $scope.questions.indexOf(question);
+                          $scope.questions.splice(index, 1);
+                    });
+                }
+            };
+
             // Get the potential groupings for the grouping select.
             $scope.groupings = QuestionStore.groupingsConn.query({}, function() {});
 

@@ -11,6 +11,7 @@ exports.getAllQuestions = function(client_id, form_id, res, callback) {
         .innerJoin('Question', 'ClientQuestionResponse.question_id', 'Question.id')
         .innerJoin('Form', 'Question.form_id', 'Form.id')
         .where('Question.form_id', form_id)
+        .where('Question.active', 1)
         .where('ClientQuestionResponse.client_id', client_id)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
@@ -29,6 +30,7 @@ exports.getClientAnswers = function(client_id, form_id, res, callback) {
         .innerJoin('Grouping', 'Question.group_id', 'Grouping.id')
         .leftJoin('Response', 'ClientQuestionResponse.response_id', 'Response.id')
         .where('Question.form_id', form_id)
+        .where('Question.active', 1)
         .where('ClientQuestionResponse.client_id', client_id)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
@@ -42,8 +44,6 @@ exports.getAllResponses = function(res, callback) {
         callback(err, res, rows);
     });
 };
-
-
 
 // TODO: Again the above method can probably be refactored to include the information
 // gathered from this query.
@@ -61,6 +61,7 @@ exports.getQuestionsByForm = function(form_id, res, callback) {
         .from('Question')
         .innerJoin('Form', 'Question.form_id', 'Form.id')
         .where('Question.form_id', form_id)
+        .where('Question.active', 1)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
         })
@@ -112,4 +113,13 @@ exports.updateQuestions = function(res, questions, callback) {
                     callback(err, res, rows);
                 })
         });
-}
+};
+
+// Set the field of a question to inactive
+exports.deleteQuestion = function(id, res, callback) {
+    knex('question').where('id', id).update({
+        active: 0
+    }).asCallback(function(err, rows) {
+        callback(err, res);
+    });
+};

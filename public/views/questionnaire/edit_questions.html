@@ -8,14 +8,16 @@
       <th> Question </th>
       <th> Groupings </th>
     </thead>
-    <tbody ng-repeat="question in questions |  filter: { category_id: '1' }">
+    <tbody ng-repeat="question in questions |  filter: { category_id: '1', active: '1' } ">
       <tr>
         <td>
-          <input type="text" class="form-control" ng-model="question.text"> </td>
+            <input type="text" class="form-control" ng-model="question.text"> </td>
         <td>
           <select ng-model="question.group_id" ng-options="grouping.id as grouping.name for grouping in groupings"></select>
         </td>
-
+        <td>
+            <img src="images/delete.png"  height="32" width="32" ng-click="deleteQuestion(question)" />
+        </td>
       </tr>
     </tbody>
   </table>

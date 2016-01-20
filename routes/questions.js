@@ -41,25 +41,24 @@ module.exports = function(app) {
 
     // get all scores
     app.get('/score/:client_id/:form_id', dbUtils.checkAuthenticated, function(req, res) {
-
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, permitted) {
-           
-            console.log("Checking: CLIENTID = " + req.params.client_id);
-            console.log("Checking: EMAIL = " + req.user.email); 
-            console.log("Is permitted?");
-            if (permitted){
-                console.log("IS PERMITTED!");
+            if (permitted) {
                 queries.getClientAnswers(req.params.client_id, req.params.form_id, res, dbUtils.callback);
-            }else
-            res.send(403); 
+            } else
+                res.send(403);
         })
+    });
+
+    // toggles the active status of a question
+    app.post('/deleteQuestion', dbUtils.checkAuthenticated, function(req, res) {
+        console.log(req.body);
+        queries.deleteQuestion(req.body.id, res, dbUtils.callbackNoReturn);
     });
 
     // get all possible responses
     app.get('/responses', dbUtils.checkAuthenticated, function(req, res) {
         queries.getAllResponses(res, dbUtils.callback);
     });
-
 
     // get a list of all the forms.
     app.get('/forms', dbUtils.checkAuthenticated, function(req, res) {
