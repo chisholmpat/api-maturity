@@ -4,13 +4,17 @@
     <uib-accordion close-others="oneAtATime" class="clients">
         <uib-accordion-group ng-repeat="client in clients">
             <uib-accordion-heading>
-                <!-- capture whent the user presses enter -->
-                <input type="text" id="{{client.name}}" list="usersEmailList"
-                        ng-keypress="($event.which === 13)?addUserToClient(client.id, client.name):0" />
                 {{client.name}}
             </uib-accordion-heading>
             <div class="formTable">
-                <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?">Delete</button>
+                <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?">Delete</button><br>
+
+                <!-- validate using angluar -->
+                <form name="emailForm" ng-submit="addUserToClient(emailForm.$valid, client.id, client.name)" novalidate>
+                    <input type="email" id="{{client.name}}" name="email" list="usersEmailList" ng-model="email" placeholder="example@us.ibm.com"/>
+                    <button type="submit" ng-disabled="emailForm.$invalid">Add User to Client</button>
+                    <p ng-show="emailForm.email.$invalid && !emailForm.email$pristine">Enter a valid email.</p>
+                </form>
                 <div ng-repeat="form in forms">
                     <span>{{form.name}} </span>
                     <span><a href="/#/questionnaire/{{client.id}}/{{form.id}}"> Survey </a></span>

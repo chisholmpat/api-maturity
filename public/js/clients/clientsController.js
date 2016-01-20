@@ -1,85 +1,48 @@
 (function() {
 
-    var module = angular.module('clientsModule', ['clientsServiceModule'])
-
-    // Controller for "clients.html", for viewing the list of clients.
-    module.controller('ClientsController', ['$scope', 'ClientsStore',
-
-        function($scope, ClientsStore) {
-            $scope.oneAtATime = true;
-
-            $scope.collapsed = true;
-
-            $scope.clients = ClientsStore.getClientsConn.query({}, function() {
-                console.log($scope.clients)
-            })
-            $scope.forms = ClientsStore.formsConn.query({});
-            $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
-            $scope.addUserToClient = function(clientID, divId) {
-
-              var txtbox = document.getElementById(divId);
-              var value = txtbox.value;
-
-              $scope.questions = ClientsStore.addUserToClient.query({
-                client_id: clientID,
-                user_email: value
-              }, function() {});
-            }
-        }
-    ]);
-
-
-    // Controller for "add_clients.html", for adding clients to DB.
-    module.controller('AddClientController', ['$scope', 'ClientsStore', '$window',
-        function($scope, ClientsStore, $window) {
-
-            $scope.clients = ClientsStore.getClientsConn.query();
-            $scope.editing = {}; // model to hold edited fields
-            $scope.integerval = /^\d*$/;
-            // Handles populating the "editing" model
-            // with the proper fields from the selected
-            // client in the select field or emptying it
-            // if there is not client selected.
-            $scope.onChange = function() {
-                if ($scope.client) {
-                    for (key in ($scope.client))
-                        $scope.editing[key] = $scope.client[key];
-                } else {
-                    $scope.editing = {};
-                }
-            }
-        }
-      ]);
       var module = angular.module('clientsModule', ['clientsServiceModule'])
 
       // Controller for "clients.html", for viewing the list of clients.
       module.controller('ClientsController', ['$scope', 'ClientsStore',
-        function($scope, ClientsStore) {
-            $scope.oneAtATime = true;
-            $scope.collapsed = true;
-            $scope.clients = ClientsStore.getClientsConn.query({});
-            $scope.forms = ClientsStore.formsConn.query({});
 
+          function($scope, ClientsStore) {
+              $scope.oneAtATime = true;
+              $scope.collapsed = true;
+              $scope.clients = ClientsStore.getClientsConn.query({}, function() {});
+              $scope.forms = ClientsStore.formsConn.query({});
 
-            $scope.deleteClient = function(client) {
-                if (confirm('Are you sure you want to delete this?')) {
-                    console.log(client.id);
-                    client.status = 0;
+              $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
+              $scope.addUserToClient = function(isValid, clientID, divId) {
+                if(isValid){
+                  var txtbox = document.getElementById(divId);
+                  var email = txtbox.value;
 
-                    for (var i = $scope.clients.length - 1; i >= 0; i--) {
-                        if ($scope.clients[i].status == 0)
-                            $scope.clients.splice(i, 1);
-                    }
-
-                    ClientsStore.deleteClientConn.save({
-                        id: client.id,
-                        status: 0
-                    }, function() {});
+                  $scope.questions = ClientsStore.addUserToClient.query({
+                    client_id: clientID,
+                    user_email: email
+                  }, function() {
+                    window.alert("The client has been added to user "+ email);
+                  });
                 }
-            }
-         }
-       ]);
+              }
+              $scope.deleteClient = function(client) {
+                  if (confirm('Are you sure you want to delete this?')) {
+                      console.log(client.id);
+                      client.status = 0;
 
+                      for (var i = $scope.clients.length - 1; i >= 0; i--) {
+                          if ($scope.clients[i].status == 0)
+                              $scope.clients.splice(i, 1);
+                      }
+
+                      ClientsStore.deleteClientConn.save({
+                          id: client.id,
+                          status: 0
+                      }, function() {});
+                  }
+              }
+          }
+      ]);
 
       // Controller for "add_clients.html", for adding clients to DB.
       module.controller('AddClientController', ['$scope', 'ClientsStore', '$window',
