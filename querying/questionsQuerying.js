@@ -123,3 +123,18 @@ exports.deleteQuestion = function(id, res, callback) {
         callback(err, res);
     });
 };
+
+exports.addQuestion = function(question, res, callback) {
+    console.log(question);
+    //STEPS: Insert Question in Question Table
+    //STEPS: For each client, insert the question into the table with a default answer.
+    knex('question').insert(question).asCallback(function(err, rows){
+        if(!err){
+            var id = rows[0];
+            console.log(id);
+        }
+    });
+
+}
+
+

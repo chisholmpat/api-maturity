@@ -24,6 +24,7 @@ module.exports.callbackNoReturn = function callbackNoResults(err, res) {
     if (!err) {
         res.send('200');
     } else {
+        console.log(err);
         res.send('400', err);
     }
 };

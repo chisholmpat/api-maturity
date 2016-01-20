@@ -39,6 +39,7 @@
                         client_id: $routeParams.client_id
                     },
                     function() {
+                        console.log("Testing!");
                         $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
                     });
             }
@@ -48,7 +49,35 @@
     // Controller for handling the questions editing form.
     module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
-            
+
+            // for toggling visibility of add question drop down 
+            $scope.addQuestion = false;
+
+
+            $scope.toggleAddQuestionVisibility = function() {
+                $scope.addQuestion = !$scope.addQuestion;
+            };
+
+            $scope.saveQuestion = function(question) {
+                console.log(question);
+
+                question.category_id=1;
+                question.form_id = $routeParams.form_id;
+                $window.alert(question.text);
+
+                QuestionStore.addQuestionConn.save({
+                    question: question
+
+                }, function() {
+                    $scope.addQuestion = false;
+                    $scope.newQuestion.group_id = 1;
+                    $scope.newQuestion.category_id = 1;
+                    $scope.newQuestion.text = "";
+                    $scope.questions.push(question);
+                })
+            };
+
+
             // Get the questions belonging to the form.
             $scope.questions = QuestionStore.questionConn.query({
                 form_id: $routeParams.form_id
@@ -56,18 +85,21 @@
 
             // Sets a questions's active field to inactive
             $scope.deleteQuestion = function(question) {
-                if (confirm('Are you sure you want to delete this?')){
+                if (confirm('Are you sure you want to delete this?')) {
                     QuestionStore.deleteQuestionConn.save({
-                       id: question.id
+                        id: question.id
                     }, function() {
-                          var index = $scope.questions.indexOf(question);
-                          $scope.questions.splice(index, 1);
+                        var index = $scope.questions.indexOf(question);
+                        $scope.questions.splice(index, 1);
                     });
                 }
             };
 
+
             // Get the potential groupings for the grouping select.
-            $scope.groupings = QuestionStore.groupingsConn.query({}, function() {});
+            $scope.groupings = QuestionStore.groupingsConn.query({}, function() {
+
+            });
 
             // Function for handling submission of form.
             $scope.editQuestions = function() {

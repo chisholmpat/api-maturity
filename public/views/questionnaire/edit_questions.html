@@ -21,6 +21,18 @@
       </tr>
     </tbody>
   </table>
-  <input type="submit" />
+  <input type="submit" />       
 </form>
+
+<button ng-click="toggleAddQuestionVisibility()"> New </button>
+
 </div>
+
+</br>
+  <div ng-show="addQuestion">
+       <input type="text" class="form-control" ng-model="newQuestion.text"> </td>
+       <select ng-model="newQuestion.group_id" ng-options="grouping.id as grouping.name for grouping in groupings" ng-init="newQuestion.group_id=1"></select>
+       <button ng-click="saveQuestion(newQuestion)"> Add </button>
+ </div>
+
+
