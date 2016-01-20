@@ -141,11 +141,9 @@ uib-accordion.clients {
     color: #3a697e;
     cursor: pointer; }
   uib-accordion.clients div.formTable {
-    width: 40%;
     float: left; }
     uib-accordion.clients div.formTable div > span {
       display: inline-block;
-      width: 20%;
       padding: 1rem; }
     uib-accordion.clients div.formTable div:last-child,
     uib-accordion.clients div.formTable div:last-child span {
@@ -171,7 +169,7 @@ div.clientInfo {
   color: #FFF;
   margin-bottom: 4rem;
   background-color: #728086;
-  float: left;
+  float: right;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
   -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25); }

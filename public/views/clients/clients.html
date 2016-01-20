@@ -4,12 +4,13 @@
     <uib-accordion close-others="oneAtATime" class="clients">
         <uib-accordion-group ng-repeat="client in clients">
             <uib-accordion-heading>
-                {{client.name}}<br>
                 <!-- capture whent the user presses enter -->
                 <input type="text" id="{{client.name}}" list="usersEmailList"
                         ng-keypress="($event.which === 13)?addUserToClient(client.id, client.name):0" />
+                {{client.name}}
             </uib-accordion-heading>
             <div class="formTable">
+                <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?">Delete</button>
                 <div ng-repeat="form in forms">
                     <span>{{form.name}} </span>
                     <span><a href="/#/questionnaire/{{client.id}}/{{form.id}}"> Survey </a></span>

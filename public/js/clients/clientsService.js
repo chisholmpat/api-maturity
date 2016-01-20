@@ -9,6 +9,7 @@
             this.updateClientsConn = $resource('/updateClient');
             this.getUserEmailsConn = $resource('/getAllUserEmails');
             this.addUserToClient = $resource('/addUserToClient/:client_id/:user_email');
+            this.deleteClientConn = $resource('/deleteClient');
         }
     ]);
 })();

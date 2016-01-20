@@ -54,7 +54,7 @@ exports.getAllFormsByClient = function(client_id, res, callback) {
 
 // return a list of clients.
 exports.getClients = function(email, res, callback) {
-    knex.select('Client.*').select('Client.id').from('client').where('userclients.email', email)
+    knex.select('Client.*').select('Client.id').from('client').where('userclients.email', email).where('client.active', 1)
     .innerJoin('userclients', 'client.id', 'userclients.client_id')
         .asCallback(function(err, rows) {
             console.log(rows);
@@ -83,3 +83,13 @@ exports.addClientToUser = function(client_id, user_email, res, callback) {
         callback(err, res, rows);
     })
 };
+
+
+// sets the active status to the value is isActive
+exports.setClientInactive = function(id, isActive, res, callback) {
+    knex('client').where('id', id).update({
+        active: isActive
+    }).asCallback(function(err, rows){
+        callback(err, res);
+    });
+}
