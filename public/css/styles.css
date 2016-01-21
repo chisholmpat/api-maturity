@@ -321,4 +321,10 @@ form.simple-form.questions-Form {
       margin: 0;
       padding: 0; }
 
+div.form-group.radioButtons label {
+  display: inline-block;
+  margin: 0 1rem 0 0; }
+  div.form-group.radioButtons label span {
+    padding: .6rem; }
+
 /*# sourceMappingURL=styles.css.map */

@@ -385,3 +385,14 @@ form.simple-form.questions-Form {
         }
     }
 }
+
+div.form-group.radioButtons{
+    label{
+        display: inline-block;
+        margin: 0 1rem 0 0;
+
+        span{
+            padding: .6rem;
+        }
+    }
+}
