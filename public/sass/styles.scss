@@ -2,6 +2,9 @@
 	* copiled to ./css/styles.css
  * This file provides css styles.
  */
+$color-main: #575757; //main Dark text
+$color-light: #fff;     //Light text on dark background
+
 @mixin font-Light() {
     font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
     font-weight: 300;
@@ -21,7 +24,7 @@ html {
     margin: 0 auto;
     @include font-Light();
     // font-weight: 400;
-    color: #575757;
+    color: $color-main;
     font-size: 10px;
 }
 
@@ -69,7 +72,7 @@ label {
 }
 #sidebar-wrapper {
     background-color: #3b4b54;
-    color: #fff;
+    color: $color-light;
     padding-top: 2rem;
     box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
     -moz-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
@@ -82,7 +85,7 @@ label {
         padding-right: 3rem;
     }
     div.headerHeight a {
-        color: #fff;
+        color: $color-light;
     }
     h2 {
         margin-bottom: 1rem;
@@ -204,8 +207,8 @@ uib-accordion.clients {
 div.clientInfo {
     padding: 1.5rem 2.5rem;
     background-color: #bbb;
-    color: #FFF;
-    margin: 0 2rem 4rem 0;
+    color: $color-light;
+    margin-left:2rem;
     min-height: 32rem;
     background-color: #728086;
     // width: 30%;
@@ -229,7 +232,11 @@ div.clientInfo {
         float: right;
     }
     input{
-        color: black;
+        color: $color-main;
+        margin-right: .5rem;
+        width: 100%;
+        display: block;
+        margin-bottom: 1rem;
     }
     p{
         display: block;
@@ -243,7 +250,7 @@ div.clientInfo {
 /*SURVEY PAGE*/
 #sideLeftlinks a {
     display: block;
-    color: #FFF;
+    color: $color-light;
     font-size: 1.2rem;
     @include font_Thin();
     margin-bottom: 1rem;

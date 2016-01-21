@@ -6,7 +6,7 @@ module.exports = function(app) {
 
     // add client
     app.post('/insertClient', dbUtils.checkAuthenticated, function(req, res) {
-        queries.insertClient(req.body.client, res, dbUtils.callback);
+        queries.insertClient(req.body.client, res, dbUtils.callbackNoReturn);
     });
 
     // update client
