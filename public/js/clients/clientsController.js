@@ -40,7 +40,9 @@
                     }, function() {
                       window.alert("The client has been added to user "+ email);
                     });
-                  }else{
+                  }
+                  //user-email already assinged to the client
+                  else{
                       window.alert("The client is already assigned to user "+ email);
                   }
                 }

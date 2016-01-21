@@ -7,15 +7,6 @@
                 {{client.name}}
             </uib-accordion-heading>
             <div class="formTable">
-                <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?">Delete</button><br>
-
-                <!-- validate using angluar -->
-                <!-- autocomplete=off to prevent caching form fields , list-auto-complete will still work -->
-                <form name="emailForm" ng-submit="addUserToClient(emailForm.$valid, client.id, client.name)" autocomplete="off" novalidate >
-                    <input type="text" id="{{client.name}}" name="email" list="usersEmailList" />
-                    <button type="submit" ng-disabled="emailForm.$invalid">Add User to Client</button>
-                    <p ng-show="emailForm.email.$invalid && !emailForm.email$pristine">Enter a valid email.</p>
-                </form>
                 <div ng-repeat="form in forms">
                     <span>{{form.name}} </span>
                     <span><a href="/#/questionnaire/{{client.id}}/{{form.id}}"> Survey </a></span>
@@ -25,7 +16,25 @@
                     <span></span>
                 </div>
             </div>
+
             <div class="clientInfo">
+                <h3>Client Tools</h3>
+                <p>
+                    Add Access to:
+                    <!-- validate using angluar -->
+                    <!-- autocomplete=off to prevent caching form fields , list-auto-complete will still work -->
+                    <form name="emailForm" ng-submit="addUserToClient(emailForm.$valid, client.id, client.name)" autocomplete="off" novalidate >
+                        <input type="text" id="{{client.name}}" name="email" list="usersEmailList" />
+                        <button type="submit" ng-disabled="emailForm.$invalid">Add User to Client</button>
+                        <p ng-show="emailForm.email.$invalid && !emailForm.email$pristine">Enter a valid email.</p>
+                    </form>
+                </p>
+                <p>
+                    <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?" class="btn btn-danger">Delete Client: {{client.name}}</button>
+                </p>
+            </div>
+            <div class="clientInfo">
+                <h3>Client Details<a href="/#/edit_client/{{client.id}}" class="btn-default btn">Edit Client</a></h3>
                 <table class="clientStyle">
                     <tbody>
                         <tr>
@@ -55,6 +64,7 @@
                     </tbody>
                 </table>
             </div>
+
         </uib-accordion-group>
     </uib-accordion>
 
