@@ -82,8 +82,7 @@ module.exports = function(app) {
 
     app.post("/addQuestion", dbUtils.checkAuthenticated, function(req, res) {
         console.log(req.body);
-        queries.addQuestion(req.body.question);
-        res.send(200);
+        queries.addQuestion(req.body.question, res, dbUtils.callbackNoReturn);
     });
 
 };

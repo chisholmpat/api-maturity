@@ -124,17 +124,20 @@ exports.deleteQuestion = function(id, res, callback) {
     });
 };
 
+// Add a question to the database. The design currently
+// dictates that there must be an entry in CQR table to 
+// allow users to "answer questions".
 exports.addQuestion = function(question, res, callback) {
-    console.log(question);
-    //STEPS: Insert Question in Question Table
-    //STEPS: For each client, insert the question into the table with a default answer.
-    knex('question').insert(question).asCallback(function(err, rows){
-        if(!err){
-            var id = rows[0];
-            console.log(id);
+    
+    knex('question').insert(question).asCallback(function(err, rows) {
+        if (!err) {
+            var rawSql = "INSERT INTO ClientQuestionResponse(response_id, question_id, client_id, weight)\
+            SELECT DISTINCT 1, (SELECT MAX(id) from Question), id, 0 from Client";
+
+            knex.raw(rawSql).asCallback(function(err, rows) {
+                callback(err, res);
+            });
         }
     });
 
 }
-
-
