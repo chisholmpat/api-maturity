@@ -7,37 +7,47 @@
 
           function($scope, ClientsStore) {
 
+              $scope.isOwner = false;
               var idsToEmails = [];
+              var allClientIDs = [];
 
               $scope.oneAtATime = true;
               $scope.collapsed = true;
               $scope.clients = ClientsStore.getClientsConn.query({}, function() {});
               $scope.forms = ClientsStore.formsConn.query({});
               $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
-              $scope.allClientIDsAndEmails = ClientsStore.getAllCliendIDsAndEmails.query({}, function(){
+
+              //use idToEmails to avoid adding duplicates of user_email-client ID combination
+              $scope.allClientIDsAndEmails = ClientsStore.getAllCliendIDsAndEmailsConn.query({}, function(){
                 ///map all the emailIDs belonging to a CliendID
                 for(var i=0; i < $scope.allClientIDsAndEmails.length; i++){
-                  if(!idsToEmails[$scope.allClientIDsAndEmails[i].client_id])
-                      idsToEmails[$scope.allClientIDsAndEmails[i].client_id] = [];
-
-                  if(idsToEmails[$scope.allClientIDsAndEmails[i].client_id].indexOf($scope.allClientIDsAndEmails[i].email) <0)//email doens't exit for the client ID
-                      idsToEmails[$scope.allClientIDsAndEmails[i].client_id].push($scope.allClientIDsAndEmails[i].email);
+                  idsToEmails.push($scope.allClientIDsAndEmails[i].email + $scope.allClientIDsAndEmails[i].client_id);
                 }
-
               });
 
+              //use allClients to ensure only client owner is allowed to edit and delete client
+              var allClientsOwnedByUser = ClientsStore.allClientsOwnedByUserConn.query({}, function(){
+                ///map all the emailIDs belonging to a CliendID
+                for(var i=0; i < allClientsOwnedByUser.length; i++){
+                  allClientIDs.push(allClientsOwnedByUser[i].client_id);
+                };
+              });
+              $scope.allClients = allClientIDs;
 
+              //Assign user to ClientID
               $scope.addUserToClient = function(isValid, clientID, divId) {
                 if(isValid){
                   var txtbox = document.getElementById(divId);
                   var email = txtbox.value;
+                  var search_str = email + clientID;
 
                   //if email not assigned to the client, then add it in
-                  if(idsToEmails[clientID].indexOf(email) <0){
+                  if(idsToEmails.indexOf(search_str) <0){
                     $scope.questions = ClientsStore.addUserToClient.query({
                       client_id: clientID,
                       user_email: email
                     }, function() {
+                      idsToEmails.push(search_str);
                       window.alert("The client has been added to user "+ email);
                     });
                   }
@@ -47,6 +57,7 @@
                   }
                 }
               }
+
               $scope.deleteClient = function(client) {
                   if (confirm('Are you sure you want to delete this?')) {
                       console.log(client.id);
