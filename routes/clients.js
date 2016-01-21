@@ -6,7 +6,7 @@ module.exports = function(app) {
 
     // add client
     app.post('/insertClient', dbUtils.checkAuthenticated, function(req, res) {
-        queries.insertClient(req.body.client, res, dbUtils.callback);
+        queries.insertClient(req.body.client, req.user.email, res, dbUtils.callbackNoReturn);
     });
 
     // update client
@@ -42,7 +42,6 @@ module.exports = function(app) {
 
     // add UserEmail and CliendID to the database
     app.get('/addUserToClient/:client_id/:user_email', dbUtils.checkAuthenticated, function(req, res) {
-        console.log("USER EMAIL = CLIENT ID" + req.params.client_id + req.params.user_email);
         queries.addClientToUser(req.params.client_id, req.params.user_email, res, dbUtils.callback);
     });
     // used to set the status of the client to active or inactive
@@ -54,4 +53,9 @@ module.exports = function(app) {
                 res.send('403');
         })
     });
+    // get clientID from client table
+    app.get('/getClientID/:client_name/', dbUtils.checkAuthenticated, function(req, res) {
+        queries.getClientID(req.params.client_name, res, dbUtils.callback);
+    });
+
 };

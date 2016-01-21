@@ -6,7 +6,7 @@ var knex = require("../db/db.js").knex; // data connection
 // have an entry for each question in the ClientQuestionResponse
 // table. This is because a client can have a unique weighting to
 // a question. In the future this should be normalized.
-exports.insertClient = function(client, res, callback) {
+exports.insertClient = function(client, email, res, callback) {
 
     // Insert all SA questions/client_id into the CQR table. This is broken in to two seperate queries
     // since there are different default answers depending on whether the question is a QA question or
@@ -20,10 +20,19 @@ exports.insertClient = function(client, res, callback) {
 
     // Insert the client object from the post directly.
     knex('Client').insert(client).asCallback(function(err, rows) {
+      console.log(err);
+      console.log(rows);
+      knex('userclients').insert({
+        client_id: rows[0],
+        email: email}
+      ).asCallback(function(err, rows){
+        console.log(err);
+        console.log(rows);
+      });
         // Once the FK constraint has been satisfied, add rows to CQR.
         knex.raw(saQuestionQuery).asCallback(function(err, rows) {
             knex.raw(qaQuestionQuery).asCallback(function(err, rows) {
-                callback(err, res, rows);
+                callback(err, res);
             });
         });
     });
@@ -102,4 +111,15 @@ exports.setClientInactive = function(id, isActive, res, callback) {
     }).asCallback(function(err, rows){
         callback(err, res);
     });
+}
+
+// get clientID
+exports.getClientID = function(client_name, res, callback) {
+  knex.select('id')
+      .from('client')
+        .where('name', client_name)
+          .asCallback(function(err, rows) {
+              console.log(rows);
+              callback(err, res, rows);
+          })
 }
