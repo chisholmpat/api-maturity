@@ -3,6 +3,7 @@ module.exports = function(app, passport) {
 
     // defines the strategies for logins
     var passportConfig = require('../config/passportConfig.js')(passport);
+    var queries = require('../querying/usersQuerying');
 
     // route to log out
     app.post('/logout', function(req, res) {
