@@ -7,7 +7,7 @@
         this.questionConn = $resource('/questions/:form_id');
         this.groupingsConn = $resource('/groupings');
         this.formsConn = $resource('/forms');
-        this.updateQuestionsConn = $resource('/update_questions', {}, { save: { method: "POST", isArray: true}});
+        this.updateQuestionsConn = $resource('/update_questions');
         this.deleteQuestionConn = $resource('/deleteQuestion');
         this.addQuestionConn = $resource('/addQuestion');
     }]);
