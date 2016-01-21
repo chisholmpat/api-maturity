@@ -205,7 +205,8 @@ div.clientInfo {
     padding: 1.5rem 2.5rem;
     background-color: #bbb;
     color: #FFF;
-    margin-bottom: 4rem;
+    margin: 0 2rem 4rem 0;
+    min-height: 32rem;
     background-color: #728086;
     // width: 30%;
     float: right;
@@ -218,6 +219,25 @@ div.clientInfo {
     table tr > td:first-child {
         text-align: right;
         padding-right: 2rem;
+    }
+    h3{
+        margin-top:0;
+    }
+    .btn{
+        font-size: 1.2rem;
+        padding: 0.3rem 1.2rem;
+        float: right;
+    }
+    input{
+        color: black;
+    }
+    p{
+        display: block;
+        text-align: center;
+    }
+    .btn-danger{
+        float: none;
+        font-size: 1.5rem;
     }
 }
 /*SURVEY PAGE*/

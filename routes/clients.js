@@ -11,7 +11,7 @@ module.exports = function(app) {
 
     // update client
     app.post('/updateClient', dbUtils.checkAuthenticated, function(req, res) {
-        
+
         dbUtils.userCanViewClient(req.body.client.id, req.user.email, function(err, permitted) {
             if (permitted)
                 queries.updateClient(req.body.client, res, dbUtils.callbackNoReturn);
@@ -30,6 +30,21 @@ module.exports = function(app) {
         queries.getClients(req.user.email, res, dbUtils.callback);
     });
 
+    // get a list of all user Email IDs
+    app.get('/getAllUserEmails', dbUtils.checkAuthenticated, function(req, res) {
+        queries.getAllUserEmails(res, dbUtils.callback);
+    });
+
+    // get a list of all user Email IDs and ClientIDs
+    app.get('/getAllCliendIDsAndEmails', dbUtils.checkAuthenticated, function(req, res) {
+        queries.getAllClientIDsAndEmails(res, dbUtils.callback);
+    });
+
+    // add UserEmail and CliendID to the database
+    app.get('/addUserToClient/:client_id/:user_email', dbUtils.checkAuthenticated, function(req, res) {
+        console.log("USER EMAIL = CLIENT ID" + req.params.client_id + req.params.user_email);
+        queries.addClientToUser(req.params.client_id, req.params.user_email, res, dbUtils.callback);
+    });
     // used to set the status of the client to active or inactive
     app.post('/deleteClient', dbUtils.checkAuthenticated, function(req, res) {
         dbUtils.userCanViewClient(req.body.id, req.user.email, function(err, permitted) {
