@@ -291,4 +291,7 @@ canvas {
   height: 100%;
   border-radius: 5px; }
 
+form.simple-form {
+  width: 80%; }
+
 /*# sourceMappingURL=styles.css.map */

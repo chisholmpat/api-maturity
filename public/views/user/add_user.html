@@ -1,32 +1,44 @@
-<form novalidate class="simple-form">
-    
-    <!-- Username -->
-    Username:
-    <input type="text" ng-model="editing.username" /> <br />
-    
-    <!-- First Name -->
-    First Name:
-    <input type="text" ng-model="editing.firstname" /> </br />
+<div class="col-lg12">
+    <form novalidate class="simple-form">
 
-    <!-- Last Name -->
-    Last Name:
-    <input type="text" ng-model="editing.lastname" /> </br />
-    
-    <!-- Password -->
-    Password:
-    <input type="password" ng-model="editing.password"><br/>
-    
-    <!-- Role -->
-    <label data-ng-repeat="role in ['admin', 'user']">
-        <input name="currentActivity" type="radio" value="{{role}}" ng-model="editing.role" required />{{role}}<br/>
-    </label><br/>
+        <div class="form-group">
+            <!-- Username -->
+            <label>Username:</label>
+            <input class="form-control" type="text" ng-model="editing.username" />
 
-    <!-- Userlist -->
-    <select ng-model="aUser" ng-options="aUser.username for aUser in allUsers " ng-change="onChange()"> <option value="">New User</option></select>
-    
-    <input type="submit" ng-click="submit()" />
+        </div>
+        <div class="form-group">
+            <!-- First Name -->
+            <lable>First Name:</lable>
+            <input class="form-control" type="text" ng-model="editing.firstname" />
+        </div>
+        <div class="form-group">
+            <!-- Last Name -->
+            <label>Last Name:</label>
+            <input class="form-control" type="text" ng-model="editing.lastname" />
+        </div>
+        <div class="form-group">
+            <!-- Password -->
+            <label>Password:</label>
+            <input class="form-control" type="password" ng-model="editing.password">
+        </div>
+        <!-- Role -->
+        <div class="form-group">
+            <label data-ng-repeat="role in ['admin', 'user']">
+                <input name="currentActivity" type="radio" value="{{role}}" ng-model="editing.role" required />{{role}}
+                <br/>
+            </label>
+        </div>
+
+        <!-- Userlist -->
+        <select ng-model="aUser" ng-options="aUser.username for aUser in allUsers " ng-change="onChange()">
+            <option value="">New User</option>
+        </select>
+
+        <input type="submit" ng-click="submit()" />
 
 
-</form>
+    </form>
 
-<h1> {{result}} </h1>
+    <h1> {{result}} </h1>
+</div>
