@@ -24,8 +24,8 @@
                     <!-- validate using angluar -->
                     <!-- autocomplete=off to prevent caching form fields , list-auto-complete will still work -->
                     <form name="emailForm" ng-submit="addUserToClient(emailForm.$valid, client.id, client.name)" autocomplete="off" novalidate >
-                        <input type="email" id="{{client.name}}" name="email" list="usersEmailList" ng-model="emai"/>
-                        <button type="submit" ng-disabled="emailForm.$invalid">Add User to Client</button>
+                        <input type="email" id="{{client.name}}" name="email" list="usersEmailList" ng-model="emai" placeholder="example@email.com"/>
+                        <button type="submit" ng-disabled="emailForm.$invalid" class="btn btn-default">Add User to Client</button>
                         <p ng-show="emailForm.email.$invalid && !emailForm.email$pristine">Enter a valid email.</p>
                     </form>
                 </p>

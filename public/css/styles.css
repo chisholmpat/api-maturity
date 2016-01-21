@@ -166,8 +166,8 @@ uib-accordion.clients {
 div.clientInfo {
   padding: 1.5rem 2.5rem;
   background-color: #bbb;
-  color: #FFF;
-  margin: 0 2rem 4rem 0;
+  color: #fff;
+  margin-left: 2rem;
   min-height: 32rem;
   background-color: #728086;
   float: right;
@@ -186,7 +186,8 @@ div.clientInfo {
     padding: 0.3rem 1.2rem;
     float: right; }
   div.clientInfo input {
-    color: black; }
+    color: #575757;
+    margin-right: .5rem; }
   div.clientInfo p {
     display: block;
     text-align: center; }
@@ -197,7 +198,7 @@ div.clientInfo {
 /*SURVEY PAGE*/
 #sideLeftlinks a {
   display: block;
-  color: #FFF;
+  color: #fff;
   font-size: 1.2rem;
   font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
   font-weight: 100;
