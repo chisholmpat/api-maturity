@@ -92,6 +92,18 @@ exports.getAllClientIDsAndEmails= function(res, callback) {
           })
 };
 
+// return a list of all clients the user is allowed to view
+exports.getAllClientsOwnedByUser= function(email, res, callback) {
+    knex.distinct('client_id')
+          .select()
+            .from('userclients')
+              .where({ email: email, isOwner: true})
+              .asCallback(function(err, rows) {
+                  console.log(rows);
+                  callback(err, res, rows);
+              })
+};
+
 // Add user email and client ID
 exports.addClientToUser = function(client_id, user_email, res, callback) {
 
@@ -111,15 +123,4 @@ exports.setClientInactive = function(id, isActive, res, callback) {
     }).asCallback(function(err, rows){
         callback(err, res);
     });
-}
-
-// get clientID
-exports.getClientID = function(client_name, res, callback) {
-  knex.select('id')
-      .from('client')
-        .where('name', client_name)
-          .asCallback(function(err, rows) {
-              console.log(rows);
-              callback(err, res, rows);
-          })
 }
