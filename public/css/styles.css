@@ -187,7 +187,10 @@ div.clientInfo {
     float: right; }
   div.clientInfo input {
     color: #575757;
-    margin-right: .5rem; }
+    margin-right: .5rem;
+    width: 100%;
+    display: block;
+    margin-bottom: 1rem; }
   div.clientInfo p {
     display: block;
     text-align: center; }
