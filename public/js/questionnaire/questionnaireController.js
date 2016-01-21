@@ -50,38 +50,44 @@
     module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
 
-            // for toggling visibility of add question drop down 
+            // For toggling visibility of add question drop down 
             $scope.addQuestion = false;
 
+            // Updates the question on the form.
+            var refreshQuestions = function() {
+                $scope.questions = QuestionStore.questionConn.query({
+                    form_id: $routeParams.form_id
+                });
+            }
 
+            // Onclick method for toggling visibility
             $scope.toggleAddQuestionVisibility = function() {
                 $scope.addQuestion = !$scope.addQuestion;
             };
 
+            // Function for saving question
             $scope.saveQuestion = function(question) {
-                console.log(question);
 
-                question.category_id=1;
+          
+                question.category_id = 1; // questions can either be SA or QA, QA = 1
                 question.form_id = $routeParams.form_id;
-                $window.alert(question.text);
 
+                // Call to the backend
                 QuestionStore.addQuestionConn.save({
                     question: question
 
                 }, function() {
+
+                    // Refresh the list and clear the input box
+                    refreshQuestions();
                     $scope.addQuestion = false;
                     $scope.newQuestion.group_id = 1;
                     $scope.newQuestion.category_id = 1;
                     $scope.newQuestion.text = "";
-                    $scope.questions.push(question);
                 })
             };
 
 
-            // Get the questions belonging to the form.
-            $scope.questions = QuestionStore.questionConn.query({
-                form_id: $routeParams.form_id
-            });
 
             // Sets a questions's active field to inactive
             $scope.deleteQuestion = function(question) {
@@ -95,6 +101,7 @@
                 }
             };
 
+            refreshQuestions();
 
             // Get the potential groupings for the grouping select.
             $scope.groupings = QuestionStore.groupingsConn.query({}, function() {

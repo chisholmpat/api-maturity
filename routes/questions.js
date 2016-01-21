@@ -80,6 +80,7 @@ module.exports = function(app) {
         queries.updateQuestions(res, req.body.questions, dbUtils.callbackNoReturn);
     });
 
+    // add question to database
     app.post("/addQuestion", dbUtils.checkAuthenticated, function(req, res) {
         console.log(req.body);
         queries.addQuestion(req.body.question, res, dbUtils.callbackNoReturn);
