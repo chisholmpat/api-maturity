@@ -73,6 +73,16 @@ exports.getAllUserEmails = function(res, callback) {
           })
 };
 
+// return a list of user Emails and ClientIDs
+exports.getAllClientIDsAndEmails= function(res, callback) {
+    knex.select('email', 'client_id')
+        .from('userclients')
+          .asCallback(function(err, rows) {
+              console.log(rows);
+              callback(err, res, rows);
+          })
+};
+
 // Add user email and client ID
 exports.addClientToUser = function(client_id, user_email, res, callback) {
 

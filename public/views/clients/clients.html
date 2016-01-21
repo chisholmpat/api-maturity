@@ -10,8 +10,9 @@
                 <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?">Delete</button><br>
 
                 <!-- validate using angluar -->
-                <form name="emailForm" ng-submit="addUserToClient(emailForm.$valid, client.id, client.name)" novalidate>
-                    <input type="email" id="{{client.name}}" name="email" list="usersEmailList" ng-model="email" placeholder="example@us.ibm.com"/>
+                <!-- autocomplete=off to prevent caching form fields , list-auto-complete will still work -->
+                <form name="emailForm" ng-submit="addUserToClient(emailForm.$valid, client.id, client.name)" autocomplete="off" novalidate >
+                    <input type="text" id="{{client.name}}" name="email" list="usersEmailList" />
                     <button type="submit" ng-disabled="emailForm.$invalid">Add User to Client</button>
                     <p ng-show="emailForm.email.$invalid && !emailForm.email$pristine">Enter a valid email.</p>
                 </form>

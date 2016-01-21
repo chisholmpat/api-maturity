@@ -35,6 +35,11 @@ module.exports = function(app) {
         queries.getAllUserEmails(res, dbUtils.callback);
     });
 
+    // get a list of all user Email IDs and ClientIDs
+    app.get('/getAllCliendIDsAndEmails', dbUtils.checkAuthenticated, function(req, res) {
+        queries.getAllClientIDsAndEmails(res, dbUtils.callback);
+    });
+
     // add UserEmail and CliendID to the database
     app.get('/addUserToClient/:client_id/:user_email', dbUtils.checkAuthenticated, function(req, res) {
         console.log("USER EMAIL = CLIENT ID" + req.params.client_id + req.params.user_email);

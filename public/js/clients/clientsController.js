@@ -6,23 +6,43 @@
       module.controller('ClientsController', ['$scope', 'ClientsStore',
 
           function($scope, ClientsStore) {
+
+              var idsToEmails = [];
+
               $scope.oneAtATime = true;
               $scope.collapsed = true;
               $scope.clients = ClientsStore.getClientsConn.query({}, function() {});
               $scope.forms = ClientsStore.formsConn.query({});
-
               $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
+              $scope.allClientIDsAndEmails = ClientsStore.getAllCliendIDsAndEmails.query({}, function(){
+                ///map all the emailIDs belonging to a CliendID
+                for(var i=0; i < $scope.allClientIDsAndEmails.length; i++){
+                  if(!idsToEmails[$scope.allClientIDsAndEmails[i].client_id])
+                      idsToEmails[$scope.allClientIDsAndEmails[i].client_id] = [];
+
+                  if(idsToEmails[$scope.allClientIDsAndEmails[i].client_id].indexOf($scope.allClientIDsAndEmails[i].email) <0)//email doens't exit for the client ID
+                      idsToEmails[$scope.allClientIDsAndEmails[i].client_id].push($scope.allClientIDsAndEmails[i].email);
+                }
+
+              });
+
+
               $scope.addUserToClient = function(isValid, clientID, divId) {
                 if(isValid){
                   var txtbox = document.getElementById(divId);
                   var email = txtbox.value;
 
-                  $scope.questions = ClientsStore.addUserToClient.query({
-                    client_id: clientID,
-                    user_email: email
-                  }, function() {
-                    window.alert("The client has been added to user "+ email);
-                  });
+                  //if email not assigned to the client, then add it in
+                  if(idsToEmails[clientID].indexOf(email) <0){
+                    $scope.questions = ClientsStore.addUserToClient.query({
+                      client_id: clientID,
+                      user_email: email
+                    }, function() {
+                      window.alert("The client has been added to user "+ email);
+                    });
+                  }else{
+                      window.alert("The client is already assigned to user "+ email);
+                  }
                 }
               }
               $scope.deleteClient = function(client) {
