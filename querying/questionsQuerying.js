@@ -50,6 +50,7 @@ exports.getAllResponses = function(res, callback) {
 exports.getAllForms = function(res, callback) {
     knex.select().table('form')
         .distinct('*')
+        .where('Form.active', 1)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
         })
@@ -103,7 +104,7 @@ exports.updateQuestions = function(res, questions, callback) {
     updateTextQuery += " ELSE text END";
     updateGroupQuery += " ELSE group_id END";;
 
-    // TODO Fix this logic. Right now the callback 
+    // TODO Fix this logic. Right now the callback
     // for the first query is the second query. Also
     // There is the possibility for SQL injection here.
     knex.raw(updateTextQuery)
@@ -124,11 +125,21 @@ exports.deleteQuestion = function(id, res, callback) {
     });
 };
 
+// Set the field of a question to inactive
+exports.deleteForm = function(id, res, callback) {
+    knex('form').where('id', id).update({
+        active: 0
+    }).asCallback(function(err, rows) {
+        callback(err, res);
+    });
+};
+
+
 // Add a question to the database. The design currently
-// dictates that there must be an entry in CQR table to 
+// dictates that there must be an entry in CQR table to
 // allow users to "answer questions".
 exports.addQuestion = function(question, res, callback) {
-    
+
     knex('question').insert(question).asCallback(function(err, rows) {
         if (!err) {
             var rawSql = "INSERT INTO ClientQuestionResponse(response_id, question_id, client_id, weight)\

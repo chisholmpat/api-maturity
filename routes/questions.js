@@ -55,6 +55,12 @@ module.exports = function(app) {
         queries.deleteQuestion(req.body.id, res, dbUtils.callbackNoReturn);
     });
 
+    // toggles the active status of a form
+    app.post('/deleteForm', dbUtils.checkAuthenticated, function(req, res) {
+        console.log(req.body);
+        queries.deleteForm(req.body.id, res, dbUtils.callbackNoReturn);
+    });
+
     // get all possible responses
     app.get('/responses', dbUtils.checkAuthenticated, function(req, res) {
         queries.getAllResponses(res, dbUtils.callback);
