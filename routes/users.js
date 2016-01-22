@@ -22,9 +22,6 @@ module.exports = function(app) {
     // return whether or not a particular user has rights to view 
     // a client based on the user's email address.
     app.get('/userauthd', function( req, res) {
-        console.log(req.query);
-        console.log("Email =", req.query.email);
-        console.log("Client =", req.query.client_id);
         queries.checkIfUserCanViewClient(req.query.client_id, req.query.email, res, function(err, res, rows){
             if(rows && rows.length == 1)
                 res.send('1');
@@ -32,4 +29,10 @@ module.exports = function(app) {
                 res.send('0');        
         });    
     });
+
+    // Get the user's role from the database
+    app.get('/role/', function(req, res) {
+        queries.getUserRole(req.user.email, res, dbUtils.callback);
+    });
+
 }

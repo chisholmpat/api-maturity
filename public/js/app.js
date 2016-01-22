@@ -5,6 +5,7 @@ var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource', , 'ui.b
 // Logic for handling login.
 myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
+
     // Function which gits the backend in order to get credentials.
     // For more information about promises checkout this blog entry.
     // http://johnmunsch.com/2013/07/17/angularjs-services-and-promises/
@@ -41,6 +42,78 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         return deferred.promise;
     };
 
+
+    // Checks if the user is an admin, used for controlling access to 
+    // resources which only an admin 
+    var userIsAdmin = function($q, $timeout, $http, $location, $rootScope) {
+
+        var deferred = $q.defer(); // expose the promise object
+        var admin = false; // set admin to false by  default
+
+        // Query the backend to get the role of the user.
+        $http.get('/role').success(function(role) {
+
+            // If they do not have access then they are redirected
+            // to the root of the application.
+            if (role == "admin") {
+                deferred.resolve();
+            } else {
+                deferred.reject();
+                $location.url('/');
+            }
+        });
+
+        return deferred.promise;
+    }
+
+
+    // Checks if the user is an admin, used for controlling access to 
+    // resources which only an admin 
+    var userIsUser= function($q, $timeout, $http, $location, $rootScope) {
+
+        var deferred = $q.defer(); // expose the promise object
+        var admin = false; // set admin to false by  default
+
+        // Query the backend to get the role of the user.
+        $http.get('/role').success(function(role) {
+
+            // If they do not have access then they are redirected
+            // to the root of the application.
+            if (role == "user" || role == "admin") {
+                deferred.resolve();
+            } else {
+                deferred.reject();
+                $location.url('/');
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    // Checks if the user is an admin, used for controlling access to 
+    // resources which only an admin 
+    var userIsClient = function($q, $timeout, $http, $location, $rootScope) {
+
+        var deferred = $q.defer(); // expose the promise object
+        var admin = false; // set admin to false by  default
+
+        // Query the backend to get the role of the user.
+        $http.get('/role').success(function(role) {
+
+            // If they do not have access then they are redirected
+            // to the root of the application.
+            if (role == "client" || role == "user" || role == "admin") {
+                deferred.resolve();
+            } else {
+                deferred.reject();
+                $location.url('/');
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    // Checks if the user is an admin
     // INTERCEPTOR
     // The interceptor takes the promise object and returns
     // the resolved promise (think of it as sort of like a callback.
@@ -96,14 +169,16 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/questionnaire/questionnaire.html',
         controller: 'QuestionController', // For testing route parameters.
         resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
+            userIsUser: userIsUser
         }
     }).
     when('/clients', {
         templateUrl: '/views/clients/clients.html',
         controller: 'ClientsController',
         resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
+            userIsUser: userIsUser
         }
     }).
 
@@ -111,56 +186,65 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/user/user.html',
         controller: 'UserController'
     }).
+
     when('/ibmlogin', {
         templateUrl: '/views/user/ibmuser.html',
         controller: 'EditUserController'
     }).
+
     when('/add_client', {
         templateUrl: '/views/clients/add_client.html',
         controller: 'AddClientController',
         resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
+            userIsUser: userIsUser
         }
     }).
     when('/edit_client/:client_id', {
         templateUrl: '/views/clients/add_client.html',
         controller: 'AddClientController',
         resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
+            userIsUser: userIsUser
+
         }
     }).
     when('/edit_questions/:form_id', {
         templateUrl: '/views/questionnaire/edit_questions.html',
         controller: 'EditQuestionsController',
         resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
+            isAdmin: userIsAdmin
         }
     }).
     when('/add_user/', {
         templateUrl: '/views/user/add_user.html',
         controller: 'AddUserController',
         resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
+            isAdmin: userIsAdmin
         }
     }).
     when('/forms/', {
         templateUrl: '/views/questionnaire/list_forms.html',
         controller: 'ListFormsController',
         resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
+            isAdmin: userIsAdmin
         }
     }).
     when('/howto/', {
         templateUrl: '/views/welcome/howto.html',
         controller: 'HomePageController',
         resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
+            userIsUser: userIsUser
         }
     }).
     otherwise({
         redirectTo: '/home'
     });
-// http://stackoverflow.com/questions/20663076/angularjs-app-run-documentation
+    // http://stackoverflow.com/questions/20663076/angularjs-app-run-documentation
 }).run(function($rootScope, $http) {
     $rootScope.logout = function() {
         $http.post('/logout');
