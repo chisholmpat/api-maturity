@@ -50,7 +50,7 @@
     module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
 
-            // For toggling visibility of add question drop down 
+            // For toggling visibility of add question drop down
             $scope.addQuestion = false;
 
             // Updates the question on the form.
@@ -68,7 +68,7 @@
             // Function for saving question
             $scope.saveQuestion = function(question) {
 
-          
+
                 question.category_id = 1; // questions can either be SA or QA, QA = 1
                 question.form_id = $routeParams.form_id;
 
@@ -135,6 +135,18 @@
     module.controller('ListFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
             $scope.forms = QuestionStore.formsConn.query({}, function() {});
+            // Sets a form's active field to inactive
+            $scope.deleteForm = function(form) {
+                console.log("form"+form);
+                if (confirm('Are you sure you want to delete this form ?')) {
+                    QuestionStore.deleteFormConn.save({
+                        id: form.id
+                    }, function() {
+                        var index = $scope.forms.indexOf(form);
+                        $scope.forms.splice(index, 1);
+                    });
+                }
+            };
         }
     ]);
 

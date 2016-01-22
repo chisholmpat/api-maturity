@@ -9,6 +9,7 @@
         this.formsConn = $resource('/forms');
         this.updateQuestionsConn = $resource('/update_questions');
         this.deleteQuestionConn = $resource('/deleteQuestion');
+        this.deleteFormConn = $resource('/deleteForm');
         this.addQuestionConn = $resource('/addQuestion');
     }]);
 })();
