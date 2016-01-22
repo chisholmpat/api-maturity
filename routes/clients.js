@@ -1,5 +1,7 @@
+// Module for handling actions related to clients.
 module.exports = function(app) {
 
+    // dependencies
     var queries = require('../querying/clientQuerying');
     var userQueries = require('../querying/usersQuerying');
     var dbUtils = require('../helpers/db_util');
@@ -60,5 +62,9 @@ module.exports = function(app) {
         })
     });
 
+    // get clientID from client table
+    app.get('/getClientID/:client_name/', dbUtils.checkAuthenticated, function(req, res) {
+        queries.getClientID(req.params.client_name, res, dbUtils.callback);
+    });
 
 };

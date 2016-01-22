@@ -13,7 +13,6 @@ exports.userloginvalidate = function(username, password) {
 
 };
 
-
 // Add a user to the DB
 exports.addUser = function(user, res, callback) {
     user.salt = Math.random().toString(36).slice(2);
@@ -39,5 +38,17 @@ exports.getUsers = function(res, callback) {
     knex('users').select('').asCallback(function(err, rows) {
         callback(err, res, rows);
     });
+}
+
+exports.getUserRole = function(email, res, callback) {
+
+    knex('users').select('roles.role').where('users.email', email)
+    .innerJoin('roles', 'users.role_id', 'roles.id').asCallback(function(err, rows){
+
+        if(rows)
+        callback(err, res, rows[0].role);
+        else
+        callback(err, res);
+    });   
 }
 

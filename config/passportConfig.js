@@ -29,10 +29,10 @@ module.exports = function(passport) {
         function(username, password, done) {
 
             // Query the DB for the user.
-            knex.select('').from('users')
+            knex.select('username', 'email', 'password', 'salt', 'roles.role').from('users')
             .where('username', username)
+            .innerJoin('roles', 'users.role_id', 'roles.id')
             .asCallback(function(err, rows) {
-
                     // If the user is found return a result for username.
                     if (rows && rows.length !== 0) {
                         user = rows[0];
