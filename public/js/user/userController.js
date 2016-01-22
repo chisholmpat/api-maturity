@@ -60,7 +60,7 @@
                     UserStore.updateUser.save({
                         user : $scope.editing
                     }, function() {
-                        $scope.result = "User Updated";
+                        $scope.allUsers = "";
                         $scope.allUsers = UserStore.getUsers.query();
                     })
 

@@ -16,7 +16,7 @@ module.exports = function(app) {
 
     // update a user in the database
     app.post("/update_user", function(req, res) {
-        queries.updateUser(req.body.user, res, dbUtil.callbackNoResults);
+        queries.updateUser(req.body.user, res, dbUtils.callbackNoResults);
     });
 
     // return whether or not a particular user has rights to view 

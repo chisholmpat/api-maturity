@@ -36,7 +36,7 @@ exports.addUser = function(user, res, callback) {
             var userID = rows[0].id;
 
 
-            var roleQuery = knex('roles').select('id').where('role', user.role).asCallback(function(err, rows) {
+            knex('roles').select('id').where('role', user.role).asCallback(function(err, rows) {
                 knex('users').where('id', userID).update({
                     role_id: rows[0].id
                 }).asCallback(function(err, rows) {
@@ -51,9 +51,23 @@ exports.addUser = function(user, res, callback) {
 // Updating a user in the DB
 exports.updateUser = function(user, res, callback) {
 
-    console.log(JSON.stringify(user));
-    knex('users').where('id', user.id).update(user).asCallback(function(err, rows) {
-        callback(err, res, rows);
+    knex('users').where('id', user.id).update({
+        username: user.username,
+        password: user.password,
+        salt: user.salt,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        role: "NONE"
+    }).asCallback(function(err, rows) {
+        knex('roles').select('id').where('role', user.role).asCallback(function(err, rows) {
+            knex('users').where('id', userID).update({
+                role_id: rows[0].id
+            }).asCallback(function(err, rows) {
+                callback(err, res);
+            });
+
+        });
     });
 }
 
