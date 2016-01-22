@@ -1,4 +1,5 @@
 var knex = require("../db/db.js").knex; // data connection
+var dbUtils = require("../helpers/db_util");
 
 // Insert a new customer into the database.
 // TODO A current flaw in the database/application design

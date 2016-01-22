@@ -1,13 +1,13 @@
 // Call back function from the database call. Used to send either the results
 // to the response or to send an error string to the response.
 // Dependencies
+
 var queries = require('../querying/usersQuerying');
 var knex = require("../db/db.js").knex;
 var passwordHelper = require('../helpers/password');
+
 // VCAP_SERVICES contains all the credentials of services bound to
-
 // this application. For details of its content, please refer to
-
 // the document or sample of each service.
 
 var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
@@ -21,6 +21,7 @@ if (process.env.VCAP_SERVICES) {
     var issuer_id = ssoConfig.credentials.issuerIdentifier;
     var callback_url = "https://bmix-essential.mybluemix.net/auth/sso/callback";
 }
+
 
 module.exports = function(passport) {
 
@@ -75,7 +76,7 @@ module.exports = function(passport) {
                     profile.accessToken = accessToken;
                     profile.refreshToken = refreshToken;
                     profile.name = "Testing";
-                    profile.role = "admin";
+                    profile.role = "user";
                     profile.isIBM = '1';
                     profile.email = profile.emailaddress;
                     console.log(profile.emailaddress);

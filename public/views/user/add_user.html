@@ -14,27 +14,26 @@
         </div>
         <div class="form-group">
             <!-- Last Name -->
-            <label>email</label>
-            <input class="form-control" type="email" ng-model="editing.email" />
-        </div>
-        <div class="form-group">
-            <!-- Last Name -->
             <label>Last Name:</label>
             <input class="form-control" type="text" ng-model="editing.lastname" />
         </div>
         <div class="form-group">
+            <!-- Last Name -->
+            <label>Email</label>
+            <input class="form-control" type="email" ng-model="editing.email" />
+        </div>
+
+        <div class="form-group" ng-hide=editing.id>
             <!-- Password -->
             <label>Password:</label>
             <input class="form-control" type="password" ng-model="editing.password">
         </div>
         <!-- Role -->
-        <div class="form-group radioButtons">
-            <p>
-                Role:
-            </p>
-            <label data-ng-repeat="role in ['admin', 'user']">
-                <input name="currentActivity" type="radio" value="{{role}}" ng-model="editing.role" required /><span>{{role}}</span>
-            </label>
+        <div class="form-group">
+
+            Role:
+
+            <select ng-model="editing.role_id" ng-options="role.id as (role.role | uppercase) for role in roles"></select>
         </div>
 
         <!-- Userlist -->
@@ -47,5 +46,4 @@
 
     </form>
 
-    <h1> {{result}} </h1>
 </div>

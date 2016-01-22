@@ -13,7 +13,6 @@ module.exports = function(app) {
 
     // update client
     app.post('/updateClient', dbUtils.checkAuthenticated, function(req, res) {
-
         dbUtils.userCanViewClient(req.body.client.id, req.user.email, function(err, permitted) {
             if (permitted)
                 queries.updateClient(req.body.client, res, dbUtils.callbackNoReturn);
@@ -44,7 +43,7 @@ module.exports = function(app) {
 
     //get a list of all clients owned by the user_email
     app.get('/getAllClientsOwnedByUser', dbUtils.checkAuthenticated, function(req, res) {
-      console.log(req.user.email);
+        console.log(req.user.email);
         queries.getAllClientsOwnedByUser(req.user.email, res, dbUtils.callback);
     });
 
@@ -54,6 +53,7 @@ module.exports = function(app) {
     });
     // used to set the status of the client to active or inactive
     app.post('/deleteClient', dbUtils.checkAuthenticated, function(req, res) {
+        
         dbUtils.userCanViewClient(req.body.id, req.user.email, function(err, permitted) {
             if (permitted)
                 queries.setClientInactive(req.body.id, req.body.status, res, dbUtils.callbackNoReturn);

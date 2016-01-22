@@ -13,37 +13,15 @@ exports.userloginvalidate = function(username, password) {
 
 };
 
-// Add a user to the DB
+// Add a user to the database. Additionally the role needs to be 
+// looked up when inserted. I will change this by offering the role_id
+// as a parameter to this function rather than having to do a query for it.
 exports.addUser = function(user, res, callback) {
     user.salt = Math.random().toString(36).slice(2);
     passwordHelper.hash(user.password, user.salt, function(err, result) {
-
         user.password = result;
-
-        knex('users').insert({
-            username: user.username,
-            password: user.password,
-            salt: user.salt,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            role: "NONE"
-        }).asCallback(function(err, rows) {
-
-            console.log(err);
-            console.log(rows);
-
-            var userID = rows[0].id;
-
-
-            knex('roles').select('id').where('role', user.role).asCallback(function(err, rows) {
-                knex('users').where('id', userID).update({
-                    role_id: rows[0].id
-                }).asCallback(function(err, rows) {
+        knex('users').insert(user).asCallback(function(err, rows) {
                     callback(err, res);
-                });
-            });
-
         });
     });
 };
@@ -51,23 +29,8 @@ exports.addUser = function(user, res, callback) {
 // Updating a user in the DB
 exports.updateUser = function(user, res, callback) {
 
-    knex('users').where('id', user.id).update({
-        username: user.username,
-        password: user.password,
-        salt: user.salt,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-        role: "NONE"
-    }).asCallback(function(err, rows) {
-        knex('roles').select('id').where('role', user.role).asCallback(function(err, rows) {
-            knex('users').where('id', userID).update({
-                role_id: rows[0].id
-            }).asCallback(function(err, rows) {
-                callback(err, res);
-            });
-
-        });
+    knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
+        callback(err, res);
     });
 }
 
@@ -78,6 +41,7 @@ exports.getUsers = function(res, callback) {
     });
 }
 
+// Retrieve the role of the user from the database.
 exports.getUserRole = function(email, res, callback) {
 
     knex('users').select('roles.role').where('users.email', email)
@@ -88,4 +52,12 @@ exports.getUserRole = function(email, res, callback) {
             else
                 callback(err, res);
         });
+}
+
+// Gets all the roles for use in creating users.
+exports.getRoles = function(res, callback) {
+    knex('roles').select('').asCallback(function(err, rows) {
+        console.log(err);
+        callback(err, res, rows);
+    });
 }
