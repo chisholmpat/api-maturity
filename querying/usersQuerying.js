@@ -17,9 +17,33 @@ exports.userloginvalidate = function(username, password) {
 exports.addUser = function(user, res, callback) {
     user.salt = Math.random().toString(36).slice(2);
     passwordHelper.hash(user.password, user.salt, function(err, result) {
+
         user.password = result;
-        knex('users').insert(user).asCallback(function(err, rows) {
-            callback(err, res);
+
+        knex('users').insert({
+            username: user.username,
+            password: user.password,
+            salt: user.salt,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            role: "NONE"
+        }).asCallback(function(err, rows) {
+
+            console.log(err);
+            console.log(rows);
+
+            var userID = rows[0].id;
+
+
+            var roleQuery = knex('roles').select('id').where('role', user.role).asCallback(function(err, rows) {
+                knex('users').where('id', userID).update({
+                    role_id: rows[0].id
+                }).asCallback(function(err, rows) {
+                    callback(err, res);
+                });
+            });
+
         });
     });
 };
@@ -43,12 +67,11 @@ exports.getUsers = function(res, callback) {
 exports.getUserRole = function(email, res, callback) {
 
     knex('users').select('roles.role').where('users.email', email)
-    .innerJoin('roles', 'users.role_id', 'roles.id').asCallback(function(err, rows){
+        .innerJoin('roles', 'users.role_id', 'roles.id').asCallback(function(err, rows) {
 
-        if(rows)
-        callback(err, res, rows[0].role);
-        else
-        callback(err, res);
-    });   
+            if (rows)
+                callback(err, res, rows[0].role);
+            else
+                callback(err, res);
+        });
 }
-
