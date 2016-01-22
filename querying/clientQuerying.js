@@ -24,7 +24,8 @@ exports.insertClient = function(client, email, res, callback) {
       console.log(rows);
       knex('userclients').insert({
         client_id: rows[0],
-        email: email}
+        email: email,
+        isOwner: true}
       ).asCallback(function(err, rows){
         console.log(err);
         console.log(rows);

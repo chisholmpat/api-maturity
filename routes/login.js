@@ -7,6 +7,7 @@ module.exports = function(app, passport) {
 
     // route to log out
     app.post('/logout', function(req, res) {
+        console.log(req);
         req.logOut();
         res.send(200);
     });
@@ -30,13 +31,6 @@ module.exports = function(app, passport) {
             successRedirect: '/#',
             failureRedirect: 'http://bmix-essential.mybluemix.net/#/ibmlogin',
         })(req, res, next);
-    });
-
-    // route to log out
-    app.post('/logout', function(req, res) {
-        console.log("Logging out!");
-        req.logOut();
-        res.send(200);
     });
 
     // route to add user to the database
