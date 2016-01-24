@@ -4,17 +4,14 @@ var knex = require("../db/db.js").knex; // database connection
 module.exports.checkAuthenticated = function isAuthenticated(req, res, next) {
     if (req.isAuthenticated())
         return next();
-
     res.redirect('/');
 }
 
 // callback for queries with a result return
 module.exports.callback = function callback(err, res, results) {
     if (!err) {
-        console.log(results);
         res.send(results);
     } else {
-        console.log(err);
         res.send('400', err);
     }
 };
@@ -24,7 +21,6 @@ module.exports.callbackNoReturn = function callbackNoResults(err, res) {
     if (!err) {
         res.send('200');
     } else {
-        console.log(err);
         res.send('400', err);
     }
 };

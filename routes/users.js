@@ -32,7 +32,10 @@ module.exports = function(app) {
 
     // get the user's role from the database
     app.get('/role/', function(req, res) {
+        if(req.user && req.user.email)
         queries.getUserRole(req.user.email, res, dbUtils.callback);
+        else
+        res.send(403, 'No User Email');
     });
 
     // get all roles from the database
