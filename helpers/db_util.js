@@ -29,8 +29,6 @@ module.exports.callbackNoReturn = function callbackNoResults(err, res) {
 module.exports.userCanViewClient = function(client_id, email, callback) {
     knex('userclients').select('').where('client_id', client_id).where('email', email)
     .asCallback(function(err, rows) {
-        console.log("Checking user permissions for " + client_id + " and email " + email);
-        console.log(rows);
         var permitted = rows && rows.length == 1;
         callback(err, permitted);
     });

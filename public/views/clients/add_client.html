@@ -81,7 +81,8 @@
 
   <!-- SUBMIT BUTTON -->
   <button data-ng-disabled="!userForm.$valid" data-ng-click="submit()" class="btn btn-default">Submit</button>
-  <select ng-model="client" ng-options="client.name for client in clients" ng-change="onChange()"> <option value="">New Client</option></select>
+  <select ng-show="clients.length != 0" ng-model="client" ng-options="client.name for client in clients" ng-change="onChange()"> <option value="">New Client</option></select>
 
 </form>
+{{clients}}
 </div>

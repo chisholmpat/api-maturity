@@ -81,7 +81,7 @@
     module.controller('AddClientController', ['$scope', 'ClientsStore', '$window',
         function($scope, ClientsStore, $window) {
 
-            $scope.clients = ClientsStore.getClientsConn.query();
+            $scope.clients = ClientsStore.allClientInfoOwnedByUserConn.query({});  
             $scope.editing = {}; // model to hold edited fields
             $scope.integerval = /^\d*$/;
             // Handles populating the "editing" model

@@ -12,6 +12,7 @@
             this.deleteClientConn = $resource('/deleteClient');
             this.getAllCliendIDsAndEmailsConn = $resource('/getAllCliendIDsAndEmails');
             this.allClientsOwnedByUserConn = $resource('/getAllClientsOwnedByUser')
+            this.allClientInfoOwnedByUserConn = $resource('/clientDetailsOwnedByUser');
         }
     ]);
 })();
