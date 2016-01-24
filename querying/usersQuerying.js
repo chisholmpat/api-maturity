@@ -57,7 +57,6 @@ exports.getUserRole = function(email, res, callback) {
 // Gets all the roles for use in creating users.
 exports.getRoles = function(res, callback) {
     knex('roles').select('').asCallback(function(err, rows) {
-        console.log(err);
         callback(err, res, rows);
     });
 }

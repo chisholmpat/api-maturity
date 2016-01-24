@@ -51,13 +51,11 @@ module.exports = function(app) {
 
     // toggles the active status of a question
     app.post('/deleteQuestion', dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.body);
         queries.deleteQuestion(req.body.id, res, dbUtils.callbackNoReturn);
     });
 
     // toggles the active status of a form
     app.post('/deleteForm', dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.body);
         queries.deleteForm(req.body.id, res, dbUtils.callbackNoReturn);
     });
 
@@ -88,7 +86,6 @@ module.exports = function(app) {
 
     // add question to database
     app.post("/addQuestion", dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.body);
         queries.addQuestion(req.body.question, res, dbUtils.callbackNoReturn);
     });
 

@@ -33,7 +33,6 @@
             $scope.editing = {}; // model to hold edited fields
             $scope.allUsers = UserStore.getUsers.query();
             $scope.defaultRoleID = "";
-            console.log($scope.allUsers);
             $scope.roles = UserStore.getUserRoles.query({}, function(results) {
                 $scope.defaultRoleID = results[0].id;
                 $scope.editing.role_id = $scope.defaultRoleID
@@ -45,8 +44,6 @@
             // user in the select field or emptying it
             // if there is no user selected.
             $scope.onChange = function() {
-                console.log($scope.aUser);
-                console.log($scope.roles);
                 if ($scope.aUser) {
                     for (key in ($scope.aUser))
                         $scope.editing[key] = $scope.aUser[key];
@@ -65,7 +62,6 @@
 
 
                 if ($scope.aUser) {
-                    console.log("Updating user.");
                     // Handle Updating Client
                     UserStore.updateUser.save({
                         user: $scope.editing
@@ -75,8 +71,6 @@
                     })
 
                 } else {
-                    console.log("Adding user.");
-                    console.log($scope.editing);
                     UserStore.addUser.save({
                         user: $scope.editing
                     }, function() {

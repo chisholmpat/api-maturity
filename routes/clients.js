@@ -43,7 +43,6 @@ module.exports = function(app) {
 
     //get a list of all clients owned by the user_email
     app.get('/getAllClientsOwnedByUser', dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.user.email);
         queries.getAllClientsOwnedByUser(req.user.email, res, dbUtils.callback);
     });
 

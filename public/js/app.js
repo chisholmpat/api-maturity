@@ -23,7 +23,6 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                 $rootScope.message = "Login Successful"
                 $rootScope.role = user.role;
                 $rootScope.isIBM = user.isIBM;
-                console.log(user.role);
                 $rootScope.isLoggedIn = true;
             }
 
@@ -34,8 +33,6 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                 $rootScope.isLoggedIn = false;
                 $location.url('/login');
             }
-
-            console.log($rootScope.isLoggedIn);
         });
 
         // Return the promise

@@ -7,7 +7,6 @@ module.exports = function(app, passport) {
 
     // route to log out
     app.post('/logout', function(req, res) {
-        console.log(req);
         req.logOut();
         res.send(200);
     });
@@ -37,8 +36,7 @@ module.exports = function(app, passport) {
     app.post('/add_user', function(req, res) {
         queries.addUser(req.body.user, res, function(err, res) {
             if (err) {
-                console.log(err);
-                res.send(400);
+                res.send(400, err);
             } else {
                 res.send(200);
             }

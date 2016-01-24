@@ -21,16 +21,12 @@ exports.insertClient = function(client, email, res, callback) {
 
     // Insert the client object from the post directly.
     knex('Client').insert(client).asCallback(function(err, rows) {
-      console.log(err);
-      console.log(rows);
       knex('userclients').insert({
         client_id: rows[0],
         email: email,
         isOwner: true}
-      ).asCallback(function(err, rows){
-        console.log(err);
-        console.log(rows);
-      });
+      ).asCallback(function(err, rows){});
+
         // Once the FK constraint has been satisfied, add rows to CQR.
         knex.raw(saQuestionQuery).asCallback(function(err, rows) {
             knex.raw(qaQuestionQuery).asCallback(function(err, rows) {
@@ -44,7 +40,6 @@ exports.insertClient = function(client, email, res, callback) {
 exports.updateClient = function(client, res, callback) {
     knex('client').where('Client.id', client.id).update(client).asCallback(function(err, rows) {
         callback(err, res, rows);
-        console.log(rows);
     });
 };
 
@@ -68,7 +63,6 @@ exports.getClients = function(email, res, callback) {
     knex.select('Client.*').select('Client.id').from('client').where('userclients.email', email).where('client.active', 1)
     .innerJoin('userclients', 'client.id', 'userclients.client_id')
         .asCallback(function(err, rows) {
-            console.log(rows);
             callback(err, res, rows);
         })
 };
@@ -79,7 +73,6 @@ exports.getAllUserEmails = function(res, callback) {
       .select()
         .from('userclients')
           .asCallback(function(err, rows) {
-              console.log(rows);
               callback(err, res, rows);
           })
 };
@@ -89,7 +82,6 @@ exports.getAllClientIDsAndEmails= function(res, callback) {
     knex.select('email', 'client_id')
         .from('userclients')
           .asCallback(function(err, rows) {
-              console.log(rows);
               callback(err, res, rows);
           })
 };
@@ -101,7 +93,6 @@ exports.getAllClientsOwnedByUser= function(email, res, callback) {
             .from('userclients')
               .where({ email: email, isOwner: true})
               .asCallback(function(err, rows) {
-                  console.log(rows);
                   callback(err, res, rows);
               })
 };
@@ -112,7 +103,6 @@ exports.addClientToUser = function(client_id, user_email, res, callback) {
   // Insert the clinet_id, user_email
   knex('userclients').insert({client_id: client_id, email: user_email})
     .asCallback(function(err, rows) {
-        console.log(rows);
         callback(err, res, rows);
     })
 };

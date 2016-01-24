@@ -39,7 +39,6 @@
                         client_id: $routeParams.client_id
                     },
                     function() {
-                        console.log("Testing!");
                         $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
                     });
             }
@@ -137,7 +136,6 @@
             $scope.forms = QuestionStore.formsConn.query({}, function() {});
             // Sets a form's active field to inactive
             $scope.deleteForm = function(form) {
-                console.log("form"+form);
                 if (confirm('Are you sure you want to delete this form ?')) {
                     QuestionStore.deleteFormConn.save({
                         id: form.id
