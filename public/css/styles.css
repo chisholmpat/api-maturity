@@ -327,4 +327,14 @@ div.form-group.radioButtons label {
   div.form-group.radioButtons label span {
     padding: .6rem; }
 
+#loadingdiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: grey;
+  opacity: .8; }
+
 /*# sourceMappingURL=styles.css.map */
