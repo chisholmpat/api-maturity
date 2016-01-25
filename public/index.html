@@ -2,106 +2,114 @@
 <html ng-app="app" ng-cloak>
 
 <head>
-  <title>API Maturity</title>
-  <!-- <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' /> -->
-  <link rel="stylesheet" href="/css/bootstrap.css">
-  <link href="css/simple-sidebar.css" rel="stylesheet">
-  <link rel='stylesheet' href='css/styles.css' />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>API Maturity</title>
+    <!-- <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' /> -->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link rel='stylesheet' href='css/styles.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body ng-cloak>
 
 
-  <div ng-http-loader template="views/loader/loading.html"></div> 
+    <div ng-http-loader template="views/loader/loading.html"></div>
 
 
-  <div id="wrapper">
+    <div id="wrapper">
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
 
-      <div class="headerHeight">
-        <a href="#home"><h1>API Maturity</h1></a>
-      </div>
-      <div>
-        <ul class="sidebar-nav">
-          <div ng-show="isLoggedIn">
-            <li>
-              <a href="#howto">How-To</a>
-            </li>
-            <li>
-              <a href="#clients">Clients</a>
-            </li>
-            <div ng-controller="MenuController">
-              <li ng-show="role === 'admin'">
-                <a class="brand" ng-click="isCollapsed = !isCollapsed">Admin</a>
-                <div class="nav-collapse" collapse="isCollapsed">
-                  <ul class="nav">
-                    <li><a href="#forms">Edit Forms</a></li>
-                    <li><a href="#add_user">Edit Users</a></li> 
-                    <li><a href="#add_client">Edit Clients</a></li>
-                  </ul>
-                </div>
-              </li>
+            <div class="headerHeight">
+                <a href="#home"><h1>API Maturity</h1></a>
             </div>
-          </div>
-          <li>
-            <a href="#login" ng-show="!isLoggedIn">Login</a>
-          </li>
-          <li>
-          <a href="/ibmlogin" ng-show="!isLoggedIn">IBMLogin</a>
-          </li>
-          <li>
-          <a href="#/" ng-click="logout()" ng-show="isLoggedIn" ng-hide="isIBM === '1'"> Logout </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      <div class="headerHeight">
-        <div>
-          <h2>Welcome, Practitioner </h2><img src="./images/API Maturity_avatar.png" alt="" /></div>
-      </div>
-
-      <div class="container-fluid">
-        <div class="row">
-          <ng-view></ng-view>
+            <div>
+                <ul class="sidebar-nav">
+                    <div ng-show="isLoggedIn">
+                        <li>
+                            <a href="#howto">How-To</a>
+                        </li>
+                        <li>
+                            <a href="#clients">Clients</a>
+                        </li>
+                        <div ng-controller="MenuController">
+                            <li ng-show="role === 'admin'">
+                                <a class="brand" ng-click="isCollapsed = !isCollapsed">Admin</a>
+                                <div class="nav-collapse" collapse="isCollapsed">
+                                    <ul class="nav">
+                                        <li><a href="#forms">Edit Forms</a>
+                                        </li>
+                                        <li><a href="#add_user">Edit Users</a>
+                                        </li>
+                                        <li><a href="#add_client">Edit Clients</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                    <li>
+                        <a href="#login" ng-show="!isLoggedIn">Login</a>
+                    </li>
+                    <li>
+                        <a href="/ibmlogin" ng-show="!isLoggedIn">IBMLogin</a>
+                    </li>
+                    <li>
+                        <a href="#/" ng-click="logout()" ng-show="isLoggedIn" ng-hide="isIBM === '1'"> Logout </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="headerHeight">
+                <div>
+                    <h2>Welcome, Practitioner </h2>
+                    <img src="./images/API Maturity_avatar.png" alt="" />
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <ng-view></ng-view>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
     </div>
-    <!-- /#page-content-wrapper -->
 
-  </div>
-
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="bower_components/angular-resource/angular-resource.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script src="bower_components/angular-animate/angular-animate.js"> </script>
-  <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
-  <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
-  <script src="bower_components/Chart.js/Chart.min.js"></script>
-  <script src="bower_components/angular-http-loader/app/package/js/angular-http-loader.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/questionnaire/questionnaireController.js"></script>
-  <script src="js/questionnaire/questionnaireService.js"></script>
-  <script src="js/results/resultsController.js"></script>
-  <script src="js/results/resultsService.js"></script>
-  <script src="js/clients/clientsController.js"></script>
-  <script src="js/clients/clientsService.js"></script>
-  <script src="js/user/userController.js"></script>
-  <script src="js/user/userService.js"></script>
-  <script src=http://code.jquery.com/jquery-2.1.4.min.js></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
-    google.charts.load('current', {
-      'packages': ['gauge']
-    });
-  </script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js">
+    </script>
+    <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="bower_components/Chart.js/Chart.min.js"></script>
+    <script src="bower_components/angular-http-loader/app/package/js/angular-http-loader.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/questionnaire/questionnaireController.js"></script>
+    <script src="js/questionnaire/questionnaireService.js"></script>
+    <script src="js/results/resultsController.js"></script>
+    <script src="js/results/resultsService.js"></script>
+    <script src="js/clients/clientsController.js"></script>
+    <script src="js/clients/clientsService.js"></script>
+    <script src="js/user/userController.js"></script>
+    <script src="js/user/userService.js"></script>
+    <script src="js/user/userDirectives.js"></script>
+    <script src=http://code.jquery.com/jquery-2.1.4.min.js></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current',
+        {
+            'packages': ['gauge']
+        });
+    </script>
 </body>
 
 </html>
