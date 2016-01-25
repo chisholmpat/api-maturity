@@ -5,8 +5,9 @@ var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource','ng.http
 
 myApp.config(['httpMethodInterceptorProvider',
   function (httpMethodInterceptorProvider) {
-  httpMethodInterceptorProvider.whitelistDomain('twitter.com');
+  httpMethodInterceptorProvider.whitelistDomain('bmix-essential.mybluemix.net');
   httpMethodInterceptorProvider.whitelistLocalRequests();
+
   // ...
  }
 ]);
