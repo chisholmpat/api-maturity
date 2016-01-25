@@ -1,5 +1,12 @@
 <div class="col-lg-12">
 <h1>Forms</h1>
+<div class="form-group headings">
+    <div> <input type="button" ng-click="toggleAddFormVisibility()" value="{{!addForm && 'Add'||'Cancel'}}"> </input> </div>
+</div>
+<div ng-show="addForm" class="form-group addQuestion">
+    <div><input type="text" class="form-control" ng-model="newForm.text"> </td></div>
+    <div><input type="button" ng-click="saveForm(newForm)" value="Add"></input></div>
+</div>
 <div ng-repeat="form in forms">
   <div>
      <a href="/#/edit_questions/{{form.id}}"> {{form.name}} </a>

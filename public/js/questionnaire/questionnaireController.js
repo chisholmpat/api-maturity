@@ -40,7 +40,7 @@
                     },
                     function() {
                         $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
-                    });
+                });
             }
         }
     ]);
@@ -74,7 +74,6 @@
                 // Call to the backend
                 QuestionStore.addQuestionConn.save({
                     question: question
-
                 }, function() {
 
                     // Refresh the list and clear the input box
@@ -114,7 +113,6 @@
                 }, function() {
                     $scope.changeRoute('#/forms/');
                 });
-
             }
 
             // For re-routing the request
@@ -133,7 +131,10 @@
     // Controller for handling listing all the forms.
     module.controller('ListFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
+
+            // Retrive all Forms
             $scope.forms = QuestionStore.formsConn.query({}, function() {});
+
             // Sets a form's active field to inactive
             $scope.deleteForm = function(form) {
                 if (confirm('Are you sure you want to delete this form ?')) {
@@ -144,6 +145,30 @@
                         $scope.forms.splice(index, 1);
                     });
                 }
+            };
+
+            // For toggling visibility of add question drop down
+            $scope.addForm = false;
+
+            // Updates the question on the form.
+            var refreshForms = function() {
+                $scope.forms = QuestionStore.formsConn.query({});
+            }
+
+            // Onclick method for toggling visibility
+            $scope.toggleAddFormVisibility = function() {
+                $scope.addForm = !$scope.addForm;
+            };
+
+            // Function for saving a new form
+            $scope.saveForm = function(formName) {
+                // Call to the backend
+                QuestionStore.addFormConn.save({
+                    formName: formName.text
+                }, function() {
+                    // Update the forms array
+                    refreshForms();
+                })
             };
         }
     ]);

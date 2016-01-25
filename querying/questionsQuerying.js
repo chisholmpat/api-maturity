@@ -125,6 +125,8 @@ exports.deleteQuestion = function(id, res, callback) {
     });
 };
 
+
+
 // Set the field of a question to inactive
 exports.deleteForm = function(id, res, callback) {
     knex('form').where('id', id).update({
@@ -151,4 +153,17 @@ exports.addQuestion = function(question, res, callback) {
         }
     });
 
+}
+
+// Add a new form to the form table
+//By default the form is set to isActive = true
+
+exports.addForm = function(formName, res, callback) {
+  console.log("reached Add Forms query " + formName);
+  knex('form').insert({
+      name: formName
+  })
+  .asCallback(function(err, rows) {
+      callback(err, res, rows);
+  })
 }
