@@ -18,7 +18,8 @@
 
         <div class="form-group" ng-repeat="question in questions |  filter: { category_id: '1', active: '1' } ">
             <div>
-                <input type="text" class="form-control" ng-model="question.text">
+                <input type="text" class="form-control" ng-model="question.text" required>
+
             </div>
             <div>
                 <select ng-model="question.group_id" ng-options="grouping.id as grouping.name for grouping in groupings"></select>
