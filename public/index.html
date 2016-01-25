@@ -12,6 +12,10 @@
 
 <body ng-cloak>
 
+
+  <div ng-http-loader template="views/loader/loading.html"></div> 
+
+
   <div id="wrapper">
 
     <!-- Sidebar -->
@@ -81,6 +85,7 @@
   <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
   <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
   <script src="bower_components/Chart.js/Chart.min.js"></script>
+  <script src="bower_components/angular-http-loader/app/package/js/angular-http-loader.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/questionnaire/questionnaireController.js"></script>
   <script src="js/questionnaire/questionnaireService.js"></script>

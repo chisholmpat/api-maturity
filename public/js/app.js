@@ -1,6 +1,15 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
-var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource', , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
+var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource','ng.httpLoader' , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule']);
+
+
+myApp.config(['httpMethodInterceptorProvider',
+  function (httpMethodInterceptorProvider) {
+  httpMethodInterceptorProvider.whitelistDomain('twitter.com');
+  httpMethodInterceptorProvider.whitelistLocalRequests();
+  // ...
+ }
+]);
 
 // Logic for handling login.
 myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
