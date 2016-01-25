@@ -54,11 +54,6 @@ module.exports = function(app) {
         queries.deleteQuestion(req.body.id, res, dbUtils.callbackNoReturn);
     });
 
-    // toggles the active status of a form
-    app.post('/deleteForm', dbUtils.checkAuthenticated, function(req, res) {
-        queries.deleteForm(req.body.id, res, dbUtils.callbackNoReturn);
-    });
-
     // get all possible responses
     app.get('/responses', dbUtils.checkAuthenticated, function(req, res) {
         queries.getAllResponses(res, dbUtils.callback);
@@ -67,6 +62,11 @@ module.exports = function(app) {
     // get a list of all the forms.
     app.get('/forms', dbUtils.checkAuthenticated, function(req, res) {
         queries.getAllForms(res, dbUtils.callback);
+    });
+
+    // toggles the active status of a form
+    app.post('/deleteForm', dbUtils.checkAuthenticated, function(req, res) {
+        queries.deleteForm(req.body.id, res, dbUtils.callbackNoReturn);
     });
 
     // get the questions associated with a form.
@@ -87,6 +87,12 @@ module.exports = function(app) {
     // add question to database
     app.post("/addQuestion", dbUtils.checkAuthenticated, function(req, res) {
         queries.addQuestion(req.body.question, res, dbUtils.callbackNoReturn);
+    });
+
+    // add a form to the form table
+    app.post("/addForm", dbUtils.checkAuthenticated, function(req, res) {
+        queries.addForm(req.body.formName, res, dbUtils.callbackNoReturn);
+        console.log("reached Add Forms ");
     });
 
 };
