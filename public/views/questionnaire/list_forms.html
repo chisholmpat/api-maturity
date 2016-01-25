@@ -3,10 +3,13 @@
 <div class="form-group headings">
     <div> <input type="button" ng-click="toggleAddFormVisibility()" value="{{!addForm && 'Add'||'Cancel'}}"> </input> </div>
 </div>
-<div ng-show="addForm" class="form-group addQuestion">
-    <div><input type="text" class="form-control" ng-model="newForm.text"> </td></div>
-    <div><input type="button" ng-click="saveForm(newForm)" value="Add"></input></div>
-</div>
+<form name="addingNewForm"  novalidate class="simple-form">
+  <div ng-show="addForm" class="form-group addQuestion">
+      <div><input type="text" class="form-control" name="newFormName" ng-model="newForm.text" required> </td></div>
+      <div><input type="button" ng-click="saveForm(newForm)" value="Add"  ng-show="addingNewForm.newFormName.$valid && !addingNewForm.newFormName.$pristine"></input></div>
+      <p ng-show="addingNewForm.newFormName.$invalid && !addingNewForm.newFormName.$pristine" class="help-block">Form Name is required.</p>
+  </div>
+</form>
 <div ng-repeat="form in forms">
   <div>
      <a href="/#/edit_questions/{{form.id}}"> {{form.name}} </a>

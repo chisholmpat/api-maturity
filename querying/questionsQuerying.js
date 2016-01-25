@@ -161,7 +161,8 @@ exports.addQuestion = function(question, res, callback) {
 exports.addForm = function(formName, res, callback) {
   console.log("reached Add Forms query " + formName);
   knex('form').insert({
-      name: formName
+      name: formName,
+      active: 1
   })
   .asCallback(function(err, rows) {
       callback(err, res, rows);
