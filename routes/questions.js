@@ -91,6 +91,7 @@ module.exports = function(app) {
 
     // add a form to the form table
     app.post("/addForm", dbUtils.checkAuthenticated, function(req, res) {
+        queries.addForm(req.body.formName, res, dbUtils.callbackNoReturn);
         console.log("reached Add Forms ");
     });
 
