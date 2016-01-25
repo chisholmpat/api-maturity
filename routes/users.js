@@ -43,4 +43,11 @@ module.exports = function(app) {
         queries.getRoles(res, dbUtils.callback);
     });
 
+    app.get('/checkUnique/:username', function(req, res){
+            console.log("Called!");
+            console.log(req.params.username);
+            queries.checkUniqueUsername(req.params.username, res, dbUtils.callback); 
+    });
+
+
 }
