@@ -60,3 +60,13 @@ exports.getRoles = function(res, callback) {
         callback(err, res, rows);
     });
 }
+
+// Checks to see if a username exists
+exports.checkUniqueUsername = function(username, res, callback){
+    knex('users').select('').where('username', username).asCallback(function(err, rows){
+        if(rows && rows[0])
+            res.send(rows[0].username);
+        else
+            res.send(404);
+    });
+}
