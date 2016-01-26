@@ -42,15 +42,14 @@
         ng-hide=editing.id>
             <!-- Password -->
             <label>Password:</label>
-            <input class="form-control" type="password" name="password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})"
-            ng-model="editing.password" required>
+            <input class="form-control" type="password" name="password" ng-pattern="handlePatternPassword"
+            ng-model="editing.password" ng-hide=editing.id >
             <p ng-show="userform.password.$error.pattern" class="help-block">Password must be 6 to 20 characters string with at least one digit,
                 one upper case letter, one lower case letter and one special symbol
                 (“!@#$%”).
             </p>
         </div>
 
-        {{userform.password.$error.pattern}}
 
         <!-- Role -->
         <div class="form-group">
