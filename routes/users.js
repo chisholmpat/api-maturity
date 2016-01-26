@@ -19,7 +19,7 @@ module.exports = function(app) {
         queries.updateUser(req.body.user, res, dbUtils.callbackNoReturn);
     });
 
-    // return whether or not a particular user has rights to view 
+    // return whether or not a particular user has rights to view
     // a client based on the user's email address.
     app.get('/userauthd', function(req, res) {
         queries.checkIfUserCanViewClient(req.query.client_id, req.query.email, res, function(err, res, rows) {
@@ -43,10 +43,10 @@ module.exports = function(app) {
         queries.getRoles(res, dbUtils.callback);
     });
 
-    app.get('/checkUnique/:username', function(req, res){
+    app.get('/checkUniqueUser/:username', function(req, res){
             console.log("Called!");
             console.log(req.params.username);
-            queries.checkUniqueUsername(req.params.username, res, dbUtils.callback); 
+            queries.checkUniqueUsername(req.params.username, res, dbUtils.callback);
     });
 
 

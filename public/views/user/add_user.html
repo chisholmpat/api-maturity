@@ -3,7 +3,7 @@
 
         <div class="form-group">
             <label>Username:</label> <br>
-            <input class="form-control"  type="text" name="username" ng-model="editing.username" unique-username="" required />
+            <input class="form-control"  type="text" name="username" ng-model="editing.username" url="/checkUniqueUser/" unique-username="" required />
             <span class="hide-while-in-focus" ng-show="userform.username.$error.unique && !userform.name.$pristine">Username Taken!</span>
         </div>
 

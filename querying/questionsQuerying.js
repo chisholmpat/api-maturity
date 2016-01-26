@@ -168,3 +168,16 @@ exports.addForm = function(formName, res, callback) {
       callback(err, res, rows);
   })
 }
+
+
+// Checks to see if a form Name exists
+exports.checkUniqueFormname = function(formname, res, callback){
+    knex('form').select('').where('name', formname).asCallback(function(err, rows){
+        console.log(err);
+        console.log(rows)
+        if(rows && rows[0])
+            res.send(rows[0].name);
+        else
+            res.send(404);
+    });
+}
