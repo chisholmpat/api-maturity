@@ -39,6 +39,20 @@
             });
 
 
+            $scope.handlePatternPassword = (function() {
+                var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/;
+                return {
+                    test: function(value) {
+                        if (!$scope.editing.id) {
+                            return (value.length > 0) ? regex.test(value) : true;
+                        } else {
+                            return true;
+                        }
+                    }
+                };
+            })();
+
+
             // Handles populating the "editing" model
             // with the proper fields from the selected
             // user in the select field or emptying it

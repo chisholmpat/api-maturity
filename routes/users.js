@@ -44,10 +44,7 @@ module.exports = function(app) {
     });
 
     app.get('/checkUniqueUser/:username', function(req, res){
-            console.log("Called!");
-            console.log(req.params.username);
             queries.checkUniqueUsername(req.params.username, res, dbUtils.callback);
     });
-
 
 }
