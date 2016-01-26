@@ -1,6 +1,6 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
-var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource','ng.httpLoader' , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule', 'userDirectives']);
+var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource','ng.httpLoader' , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule', 'userDirectives', 'passwordDirectives']);
 
 
 myApp.config(['httpMethodInterceptorProvider',

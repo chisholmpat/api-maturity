@@ -95,4 +95,10 @@ module.exports = function(app) {
         console.log("reached Add Forms ");
     });
 
+    //check if the form_name is unique
+    app.get('/checkUniqueFormName/:formname', function(req, res){
+            console.log("Called for forms!");
+            queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
+    });
+
 };

@@ -11,11 +11,12 @@
     <div ng-show="addForm" class="form-group addQuestion">
         <form name="addingNewForm">
           <div>
-              <input type="text" class="form-control" name="newFormName" ng-model="newForm.text" required> </input></td>
+              <input type="text" class="form-control" name="newFormName" ng-model="newForm.text" url="/checkUniqueFormName/" unique-username="" required> </input></td>
+              <span class="hide-while-in-focus" ng-show="addingNewForm.newFormName.$error.unique && !addingNewForm.newFormName.$pristine">Form Name Taken. Update and Press tab</span>
           </div>
           <div>
               <input type="button" ng-click="saveForm(newForm)" value="Add"  ng-show="addingNewForm.newFormName.$valid && !addingNewForm.newFormName.$pristine"></input>
-              <p ng-show="addingNewForm.newFormName.$invalid && !addingNewForm.newFormName.$pristine" class="help-block">Form Name is required.</p>
+              <p ng-show="addingNewForm.newFormName.$invalid && !addingNewForm.newFormName.$pristine && !addingNewForm.newFormName.$error.unique " class="help-block">Form Name is required.</p>
           </div>
         </form>
     </div>

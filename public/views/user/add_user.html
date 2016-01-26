@@ -1,10 +1,9 @@
 <div class="col-lg-12">
     <form novalidate name="userform" id="userform" class="userform">
-
         <div class="form-group" ng-class="{ 'has-error' : userform.name.$invalid && !userform.name.$pristine }">
             <label>Username:</label>
             <input class="form-control" type="text" name="username" ng-model="editing.username" ng-attr-unique-username="!editing.id"
-            unique-username="" required />
+            unique-username="" required url="/checkUniqueUser/" />
             <p ng-show="userform.username.$error.required && !userform.username.$pristine"
             class="help-block">Username is required.</p>
             <p ng-show="userform.username.$error.unique" class="help-block">Username taken.</p>
@@ -53,9 +52,7 @@
 
         <!-- Role -->
         <div class="form-group">
-
             Role:
-
             <select ng-model="editing.role_id" ng-options="role.id as (role.role | uppercase) for role in roles"></select>
         </div>
 
