@@ -1,5 +1,7 @@
 var knex = require("../db/db.js").knex; // data connection
 var dbUtils = require("../helpers/db_util");
+var client_email;
+var client_id;
 
 // Insert a new customer into the database.
 // TODO A current flaw in the database/application design
@@ -15,24 +17,36 @@ exports.insertClient = function(client, email, res, callback) {
     var saQuestionQuery = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
                SELECT DISTINCT id , (SELECT MAX(id) from Client), 8 from Question WHERE Question.category_id = 2"
 
-
     var qaQuestionQuery = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
                SELECT DISTINCT id , (SELECT MAX(id) from Client), 1 from Question WHERE Question.category_id = 1"
 
     // Insert the client object from the post directly.
+    client_email = client.email;
     knex('Client').insert(client).asCallback(function(err, rows) {
+
+        client_id = rows[0];
+        //this insert ensures the user adding the client is the owner of the client and is allowed to view the client
         knex('userclients').insert({
             client_id: rows[0],
             email: email,
             isOwner: true
-        }).asCallback(function(err, rows) {});
+        }).asCallback(function(err, rows) {
 
-        // Once the FK constraint has been satisfied, add rows to CQR.
-        knex.raw(saQuestionQuery).asCallback(function(err, rows) {
-            knex.raw(qaQuestionQuery).asCallback(function(err, rows) {
-                callback(err, res);
-            });
-        });
+          //add client_id and email  to user-clients table  to allow the client to view themself
+          //this inser allows the client to be able to view their own information
+          knex('userclients').insert({
+              client_id: client_id,
+              email: client_email,
+              isOwner: false
+          }).asCallback(function(err,rows){});
+
+          // Once the FK constraint has been satisfied, add rows to CQR.
+          knex.raw(saQuestionQuery).asCallback(function(err, rows) {
+              knex.raw(qaQuestionQuery).asCallback(function(err, rows) {
+                  callback(err, res);
+              });
+          });
+      });
     });
 };
 

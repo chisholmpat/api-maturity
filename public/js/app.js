@@ -50,8 +50,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     };
 
 
-    // Checks if the user is an admin, used for controlling access to 
-    // resources which only an admin 
+    // Checks if the user is an admin, used for controlling access to
+    // resources which only an admin
     var userIsAdmin = function($q, $timeout, $http, $location, $rootScope) {
 
         var deferred = $q.defer(); // expose the promise object
@@ -74,8 +74,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     }
 
 
-    // Checks if the user is an admin, used for controlling access to 
-    // resources which only an admin 
+    // Checks if the user is an admin, used for controlling access to
+    // resources which only an admin
     var userIsUser= function($q, $timeout, $http, $location, $rootScope) {
 
         var deferred = $q.defer(); // expose the promise object
@@ -97,8 +97,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         return deferred.promise;
     }
 
-    // Checks if the user is an admin, used for controlling access to 
-    // resources which only an admin 
+    // Checks if the user is an admin, used for controlling access to
+    // resources which only an admin
     var userIsClient = function($q, $timeout, $http, $location, $rootScope) {
 
         var deferred = $q.defer(); // expose the promise object
@@ -185,7 +185,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         controller: 'ClientsController',
         resolve: {
             loggedin: checkLoggedin,
-            userIsUser: userIsUser
+            userIsClient: userIsClient
         }
     }).
 
@@ -266,6 +266,3 @@ myApp.controller('MenuController', function($scope) {
 myApp.controller('HomePageController', function($scope) {
     $scope.message = 'This is the welcome page.';
 });
-
-
-

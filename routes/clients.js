@@ -5,10 +5,25 @@ module.exports = function(app) {
     var clientQueries = require('../querying/clientQuerying');
     var userQueries = require('../querying/usersQuerying');
     var dbUtils = require('../helpers/db_util');
+    var err = "";
 
     // add client
     app.post('/insertClient', dbUtils.checkAuthenticated, function(req, res) {
-        clientQueries.insertClient(req.body.client, req.user.email, res, dbUtils.callbackNoReturn);
+
+        var user = {};
+        var client = req.body.client;
+
+        //insert client into Client table
+        clientQueries.insertClient(req.body.client, req.user.email, res, function(err, res){});
+
+        //add client to user-table
+        user.username = user.email = client.email;
+        user.firstname = user.lastname = client.name;
+        user.role_id = 1;
+        user.password = "default";
+        userQueries.addUser(user, res, dbUtils.callbackNoReturn);
+
+
     });
 
     // update client
@@ -56,7 +71,7 @@ module.exports = function(app) {
     });
     // used to set the status of the client to active or inactive
     app.post('/deleteClient', dbUtils.checkAuthenticated, function(req, res) {
-        
+
         dbUtils.userCanViewClient(req.body.id, req.user.email, function(err, permitted) {
             if (permitted)
                 clientQueries.setClientInactive(req.body.id, req.body.status, res, dbUtils.callbackNoReturn);

@@ -27,11 +27,12 @@
             <div>
                 <ul class="sidebar-nav">
                     <div ng-show="isLoggedIn">
-                        <li>
+                        <li ng-show="role == 'user' || role == 'admin' ">
                             <a href="#howto">How-To</a>
                         </li>
                         <li>
-                            <a href="#clients">Clients</a>
+                            <a href="#clients" ng-show="role == 'user' || role == 'admin' ">Clients</a>
+                            <a href="#clients" ng-show="role == 'client' ">Results</a>
                         </li>
                         <div ng-controller="MenuController">
                             <li ng-show="role === 'admin'">

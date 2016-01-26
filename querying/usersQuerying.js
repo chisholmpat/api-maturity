@@ -13,7 +13,7 @@ exports.userloginvalidate = function(username, password) {
 
 };
 
-// Add a user to the database. Additionally the role needs to be 
+// Add a user to the database. Additionally the role needs to be
 // looked up when inserted. I will change this by offering the role_id
 // as a parameter to this function rather than having to do a query for it.
 exports.addUser = function(user, res, callback) {
@@ -21,7 +21,9 @@ exports.addUser = function(user, res, callback) {
     passwordHelper.hash(user.password, user.salt, function(err, result) {
         user.password = result;
         knex('users').insert(user).asCallback(function(err, rows) {
-                    callback(err, res);
+            console.log(err);
+            console.log(rows)
+            callback(err, res);
         });
     });
 };
