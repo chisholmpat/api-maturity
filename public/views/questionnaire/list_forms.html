@@ -9,17 +9,18 @@
         </div>
     </div>
     <div ng-show="addForm" class="form-group addQuestion">
-        <div>
-            <input type="text" class="form-control" ng-model="newForm.text"> </td>
-        </div>
-        <div>
-            <input type="button" ng-click="saveForm(newForm)" value="Add"></input>
-        </div>
+        <form name="addingNewForm">
+          <div>
+              <input type="text" class="form-control" name="newFormName" ng-model="newForm.text" required> </input></td>
+          </div>
+          <div>
+              <input type="button" ng-click="saveForm(newForm)" value="Add"  ng-show="addingNewForm.newFormName.$valid && !addingNewForm.newFormName.$pristine"></input>
+              <p ng-show="addingNewForm.newFormName.$invalid && !addingNewForm.newFormName.$pristine" class="help-block">Form Name is required.</p>
+          </div>
+        </form>
     </div>
     <div ng-repeat="form in forms" class="form-group">
-
         <div><a href="/#/edit_questions/{{form.id}}"> {{form.name}} </a></div>
         <div><img src="images/delete.png" height="20" width="20" ng-click="deleteForm(form)" /></div>
-
     </div>
 </div>
