@@ -3,7 +3,7 @@
 
         <div class="form-group" ng-class="{ 'has-error' : userform.name.$invalid && !userform.name.$pristine }">
             <label>Username:</label>
-            <input class="form-control" type="text" name="username" ng-model="editing.username"
+            <input class="form-control" type="text" name="username" ng-model="editing.username" ng-attr-unique-username="!editing.id"
             unique-username="" required />
             <p ng-show="userform.username.$error.required && !userform.username.$pristine"
             class="help-block">Username is required.</p>
@@ -18,6 +18,7 @@
             <p ng-show="userform.firstname.$error.required && !userform.firstname.$pristine"
             class="help-block">First name is required.</p>
         </div>
+
 
         <div class="form-group" ng-class="{ 'has-error' : userform.lastname.$invalid && !userform.lastname.$pristine }">
             <!-- Last Name -->
@@ -36,20 +37,19 @@
             <p ng-show="userform.email.$invalid && !userform.email.$pristine" class="help-block">Enter a valid email.</p>
         </div>
 
-
-
-        <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }"
-        ng-hide=editing.id>
-            <!-- Password -->
-            <label>Password:</label>
-            <input class="form-control" type="password" name="password" ng-pattern="handlePatternPassword"
-            ng-model="editing.password" ng-hide=editing.id >
-            <p ng-show="userform.password.$error.pattern" class="help-block">Password must be 6 to 20 characters string with at least one digit,
-                one upper case letter, one lower case letter and one special symbol
-                (“!@#$%”).
-            </p>
+        <div class="form-group" ng-class="{ 'has-error': userform.password.$dirty && userform.password.$error.required }"
+        ng-if="!editing.id">
+            <label for="passwordConfirm">Password</label>
+            <input "editing.id" type="password" name="password" id="password" class="form-control"
+            ng-model="editing.password" required />
         </div>
-
+        <div class="form-group" ng-class="{ 'has-error': userform.password.$dirty && userform.password.$error.required }"
+        ng-if="!editing.id">
+            <label for="passwordConfirm">Confirm Password</label>
+            <input type="password" ng-init="" name="passwordConfirm" id="passwordConfirm" class="form-control"
+            ng-model="passwordConfirm" pwd-match="editing.password" required />
+            <span ng-show="userform.passwordConfirm.$error.matched" class="help-block">Passwords do not much</span>
+        </div>
 
         <!-- Role -->
         <div class="form-group">
