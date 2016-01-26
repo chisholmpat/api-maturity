@@ -30,6 +30,7 @@
         function($scope, UserStore, $window) {
 
             $scope.result = "";
+
             $scope.editing = {}; // model to hold edited fields
             $scope.allUsers = UserStore.getUsers.query();
             $scope.defaultRoleID = "";
@@ -92,6 +93,8 @@
                         $scope.allUsers = UserStore.getUsers.query();
                         $scope.editing = {};
                         $scope.editing.role_id = $scope.defaultRoleID
+                        $scope.userform.$setPristine();
+                        $scope.passwordConfirm = "";
 
                     });
                 }
