@@ -1,16 +1,19 @@
 module.exports = function(app) {
+
+    // Dependencies
     var knex = require('../db/db.js').knex;
     var async = require('async');
     var crypto = require('crypto');
     var nodemailer = require('nodemailer');
     var passwordHelper = require('../helpers/password');
 
-
+    // End-point for triggering the calls which end in sending the user 
+    // an email with their reset token.
     app.post('/forgot', function(req, res, next) {
 
         async.waterfall([
-
             function(done) {
+                // Generate a token for the user.
                 crypto.randomBytes(20, function(err, buf) {
                     var token = buf.toString('hex');
                     done(err, token);
@@ -18,33 +21,31 @@ module.exports = function(app) {
             },
             function(token, done) {
 
-                // Replace with a database call.  
-                knex.select('').from('users').where('email', req.body.email).asCallback(function(err, rows) {
-                    console.log(err);
-                    console.log(req.body.email);
-                    console.log(rows);
-                    if (err || !rows || !rows[0])
-                        res.redirect('/reset');
-                    else {
+                knex.select('').from('users')
+                    .where('email', req.body.email)
+                    .asCallback(function(err, rows) {
+                        if (err || !rows || !rows[0])
+                            res.send(400, 'User not found');
+                        else {
+                            // set the token on the user and 
+                            // set an expiration time for the token
+                            user = rows[0]; // extract the user
+                            user.reset_password_token = token;
+                            user.reset_password_expires = Date.now() + 3600000; // 1 hour
+                        }
+                        // persist the token into the database
+                        knex('users')
+                            .where('id', user.id)
+                            .update({
+                                reset_password_token: token,
+                                reset_password_expires: Date.now() + 3600000 // 1 hour     
+                            }).asCallback(function(err, rows) {
+                                done(err, token, user)
+                            });
 
-                        user = rows[0]; // extract the user
-                        user.reset_password_token = token;
-                        user.reset_password_expires = Date.now() + 3600000; // 1 hour
-                    }
-
-                    knex('users')
-                        .where('id', user.id)
-                        .update({
-                            reset_password_token: token,
-                            reset_password_expires: Date.now() + 3600000 // 1 hour     
-                        }).asCallback(function(err, rows) {
-                            console.log(err);
-                            console.log(rows);
-                            done(err, token, user)
-                        });
-
-                });
+                    });
             },
+            // Send the email containing the link
             function(token, user, done) {
                 var smtpTransport = nodemailer.createTransport('SMTP', {
                     service: 'SendGrid',
@@ -64,22 +65,22 @@ module.exports = function(app) {
                 };
                 smtpTransport.sendMail(mailOptions, function(err) {
                     console.log('Email Sent to ' + user.email);
-                    console.log(err);
+                    console.log('Errors:' + err);
                     done(err, 'done');
                 });
             }
         ], function(err) {
+			console.log(err);
             if (err) return next(err);
-            res.redirect('/forgot');
+			res.send(200);
         });
     });
 
 
+    // Route for checking the validity of a token and retrieving
+    // the email of the requester to use for password reset.
     app.get('/checkToken/:token', function(req, res) {
-
         var token = req.params.token;
-        console.log(req.params.token);
-
         knex.select('').from('users').where('reset_password_token', token)
             .where('reset_password_expires', '>', Date.now()).asCallback(function(err, rows) {
                 if (rows && rows[0])
@@ -89,44 +90,28 @@ module.exports = function(app) {
             })
     });
 
+    // Route for updating user's password
     app.post('/updatepassword', function(req, res) {
-
+		console.log(req.body);
         var token = req.body.token;
         var password = req.body.password;
         var salt = Math.random().toString(36).slice(2);
-        
-        passwordHelper.hash(password, user.salt, function(err, result) {
-            password = result;
 
-            knex.update('users').where('reset_password_token', token).update({
-                reset_password_token : 0,
+        passwordHelper.hash(password, salt, function(err, result) {
+            password = result;
+            knex('users').where('reset_password_token', token).update({
+                reset_password_expires: 0,
                 salt: salt,
                 password: password
-            }).asCallback(function(err, res){
-                    if(!err)
-                        res.send(200);
-                    else
-                        res.send(400);
-            });
-    });
-
-
-    /*
-            User.findOne({
-                resetPasswordToken: req.params.token,
-                resetPasswordExpires: {
-                    $gt: Date.now()
-                }
-            }, function(err, user) {
-                if (!user) {
-                    req.flash('error', 'Password reset token is invalid or has expired.');
-                    return res.redirect('/forgot');
-                }
-                res.render('reset', {
-                    user: req.user
-                });
+            }).asCallback(function(err, rows) {
+				console.log(err);
+                if (!err)
+                    res.send(200, "Password Changed");
+                else
+                    res.send(400);
             });
         });
-    */
+
+    });
 
 }

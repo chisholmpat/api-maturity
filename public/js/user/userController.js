@@ -104,10 +104,9 @@
     ]);
 
 
+// Controller for handling the actual resetting of the password.
 module.controller('PasswordResetController', ['$scope', 'UserStore', '$location', '$routeParams',
         function($scope, UserStore, $location, $routeParams) {
-
-            console.log($routeParams.token);
 
             UserStore.checkToken.query({
                 token : $routeParams.token
@@ -121,12 +120,28 @@ module.controller('PasswordResetController', ['$scope', 'UserStore', '$location'
             $scope.submit = function(){
                 UserStore.updatePassword.save({
                   token: $routeParams.token,
-                  password: newpwd.password,
-                })
+                  password: $scope.pw1,
+                }, function(){
+					$location.url("/#/");
+				})
             }
-
-
         }]);
+		
+module.controller('SendPasswordController', ['$scope', 'UserStore', '$location', '$routeParams', '$window',
+	function($scope, UserStore, $location, $routeParams, $window) {
+		
+			$scope.submit = function() {
+				UserStore.sendPasswordEmail.save({
+					email: $scope.email
+				}, function(){
+					 window.alert("Email send to " + $scope.email);
+					 $location.url("/#/")
+					 
+				}, function(){
+					 $scope.emailMessage = "Email not recognized."	 
+				})
+			}
+	}]);
 
 
     module.controller('EditUserController', function($scope, $rootScope, $location, $window) {

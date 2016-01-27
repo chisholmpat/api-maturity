@@ -235,6 +235,9 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
         }
+    }).when('/forgotpassword/', {
+        templateUrl: '/views/user/send_password.html',
+        controller: 'SendPasswordController'
     }).
     when('/forms/', {
         templateUrl: '/views/questionnaire/list_forms.html',

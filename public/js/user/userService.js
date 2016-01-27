@@ -7,6 +7,7 @@ var module = angular.module('userServiceModule', ['ngResource']);
         this.updateUser = $resource('/update_user');
         this.getUserRoles = $resource('/roles');
         this.checkToken = $resource('/checkToken/:token');
-        this.updatePassword = $resource('/updatePassword');
+        this.updatePassword = $resource('/updatepassword');
+		this.sendPasswordEmail = $resource('/forgot', {}, { method: 'get', isArray:true});
     }]);
 })();
