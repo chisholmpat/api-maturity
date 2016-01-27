@@ -18,6 +18,26 @@ exports.getAllQuestions = function(client_id, form_id, res, callback) {
         })
 };
 
+// Get all the questions available for the form which are present in Questions but not in ClientQuestionResponse
+//Basically all unAnswered questions.
+exports.getallUnansweredQuestions = function(client_id, form_id, res, callback) {
+
+  var subQuery = knex.select('clientquestionresponse.question_id').from('clientquestionresponse').where('clientquestionresponse.client_id', client_id);
+  console.log("client id for the form query "+ client_id);
+  console.log(form_id);
+  knex.select('Question.id', 'Question.text', 'Question.category_id', 'Form.name as form_name')
+      .from('Question')
+      .innerJoin('Form', 'Question.form_id', 'Form.id')
+      .where('Question.form_id', form_id)
+      .where('Question.active', 1).whereNotIn('Question.id', subQuery).asCallback(function(err, rows) {
+           console.log(rows);
+           console.log(err);
+           callback(err, res, rows);
+       });
+
+};
+
+
 // Function to retrieve all of the answers that a client has submitted to calculate score.
 // TODO December 20th, 2015 : Reduce size/completexity of this query.
 exports.getClientAnswers = function(client_id, form_id, res, callback) {
@@ -36,6 +56,7 @@ exports.getClientAnswers = function(client_id, form_id, res, callback) {
             callback(err, res, rows);
         })
 };
+
 
 // Return all the possible responses to a question.
 exports.getAllResponses = function(res, callback) {

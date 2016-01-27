@@ -10,6 +10,13 @@
                 client_id: $routeParams.client_id,
                 form_id: $routeParams.form_id
             }, function() {});
+
+            // Get unanswered questions and responses from database
+            $scope.unansweredQuestions = QuestionStore.allUnansweredQuestionConn.query({
+                client_id: $routeParams.client_id,
+                form_id: $routeParams.form_id
+            }, function() {});
+
             $scope.responses = QuestionStore.responseConn.query();
 
             // For Creating a numeric range for the weight option
@@ -33,9 +40,10 @@
             };
 
             // Persist the information to the database.
-            $scope.generateScore = function(questions) {
+            $scope.generateScore = function(questions, unansweredQuestions) {
                 QuestionStore.addAnswersConn.save({
                         user_responses: questions,
+                        newly_answered_responses: unansweredQuestions,
                         client_id: $routeParams.client_id
                     },
                     function() {

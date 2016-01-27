@@ -6,7 +6,7 @@ var knex = require("../db/db.js").knex;
 // move these into a stored procedure, reduce the reduncancy
 // and normalize the database so that only a single call is required.
 // Also, it causes SQL errors on some calls. This really is bad.
-exports.addAnswers = function(res, responses, callback) {
+exports.updateAnswers = function(res, responses, callback) {
 
     var updateResponseQuery = " Update ClientQuestionResponse SET response_id = CASE ";
     var updateWeightQuery = "Update ClientQuestionResponse SET weight = CASE ";
@@ -48,3 +48,12 @@ exports.addAnswers = function(res, responses, callback) {
     });
 
 };
+
+exports.addNewlyAnswered = function(res, responses, callback) {
+  knex('ClientQuestionResponse')
+    .insert(responses).asCallback(function(err, rows) {
+      console.log(err);
+      console.log(rows)
+      callback(err, res);
+  });
+}
