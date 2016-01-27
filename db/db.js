@@ -1,5 +1,5 @@
 var opts = null;
-var devEnv = true ;
+var devEnv = true;
 
 if(!devEnv){
    opts = {

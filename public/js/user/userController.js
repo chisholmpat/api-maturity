@@ -69,8 +69,8 @@
             }
 
 
-            // Add or Update a client based on the content 
-            // of the select menu. If an existing client is 
+            // Add or Update a client based on the content
+            // of the select menu. If an existing client is
             // selected then it will update the client else
             // it will add it.
             $scope.submit = function(newUser) {
@@ -104,7 +104,29 @@
     ]);
 
 
+module.controller('PasswordResetController', ['$scope', 'UserStore', '$location', '$routeParams',
+        function($scope, UserStore, $location, $routeParams) {
 
+            console.log($routeParams.token);
+
+            UserStore.checkToken.query({
+                token : $routeParams.token
+            }, function(response) {
+                    console.log('TOKEN RECOGNIZED');
+            }, function(){
+                   console.log('TOKEN NOT RECOGNIZED')
+                   $location.url("/#/");
+            });
+
+            $scope.submit = function(){
+                UserStore.updatePassword.save({
+                  token: $routeParams.token,
+                  password: newpwd.password,
+                })
+            }
+
+
+        }]);
 
 
     module.controller('EditUserController', function($scope, $rootScope, $location, $window) {

@@ -165,6 +165,10 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin
         }
     }).
+    when('/reset/:token', {
+        templateUrl: '/views/user/reset_password.html',
+        controller: 'PasswordResetController'
+    }).
     when('/results/:client_id/:form_id', {
         templateUrl: '/views/results/results.html',
         controller: 'ResultsController',
