@@ -33,6 +33,7 @@ var addAnswers = require('./routes/answers')(app);
 var userLogin = require('./routes/login')(app, passport);
 var addClients = require('./routes/clients')(app);
 var users = require('./routes/users')(app);
+var password = require('./routes/password')(app);
 
 // statically serve up necessary files
 app.use(express.static(path.join(__dirname, '/public')));
