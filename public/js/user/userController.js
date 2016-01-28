@@ -2,9 +2,9 @@
 
     var module = angular.module('userModule', ['userServiceModule']);
 
-    module.controller('UserLoginController', function($scope, $rootScope, $http, $location) {
+    module.controller('UserLoginController', function($scope, $rootScope, $http, $location, $window) {
         
-		// To automatically forward if already authenticated
+		// To
 		$rootScope.$watch('isLoggedIn', function() {
             if ($rootScope.isLoggedIn)
                 $window.top.location = $window.location;
