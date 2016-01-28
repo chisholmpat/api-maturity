@@ -52,7 +52,7 @@
 
             // Ensure that the password is appropriate.
             $scope.handlePatternPassword = (function() {
-                var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/;   // Number/L.Case/U.Case/Symbol!@#$%
+                var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/; // Number/L.Case/U.Case/Symbol!@#$%
                 return {
                     test: function(value) {
                         if (!$scope.editing.id)
@@ -98,13 +98,13 @@
                         user: $scope.editing
                     }, function() {
                         $scope.result = "User Added";
-					    // Clear the form
+                        // Clear the form
                         $scope.editing = {};
                         $scope.editing.role_id = $scope.defaultRoleID
-						$scope.passwordConfirm = "";
+                        $scope.passwordConfirm = "";
                         $scope.userform.$setPristine();
-						// Refresh from the database
-						$scope.allUsers = UserStore.getUsers.query(); 
+                        // Refresh from the database
+                        $scope.allUsers = UserStore.getUsers.query();
 
                     });
                 }
@@ -117,17 +117,19 @@
     module.controller('PasswordResetController', ['$scope', 'UserStore', '$location', '$routeParams',
         function($scope, UserStore, $location, $routeParams) {
 
-			// Checks to see if a token for password reset
-			// actually exists in the user table. Used to avoid
-			// wrong token addresses or old tokens.
+
+
+
+            // Checks to see if a token for password reset
+            // actually exists in the user table. Used to avoid
+            // wrong token addresses or old tokens.
             UserStore.checkToken.query({
                 token: $routeParams.token
-            }, function(response) {
-            }, function() {
+            }, function(response) {}, function() {
                 $location.url("/#/");
             });
 
-			// Used to update the password in the database.
+            // Used to update the password in the database.
             $scope.submit = function() {
                 UserStore.updatePassword.save({
                     token: $routeParams.token,
@@ -136,6 +138,20 @@
                     $location.url("/#/");
                 })
             }
+
+
+            $scope.handlePatternPassword = (function() {
+                var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/; // Number/L.Case/U.Case/Symbol!@#$%
+                return {
+                    test: function(value) {
+                        if (!$scope.editing.id)
+                            return (value.length > 0) ? regex.test(value) : true;
+                        else
+                            return true;
+                    }
+                };
+            })();
+
         }
     ]);
 
