@@ -144,10 +144,7 @@
                 var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/; // Number/L.Case/U.Case/Symbol!@#$%
                 return {
                     test: function(value) {
-                        if (!$scope.editing.id)
                             return (value.length > 0) ? regex.test(value) : true;
-                        else
-                            return true;
                     }
                 };
             })();
