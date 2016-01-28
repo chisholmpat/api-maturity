@@ -3,27 +3,15 @@ var dbUtils = require("../helpers/db_util");
 var client_email;
 var client_id;
 
-// Insert a new customer into the database.
-// TODO A current flaw in the database/application design
-// requires that when a new client is created they have to
-// have an entry for each question in the ClientQuestionResponse
-// table. This is because a client can have a unique weighting to
-// a question. In the future this should be normalized.
+//(i)Insert a new Client into the client table
+//(ii) Insert the Client into the client-user table to allow user creating the client to have ownership of the client-user
+//(iii) Insert the Client into the client-user table to allow the client to view their own information
+
 exports.insertClient = function(client, email, res, callback) {
-
-    // Insert all SA questions/client_id into the CQR table. This is broken in to two seperate queries
-    // since there are different default answers depending on whether the question is a QA question or
-    // a SA question. This shouold be normalized as well.
-    var saQuestionQuery = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
-               SELECT DISTINCT id , (SELECT MAX(id) from Client), 8 from Question WHERE Question.category_id = 2"
-
-    var qaQuestionQuery = "INSERT INTO ClientQuestionResponse (question_id, client_id, response_id )\
-               SELECT DISTINCT id , (SELECT MAX(id) from Client), 1 from Question WHERE Question.category_id = 1"
 
     // Insert the client object from the post directly.
     client_email = client.email;
     knex('Client').insert(client).asCallback(function(err, rows) {
-
         client_id = rows[0];
         //this insert ensures the user adding the client is the owner of the client and is allowed to view the client
         knex('userclients').insert({
@@ -38,13 +26,8 @@ exports.insertClient = function(client, email, res, callback) {
               client_id: client_id,
               email: client_email,
               isOwner: false
-          }).asCallback(function(err,rows){});
-
-          // Once the FK constraint has been satisfied, add rows to CQR.
-          knex.raw(saQuestionQuery).asCallback(function(err, rows) {
-              knex.raw(qaQuestionQuery).asCallback(function(err, rows) {
-                  callback(err, res);
-              });
+          }).asCallback(function(err,rows){
+            callback(err, res);
           });
       });
     });
