@@ -32,7 +32,7 @@ module.exports = function(app) {
                             user = rows[0]; // extract the user
                             user.reset_password_token = token;
                             user.reset_password_expires = Date.now() + 3600000; // 1 hour
-                        }
+                        
                         // persist the token into the database
                         knex('users')
                             .where('id', user.id)
@@ -42,7 +42,7 @@ module.exports = function(app) {
                             }).asCallback(function(err, rows) {
                                 done(err, token, user)
                             });
-
+						}
                     });
             },
             // Send the email containing the link
@@ -56,8 +56,8 @@ module.exports = function(app) {
                 });
                 var mailOptions = {
                     to: user.email,
-                    from: 'passwordreset@demo.com',
-                    subject: 'Node.js Password Reset',
+                    from: 'hatt@ca.ibm.com',
+                    subject: 'API Maturity Tool Password Reset',
                     text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
                         'http://' + req.headers.host + '/#/reset/' + token + '\n\n' +
