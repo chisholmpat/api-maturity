@@ -31,6 +31,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                 $rootScope.message = "Login Successful"
                 $rootScope.role = user.role;
                 $rootScope.isIBM = user.isIBM;
+                $rootScope.loggedInEmail = user.email;
                 $rootScope.isLoggedIn = true;
             }
 

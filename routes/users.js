@@ -16,6 +16,7 @@ module.exports = function(app) {
 
     // update a user in the database
     app.post("/update_user", function(req, res) {
+        console.log(req.body.user);
         queries.updateUser(req.body.user, res, dbUtils.callbackNoReturn);
     });
 
