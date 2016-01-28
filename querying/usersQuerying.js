@@ -47,7 +47,7 @@ exports.getUserRole = function(email, res, callback) {
 
     knex('users').select('roles.role').where('users.email', email)
         .innerJoin('roles', 'users.role_id', 'roles.id').asCallback(function(err, rows) {
-            if (rows && roles[0] && roles[0].role)
+            if (rows && rows[0] && rows[0].role)
                 callback(err, res, rows[0].role);
             else
                 callback(err, res);
