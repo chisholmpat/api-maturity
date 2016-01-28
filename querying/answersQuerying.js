@@ -32,7 +32,6 @@ exports.updateAnswers = function(res, responses, callback) {
             updateNoteQuery += " WHEN question_id =" + responses[i].id +
                 " AND client_id = " + responses[i].client_id + " THEN '" + responses[i].note + "'"
         }
-
     }
 
     updateResponseQuery += " ELSE response_id END";
@@ -49,11 +48,39 @@ exports.updateAnswers = function(res, responses, callback) {
 
 };
 
-exports.addNewlyAnswered = function(res, responses, callback) {
-  knex('ClientQuestionResponse')
-    .insert(responses).asCallback(function(err, rows) {
-      console.log(err);
-      console.log(rows)
-      callback(err, res);
-  });
+exports.addNewlyAnswered = function(res, responses, client_id, callback) {
+  var index = 0;
+  var error = null;
+
+
+
+  addNext(index,client_id, responses, callback, res, error)
+}
+
+function addNext(index, client_id, responses, callback, res, error){
+  var max_index = responses.length;
+
+  console.log("RESPONSES" + responses);
+  console.log(responses[index] + " index" + index);
+
+  if(index >= max_index || error)
+    callback(error, res);
+
+  else{
+    if(responses[index].response_id){
+      console.log(responses[index]);
+
+      knex('ClientQuestionResponse')
+      .insert({
+          response_id: responses[index].response_id,
+          question_id: responses[index].id,
+          client_id: client_id,
+          weight: responses[index].weight || 0
+       }).asCallback(function(err, rows){
+           console.log("ERR" + err);
+           console.log("ROWS: " + rows);
+           addNext(index+1, client_id, responses, callback, res, err);
+      });
+    }
+  }
 }

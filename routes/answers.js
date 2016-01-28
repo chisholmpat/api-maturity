@@ -10,7 +10,6 @@ module.exports = function(app) {
     // Insert the completed questions into the database
     app.post('/insertAnswers', dbUtils.checkAuthenticated, function(req, res) {
         queries.updateAnswers(res, req.body.user_responses, function(req, res){});
-        queries.addAnswers(res, req.body.newly_answered_responses, dbUtils.callbackNoReturn);
+        queries.addNewlyAnswered(res, req.body.newly_answered_responses, req.body.client_id, dbUtils.callbackNoReturn);
     });
-
 };
