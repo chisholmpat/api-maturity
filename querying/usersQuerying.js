@@ -7,7 +7,9 @@ var passwordHelper = require('../helpers/password');
 exports.userloginvalidate = function(username, password) {
     knex.select('').from('users')
         .where('username', username)
-        .where('password', password).ascallback(function(err, rows) {
+        .where('password', password)
+        .where('active', 1)
+        .ascallback(function(err, rows) {
             return (rows.length !== 0)
         });
 
@@ -30,21 +32,38 @@ exports.addUser = function(user, res, callback) {
 
 // Updating a user in the DB
 exports.updateUser = function(user, res, callback) {
-    knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
-        callback(err, res);
+
+    // We use email to establish priviledge against users 
+    // to support SSO users not having to be registered 
+    // against our database. When a user is updated we 
+    // then have to update the userclients table.
+    knex('users').select('email').where('Users.id', user.id).asCallback(function(err, rows) {
+        userEmail = rows[0].email;
+        console.log(userEmail);
+        knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
+            callback(err, res);
+        });
+
+        knex('userclients').where('email', userEmail).update(
+            {
+                email: user.email 
+            }).asCallback(function(err, rows){
+                console.log(err);
+                console.log(rows);
+            });
     });
+
 }
 
 // Retrieve all users from the DB
 exports.getUsers = function(res, callback) {
-    knex('users').select('').asCallback(function(err, rows) {
+    knex('users').select('').where('active', 1).asCallback(function(err, rows) {
         callback(err, res, rows);
     });
 }
 
 // Retrieve the role of the user from the database.
 exports.getUserRole = function(email, res, callback) {
-
     knex('users').select('roles.role').where('users.email', email)
         .innerJoin('roles', 'users.role_id', 'roles.id').asCallback(function(err, rows) {
             if (rows && rows[0] && rows[0].role)
@@ -62,9 +81,9 @@ exports.getRoles = function(res, callback) {
 }
 
 // Checks to see if a username exists
-exports.checkUniqueUsername = function(username, res, callback){
-    knex('users').select('').where('username', username).asCallback(function(err, rows){
-        if(rows && rows[0])
+exports.checkUniqueUsername = function(username, res, callback) {
+    knex('users').select('').where('username', username).asCallback(function(err, rows) {
+        if (rows && rows[0])
             res.send(rows[0].username);
         else
             res.send(404);
