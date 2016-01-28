@@ -40,7 +40,7 @@ exports.updateUser = function(user, res, callback) {
         knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
             callback(err, res);
         });
-
+        
         knex('userclients').where('email', userEmail).update({
             email: user.email
         })
@@ -50,7 +50,7 @@ exports.updateUser = function(user, res, callback) {
 
 // Retrieve all users from the DB
 exports.getUsers = function(res, callback) {
-    knex('users').select('').where('active', 1).asCallback(function(err, rows) {
+    knex('users').select('').asCallback(function(err, rows) {
         callback(err, res, rows);
     });
 }
