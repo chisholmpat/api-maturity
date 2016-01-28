@@ -1,5 +1,21 @@
-var module = angular.module('userDirectives', []);
-module.directive('uniqueUsername', function($http) {
+var module = angular.module('directives', []);
+
+// Directive for ensuring that two passewords match
+module.directive('pwdMatch', function ($parse) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            var me = $parse(attrs.ngModel);
+            var matchTo = $parse(attrs.pwdMatch);
+ 
+            scope.$watchGroup([me, matchTo], function(newValues,oldValues){
+                ctrl.$setValidity('matched', me(scope) === matchTo(scope) );
+            }, true);
+        }
+    }
+});
+
+module.directive('uniqueValue', function($http) {
     return {
         restrict: 'A',
         require: 'ngModel',
