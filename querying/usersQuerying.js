@@ -30,7 +30,6 @@ exports.addUser = function(user, res, callback) {
 
 // Updating a user in the DB
 exports.updateUser = function(user, res, callback) {
-
     knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
         callback(err, res);
     });
@@ -48,8 +47,7 @@ exports.getUserRole = function(email, res, callback) {
 
     knex('users').select('roles.role').where('users.email', email)
         .innerJoin('roles', 'users.role_id', 'roles.id').asCallback(function(err, rows) {
-
-            if (rows)
+            if (rows && roles[0] && roles[0].role)
                 callback(err, res, rows[0].role);
             else
                 callback(err, res);
