@@ -23,8 +23,6 @@ exports.addUser = function(user, res, callback) {
     passwordHelper.hash(user.password, user.salt, function(err, result) {
         user.password = result;
         knex('users').insert(user).asCallback(function(err, rows) {
-            console.log(err);
-            console.log(rows)
             callback(err, res);
         });
     });
@@ -39,18 +37,13 @@ exports.updateUser = function(user, res, callback) {
     // then have to update the userclients table.
     knex('users').select('email').where('Users.id', user.id).asCallback(function(err, rows) {
         userEmail = rows[0].email;
-        console.log(userEmail);
         knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
             callback(err, res);
         });
 
-        knex('userclients').where('email', userEmail).update(
-            {
-                email: user.email 
-            }).asCallback(function(err, rows){
-                console.log(err);
-                console.log(rows);
-            });
+        knex('userclients').where('email', userEmail).update({
+            email: user.email
+        })
     });
 
 }
