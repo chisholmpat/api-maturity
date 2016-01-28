@@ -1,23 +1,23 @@
 <div class="col-lg-12">
+
     <form novalidate name="userform" id="userform" class="userform">
         <div class="form-group" ng-class="{ 'has-error' : userform.name.$invalid && !userform.name.$pristine }">
             <label>Username:</label>
             <input class="form-control" type="text" name="username" ng-model="editing.username" ng-attr-unique-username="!editing.id"
-            unique-username="" required url="/checkUniqueUser/" />
+            unique-username="" required url="/checkUniqueUser/" ng-init="" />
             <p ng-show="userform.username.$error.required && !userform.username.$pristine"
             class="help-block">Username is required.</p>
             <p ng-show="userform.username.$error.unique" class="help-block">Username taken.</p>
         </div>
-
+	
         <div class="form-group" ng-class="{ 'has-error' : userForm.firstname.$invalid && !userForm.firstname.$pristine }">
             <!-- First Name -->
             <label>First Name:</label>
-            <input class="form-control" name="firstname" type="text" ng-model="editing.firstname"
+            <input class="form-control" name="firstname" type="text" ng-model="editing.firstname" placeholder="First Name"
             required />
             <p ng-show="userform.firstname.$error.required && !userform.firstname.$pristine"
             class="help-block">First name is required.</p>
         </div>
-
 
         <div class="form-group" ng-class="{ 'has-error' : userform.lastname.$invalid && !userform.lastname.$pristine }">
             <!-- Last Name -->
@@ -31,11 +31,10 @@
         <div class="form-group" ng-class="{ 'has-error' : userform.email.$invalid && !userform.email.$pristine }">
             <!-- Last Name -->
             <label>Email</label>
-            <input class="form-control" type="email" ng-model="editing.email" name="email"
-            required />
+            <input class="form-control" type="email" ng-model="editing.email" name="email" placeholder="email@inbox.com" required />
             <p ng-show="userform.email.$invalid && !userform.email.$pristine" class="help-block">Enter a valid email.</p>
         </div>
-
+		
         <div class="form-group" ng-class="{ 'has-error': userform.password.$dirty && userform.password.$error.required }"
         ng-if="!editing.id">
             <label for="passwordConfirm">Password</label>
@@ -50,13 +49,11 @@
             <span ng-show="userform.passwordConfirm.$error.matched" class="help-block">Passwords do not much</span>
         </div>
 
-        <!-- Role -->
         <div class="form-group">
             Role:
             <select ng-model="editing.role_id" ng-options="role.id as (role.role | uppercase) for role in roles"></select>
         </div>
 
-        <!-- Userlist -->
         <select ng-model="aUser" ng-options="aUser.username for aUser in allUsers " ng-change="onChange()">
             <option value="">New User</option>
         </select>

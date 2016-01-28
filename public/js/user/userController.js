@@ -2,8 +2,15 @@
 
     var module = angular.module('userModule', ['userServiceModule']);
 
-    module.controller('UserController', function($scope, $rootScope, $http, $location) {
-        // This object will be filled by the form
+    module.controller('UserLoginController', function($scope, $rootScope, $http, $location) {
+        
+		// To automatically forward if already authenticated
+		$rootScope.$watch('isLoggedIn', function() {
+            if ($rootScope.isLoggedIn)
+                $window.top.location = $window.location;
+        });
+		
+		// This object will be filled by the form
         $scope.user = {};
 
         // Register the login() function
@@ -26,33 +33,34 @@
     });
 
     // Controller for "add_clients.html", for adding clients to DB.
-    module.controller('AddUserController', ['$scope', 'UserStore', '$window',
+    module.controller('EditUserController', ['$scope', 'UserStore', '$window',
         function($scope, UserStore, $window) {
 
-            $scope.result = "";
-
-            $scope.editing = {}; // model to hold edited fields
-            $scope.allUsers = UserStore.getUsers.query();
+            $scope.result = ""; // 
+            $scope.editing = {};
             $scope.defaultRoleID = "";
+			
+			// Get a list of all the available users
+			$scope.allUsers = UserStore.getUsers.query();
+			
+			// Retrieve roles for use in the dropdown
             $scope.roles = UserStore.getUserRoles.query({}, function(results) {
                 $scope.defaultRoleID = results[0].id;
                 $scope.editing.role_id = $scope.defaultRoleID
             });
 
-
+			// Ensure that the password is appropriate.
             $scope.handlePatternPassword = (function() {
                 var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/;
                 return {
                     test: function(value) {
-                        if (!$scope.editing.id) {
+                        if (!$scope.editing.id) 
                             return (value.length > 0) ? regex.test(value) : true;
-                        } else {
-                            return true;
-                        }
+                         else 
+                            return true;      
                     }
                 };
             })();
-
 
             // Handles populating the "editing" model
             // with the proper fields from the selected
@@ -127,6 +135,7 @@ module.controller('PasswordResetController', ['$scope', 'UserStore', '$location'
             }
         }]);
 		
+// Module responsible for sending the email to the registed user's email account.
 module.controller('SendPasswordController', ['$scope', 'UserStore', '$location', '$routeParams', '$window',
 	function($scope, UserStore, $location, $routeParams, $window) {
 		
@@ -143,11 +152,7 @@ module.controller('SendPasswordController', ['$scope', 'UserStore', '$location',
 			}
 	}]);
 
+   module.controller('EditUserController', function($scope, $rootScope, $location, $window) {
 
-    module.controller('EditUserController', function($scope, $rootScope, $location, $window) {
-        $rootScope.$watch('isLoggedIn', function() {
-            if ($rootScope.isLoggedIn)
-                $window.top.location = $window.location;
-        });
     });
 })();

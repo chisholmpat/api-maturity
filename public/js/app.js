@@ -5,10 +5,8 @@ var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource','ng.http
 
 myApp.config(['httpMethodInterceptorProvider',
   function (httpMethodInterceptorProvider) {
-  httpMethodInterceptorProvider.whitelistDomain('bmix-essential.mybluemix.net');
+  httpMethodInterceptorProvider.whitelistDomain('bmix-essential.mybluemix.net/');
   httpMethodInterceptorProvider.whitelistLocalRequests();
-
-  // ...
  }
 ]);
 
@@ -194,13 +192,13 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     }).
 
     when('/login', {
-        templateUrl: '/views/user/user.html',
-        controller: 'UserController'
+        templateUrl: '/views/user/login.html',
+        controller: 'UserLoginController'
     }).
 
     when('/ibmlogin', {
-        templateUrl: '/views/user/ibmuser.html',
-        controller: 'EditUserController'
+        templateUrl: '/views/user/ibmlogin.html',
+        controller: 'UserLoginController'
     }).
 
     when('/add_client', {
@@ -228,9 +226,9 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             isAdmin: userIsAdmin
         }
     }).
-    when('/add_user/', {
-        templateUrl: '/views/user/add_user.html',
-        controller: 'AddUserController',
+    when('/edit_users/', {
+        templateUrl: '/views/user/edit_user.html',
+        controller: 'EditUserController',
         resolve: {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
