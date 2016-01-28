@@ -13,7 +13,7 @@
         <div class="form-group" ng-class="{ 'has-error' : userForm.firstname.$invalid && !userForm.firstname.$pristine }">
             <!-- First Name -->
             <label>First Name:</label>
-            <input class="form-control" name="firstname" type="text" ng-model="editing.firstname" placeholder="First Name"
+            <input class="form-control" name="firstname" type="text" ng-model="editing.firstname"
             required />
             <p ng-show="userform.firstname.$error.required && !userform.firstname.$pristine"
             class="help-block">First name is required.</p>
