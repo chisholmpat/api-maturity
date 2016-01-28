@@ -5,12 +5,26 @@ module.exports = function(app) {
     var dbUtils = require('../helpers/db_util');
 
     // return all questions by client and form id
+    //All Questions from clientQuestionsResponses, basically get the answered questions first
     app.get('/questions/:client_id/:form_id', dbUtils.checkAuthenticated, function(req, res) {
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, canView) {
-            if (canView)
+            if (canView){
                 queries.getAllQuestions(req.params.client_id, req.params.form_id, res, dbUtils.callback);
-            else
+            }else{
                 res.send(403);
+            }
+        });
+    });
+
+    //Return all unanswered questions for the form
+    app.get('/unansweredQuestions/:client_id/:form_id', dbUtils.checkAuthenticated, function(req, res) {
+        dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, canView) {
+            if (canView){
+                console.log("reached unanswered " + req.params.client_id + req.params.form_id);
+                queries.getallUnansweredQuestions(req.params.client_id, req.params.form_id, res, dbUtils.callback);
+            }else{
+                res.send(403);
+            }
         });
     });
 
