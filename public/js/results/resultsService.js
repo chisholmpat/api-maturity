@@ -83,21 +83,13 @@
     }]);
 
 
-    module.service('GraphingFunctionsStore', ['$http', '$resource', function($http, $resource, qaGraphData, saGraphData) {
-        this.makeRadarGraph = function(qaGraphData, saGraphData){
+    module.service('GraphingFunctionsStore', ['$http', '$resource', function($http, $resource, qaGraphData, saGraphData, keyArray) {
+        this.makeRadarGraph = function(qaGraphData, saGraphData, keyArray){
 
-          var keyArray = [];
-          var QAdataArray = [];
-          var SAdataArray = [];
           var showGraphId;
           var canvasName = "radarGraph";
           var canvas = document.getElementById(canvasName);
 
-          for (var key in qaGraphData) {
-              keyArray.push(key);
-              QAdataArray.push(qaGraphData[key]);
-              SAdataArray.push(saGraphData[key]);
-          }
           var graphData = {
               labels: keyArray,
               datasets: [
@@ -109,7 +101,7 @@
                       pointStrokeColor: "#fff",
                       pointHighlightFill: "#fff",
                       pointHighlightStroke: "rgba(220,220,220,1)",
-                      data: QAdataArray
+                      data: qaGraphData
                   },
                   {
                       label: "SA-Graph",
@@ -119,7 +111,7 @@
                       pointStrokeColor: "#fff",
                       pointHighlightFill: "#fff",
                       pointHighlightStroke: "rgba(151,187,205,1)",
-                      data: SAdataArray
+                      data: saGraphData
                   }
               ]
           };
