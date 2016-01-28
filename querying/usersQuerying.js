@@ -6,7 +6,7 @@ var passwordHelper = require('../helpers/password');
 // to avoid reading/writing cleartext passwords.
 exports.userloginvalidate = function(username, password) {
     knex.select('').from('users')
-        .where('username', username)
+        .where('username', username.toUpperCase())
         .where('password', password)
         .where('active', 1)
         .ascallback(function(err, rows) {
@@ -22,6 +22,7 @@ exports.addUser = function(user, res, callback) {
     user.salt = Math.random().toString(36).slice(2);
     passwordHelper.hash(user.password, user.salt, function(err, result) {
         user.password = result;
+        user.username = user.username.toUpperCase();
         knex('users').insert(user).asCallback(function(err, rows) {
             callback(err, res);
         });
@@ -37,6 +38,7 @@ exports.updateUser = function(user, res, callback) {
     // then have to update the userclients table.
     knex('users').select('email').where('Users.id', user.id).asCallback(function(err, rows) {
         userEmail = rows[0].email;
+        user.username = user.username.toUpperCase();
         knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
             callback(err, res);
         });
