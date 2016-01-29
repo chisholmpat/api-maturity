@@ -4,7 +4,7 @@
         <div class="form-group" ng-class="{ 'has-error' : userform.name.$invalid && !userform.name.$pristine }">
             <label>Username:</label>
             <input class="form-control" type="text" name="username" ng-model="editing.username"
-            ng-attr-unique-username="!editing.id" uunique-value="" required url="/checkUniqueUser/"
+            ng-attr-unique-username="!editing.id" unique-value="" required url="/checkUniqueUser/"
             ng-init="" />
             <p ng-show="userform.username.$error.required && !userform.username.$pristine"
             class="help-block">Username is required.</p>

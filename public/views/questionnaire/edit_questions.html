@@ -10,7 +10,7 @@
             <div> <input type="button" ng-click="toggleAddQuestionVisibility()" value="{{!addQuestion && 'Add'||'Cancel'}}"> </input> </div>
         </div>
         <div ng-show="addQuestion" class="form-group addQuestion">
-            <div><input type="text" name="newQuestionName" class="form-control" ng-model="newQuestion.text" required> </td></div>
+            <div><input type="text" name="newQuestionName" class="form-control" ng-model="newQuestion.text"> </td></div>
             <div><select ng-model="newQuestion.group_id" ng-options="grouping.id as grouping.name for grouping in groupings" ng-init="newQuestion.group_id=1"></select></div>
             <div><input type="button" ng-click="saveQuestion(newQuestion)" value="Add"  ng-show="questionsForm.newQuestionName.$valid && !questionsForm.newQuestionName.$pristine"></input></div>
             <p ng-show="questionsForm.newQuestionName.$invalid || questionsForm.newQuestionName.$pristine" class="help-block">Question is required.</p>
@@ -18,7 +18,7 @@
 
         <div class="form-group" ng-repeat="question in questions |  filter: { category_id: '1', active: '1' } ">
             <div>
-                <input type="text" class="form-control" ng-model="question.text">
+                <input type="text" class="form-control" ng-model="question.text" required>
 
             </div>
             <div>
