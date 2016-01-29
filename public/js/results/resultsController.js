@@ -40,8 +40,10 @@
                 for(var i=0; i< keysArray.length; i++){
                   var key = keysArray[i];
                   if(graphTitles.indexOf(key)==-1){
-                    QAfinalGraphData.push(QAGraphData[key] || 0);
-                    SAfinalGraphData.push(SAGraphData[key] || 0);
+                    QAfinalGraphData.push(QAGraphData[key] || 0); //radar graph
+                    SAfinalGraphData.push(SAGraphData[key] || 0); //radar graph
+                    QAGraphData[key] =  (QAGraphData[key]  || 0); //gauge graph
+                    SAGraphData[key] =  (SAGraphData[key]  || 0); //gauge graph
                     graphTitles.push(key);
                   }
                 }

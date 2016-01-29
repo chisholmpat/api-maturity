@@ -2,16 +2,20 @@
 <h2> SURVEY - {{questions[0].form_name}}</h2>
 <form ng-submit="generateScore(questions, unansweredQuestions)">
 
-
 <h3> Self Assesment </h3>
 <div class="SAtext">
-  <p ng-repeat="question in questions |  filter: { category_id: '2' }"><span>{{question.text}}</span>
-    <label ng-repeat="response in responses  | filter: { category_id: '2' }"><input type="radio" ng-model="question.response_id" ng-value="response.id"><span>{{response.response}}</span></label>
+  <p ng-repeat="question in questions |  filter: { category_id: '2' }" ><span>{{question.text}}</span>
+    <label ng-repeat="response in responses  | filter: { category_id: '2' }"><input type="radio" ng-model="question.response_id" ng-value="response.id">
+        <span>{{response.response}}</span>
+    </label>
 
   </p>
 
   <p ng-repeat="question in unansweredQuestions |  filter: { category_id: '2' }"><span>{{question.text}}</span>
-    <label ng-repeat="response in responses  | filter: { category_id: '2' }"><input type="radio" ng-model="question.response_id" ng-value="response.id"><span>{{response.response}}</span></label>
+    <label ng-repeat="response in responses  | filter: { category_id: '2' }" ng-init="question.response_id = (responses | filter: {category_id: '2'} | filter: {value: '0'})[0].id">
+        <input type="radio" ng-model="question.response_id" ng-value="response.id">
+        <span>{{response.response}}</span>
+    </label>
   </p>
  </div>
 
@@ -42,8 +46,10 @@
   <div ng-repeat="question in unansweredQuestions |  filter: { category_id: '1' }">
      <p>{{ question.text }} </p>
      <div class="QAcheckboxes">
-       <div ng-repeat="response in responses  | filter: { category_id: '1' }" class="QACheckboxGroup">
-         <label><input type="radio" ng-model="question.response_id" ng-value="response.id"><span>{{response.response}}</span></label>
+       <div ng-repeat="response in responses  | filter: { category_id: '1' }" class="QACheckboxGroup" ng-init="question.response_id = (responses | filter: {category_id: '1'} | filter: {value: '0'})[0].id">
+         <label><input type="radio" ng-model="question.response_id"  ng-value="response.id">
+            <span>{{response.response}}</span>
+         </label>
        </div>
 
        <div class="QACheckboxGroup">
