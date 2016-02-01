@@ -44,8 +44,14 @@ module.exports = function(app) {
         queries.getRoles(res, dbUtils.callback);
     });
 
-    app.get('/checkUniqueUser/:username', function(req, res){
+    // route used to check for uniqueness of user 
+    app.get('/checkUniqueUser/:username', function(req, res) {
             queries.checkUniqueUsername(req.params.username, res, dbUtils.callback);
+    });
+
+    // route used to check for uniqueness of user email for user form.
+    app.get('/checkUniqueUserEmail/:email', function(req, res) {
+            queries.checkUniqueUserEmail(req.params.email, res, dbUtils.callback);
     });
 
 }

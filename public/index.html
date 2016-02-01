@@ -35,15 +35,15 @@
                             <a href="#clients" ng-show="role == 'client' ">Results</a>
                         </li>
                         <div ng-controller="MenuController">
-                            <li ng-show="role === 'admin'">
+                            <li ng-show="role === 'admin' || role === 'user'">
                                 <a class="brand" ng-click="isCollapsed = !isCollapsed">Admin</a>
                                 <div class="nav-collapse" collapse="isCollapsed">
                                     <ul class="nav">
-                                        <li><a href="#forms">Edit Forms</a>
+                                        <li ng-show="role === 'admin'"><a href="#forms">Edit Forms</a>
                                         </li>
                                         <li><a href="#edit_users">Edit Users</a>
                                         </li>
-                                        <li><a href="#add_client">Edit Clients</a>
+                                        <li ng-show="role === 'admin'"><a href="#add_client">Edit Clients</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -68,7 +68,7 @@
         <div id="page-content-wrapper">
             <div class="headerHeight">
                 <div>
-                    <h2>Welcome, Practitioner </h2>
+                  <h2> {{role}} Welcome, Practitioner </h2>
                     <img src="./images/API Maturity_avatar.png" alt="" />
                 </div>
             </div>

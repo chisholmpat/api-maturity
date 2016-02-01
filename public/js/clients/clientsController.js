@@ -32,6 +32,7 @@
                     allClientIDs.push(allClientsOwnedByUser[i].client_id);
                 };
             });
+
             $scope.allClients = allClientIDs;
 
             //Assign user to ClientID
@@ -58,9 +59,9 @@
                 }
             }
 
+            // Method for deleting a client from the database.
             $scope.deleteClient = function(client) {
                 if (confirm('Are you sure you want to delete this?')) {
-                    
                     client.status = 0;
 
                     for (var i = $scope.clients.length - 1; i >= 0; i--) {

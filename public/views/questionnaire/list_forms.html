@@ -11,7 +11,7 @@
     <div ng-show="addForm" class="form-group addQuestion">
         <form name="addingNewForm">
           <div>
-              <input type="text" class="form-control" name="newFormName" ng-model="newForm.text" url="/checkUniqueFormName/" unique-username="" required> </input></td>
+              <input type="text" class="form-control" name="newFormName" ng-model="newForm.text" url="/checkUniqueFormName/" unique-value="" required> </input></td>
               <span class="hide-while-in-focus" ng-show="addingNewForm.newFormName.$error.unique && !addingNewForm.newFormName.$pristine">Form Name Taken. Update and Press tab</span>
           </div>
           <div>
