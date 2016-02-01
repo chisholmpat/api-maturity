@@ -12,7 +12,10 @@
                 form_id: $routeParams.form_id
             }, function(results) {
 
+                var QAfinalGraphData = [];
+                var SAfinalGraphData = [];
                 var valueWeightsArray = results;
+                var graphTitles = [];
                 var categories = {
                     QA: 1,
                     SA: 2
@@ -25,11 +28,31 @@
 
                 //get final data for the graphs
                 var QAGraphData = QAmappedValues;
-                var SAGraphData = allGraphScores[categories.SA]; //SA does not get averaged or mapped
+                //SA does not get averaged or mapped but using the averages function will convert from single element array to just a value
+                var SAGraphData = GraphScoresDataStore.getAverageGraphScores(allGraphScores[categories.SA]);
+
+
+                //Get a list of all possible keys
+                var qaKeys = Object.keys(QAGraphData);
+                var saKeys = Object.keys(SAGraphData);
+                var keysArray = qaKeys.concat(saKeys); // Merges both arrays
+
+                for(var i=0; i< keysArray.length; i++){
+                  var key = keysArray[i];
+                  if(graphTitles.indexOf(key)==-1){
+                    QAfinalGraphData.push(QAGraphData[key] || 0); //radar graph
+                    SAfinalGraphData.push(SAGraphData[key] || 0); //radar graph
+                    QAGraphData[key] =  (QAGraphData[key]  || 0); //gauge graph
+                    SAGraphData[key] =  (SAGraphData[key]  || 0); //gauge graph
+                    graphTitles.push(key);
+                  }
+                }
+
+
 
                 //draw radar graph
-                GraphingFunctionsStore.makeRadarGraph(QAGraphData, SAGraphData);
-                
+                GraphingFunctionsStore.makeRadarGraph(QAfinalGraphData, SAfinalGraphData, graphTitles);
+
                 //draw gauge graphs
                 GraphingFunctionsStore.makeGaugeGraphs(QAGraphData, SAGraphData); //Only once charts loaded drawing charts is executed
 

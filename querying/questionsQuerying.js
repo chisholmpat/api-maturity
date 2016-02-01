@@ -61,6 +61,7 @@ exports.getClientAnswers = function(client_id, form_id, res, callback) {
 // Return all the possible responses to a question.
 exports.getAllResponses = function(res, callback) {
     knex.select().table('response').
+    orderBy('value', 'asc').
     asCallback(function(err, rows) {
         callback(err, res, rows);
     });

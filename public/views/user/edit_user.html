@@ -4,7 +4,7 @@
         <div class="form-group" ng-class="{ 'has-error' : userform.name.$invalid && !userform.name.$pristine }">
             <label>Username:</label>
             <input class="form-control" type="text" name="username" ng-model="editing.username"
-            ng-attr-unique-username="!editing.id" unique-username="" required url="/checkUniqueUser/"
+            ng-attr-unique-username="!editing.id" unique-value="" required url="/checkUniqueUser/"
             ng-init="" />
             <p ng-show="userform.username.$error.required && !userform.username.$pristine"
             class="help-block">Username is required.</p>
@@ -59,13 +59,13 @@
             <select ng-model="editing.role_id" ng-options="role.id as (role.role | uppercase) for role in roles"></select>
             <input type="checkbox" ng-model="editing.active" ng-true-value="1" ng-false-value="0"> Active </input>
         </div>
-     
+
         <select ng-model="aUser" ng-options="aUser.username for aUser in allUsers | filter: {email: '!' + loggedInEmail}" ng-change="onChange()">
             <option value="">New User</option>
         </select>
 
         <button data-ng-disabled="!userform.$valid" data-ng-click="submit()" class="btn btn-default">Submit</button>
-       
+
     </form>
 
 </div>

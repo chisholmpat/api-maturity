@@ -52,18 +52,17 @@ exports.addNewlyAnswered = function(res, responses, client_id, callback) {
   var index = 0;
   var error = null;
 
+  addNext(index,client_id, responses, callback, res, error);
 
-
-  addNext(index,client_id, responses, callback, res, error)
 }
 
 function addNext(index, client_id, responses, callback, res, error){
   var max_index = responses.length;
 
-  console.log("RESPONSES" + responses);
+  console.log("INSERTING RESPONSES" + responses);
   console.log(responses[index] + " index" + index);
 
-  if(index >= max_index || error)
+  if(index >= max_index)
     callback(error, res);
 
   else{
@@ -75,12 +74,15 @@ function addNext(index, client_id, responses, callback, res, error){
           response_id: responses[index].response_id,
           question_id: responses[index].id,
           client_id: client_id,
-          weight: responses[index].weight || 0
+          weight: responses[index].weight || 0,
+          note: responses[index].note
        }).asCallback(function(err, rows){
            console.log("ERR" + err);
            console.log("ROWS: " + rows);
            addNext(index+1, client_id, responses, callback, res, err);
       });
+    } else {
+      addNext(index+1, client_id, responses, callback, res, error);
     }
   }
 }
