@@ -187,9 +187,16 @@ exports.addForm = function(formName, res, callback) {
       active: 1
   })
   .asCallback(function(err, rows) {
-      callback(err, res, rows);
-  })
-}
+
+    var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
+SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2"
+
+    knex.raw(query).asCallback(function(err, rows) { 
+        callback(err, res);
+    });
+  });
+
+};
 
 
 // Checks to see if a form Name exists
