@@ -33,10 +33,15 @@ module.exports = function(app) {
 
     // get the user's role from the database
     app.get('/role/', function(req, res) {
-        if(req.user && req.user.email)
-        queries.getUserRole(req.user.email, res, dbUtils.callback);
-        else
-        res.send(403, 'No User Email');
+        if (req.user.isIBM) {
+            res.send('user');
+            return;
+        } else {
+            if (req.user && req.user.email)
+                queries.getUserRole(req.user.email, res, dbUtils.callback);
+            else
+                res.send(403, 'No User Email');
+        }
     });
 
     // get all roles from the database
@@ -46,12 +51,12 @@ module.exports = function(app) {
 
     // route used to check for uniqueness of user 
     app.get('/checkUniqueUser/:username', function(req, res) {
-            queries.checkUniqueUsername(req.params.username, res, dbUtils.callback);
+        queries.checkUniqueUsername(req.params.username, res, dbUtils.callback);
     });
 
     // route used to check for uniqueness of user email for user form.
     app.get('/checkUniqueUserEmail/:email', function(req, res) {
-            queries.checkUniqueUserEmail(req.params.email, res, dbUtils.callback);
+        queries.checkUniqueUserEmail(req.params.email, res, dbUtils.callback);
     });
 
 }
