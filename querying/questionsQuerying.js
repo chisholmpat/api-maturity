@@ -184,6 +184,8 @@ exports.addForm = function(formName, res, callback) {
   console.log("reached Add Forms query " + formName);
 
   knex('form').select('').where('name', formName).where('active', 0).asCallback(function(err, rows){
+
+      //If the FormName already exists in the database, just Update the entry
       if(rows.length !=0){
         knex('form')
         .where('name', formName)
@@ -193,7 +195,7 @@ exports.addForm = function(formName, res, callback) {
         .asCallback(function(err,rows){
           callback(err, res);
         });
-      }else{
+      }else{//Form Name doesn't exist in table, add it in. 
         knex('form').insert({
             name: formName,
             active: 1
