@@ -41,9 +41,9 @@
                                     <ul class="nav">
                                         <li ng-show="role === 'admin'"><a href="#forms">Edit Forms</a>
                                         </li>
-                                        <li><a href="#edit_users">Edit Users</a>
+                                        <li ng-show="role === 'admin'"><a href="#edit_users">Edit Users</a>
                                         </li>
-                                        <li ng-show="role === 'admin'"><a href="#add_client">Edit Clients</a>
+                                        <li><a href="#add_client">Edit Clients</a>
                                         </li>
                                     </ul>
                                 </div>
