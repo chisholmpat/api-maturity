@@ -105,8 +105,8 @@ module.exports = function(app) {
 
     // add a form to the form table
     app.post("/addForm", dbUtils.checkAuthenticated, function(req, res) {
+        console.log("reached Add Forms "+ req.body.formName);
         queries.addForm(req.body.formName, res, dbUtils.callbackNoReturn);
-        console.log("reached Add Forms ");
     });
 
     //check if the form_name is unique

@@ -182,26 +182,41 @@ exports.addQuestion = function(question, res, callback) {
 
 exports.addForm = function(formName, res, callback) {
   console.log("reached Add Forms query " + formName);
-  knex('form').insert({
-      name: formName,
-      active: 1
-  })
-  .asCallback(function(err, rows) {
 
-    var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
-SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2"
+  knex('form').select('').where('name', formName).where('active', 0).asCallback(function(err, rows){
+      if(rows.length !=0){
+        knex('form')
+        .where('name', formName)
+        .update({
+          active: 1
+        })
+        .asCallback(function(err,rows){
+          callback(err, res);
+        });
+      }else{
+        knex('form').insert({
+            name: formName,
+            active: 1
+        })
+        .asCallback(function(err, rows) {
 
-    knex.raw(query).asCallback(function(err, rows) { 
-        callback(err, res);
-    });
+            var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
+                        SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2"
+            knex.raw(query).asCallback(function(err, rows) {
+                callback(err, res);
+            });
+        });
+
+      }
   });
+
 
 };
 
 
 // Checks to see if a form Name exists
 exports.checkUniqueFormname = function(formname, res, callback){
-    knex('form').select('').where('name', formname).asCallback(function(err, rows){
+    knex('form').select('').where('name', formname).where('active', 1).asCallback(function(err, rows){
         console.log(err);
         console.log(rows)
         if(rows && rows[0])
