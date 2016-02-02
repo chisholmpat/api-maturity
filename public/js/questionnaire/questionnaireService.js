@@ -1,8 +1,8 @@
 (function () {
     var module = angular.module('questionnaireServiceModule', ['ngResource']);
     module.service('QuestionStore', ['$http', '$resource', function ($http, $resource) {
-        this.allQuestionConn = $resource('/questions/:client_id/:form_id');
-        this.allUnansweredQuestionConn = $resource('/unansweredQuestions/:client_id/:form_id');
+        this.allQuestionConn = $resource('/questions/:client_id/:form_id/:assessment_id');
+        this.allUnansweredQuestionConn = $resource('/unansweredQuestions/:client_id/:form_id/:assessment_id');
         this.responseConn = $resource('/responses');
         this.addAnswersConn = $resource('/insertAnswers');
         this.questionConn = $resource('/questions/:form_id');
@@ -13,5 +13,6 @@
         this.addFormConn = $resource('/addForm');
         this.deleteFormConn = $resource('/deleteForm');
         this.addQuestionConn = $resource('/addQuestion');
+        
     }]);
 })();

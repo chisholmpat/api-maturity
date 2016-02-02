@@ -4,7 +4,7 @@
     var module = angular.module('resultsServiceModule', ['ngResource']);
 
     module.service('ResultStore', ['$http', '$resource', function($http, $resource) {
-        this.scoreConn = $resource('/score/:client_id/:form_id');
+        this.scoreConn = $resource('/score/:client_id/:form_id/:assessment_id');
     }]);
 
     module.service('GraphScoresDataStore', ['$http', '$resource', function($http, $resource, valueWeightsArray) {

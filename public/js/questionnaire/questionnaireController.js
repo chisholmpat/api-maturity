@@ -8,13 +8,17 @@
             // Get questions and responses from database
             $scope.questions = QuestionStore.allQuestionConn.query({
                 client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id
+                form_id: $routeParams.form_id,
+                assessment_id: $routeParams.assessment_id
             }, function() {});
+
+            console.log($routeParams);
 
             // Get unanswered questions and responses from database
             $scope.unansweredQuestions = QuestionStore.allUnansweredQuestionConn.query({
                 client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id
+                form_id: $routeParams.form_id,
+                assessment_id: $routeParams.assessment_id
             }, function() {});
 
             $scope.responses = QuestionStore.responseConn.query();
@@ -44,11 +48,12 @@
                 QuestionStore.addAnswersConn.save({
                         user_responses: questions,
                         newly_answered_responses: unansweredQuestions,
-                        client_id: $routeParams.client_id
+                        client_id: $routeParams.client_id,
+                        assessment_id: $routeParams.assessment_id
                     },
                     function() {
-                        $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
-                });
+                        $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
+                    });
             }
         }
     ]);

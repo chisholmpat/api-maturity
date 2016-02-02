@@ -9,7 +9,8 @@
 
             $scope.results = ResultStore.scoreConn.query({
                 client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id
+                form_id: $routeParams.form_id,
+                assessment_id: $routeParams.assessment_id
             }, function(results) {
 
                 var QAfinalGraphData = [];

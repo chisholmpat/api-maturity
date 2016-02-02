@@ -5,14 +5,18 @@
     <uib-accordion close-others="oneAtATime" class="clients">
         <uib-accordion-group ng-repeat="client in clients">
             <uib-accordion-heading>
-                {{client.name}}
+              {{client.name}}
             </uib-accordion-heading>
             <div class="formTable">
-                <div ng-repeat="form in forms">
+              <button> Start New Assessment </button>
+              <div ng-repeat="assessment in assessments | filter: { client_id: client.id} ">
+                  {{assessment.date | dateToISO | date:'shortDate'}}  
+                <div ng-repeat="form in forms"> 
                     <span>{{form.name}} </span>
-                    <span><a href="/#/questionnaire/{{client.id}}/{{form.id}}"> Survey </a></span>
-                    <span><a href="/#/results/{{client.id}}/{{form.id}}"> Results </a></span>
-                </div>
+                    <span><a href="/#/questionnaire/{{client.id}}/{{form.id}}/{{assessment.id}}"> Survey  </a></span>
+                    <span><a href="/#/results/{{client.id}}/{{form.id}}/{{assessment.id}}"> Results </a></span>
+                  </div>
+              </div>
                 <div>
                     <span></span>
                 </div>

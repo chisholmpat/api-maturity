@@ -75,7 +75,8 @@ function addNext(index, client_id, responses, callback, res, error){
           question_id: responses[index].id,
           client_id: client_id,
           weight: responses[index].weight || 0,
-          note: responses[index].note
+          note: responses[index].note,
+          assessment_id: responses[index].assessment_id
        }).asCallback(function(err, rows){
            console.log("ERR" + err);
            console.log("ROWS: " + rows);
