@@ -5,6 +5,7 @@ var knex = require("../db/db.js").knex; // the database connection.
 exports.getAllQuestions = function(client_id, form_id, assessment_id, res, callback) {
 
     console.log('ASSESSMENT_ID', assessment_id);
+
     knex.select('ClientQuestionResponse.client_id', 'ClientQuestionResponse.note',
             'Form.name as form_name', 'Question.id', 'Question.text', 'Question.category_id',
             'ClientQuestionResponse.response_id', 'ClientQuestionResponse.weight')
@@ -17,8 +18,6 @@ exports.getAllQuestions = function(client_id, form_id, assessment_id, res, callb
         .where('ClientQuestionResponse.client_id', client_id)
         .where('Assessment.id', assessment_id)
         .asCallback(function(err, rows) {
-            console.log(err);
-            console.log(rows);
             callback(err, res, rows);
         })
 };
@@ -29,6 +28,8 @@ exports.getallUnansweredQuestions = function(client_id, form_id, assessment_id, 
 
     var subQuery = knex.select('clientquestionresponse.question_id').from('clientquestionresponse').where('clientquestionresponse.client_id', client_id)
         .where('clientquestionresponse.assessment_id', assessment_id);
+
+        console.log(subQuery.toString());
 
     knex.select('Question.id', 'Question.text', 'Question.category_id', 'Form.name as form_name')
         .from('Question')
@@ -150,8 +151,6 @@ exports.deleteQuestion = function(id, res, callback) {
     });
 };
 
-
-
 // Set the field of a question to inactive
 exports.deleteForm = function(id, res, callback) {
     knex('form').where('id', id).update({
@@ -160,7 +159,6 @@ exports.deleteForm = function(id, res, callback) {
         callback(err, res);
     });
 };
-
 
 // Add a question to the database. The design currently
 // dictates that there must be an entry in CQR table to
@@ -184,29 +182,44 @@ exports.addQuestion = function(question, res, callback) {
 //By default the form is set to isActive = true
 
 exports.addForm = function(formName, res, callback) {
-    console.log("reached Add Forms query " + formName);
-    knex('form').insert({
-            name: formName,
-            active: 1
-        })
-        .asCallback(function(err, rows) {
 
-            var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
-SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2"
+    knex('form').select('').where('name', formName).where('active', 0).asCallback(function(err, rows) {
 
-            knex.raw(query).asCallback(function(err, rows) {
-                callback(err, res);
-            });
-        });
+        //If the FormName already exists in the database, just Update the entry
+        if (rows.length != 0) {
+            knex('form')
+                .where('name', formName)
+                .update({
+                    active: 1
+                })
+                .asCallback(function(err, rows) {
+                    callback(err, res);
+                });
+        } else { //Form Name doesn't exist in table, add it in. 
+            knex('form').insert({
+                    name: formName,
+                    active: 1
+                })
+                .asCallback(function(err, rows) {
+
+                    var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
+                        SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2"
+
+                    knex.raw(query).asCallback(function(err, rows) {
+                        callback(err, res);
+                    });
+                });
+
+
+        }
+    });
 
 };
 
 
 // Checks to see if a form Name exists
 exports.checkUniqueFormname = function(formname, res, callback) {
-    knex('form').select('').where('name', formname).asCallback(function(err, rows) {
-        console.log(err);
-        console.log(rows)
+    knex('form').select('').where('name', formname).where('active', 1).asCallback(function(err, rows) {
         if (rows && rows[0])
             res.send(rows[0].name);
         else
@@ -216,10 +229,7 @@ exports.checkUniqueFormname = function(formname, res, callback) {
 
 // Gets all the assessments for a particular client
 exports.getAllAssessmentsForClient = function(client_id, res, callback) {
-    knex('assessment').select('').where('client_id', client_id).asCallback(function(err, rows) {
-        console.log(rows);
-        console.log(err);
-    });
+    knex('assessment').select('').where('client_id', client_id).asCallback(function(err, rows) {});
 }
 
 // Gets all the assesments for all clients

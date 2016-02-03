@@ -166,12 +166,16 @@
             // Updates the question on the form.
             var refreshForms = function() {
                 $scope.forms = QuestionStore.formsConn.query({});
+                // Refresh the list and clear the input box
+                $scope.addForm = false;
+                $scope.newForm.text = "";
             }
 
             // Onclick method for toggling visibility
             $scope.toggleAddFormVisibility = function() {
                 $scope.addForm = !$scope.addForm;
             };
+
 
             // Function for saving a new form
             $scope.saveForm = function(formName) {

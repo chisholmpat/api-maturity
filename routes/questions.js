@@ -20,7 +20,6 @@ module.exports = function(app) {
     app.get('/unansweredQuestions/:client_id/:form_id/:assessment_id', dbUtils.checkAuthenticated, function(req, res) {
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, canView) {
             if (canView){
-                console.log("reached unanswered " + req.params.client_id + req.params.form_id, req.params.assessment_id);
                 queries.getallUnansweredQuestions(req.params.client_id, req.params.form_id, req.params.assessment_id, res, dbUtils.callback);
             }else{
                 res.send(403);
@@ -106,12 +105,10 @@ module.exports = function(app) {
     // add a form to the form table
     app.post("/addForm", dbUtils.checkAuthenticated, function(req, res) {
         queries.addForm(req.body.formName, res, dbUtils.callbackNoReturn);
-        console.log("reached Add Forms ");
     });
 
     // check if the form_name is unique
     app.get('/checkUniqueFormName/:formname', function(req, res){
-            console.log("Called for forms!");
             queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
     });
 

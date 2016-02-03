@@ -9,8 +9,10 @@ module.exports = function(app) {
 
     // Insert the completed questions into the database
     app.post('/insertAnswers', dbUtils.checkAuthenticated, function(req, res) {
-        console.log("Assessment_ID:", req.body.assessment_id);
-        queries.updateAnswers(res, req.body.user_responses, function(req, res){});
-        queries.addNewlyAnswered(res, req.body.newly_answered_responses, req.body.client_id, dbUtils.callbackNoReturn);
+        console.log("ASSESSMENTID: " + req.body.assessment_id);
+        console.log("BODY: " + req.body.user_responses);
+        console.log("NEWLY ANSWERED: " + req.body.newly_answered_responses);
+        queries.updateAnswers(res, req.body.user_responses, req.body.assessment_id, function(req, res){});
+        queries.addNewlyAnswered(res, req.body.newly_answered_responses, req.body.client_id, req.body.assessment_id, dbUtils.callbackNoReturn);
     });
 };

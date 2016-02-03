@@ -64,13 +64,10 @@ module.exports = function(app) {
                         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
                 };
                 smtpTransport.sendMail(mailOptions, function(err) {
-                    console.log('Email Sent to ' + user.email);
-                    console.log('Errors:' + err);
                     done(err, 'done');
                 });
             }
         ], function(err) {
-			console.log(err);
             if (err) return next(err);
 			res.send(200);
         });
@@ -92,7 +89,6 @@ module.exports = function(app) {
 
     // Route for updating user's password
     app.post('/updatepassword', function(req, res) {
-		console.log(req.body);
         var token = req.body.token;
         var password = req.body.password;
         var salt = Math.random().toString(36).slice(2);
@@ -104,7 +100,6 @@ module.exports = function(app) {
                 salt: salt,
                 password: password
             }).asCallback(function(err, rows) {
-				console.log(err);
                 if (!err)
                     res.send(200, "Password Changed");
                 else
