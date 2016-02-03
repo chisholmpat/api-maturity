@@ -130,6 +130,17 @@
           makeGaugeGraphs(SAGraphData, "SAgaugeGraph", saMaxVal) ;
         }
 
+        //Find a way of serializing the canvg()
+        //is an externally implmented function that didn't
+        //consider to make things serial
+        function convertToCanvas(){
+          angular.element(document).ready(function(){
+              canvg();
+              canvg();
+              canvg();
+          });
+        }
+
         function makeGaugeGraphs(graph_array, showGraph, max_val) {
 
             var graphData = [];
@@ -153,60 +164,26 @@
             };
 
             var chart = new google.visualization.Gauge(document.getElementById(showGraph));
+            google.visualization.events.addListener(chart, 'ready', convertToCanvas);
             chart.draw(data, options);
-
-        }
+       }
     }]);
 
-    module.service('FileFormatsConversionStore', ['$http', '$resource', function($http, $resource, results) {
-        this.convertToPDF = function(results){
+    module.service('FileFormatsConversionStore', ['$http', '$resource', function($http, $resource) {
 
-            var bodyColumns = {
-                response : 0,
-                value : 0,
-              	text : '',
-              	id : 0,
-              	response_id : 0,
-              	weight : 0,
-              	category_id : 0,
-              	group_id : 0,
-              	name : ''
-            }
-            var ColumnNames = [];
-            var bodyDataSet = [];
-
-            //Get the columnNames;
-            for(var key in bodyColumns){
-              ColumnNames.push(key);
-            }
-            bodyDataSet.push(ColumnNames);
-            //Get the datasets
-            for(var i=0; i<results.length; i++){
-              var tempDataValues = [];
-              for(var key in bodyColumns){
-                var tempString = results[i][key].toString();
-                tempDataValues.push(tempString);
-              }
-              bodyDataSet.push(tempDataValues);
-            }
-
-            var docDefinition = {
-              content: [
-                {
-                  table: {
-                    // headers are automatically repeated if the table spans over multiple pages
-                    // you can declare how many rows should be treated as headers
-                    headerRows: 1,
-                    body: bodyDataSet
-                  }
-                }
-              ]
-            };
-
-            // open the PDF in a new window
-            pdfMake.createPdf(docDefinition).open();
-            // download the PDF (temporarily Chrome-only)
-            pdfMake.createPdf(docDefinition).download('optionalName.pdf');
-        }
+      this.convertToPDF = function(){
+        html2canvas(document.getElementById('exportthis'), {
+           onrendered: function (canvas) {
+               var data = canvas.toDataURL();
+               var docDefinition = {
+                   content: [{
+                       image: data,
+                       width: 500,
+                   }]
+               };
+               pdfMake.createPdf(docDefinition).download("resultDetails.pdf");
+           }
+        });
+      }
     }]);
 })();
