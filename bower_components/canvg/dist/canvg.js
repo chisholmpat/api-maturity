@@ -26,8 +26,9 @@
 		// no parameters
 		if (target == null && s == null && opts == null) {
 			var svgTags = document.getElementsByTagName('svg');
-			for (var i=0; i<svgTags.length; i++) {
-				var svgTag = svgTags[i];
+			var max_val = svgTags.length;
+			for (var i=0; i<max_val; i++) {
+				var svgTag = svgTags[0];
 				var c = document.createElement('canvas');
 				c.width = svgTag.clientWidth;
 				c.height = svgTag.clientHeight;

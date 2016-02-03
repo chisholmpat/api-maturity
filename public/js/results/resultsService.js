@@ -130,13 +130,8 @@
           makeGaugeGraphs(SAGraphData, "SAgaugeGraph", saMaxVal) ;
         }
 
-        //Find a way of serializing the canvg()
-        //is an externally implmented function that didn't
-        //consider to make things serial
         function convertToCanvas(){
           angular.element(document).ready(function(){
-              canvg();
-              canvg();
               canvg();
           });
         }
