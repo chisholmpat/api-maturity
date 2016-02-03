@@ -49,18 +49,17 @@
                   }
                 }
 
-
-
                 //draw radar graph
                 GraphingFunctionsStore.makeRadarGraph(QAfinalGraphData, SAfinalGraphData, graphTitles);
 
                 //draw gauge graphs
                 GraphingFunctionsStore.makeGaugeGraphs(QAGraphData, SAGraphData); //Only once charts loaded drawing charts is executed
-
             });
-            $scope.getPDF = function(results) {
-                FileFormatsConversionStore.convertToPDF($scope.results);
+
+            $scope.getPDF = function() {
+                FileFormatsConversionStore.convertToPDF();
             }
+
 
         }
     ]);
