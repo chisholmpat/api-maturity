@@ -42,7 +42,7 @@
                   if(graphTitles.indexOf(key)==-1){
                     QAfinalGraphData.push(QAGraphData[key] || 0); //radar graph
                     SAfinalGraphData.push(SAGraphData[key] || 0); //radar graph
-                    QAGraphData[key] =  (QAGraphData[key]  || 0); //gauge graph
+                    QAaverages[key] =  (QAaverages[key]  || 0); //gauge graph
                     SAGraphData[key] =  (SAGraphData[key]  || 0); //gauge graph
                     graphTitles.push(key);
                   }
@@ -52,7 +52,8 @@
                 GraphingFunctionsStore.makeRadarGraph(QAfinalGraphData, SAfinalGraphData, graphTitles);
 
                 //draw gauge graphs
-                GraphingFunctionsStore.makeGaugeGraphs(QAGraphData, SAGraphData); //Only once charts loaded drawing charts is executed
+                //The gauge graphs need to be more detailed then radar, use the averages values as opposed to mapping to a lower value.
+                GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
             });
 
             $scope.getPDF = function() {
