@@ -1,5 +1,18 @@
+<style>
+ul#menu li {
+    display:inline;
+}
+</style>
+
 <div class="col-lg-12">
-<h2> SURVEY - {{questions[0].form_name}}</h2>
+<h2> SURVEY - {{formName}}</h2>
+
+<ul id="menu">
+     <button ng-click="prevForm()"> Prev </button>
+    <li ng-repeat="form in forms"> <a ng-click="loadQuestions(form.id)" > {{form.name}}  </a></li> 
+    <button ng-click="nextForm()"> Next </button>
+</ul>
+
 <form ng-submit="generateScore(questions, unansweredQuestions)">
 
 <h3> Self Assesment </h3>
