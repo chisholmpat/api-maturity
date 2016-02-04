@@ -170,7 +170,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin
         }
     }).
-    when('/questionnaire/:client_id/:form_id/:assessment_id', {
+    when('/questionnaire/:client_id/:assessment_id', {
         templateUrl: '/views/questionnaire/questionnaire.html',
         controller: 'QuestionnaireController', // For testing route parameters.
         resolve: {
@@ -186,7 +186,6 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsClient: userIsClient
         }
     }).
-
     when('/login', {
         templateUrl: '/views/user/login.html',
         controller: 'UserLoginController'
@@ -195,15 +194,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     when('/ibmlogin', {
         templateUrl: '/views/user/ibmlogin.html',
         controller: 'UserLoginController'
-    }).
-    when('/add_client', {
-        templateUrl: '/views/clients/add_client.html',
-        controller: 'AddClientController',
-        resolve: {
-            loggedin: checkLoggedin,
-            userIsUser: userIsUser
-        }
-    }).when('/edit_client/:client_id', {
+    })
+    .when('/edit_client/:client_id', {
         templateUrl: '/views/clients/add_client.html',
         controller: 'AddClientController',
         resolve: {

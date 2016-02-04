@@ -2,44 +2,39 @@
     var module = angular.module('questionnaireModule', ['questionnaireServiceModule'])
 
     // Controller for handling filling out the form.
-    module.controller('QuestionnaireController', ['$scope', 'QuestionStore',  '$window', '$routeParams',
+    module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
-
-
-            // Goals: Create one controller to handle all of the forms.
-            // Goals: Navigate through the forms with next and previous buttons.
-            // Goals: Allow the user to navigate to one particular form.
+            
+            // For determining which assessment we are on.
             $scope.client_id = $routeParams.client_id;
-            $scope.form_id = $routeParams.form_id;
             $scope.assessment_id = $routeParams.assessment_id;
             $scope.currentIndex = 0;
 
-            
-            // Advance the questions by one.
+            // Advance to the next form.
             $scope.nextForm = function() {
-              console.log("Checking");
-              if($scope.currentIndex < $scope.forms.length - 1){
-                $scope.loadQuestions($scope.forms[$scope.currentIndex + 1].id);
-              }
+                console.log("Checking");
+                if ($scope.currentIndex < $scope.forms.length - 1) {
+                    $scope.loadQuestions($scope.forms[$scope.currentIndex + 1].id);
+                    $scope.generateScore($scope.questions, $scope.unansweredQuestions, true);
+                }
             }
 
+            // Go to a previous form.
             $scope.prevForm = function() {
-              if($scope.currentIndex > 0){
-                $scope.loadQuestions($scope.forms[$scope.currentIndex - 1].id);
-              }
+                if ($scope.currentIndex > 0) {
+                    $scope.loadQuestions($scope.forms[$scope.currentIndex - 1].id);
+                }
             }
-                        
 
             // Loads all the questions and responses for 
-            // a given form id.
+            // a given form id. Used to page the questions.
             $scope.loadQuestions = function(form_id) {
 
-              for(i=0;i<$scope.forms.length;i++)
-                    if($scope.forms[i].id == form_id)
-                      $scope.currentIndex = i;
+                for (i = 0; i < $scope.forms.length; i++)
+                    if ($scope.forms[i].id == form_id)
+                        $scope.currentIndex = i;
 
-                console.log($scope.currentIndex);
-                console.log(form_id);
+                // Set the current form name
                 $scope.formName = $scope.forms[$scope.currentIndex].name;
 
                 // Get questions and responses from database
@@ -61,12 +56,9 @@
             }
 
             // Load the initial questions.
-            $scope.forms = QuestionStore.formsConn.query({}, function(){
-                 $scope.loadQuestions($scope.forms[$scope.currentIndex].id); 
+            $scope.forms = QuestionStore.formsConn.query({}, function() {
+                $scope.loadQuestions($scope.forms[$scope.currentIndex].id);
             });
-          
-
-           
 
             // For Creating a numeric range for the weight option
             $scope.Range = function(start, end) {
@@ -89,7 +81,7 @@
             };
 
             // Persist the information to the database.
-            $scope.generateScore = function(questions, unansweredQuestions) {
+            $scope.generateScore = function(questions, unansweredQuestions, stayOnPage) {
                 QuestionStore.addAnswersConn.save({
                         user_responses: questions,
                         newly_answered_responses: unansweredQuestions,
@@ -97,6 +89,7 @@
                         assessment_id: $routeParams.assessment_id
                     },
                     function() {
+                        if(!stayOnPage)
                         $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
 
                     });

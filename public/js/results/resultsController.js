@@ -59,8 +59,6 @@
             $scope.getPDF = function() {
                 FileFormatsConversionStore.convertToPDF();
             }
-
-
         }
     ]);
 })();
