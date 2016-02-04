@@ -60,6 +60,10 @@
                 FileFormatsConversionStore.convertToPDF();
             }
 
+            $scope.getWordFile = function() {
+                FileFormatsConversionStore.convertToDOCX();
+            }
+
 
         }
     ]);

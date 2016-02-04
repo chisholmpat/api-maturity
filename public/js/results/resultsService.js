@@ -180,5 +180,37 @@
            }
         });
       }
+
+      this.convertToDOCX = function(){
+          //convert from canvas to png to allow word to display images
+          // var canvasTags = document.getElementsByTagName('canvas');
+    			// var max_val = canvasTags.length;
+    			// for (var i=0; i<max_val; i++) {
+    			// 	var canvas = canvasTags[0];
+          //   var img    = canvas.toDataURL("image/png");
+          //   var oImg=document.createElement("img");
+          //   // <xml><image>AAECAwQFBgcICQ==</image></xml>
+          //
+          //   oImg.setAttribute('src', img);
+    			// 	// canvas.parentNode.insertBefore(canvas, oImg);
+          //   canvas.parentNode.appendChild(oImg);
+    			// 	canvas.parentNode.removeChild(canvas);
+    			// }
+          // //full set of html tags to be displayed in browser
+          var htmlString = document.getElementById('exportthis').innerHTML;
+
+          //WORD will only know to render this as a HTML document and not plain text
+          //if the html, head and body tags are included
+          var htmlOutput = "<html><head></head><body>"+htmlString+"</body></html>"
+
+          var element = document.createElement('a');
+          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(htmlOutput));
+          element.setAttribute('download', "results.doc");
+
+          element.style.display = 'none';
+          document.body.appendChild(element);
+
+          element.click();
+      }
     }]);
 })();
