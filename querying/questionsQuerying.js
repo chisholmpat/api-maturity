@@ -111,6 +111,7 @@ exports.getForms = function(res, callback) {
         })
 };
 
+
 // TODO This query is rather hideous right now, there has
 // to be a more elegant way of performing multiple unique
 // updates against the database apart from a for-loop.
@@ -237,4 +238,15 @@ exports.getAllAssessments = function(res, callback) {
     knex('assessment').select('').asCallback(function(err, rows) {
         callback(err, res, rows);
     });
+}
+
+exports.getAssessmentDetails = function(assessment_id, res, callback) {
+    knex('assessment').select('Client.name')
+    .innerJoin('client', 'assessment.client_id', 'client.id')
+    .where('assessment.id', assessment_id).asCallback(function(err, rows) {
+      console.log(err);
+      console.log(rows);
+      callback(err, res, rows);
+    });
+
 }

@@ -12,7 +12,6 @@
               <div ng-repeat="assessment in assessments | filter: { client_id: client.id} ">
                     <span><a href="/#/questionnaire/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
               </div>
-            
                 <div>
                     <span></span>
                 </div>

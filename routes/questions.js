@@ -122,4 +122,9 @@ module.exports = function(app) {
             queries.getAllAssessments(res, dbUtils.callback);
     });
 
+    // get client information given the assessment id
+    app.get('/results/:assessment_id', function(req, res) {
+            queries.getAssessmentDetails(req.params.assessment_id, res, dbUtils.callback);
+    });
+
 };

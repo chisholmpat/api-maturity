@@ -1,6 +1,6 @@
 (function() {
 
-    var module = angular.module('resultsModule', ['resultsServiceModule']);
+    var module = angular.module('resultsModule', ['resultsServiceModule', 'ngResource']);
     module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
         function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
 
@@ -61,4 +61,14 @@
             }
         }
     ]);
+
+    module.controller('ResultsListController',['$scope', '$routeParams', '$resource', function($scope, $routeParams, $resource){
+          $scope.clientName = $resource('/results/:assessment_id').query({
+            assessment_id : $routeParams.assessment_id,
+          });
+
+          $scope.forms = $resource('/forms').query({});
+
+    }]);
+
 })();

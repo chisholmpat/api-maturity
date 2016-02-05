@@ -190,7 +190,10 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/user/login.html',
         controller: 'UserLoginController'
     }).
-
+    when('/results/:assessment_id', {
+        controller: 'ResultsListController',
+        templateUrl: '/views/results/results_list.html'
+    }).
     when('/ibmlogin', {
         templateUrl: '/views/user/ibmlogin.html',
         controller: 'UserLoginController'
