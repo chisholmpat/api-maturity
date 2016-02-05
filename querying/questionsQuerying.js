@@ -234,9 +234,11 @@ exports.getAllAssessmentsForClient = function(client_id, res, callback) {
 }
 
 // Gets all the assesments for all clients
-exports.getAllAssessments = function(res, callback) {
-    knex('assessment').select('').asCallback(function(err, rows) {
-        callback(err, res, rows);
+exports.getAllAssessments = function(res, category_id, callback) {
+    knex('assessment').select('').where('category_id', category_id).asCallback(function(err, rows) {
+      console.log(err);
+      console.log(rows);
+      callback(err, res, rows);
     });
 }
 

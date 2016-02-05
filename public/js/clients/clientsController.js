@@ -4,19 +4,27 @@
 
     module.controller('AssessmentController', ['$scope', 'ClientsStore', '$routeParams',
         function($scope, ClientsStore, $routeParams) {
-          $scope.forms = ClientsStore.formsConn.query({});
-          $scope.client_id = $routeParams.client_id;
-          $scope.assessment_id = $routeParams.assessment_id;
-          console.log($scope.client_id);
-          console.log($scope.assessment_id);
+            $scope.forms = ClientsStore.formsConn.query({});
+            $scope.client_id = $routeParams.client_id;
+            $scope.assessment_id = $routeParams.assessment_id;
+            console.log($scope.client_id);
+            console.log($scope.assessment_id);
         }
     ]);
 
 
     // Controller for "clients.html", for viewing the list of clients.
-    module.controller('ClientsController', ['$scope', 'ClientsStore',
+    module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams',
 
-        function($scope, ClientsStore) {
+        function($scope, ClientsStore, $routeParams) {
+
+
+            if ($routeParams.aff)
+                $scope.category = 4;
+            else
+                $scope.category = 3;
+
+            console.log($scope.category);
 
             // Handles editing functionality of the client.
             $scope.isOwner = false;
@@ -32,8 +40,10 @@
             $scope.clients = ClientsStore.getClientsConn.query({}, function() {});
             $scope.forms = ClientsStore.formsConn.query({});
             $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
-            $scope.assessments = ClientsStore.getAllAssessmentsConn.query({}, function(res) {
-                console.log(res);
+            $scope.assessments = ClientsStore.getAllAssessmentsConn.query({
+                category_id: $scope.category
+            }, function(res) {
+
             });
 
             //use idToEmails to avoid adding duplicates of user_email-client ID combination

@@ -186,6 +186,15 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsClient: userIsClient
         }
     }).
+    when('/:aff/clients/', {
+        templateUrl: '/views/clients/clients.html',
+        controller: 'ClientsController',
+        resolve: {
+            loggedin: checkLoggedin,
+            userIsClient: userIsClient
+        }
+    }).
+
     when('/login', {
         templateUrl: '/views/user/login.html',
         controller: 'UserLoginController'

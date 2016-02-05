@@ -8,9 +8,9 @@ module.exports = function(app) {
     //All Questions from clientQuestionsResponses, basically get the answered questions first
     app.get('/questions/:client_id/:form_id/:assessment_id', dbUtils.checkAuthenticated, function(req, res) {
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, canView) {
-            if (canView){
+            if (canView) {
                 queries.getAllQuestions(req.params.client_id, req.params.form_id, req.params.assessment_id, res, dbUtils.callback);
-            }else{
+            } else {
                 res.send(403);
             }
         });
@@ -19,9 +19,9 @@ module.exports = function(app) {
     //Return all unanswered questions for the form
     app.get('/unansweredQuestions/:client_id/:form_id/:assessment_id', dbUtils.checkAuthenticated, function(req, res) {
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, canView) {
-            if (canView){
+            if (canView) {
                 queries.getallUnansweredQuestions(req.params.client_id, req.params.form_id, req.params.assessment_id, res, dbUtils.callback);
-            }else{
+            } else {
                 res.send(403);
             }
         });
@@ -108,23 +108,18 @@ module.exports = function(app) {
     });
 
     // check if the form_name is unique
-    app.get('/checkUniqueFormName/:formname', function(req, res){
-            queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
+    app.get('/checkUniqueFormName/:formname', function(req, res) {
+        queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
     });
 
-    // get all the assessments for a particular client
-    app.get('/assessments/:client_id', function(req, res) {
-            queries.getAllAssessmentsForClient(req.params.client_id, res, dbUtils.callback);
-    });
-
-    // get all assessments
-    app.get('/assessments', function(req, res) {
-            queries.getAllAssessments(res, dbUtils.callback);
+        // get all assessments
+    app.get('/assessments/:category_id', function(req, res) {
+        queries.getAllAssessments(res, req.params.category_id, dbUtils.callback);
     });
 
     // get client information given the assessment id
     app.get('/results/:assessment_id', function(req, res) {
-            queries.getAssessmentDetails(req.params.assessment_id, res, dbUtils.callback);
+        queries.getAssessmentDetails(req.params.assessment_id, res, dbUtils.callback);
     });
 
 };
