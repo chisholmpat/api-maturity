@@ -1,13 +1,13 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
-var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource','ng.httpLoader' , 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule', 'directives']);
+var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource', 'ng.httpLoader', 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule', 'directives']);
 
 
 myApp.config(['httpMethodInterceptorProvider',
-  function (httpMethodInterceptorProvider) {
-  httpMethodInterceptorProvider.whitelistDomain('bmix-essential.mybluemix.net/');
-  httpMethodInterceptorProvider.whitelistLocalRequests();
- }
+    function(httpMethodInterceptorProvider) {
+        httpMethodInterceptorProvider.whitelistDomain('bmix-essential.mybluemix.net/');
+        httpMethodInterceptorProvider.whitelistLocalRequests();
+    }
 ]);
 
 // Logic for handling login.
@@ -77,7 +77,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
     // Checks if the user is an admin, used for controlling access to
     // resources which only an admin
-    var userIsUser= function($q, $timeout, $http, $location, $rootScope) {
+    var userIsUser = function($q, $timeout, $http, $location, $rootScope) {
 
         var deferred = $q.defer(); // expose the promise object
         var admin = false; // set admin to false by  default
@@ -159,27 +159,20 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin
         }
     }).
-    when('/questionnaire/:client_id/:form_id', {
-        templateUrl: '/views/questionnaire/questionnaire.html',
-        controller: 'QuestionnaireController',
-        resolve: {
-            loggedin: checkLoggedin
-        }
-    }).
     when('/reset/:token', {
         templateUrl: '/views/user/reset_password.html',
         controller: 'PasswordResetController'
     }).
-    when('/results/:client_id/:form_id', {
+    when('/results/:client_id/:form_id/:assessment_id', {
         templateUrl: '/views/results/results.html',
         controller: 'ResultsController',
         resolve: {
             loggedin: checkLoggedin
         }
     }).
-    when('/questionnaire/:clientid/:formid', {
+    when('/questionnaire/:client_id/:assessment_id', {
         templateUrl: '/views/questionnaire/questionnaire.html',
-        controller: 'QuestionController', // For testing route parameters.
+        controller: 'QuestionnaireController', // For testing route parameters.
         resolve: {
             loggedin: checkLoggedin,
             userIsUser: userIsUser
@@ -193,26 +186,28 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsClient: userIsClient
         }
     }).
+    when('/:aff/clients/', {
+        templateUrl: '/views/clients/clients.html',
+        controller: 'ClientsController',
+        resolve: {
+            loggedin: checkLoggedin,
+            userIsClient: userIsClient
+        }
+    }).
 
     when('/login', {
         templateUrl: '/views/user/login.html',
         controller: 'UserLoginController'
     }).
-
+    when('/results/:assessment_id', {
+        controller: 'ResultsListController',
+        templateUrl: '/views/results/results_list.html'
+    }).
     when('/ibmlogin', {
         templateUrl: '/views/user/ibmlogin.html',
         controller: 'UserLoginController'
-    }).
-
-    when('/add_client', {
-        templateUrl: '/views/clients/add_client.html',
-        controller: 'AddClientController',
-        resolve: {
-            loggedin: checkLoggedin,
-            userIsUser: userIsUser
-        }
-    }).
-    when('/edit_client/:client_id', {
+    })
+    .when('/edit_client/:client_id', {
         templateUrl: '/views/clients/add_client.html',
         controller: 'AddClientController',
         resolve: {
@@ -220,16 +215,14 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsUser: userIsUser
 
         }
-    }).
-    when('/edit_questions/:form_id', {
+    }).when('/edit_questions/:form_id', {
         templateUrl: '/views/questionnaire/edit_questions.html',
         controller: 'EditQuestionsController',
         resolve: {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
         }
-    }).
-    when('/edit_users/', {
+    }).when('/edit_users/', {
         templateUrl: '/views/user/edit_user.html',
         controller: 'EditUserController',
         resolve: {
@@ -239,24 +232,21 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     }).when('/forgotpassword/', {
         templateUrl: '/views/user/send_password.html',
         controller: 'SendPasswordController'
-    }).
-    when('/forms/', {
+    }).when('/forms/', {
         templateUrl: '/views/questionnaire/list_forms.html',
         controller: 'ListFormsController',
         resolve: {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
         }
-    }).
-    when('/howto/', {
+    }).when('/howto/', {
         templateUrl: '/views/welcome/howto.html',
         controller: 'HomePageController',
         resolve: {
             loggedin: checkLoggedin,
             userIsUser: userIsUser
         }
-    }).
-    otherwise({
+    }).otherwise({
         redirectTo: '/home'
     });
     // http://stackoverflow.com/questions/20663076/angularjs-app-run-documentation

@@ -6,23 +6,22 @@ module.exports = function(app) {
 
     // return all questions by client and form id
     //All Questions from clientQuestionsResponses, basically get the answered questions first
-    app.get('/questions/:client_id/:form_id', dbUtils.checkAuthenticated, function(req, res) {
+    app.get('/questions/:client_id/:form_id/:assessment_id', dbUtils.checkAuthenticated, function(req, res) {
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, canView) {
-            if (canView){
-                queries.getAllQuestions(req.params.client_id, req.params.form_id, res, dbUtils.callback);
-            }else{
+            if (canView) {
+                queries.getAllQuestions(req.params.client_id, req.params.form_id, req.params.assessment_id, res, dbUtils.callback);
+            } else {
                 res.send(403);
             }
         });
     });
 
     //Return all unanswered questions for the form
-    app.get('/unansweredQuestions/:client_id/:form_id', dbUtils.checkAuthenticated, function(req, res) {
+    app.get('/unansweredQuestions/:client_id/:form_id/:assessment_id', dbUtils.checkAuthenticated, function(req, res) {
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, canView) {
-            if (canView){
-                console.log("reached unanswered " + req.params.client_id + req.params.form_id);
-                queries.getallUnansweredQuestions(req.params.client_id, req.params.form_id, res, dbUtils.callback);
-            }else{
+            if (canView) {
+                queries.getallUnansweredQuestions(req.params.client_id, req.params.form_id, req.params.assessment_id, res, dbUtils.callback);
+            } else {
                 res.send(403);
             }
         });
@@ -53,11 +52,11 @@ module.exports = function(app) {
         })
     });
 
-    // get all scores
-    app.get('/score/:client_id/:form_id', dbUtils.checkAuthenticated, function(req, res) {
+    // get all scores for a client form assessment
+    app.get('/score/:client_id/:form_id/:assessment_id', dbUtils.checkAuthenticated, function(req, res) {
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, permitted) {
             if (permitted) {
-                queries.getClientAnswers(req.params.client_id, req.params.form_id, res, dbUtils.callback);
+                queries.getClientAnswers(req.params.client_id, req.params.form_id, req.params.assessment_id, res, dbUtils.callback);
             } else
                 res.send(403);
         })
@@ -105,14 +104,22 @@ module.exports = function(app) {
 
     // add a form to the form table
     app.post("/addForm", dbUtils.checkAuthenticated, function(req, res) {
-        console.log("reached Add Forms "+ req.body.formName);
         queries.addForm(req.body.formName, res, dbUtils.callbackNoReturn);
     });
 
-    //check if the form_name is unique
-    app.get('/checkUniqueFormName/:formname', function(req, res){
-            console.log("Called for forms!");
-            queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
+    // check if the form_name is unique
+    app.get('/checkUniqueFormName/:formname', function(req, res) {
+        queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
+    });
+
+        // get all assessments
+    app.get('/assessments/:category_id', function(req, res) {
+        queries.getAllAssessments(res, req.params.category_id, dbUtils.callback);
+    });
+
+    // get client information given the assessment id
+    app.get('/results/:assessment_id', function(req, res) {
+        queries.getAssessmentDetails(req.params.assessment_id, res, dbUtils.callback);
     });
 
 };

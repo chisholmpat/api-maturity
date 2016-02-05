@@ -4,17 +4,129 @@
     // Controller for handling filling out the form.
     module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
+           
+
+   
+            // For determining which assessment we are on.
+            $scope.client_id = $routeParams.client_id;
+            $scope.assessment_id = $routeParams.assessment_id;
+            $scope.currentIndex = 0;
+
+            // Advance to the next form.
+            $scope.nextForm = function() {
+                console.log("Checking");
+                if ($scope.currentIndex < $scope.forms.length - 1) {
+                    $scope.loadQuestions($scope.forms[$scope.currentIndex + 1].id);
+                    $scope.generateScore($scope.questions, $scope.unansweredQuestions, true);
+                }
+            }
+
+            // Go to a previous form.
+            $scope.prevForm = function() {
+                if ($scope.currentIndex > 0) {
+                    $scope.loadQuestions($scope.forms[$scope.currentIndex - 1].id);
+                }
+            }
+
+            // Loads all the questions and responses for 
+            // a given form id. Used to page the questions.
+            $scope.loadQuestions = function(form_id) {
+
+                for (i = 0; i < $scope.forms.length; i++)
+                    if ($scope.forms[i].id == form_id)
+                        $scope.currentIndex = i;
+
+                // Set the current form name
+                $scope.formName = $scope.forms[$scope.currentIndex].name;
+
+                // Get questions and responses from database
+                $scope.questions = QuestionStore.allQuestionConn.query({
+                    client_id: $scope.client_id,
+                    form_id: form_id,
+                    assessment_id: $scope.assessment_id
+                }, function() {});
+
+
+                // Get unanswered questions and responses from database
+                $scope.unansweredQuestions = QuestionStore.allUnansweredQuestionConn.query({
+                    client_id: $scope.client_id,
+                    form_id: form_id,
+                    assessment_id: $scope.assessment_id
+                }, function() {});
+
+                $scope.responses = QuestionStore.responseConn.query();
+            }
+
+            // Load the initial questions.
+            $scope.forms = QuestionStore.formsConn.query({}, function() {
+                $scope.loadQuestions($scope.forms[$scope.currentIndex].id);
+            });
+
+            // For Creating a numeric range for the weight option
+            $scope.Range = function(start, end) {
+                var result = [];
+                for (var i = start; i <= end; i++) {
+                    result.push(i);
+                }
+                return result;
+            };
+
+            // For re-routing the request
+            $scope.changeRoute = function(url, forceReload) {
+                $scope = $scope || angular.element(document).scope();
+                if (forceReload || $scope.$$phase) { // that's right TWO dollar signs: $$phase
+                    window.location = url;
+                } else {
+                    $location.path(url);
+                    $scope.$apply();
+                }
+            };
+
+            // Persist the information to the database.
+            $scope.generateScore = function(questions, unansweredQuestions, stayOnPage) {
+                QuestionStore.addAnswersConn.save({
+                        user_responses: questions,
+                        newly_answered_responses: unansweredQuestions,
+                        client_id: $routeParams.client_id,
+                        assessment_id: $routeParams.assessment_id
+                    },
+                    function() {
+                        if(!stayOnPage)
+                        $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
+
+                    });
+            }
+        }
+    ]);
+
+
+
+    // Controller for handling filling out the form.
+    module.controller('', ['$scope', 'QuestionStore', '$window', '$routeParams',
+        function($scope, QuestionStore, $window, $routeParams) {
+
+            $scope.forms = QuestionStore.formsConn.query({});
+
+            console.log("Calling QuestionnaireController.");
+
+
+
+            $scope.client_id = $routeParams.client_id;
+            $scope.form_id = $routeParams.form_id;
+            $scope.assessment_id = $routeParams.assessment_id;
 
             // Get questions and responses from database
             $scope.questions = QuestionStore.allQuestionConn.query({
                 client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id
+                form_id: $routeParams.form_id,
+                assessment_id: $routeParams.assessment_id
             }, function() {});
 
             // Get unanswered questions and responses from database
             $scope.unansweredQuestions = QuestionStore.allUnansweredQuestionConn.query({
                 client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id
+                form_id: $routeParams.form_id,
+                assessment_id: $routeParams.assessment_id
             }, function() {});
 
             $scope.responses = QuestionStore.responseConn.query();
@@ -44,11 +156,14 @@
                 QuestionStore.addAnswersConn.save({
                         user_responses: questions,
                         newly_answered_responses: unansweredQuestions,
-                        client_id: $routeParams.client_id
+                        client_id: $routeParams.client_id,
+                        assessment_id: $routeParams.assessment_id
                     },
                     function() {
-                        $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id)
-                });
+                        console.log(url);
+                        if (!url)
+                            $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
+                    });
             }
         }
     ]);
@@ -171,9 +286,6 @@
                 $scope.addForm = !$scope.addForm;
             };
 
-            $scope.someFunc = function(){
-              console.log("It works.");
-            }
 
             // Function for saving a new form
             $scope.saveForm = function(formName) {

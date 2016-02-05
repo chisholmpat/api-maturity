@@ -1,6 +1,6 @@
 (function() {
 
-    var module = angular.module('resultsModule', ['resultsServiceModule']);
+    var module = angular.module('resultsModule', ['resultsServiceModule', 'ngResource']);
     module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
         function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
 
@@ -9,7 +9,8 @@
 
             $scope.results = ResultStore.scoreConn.query({
                 client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id
+                form_id: $routeParams.form_id,
+                assessment_id: $routeParams.assessment_id
             }, function(results) {
 
                 var QAfinalGraphData = [];
@@ -37,15 +38,15 @@
                 var saKeys = Object.keys(SAGraphData);
                 var keysArray = qaKeys.concat(saKeys); // Merges both arrays
 
-                for(var i=0; i< keysArray.length; i++){
-                  var key = keysArray[i];
-                  if(graphTitles.indexOf(key)==-1){
-                    QAfinalGraphData.push(QAGraphData[key] || 0); //radar graph
-                    SAfinalGraphData.push(SAGraphData[key] || 0); //radar graph
-                    QAaverages[key] =  (QAaverages[key]  || 0); //gauge graph
-                    SAGraphData[key] =  (SAGraphData[key]  || 0); //gauge graph
-                    graphTitles.push(key);
-                  }
+                for (var i = 0; i < keysArray.length; i++) {
+                    var key = keysArray[i];
+                    if (graphTitles.indexOf(key) == -1) {
+                        QAfinalGraphData.push(QAGraphData[key] || 0); //radar graph
+                        SAfinalGraphData.push(SAGraphData[key] || 0); //radar graph
+                        QAaverages[key] = (QAaverages[key] || 0); //gauge graph
+                        SAGraphData[key] = (SAGraphData[key] || 0); //gauge graph
+                        graphTitles.push(key);
+                    }
                 }
 
                 //draw radar graph
@@ -64,7 +65,18 @@
                 FileFormatsConversionStore.convertToDOCX();
             }
 
+        }
+    ]);
+
+    module.controller('ResultsListController', ['$scope', '$routeParams', '$resource',
+        function($scope, $routeParams, $resource) {
+            $scope.clientName = $resource('/results/:assessment_id').query({
+                assessment_id: $routeParams.assessment_id,
+            });
+
+            $scope.forms = $resource('/forms').query({});
 
         }
     ]);
+
 })();

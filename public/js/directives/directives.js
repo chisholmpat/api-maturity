@@ -15,6 +15,7 @@ module.directive('pwdMatch', function ($parse) {
     }
 });
 
+// Directive for checking for duplicate values
 module.directive('uniqueValue', function($http) {
     return {
         restrict: 'A',
@@ -38,3 +39,11 @@ module.directive('uniqueValue', function($http) {
         }
     };
 })
+
+
+// Filters
+module.filter('dateToISO', function() {
+  return function(input) {
+    return new Date(input).toISOString();
+  };
+});
