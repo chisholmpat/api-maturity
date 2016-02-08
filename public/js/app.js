@@ -163,7 +163,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/user/reset_password.html',
         controller: 'PasswordResetController'
     }).
-    when('/results/:client_id/:form_id/:assessment_id', {
+    when('/results/:client_name/:form_name/:assesment_date/:client_id/:form_id/:assessment_id', {
         templateUrl: '/views/results/results.html',
         controller: 'ResultsController',
         resolve: {
@@ -245,7 +245,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
         }
-    }).when('/allFormsOfClient/:category_id/:client_id/:client_name/:assessment_id', {
+    }).when('/clientforms/:client_name/:category_id/:client_id/:assessment_id/:assessment_date', {
         templateUrl: '/views/questionnaire/all_forms_for_client.html',
         controller: 'IndividualClientController',
         resolve: {

@@ -7,6 +7,10 @@
             // URL for retrieving results as a CSV file
             $scope.csvURL = "questions/" + $routeParams.client_id + "/" + $routeParams.form_id + "/" + $routeParams.assessment_id + "/csv";
 
+            $scope.client_name = $routeParams.client_name;
+            $scope.form_name = $routeParams.form_name;
+            $scope.assesment_date = $routeParams.assesment_date;
+
             $scope.results = ResultStore.scoreConn.query({
                 client_id: $routeParams.client_id,
                 form_id: $routeParams.form_id,
