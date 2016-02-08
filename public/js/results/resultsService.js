@@ -159,7 +159,7 @@
             };
 
             var chart = new google.visualization.Gauge(document.getElementById(showGraph));
-            google.visualization.events.addListener(chart, 'ready', convertToCanvas);
+            // google.visualization.events.addListener(chart, 'ready', convertToCanvas);
             chart.draw(data, options);
        }
     }]);
@@ -168,16 +168,24 @@
 
       this.convertToPDF = function(){
         html2canvas(document.getElementById('exportthis'), {
-           onrendered: function (canvas) {
-               var data = canvas.toDataURL();
-               var docDefinition = {
-                   content: [{
-                       image: data,
-                       width: 500,
-                   }]
-               };
-               pdfMake.createPdf(docDefinition).download("resultDetails.pdf");
-           }
+  //         var docDefinition = {
+  // content: [
+  //   {
+  //     // you'll most often use dataURI images on the browser side
+  //     // if no width/height/fit is provided, the original size will be used
+  //     image: 'data:image/jpeg;base64,...encodedContent...'
+  //   },
+        onrendered: function (canvas) {
+              var data = canvas.toDataURL();
+              var docDefinition = {
+                  content: [{
+                      image: data,
+                      width: 500
+                  }]
+              };
+
+              pdfMake.createPdf(docDefinition).download("Result_Details.pdf");
+          }
         });
       }
 

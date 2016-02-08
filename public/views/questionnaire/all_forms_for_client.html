@@ -1,0 +1,8 @@
+<div class="col-lg-12">
+    <h1> {{client_name}}</h1>
+    <div class="form-group" ng-repeat="form in forms |  filter: { category_id: category_id, active: '1' } ">
+        <div>
+            <span><a href="/#/results/{{client_id}}/{{form.id}}/{{assesment_id}}"> {{form.name}} </a> </span>
+        </div>
+    </div>
+</div>

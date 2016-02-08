@@ -12,6 +12,19 @@
         }
     ]);
 
+    //moduel to pass client info to forms and result pages
+    module.controller('IndividualClientController', ['$scope', 'ClientsStore', '$routeParams',
+        function($scope, ClientsStore, $routeParams) {
+            $scope.forms = ClientsStore.formsConn.query({});
+            $scope.category_id =  $routeParams.category_id ;
+            $scope.assesment_id = $routeParams.assessment_id
+            $scope.client_id = $routeParams.client_id;
+            $scope.client_name = $routeParams.client_name;
+            console.log("category id "+ $scope.category_id );
+            console.log("assesment id "+ $scope.assesment_id );
+            console.log("client id "+ $scope.client_id );
+        }
+    ]);
 
     // Controller for "clients.html", for viewing the list of clients.
     module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams',
@@ -20,9 +33,9 @@
 
 
             if ($routeParams.aff)
-                $scope.category = 4;
+                $scope.category = 41;
             else
-                $scope.category = 3;
+                $scope.category = 31;
 
             console.log($scope.category);
 

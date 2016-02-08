@@ -196,7 +196,7 @@ exports.addForm = function(formName, res, callback) {
                 .asCallback(function(err, rows) {
                     callback(err, res);
                 });
-        } else { //Form Name doesn't exist in table, add it in. 
+        } else { //Form Name doesn't exist in table, add it in.
             knex('form').insert({
                     name: formName,
                     active: 1

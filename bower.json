@@ -12,7 +12,8 @@
     "angular-http-loader": "~0.1.7",
     "html2canvas": "*",
     "canvg": "*",
-    "rgb-color": "*"
+    "rgb-color": "*",
+    "pdfmake":"*"
   },
   "private": true
 }
