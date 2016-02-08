@@ -10,7 +10,8 @@
             <div class="formTable">
                 <a ng-click=""> Start New Assessment </a>
               <div ng-repeat="assessment in assessments | filter: { client_id: client.id} ">
-                    <span><a href="/#/questionnaire/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
+                    <span ng-if="!isAff"><a href="/#/questionnaire/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
+                    <span ng-show="isAff"><a href="/#/questionnaire/bmix/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
                     <span><a href="/#/allFormsOfClient/{{category}}/{{client.id}}/{{client.name}}/{{assessment.id}}"> Results </a> </span>
               </div>
                 <div>

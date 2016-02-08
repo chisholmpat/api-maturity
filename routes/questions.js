@@ -73,8 +73,20 @@ module.exports = function(app) {
 
     // get a list of all the forms.
     app.get('/forms', dbUtils.checkAuthenticated, function(req, res) {
-        queries.getAllForms(res, dbUtils.callback);
+        console.log(req.body);
+        if (req.body.category_id) {
+          queries.getFormsByCategory(res, req.body.category_id, callback)
+            console.log(req.body.category_id);
+        } else {
+            queries.getAllForms(res, dbUtils.callback);
+        }
     });
+
+    app.get('/forms/:category_id', function(req, res) {
+       console.log("Searching for forms by category.");
+       queries.getFormsByCategory(res, req.params.category_id, dbUtils.callback);
+    });
+
 
     // toggles the active status of a form
     app.post('/deleteForm', dbUtils.checkAuthenticated, function(req, res) {
@@ -113,12 +125,18 @@ module.exports = function(app) {
 
     // get all assessments
     app.get('/assessments/:category_id', function(req, res) {
+        console.log("Getting Assements for Category_ID: " + req.params.category_id);
         queries.getAllAssessments(res, req.params.category_id, dbUtils.callback);
     });
 
     // get client information given the assessment id
     app.get('/results/:assessment_id', function(req, res) {
         queries.getAssessmentDetails(req.params.assessment_id, res, dbUtils.callback);
+    });
+
+    // get the category of the id.
+    app.get('/assessment_category/:assessment_id', function(req, res) {
+        queries.getAssessmentCategory(req.params.assessment_id, res, dbUtils.callback); 
     });
 
 };

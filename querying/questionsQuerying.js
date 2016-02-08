@@ -29,8 +29,6 @@ exports.getallUnansweredQuestions = function(client_id, form_id, assessment_id, 
     var subQuery = knex.select('clientquestionresponse.question_id').from('clientquestionresponse').where('clientquestionresponse.client_id', client_id)
         .where('clientquestionresponse.assessment_id', assessment_id);
 
-        console.log(subQuery.toString());
-
     knex.select('Question.id', 'Question.text', 'Question.category_id', 'Form.name as form_name')
         .from('Question')
         .innerJoin('Form', 'Question.form_id', 'Form.id')
@@ -112,6 +110,18 @@ exports.getForms = function(res, callback) {
 };
 
 
+// Return a list of forms by category. Used to seperate out
+// Bluemix Affinity forms from API Maturity Forms.
+exports.getFormsByCategory = function(res, category_id, callback) {
+    knex.select().table('form').where('category_id', category_id)
+        .asCallback(function(err, rows) {
+            console.log(err);
+            console.log(rows);
+            callback(err, res, rows);
+        })
+};
+
+
 // TODO This query is rather hideous right now, there has
 // to be a more elegant way of performing multiple unique
 // updates against the database apart from a for-loop.
@@ -181,7 +191,6 @@ exports.addQuestion = function(question, res, callback) {
 
 // Add a new form to the form table
 //By default the form is set to isActive = true
-
 exports.addForm = function(formName, res, callback) {
 
     knex('form').select('').where('name', formName).where('active', 0).asCallback(function(err, rows) {
@@ -235,6 +244,7 @@ exports.getAllAssessmentsForClient = function(client_id, res, callback) {
 
 // Gets all the assesments for all clients
 exports.getAllAssessments = function(res, category_id, callback) {
+  console.log(knex('assessment').select('').where('category_id', category_id).toString());
     knex('assessment').select('').where('category_id', category_id).asCallback(function(err, rows) {
       console.log(err);
       console.log(rows);
@@ -242,6 +252,7 @@ exports.getAllAssessments = function(res, category_id, callback) {
     });
 }
 
+// Get the details of an assessment.
 exports.getAssessmentDetails = function(assessment_id, res, callback) {
     knex('assessment').select('Client.name')
     .innerJoin('client', 'assessment.client_id', 'client.id')
@@ -251,4 +262,11 @@ exports.getAssessmentDetails = function(assessment_id, res, callback) {
       callback(err, res, rows);
     });
 
+}
+
+// Get the category of an assessment.
+exports.getAssessmentCategory = function(assessment_id, res, callback) {
+    knex('assessment').select('category_id').where('id', assessment_id).asCallback(function(err, rows){
+      callback(err, res, rows);
+    });
 }

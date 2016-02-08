@@ -32,12 +32,18 @@
     module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams',
 
         function($scope, ClientsStore, $routeParams) {
+            
+            $scope.isAff = false;
 
-
-            if ($routeParams.aff)
+            // Check to see if this is a Bluemix survey or 
+            // if it's an API maturity survey.
+            if ($routeParams.aff){
                 $scope.category = 41;
-            else
+                $scope.isAff = true;
+            }
+            else{
                 $scope.category = 31;
+            }
 
             console.log($scope.category);
 
@@ -58,6 +64,7 @@
             $scope.assessments = ClientsStore.getAllAssessmentsConn.query({
                 category_id: $scope.category
             }, function(res) {
+                console.log(res);
 
             });
 

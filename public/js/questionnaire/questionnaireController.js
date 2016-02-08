@@ -4,7 +4,16 @@
     // Controller for handling filling out the form.
     module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
-           
+
+            // This controller is used to handle both BMIX and API
+            // questionnaires. The route parameter controls whether
+            // the category of form displayed.
+            
+            if ($routeParams.aff)
+                $scope.category = 41;
+            else
+                $scope.category = 31;
+
             // For determining which assessment we are on.
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
@@ -56,7 +65,9 @@
             }
 
             // Load the initial questions.
-            $scope.forms = QuestionStore.formsConn.query({}, function() {
+            $scope.forms = QuestionStore.formsByCategoryConn.query({
+                category_id: $scope.category
+            }, function() {
                 $scope.loadQuestions($scope.forms[$scope.currentIndex].id);
             });
 
@@ -89,8 +100,8 @@
                         assessment_id: $routeParams.assessment_id
                     },
                     function() {
-                        if(!stayOnPage)
-                        $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
+                        if (!stayOnPage)
+                            $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
 
                     });
             }
