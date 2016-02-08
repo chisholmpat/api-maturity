@@ -88,6 +88,7 @@ label {
     div.headerHeight a {
         color: $color-light;
     }
+
     h2 {
         margin-bottom: 1rem;
     }
@@ -114,12 +115,6 @@ label {
 }
 //#sideLeft
 #page-content-wrapper {
-    // display: block;
-    // position: absolute;
-    // top:0;
-    // right: 0;
-    // width: 80%;
-    // padding: 3rem;
     div.headerHeight h2 {
         display: inline-block;
         float: left;
@@ -131,8 +126,26 @@ label {
     div.headerHeight div {
         float: right;
     }
+    h1{
+        @include font-Light();
+        margin-bottom: 1rem;
+    }
     h2 {
         margin-bottom: 3rem;
+    }
+}
+
+div#formNav{
+    font-size: 1.2rem;
+    button{
+        padding:0 0.3rem;
+    }
+    div{
+        margin: 0 0.3rem;
+        display: inline-block;
+    }
+    a{
+        cursor: pointer;
     }
 }
 //#page-content-wrapper
@@ -310,6 +323,11 @@ form {
             font-size: 2.5rem;
         }
     }
+}
+#exportResults{
+    display: block;
+    float: right;
+
 }
 /*Colour and Shadows*/
 #sideLeft {}

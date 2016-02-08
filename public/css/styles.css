@@ -107,8 +107,23 @@ label {
   display: inline-block; }
 #page-content-wrapper div.headerHeight div {
   float: right; }
+#page-content-wrapper h1 {
+  font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  font-weight: 300;
+  font-stretch: normal;
+  margin-bottom: 1rem; }
 #page-content-wrapper h2 {
   margin-bottom: 3rem; }
+
+div#formNav {
+  font-size: 1.2rem; }
+  div#formNav button {
+    padding: 0 0.3rem; }
+  div#formNav div {
+    margin: 0 0.3rem;
+    display: inline-block; }
+  div#formNav a {
+    cursor: pointer; }
 
 table.clientStyle {
   font-size: 1.5rem;
@@ -259,6 +274,10 @@ form {
   max-width: 50rem; }
 .qa_scores table.clientStyle thead {
   font-size: 2.5rem; }
+
+#exportResults {
+  display: block;
+  float: right; }
 
 /*Colour and Shadows*/
 canvas {
