@@ -48,7 +48,7 @@ module.exports = function(app) {
             } else
 
                 res.send('403');
-        })
+        });
     });
 
     // get all scores for a client form assessment
@@ -58,7 +58,7 @@ module.exports = function(app) {
                 queries.getClientAnswers(req.params.client_id, req.params.form_id, req.params.assessment_id, res, dbUtils.callback);
             } else
                 res.send(403);
-        })
+        });
     });
 
     // toggles the active status of a question
@@ -75,7 +75,7 @@ module.exports = function(app) {
     app.get('/forms', dbUtils.checkAuthenticated, function(req, res) {
         console.log(req.body);
         if (req.body.category_id) {
-          queries.getFormsByCategory(res, req.body.category_id, callback)
+          queries.getFormsByCategory(res, req.body.category_id, callback);
             console.log(req.body.category_id);
         } else {
             queries.getAllForms(res, dbUtils.callback);

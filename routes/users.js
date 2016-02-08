@@ -59,4 +59,4 @@ module.exports = function(app) {
         queries.checkUniqueUserEmail(req.params.email, res, dbUtils.callback);
     });
 
-}
+};

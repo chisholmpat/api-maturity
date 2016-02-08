@@ -10,7 +10,7 @@ exports.userloginvalidate = function(username, password) {
         .where('password', password)
         .where('active', 1)
         .ascallback(function(err, rows) {
-            return (rows.length !== 0)
+            return (rows.length !== 0);
         });
 
 };
@@ -45,17 +45,17 @@ exports.updateUser = function(user, res, callback) {
         
         knex('userclients').where('email', userEmail).update({
             email: user.email
-        })
+        });
     });
 
-}
+};
 
 // Retrieve all users from the DB
 exports.getUsers = function(res, callback) {
     knex('users').select('').asCallback(function(err, rows) {
         callback(err, res, rows);
     });
-}
+};
 
 // Retrieve the role of the user from the database.
 exports.getUserRole = function(email, res, callback) {
@@ -66,14 +66,14 @@ exports.getUserRole = function(email, res, callback) {
             else
                 callback(err, res);
         });
-}
+};
 
 // Gets all the roles for use in creating users.
 exports.getRoles = function(res, callback) {
     knex('roles').select('').asCallback(function(err, rows) {
         callback(err, res, rows);
     });
-}
+};
 
 // Checks to see if a username exists
 exports.checkUniqueUsername = function(username, res, callback) {
@@ -83,7 +83,7 @@ exports.checkUniqueUsername = function(username, res, callback) {
         else
             res.send(404);
     });
-}
+};
 
 // Checks to see if an email is already taken
 exports.checkUniqueUserEmail = function(email, res, callback){
@@ -99,5 +99,5 @@ exports.checkUniqueUserEmail = function(email, res, callback){
         else
             res.send(404);
     });
-}
+};
 

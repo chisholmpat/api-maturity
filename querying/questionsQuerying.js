@@ -19,7 +19,7 @@ exports.getAllQuestions = function(client_id, form_id, assessment_id, res, callb
         .where('Assessment.id', assessment_id)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 // Get all the questions available for the form which are present in Questions but not in ClientQuestionResponse
@@ -56,7 +56,7 @@ exports.getClientAnswers = function(client_id, form_id, assessment_id, res, call
         .where('ClientQuestionResponse.assessment_id', assessment_id)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 
@@ -77,7 +77,7 @@ exports.getAllForms = function(res, callback) {
         .where('Form.active', 1)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 // Get all the questions for a given form.
@@ -89,7 +89,7 @@ exports.getQuestionsByForm = function(form_id, res, callback) {
         .where('Question.active', 1)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 
@@ -98,7 +98,7 @@ exports.getGroupings = function(res, callback) {
     knex.select().table('grouping')
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 // Return a list of forms.
@@ -106,7 +106,7 @@ exports.getForms = function(res, callback) {
     knex.select().table('form')
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 
@@ -118,7 +118,7 @@ exports.getFormsByCategory = function(res, category_id, callback) {
             console.log(err);
             console.log(rows);
             callback(err, res, rows);
-        })
+        });
 };
 
 
@@ -139,7 +139,7 @@ exports.updateQuestions = function(res, questions, callback) {
     }
 
     updateTextQuery += " ELSE text END";
-    updateGroupQuery += " ELSE group_id END";;
+    updateGroupQuery += " ELSE group_id END";
 
     // TODO Fix this logic. Right now the callback
     // for the first query is the second query. Also
@@ -149,7 +149,7 @@ exports.updateQuestions = function(res, questions, callback) {
             knex.raw(updateGroupQuery)
                 .asCallback(function(err, rows) {
                     callback(err, res, rows);
-                })
+                });
         });
 };
 
@@ -187,7 +187,7 @@ exports.addQuestion = function(question, res, callback) {
         }
     });
 
-}
+};
 
 // Add a new form to the form table
 //By default the form is set to isActive = true
@@ -213,7 +213,7 @@ exports.addForm = function(formName, res, callback) {
                 .asCallback(function(err, rows) {
 
                     var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
-                        SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2"
+                        SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2";
 
                     knex.raw(query).asCallback(function(err, rows) {
                         callback(err, res);
@@ -235,12 +235,12 @@ exports.checkUniqueFormname = function(formname, res, callback) {
         else
             res.send(404);
     });
-}
+};
 
 // Gets all the assessments for a particular client
 exports.getAllAssessmentsForClient = function(client_id, res, callback) {
     knex('assessment').select('').where('client_id', client_id).asCallback(function(err, rows) {});
-}
+};
 
 // Gets all the assesments for all clients
 exports.getAllAssessments = function(res, category_id, callback) {
@@ -250,7 +250,7 @@ exports.getAllAssessments = function(res, category_id, callback) {
       console.log(rows);
       callback(err, res, rows);
     });
-}
+};
 
 // Get the details of an assessment.
 exports.getAssessmentDetails = function(assessment_id, res, callback) {
@@ -262,11 +262,11 @@ exports.getAssessmentDetails = function(assessment_id, res, callback) {
       callback(err, res, rows);
     });
 
-}
+};
 
 // Get the category of an assessment.
 exports.getAssessmentCategory = function(assessment_id, res, callback) {
     knex('assessment').select('category_id').where('id', assessment_id).asCallback(function(err, rows){
       callback(err, res, rows);
     });
-}
+};

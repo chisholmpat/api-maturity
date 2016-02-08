@@ -11,7 +11,7 @@
             this.addUserToClient = $resource('/addUserToClient/:client_id/:user_email');
             this.deleteClientConn = $resource('/deleteClient');
             this.getAllCliendIDsAndEmailsConn = $resource('/getAllCliendIDsAndEmails');
-            this.allClientsOwnedByUserConn = $resource('/getAllClientsOwnedByUser')
+            this.allClientsOwnedByUserConn = $resource('/getAllClientsOwnedByUser');
             this.allClientInfoOwnedByUserConn = $resource('/clientDetailsOwnedByUser');
             this.getAllAssessmentsConn = $resource('/assessments/:category_id');
         }

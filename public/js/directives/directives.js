@@ -12,7 +12,7 @@ module.directive('pwdMatch', function ($parse) {
                 ctrl.$setValidity('matched', me(scope) === matchTo(scope) );
             }, true);
         }
-    }
+    };
 });
 
 // Directive for checking for duplicate values
@@ -38,7 +38,7 @@ module.directive('uniqueValue', function($http) {
             });
         }
     };
-})
+});
 
 
 // Filters

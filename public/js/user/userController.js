@@ -47,7 +47,7 @@
             // Retrieve roles for use in the dropdown
             $scope.roles = UserStore.getUserRoles.query({}, function(results) {
                 $scope.defaultRoleID = results[0].id;
-                $scope.editing.role_id = $scope.defaultRoleID
+                $scope.editing.role_id = $scope.defaultRoleID;
             });
 
             // Ensure that the password is appropriate.
@@ -73,9 +73,9 @@
                         $scope.editing[key] = $scope.aUser[key];
                 } else {
                     $scope.editing = {};
-                    $scope.editing.role_id = $scope.defaultRoleID
+                    $scope.editing.role_id = $scope.defaultRoleID;
                 }
-            }
+            };
 
 
             // Add or Update a client based on the content
@@ -91,7 +91,7 @@
                     }, function() {
                         $scope.allUsers = "";
                         $scope.allUsers = UserStore.getUsers.query();
-                    })
+                    });
 
                 } else {
                     UserStore.addUser.save({
@@ -100,7 +100,7 @@
                         $scope.result = "User Added";
                         // Clear the form
                         $scope.editing = {};
-                        $scope.editing.role_id = $scope.defaultRoleID
+                        $scope.editing.role_id = $scope.defaultRoleID;
                         $scope.passwordConfirm = "";
                         $scope.userform.$setPristine();
                         // Refresh from the database
@@ -108,7 +108,7 @@
 
                     });
                 }
-            }
+            };
 
         }
     ]);
@@ -136,8 +136,8 @@
                     password: $scope.pw1,
                 }, function() {
                     $location.url("/#/");
-                })
-            }
+                });
+            };
 
 
             $scope.handlePatternPassword = (function() {
@@ -161,12 +161,12 @@
                     email: $scope.email
                 }, function() {
                     window.alert("Email send to " + $scope.email);
-                    $location.url("/#/")
+                    $location.url("/#/");
 
                 }, function() {
-                    $scope.emailMessage = "Email not recognized."
-                })
-            }
+                    $scope.emailMessage = "Email not recognized.";
+                });
+            };
         }
     ]);
 

@@ -18,12 +18,12 @@ exports.updateAnswers = function(res, responses, assessment_id, callback) {
         // Construct response_id update query for multiple entries.
         updateResponseQuery += "  WHEN question_id =" + responses[i].id +
             " AND client_id = " + responses[i].client_id + " AND assessment_id = " + assessment_id + 
-               " THEN " + responses[i].response_id
+               " THEN " + responses[i].response_id;
 
         // Construct weight update query for multiple entries
         updateWeightQuery += " WHEN question_id =" + responses[i].id +
             " AND client_id = " + responses[i].client_id + " AND assessment_id = " + assessment_id +
-               " THEN " + responses[i].weight
+               " THEN " + responses[i].weight;
 
         // Construct note update query.
         if (responses[i].note !== null && 0 !== responses[i].note.length) {
@@ -34,7 +34,7 @@ exports.updateAnswers = function(res, responses, assessment_id, callback) {
 
             updateNoteQuery += " WHEN question_id =" + responses[i].id +
                 " AND client_id = " + responses[i].client_id + " AND assessment_id = " + assessment_id +
-                   " THEN '" + responses[i].note + "'"
+                   " THEN '" + responses[i].note + "'";
         }
     }
 
@@ -68,7 +68,7 @@ exports.addNewlyAnswered = function(res, responses, client_id, assessment_id, ca
     for(i = 0; i < responses.length; i++)
       console.log(responses[i]);
     addNext(index, client_id, responses, assessment_id, callback, res, error);
-}
+};
 
 // Recursive call used to insert records into the database. Recursion
 // is used to handle multiple records being inserted into the database.

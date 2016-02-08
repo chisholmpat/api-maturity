@@ -28,7 +28,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             // Authenticated
             if (user !== '0') {
                 deferred.resolve();
-                $rootScope.message = "Login Successful"
+                $rootScope.message = "Login Successful";
                 $rootScope.role = user.role;
                 console.log(user.role);
                 $rootScope.isIBM = user.isIBM;
@@ -72,7 +72,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         });
 
         return deferred.promise;
-    }
+    };
 
 
     // Checks if the user is an admin, used for controlling access to
@@ -96,7 +96,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         });
 
         return deferred.promise;
-    }
+    };
 
     // Checks if the user is an admin, used for controlling access to
     // resources which only an admin
@@ -119,7 +119,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         });
 
         return deferred.promise;
-    }
+    };
 
     // Checks if the user is an admin
     // INTERCEPTOR

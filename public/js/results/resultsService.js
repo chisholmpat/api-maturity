@@ -44,7 +44,7 @@
               scoresArray[categoryID][formName].push(score);
           }
           return scoresArray;
-        }
+        };
 
         this.getAverageGraphScores = function(graphScoresArray){
 
@@ -61,7 +61,7 @@
                 averages_array[key] = (total / (internalArrayLength));
             }
             return averages_array;
-        }
+        };
 
         this.getMappedGraphScoresScores = function(averages_array){
 
@@ -77,7 +77,7 @@
               }
           }
           return graphInputsArray;
-        }
+        };
 
 
     }]);
@@ -119,7 +119,7 @@
           var myRadarChart = new Chart(document.getElementById(canvasName).getContext("2d")).Radar(graphData);
           document.getElementById("legendDiv").innerHTML = myRadarChart.generateLegend();
           return;
-        }
+        };
 
         this.makeGaugeGraphs = function(QAGraphData, SAGraphData){
 
@@ -128,7 +128,7 @@
 
           makeGaugeGraphs(QAGraphData, "QAgaugeGraph", qaMaxVal) ;
           makeGaugeGraphs(SAGraphData, "SAgaugeGraph", saMaxVal) ;
-        }
+        };
 
         function convertToCanvas(){
           angular.element(document).ready(function(){
@@ -187,7 +187,7 @@
               pdfMake.createPdf(docDefinition).download("Result_Details.pdf");
           }
         });
-      }
+      };
 
       this.convertToDOCX = function(){
           //convert from canvas to png to allow word to display images
@@ -209,7 +209,7 @@
 
           //WORD will only know to render this as a HTML document and not plain text
           //if the html, head and body tags are included
-          var htmlOutput = "<html><head></head><body>"+htmlString+"</body></html>"
+          var htmlOutput = "<html><head></head><body>"+htmlString+"</body></html>";
 
           var element = document.createElement('a');
           element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(htmlOutput));
@@ -219,6 +219,6 @@
           document.body.appendChild(element);
 
           element.click();
-      }
+      };
     }]);
 })();

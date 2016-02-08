@@ -59,11 +59,11 @@
 
             $scope.getPDF = function() {
                 FileFormatsConversionStore.convertToPDF();
-            }
+            };
 
             $scope.getWordFile = function() {
                 FileFormatsConversionStore.convertToDOCX();
-            }
+            };
 
         }
     ]);

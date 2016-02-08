@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('questionnaireModule', ['questionnaireServiceModule'])
+    var module = angular.module('questionnaireModule', ['questionnaireServiceModule']);
 
     // Controller for handling filling out the form.
     module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window', '$routeParams',
@@ -26,14 +26,14 @@
                     $scope.loadQuestions($scope.forms[$scope.currentIndex + 1].id);
                     $scope.generateScore($scope.questions, $scope.unansweredQuestions, true);
                 }
-            }
+            };
 
             // Go to a previous form.
             $scope.prevForm = function() {
                 if ($scope.currentIndex > 0) {
                     $scope.loadQuestions($scope.forms[$scope.currentIndex - 1].id);
                 }
-            }
+            };
 
             // Loads all the questions and responses for 
             // a given form id. Used to page the questions.
@@ -62,7 +62,7 @@
                 }, function() {});
 
                 $scope.responses = QuestionStore.responseConn.query();
-            }
+            };
 
             // Load the initial questions.
             $scope.forms = QuestionStore.formsByCategoryConn.query({
@@ -104,7 +104,7 @@
                             $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
 
                     });
-            }
+            };
         }
     ]);
 
@@ -166,7 +166,7 @@
                         if (!url)
                             $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
                     });
-            }
+            };
         }
     ]);
 
@@ -182,7 +182,7 @@
                 $scope.questions = QuestionStore.questionConn.query({
                     form_id: $routeParams.form_id
                 });
-            }
+            };
 
             // Onclick method for toggling visibility
             $scope.toggleAddQuestionVisibility = function() {
@@ -207,7 +207,7 @@
                     $scope.newQuestion.group_id = 1;
                     $scope.newQuestion.category_id = 1;
                     $scope.newQuestion.text = "";
-                })
+                });
             };
 
             // Sets a questions's active field to inactive
@@ -236,7 +236,7 @@
                 }, function() {
                     $scope.changeRoute('#/forms/');
                 });
-            }
+            };
 
             // For re-routing the request
             $scope.changeRoute = function(url, forceReload) {
@@ -279,7 +279,7 @@
                 // Refresh the list and clear the input box
                 $scope.addForm = false;
                 $scope.newForm.text = "";
-            }
+            };
 
             // Onclick method for toggling visibility
             $scope.toggleAddFormVisibility = function() {
@@ -295,7 +295,7 @@
                 }, function() {
                     // Update the forms array
                     refreshForms();
-                })
+                });
             };
         }
     ]);
@@ -312,9 +312,9 @@
                 }
                 element.bind("keyup", function() {
                     element.triggerHandler("change");
-                })
+                });
             }
-        }
-    })
+        };
+    });
 
 })();
