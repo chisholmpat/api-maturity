@@ -2,6 +2,7 @@
 
     var module = angular.module('clientsModule', ['clientsServiceModule'])
 
+
     module.controller('AssessmentController', ['$scope', 'ClientsStore', '$routeParams',
         function($scope, ClientsStore, $routeParams) {
             $scope.forms = ClientsStore.formsConn.query({});
@@ -12,7 +13,8 @@
         }
     ]);
 
-    //moduel to pass client info to forms and result pages
+    // Controller to list form names and provide hyperlinks to form results
+    // for an individual client assessment.
     module.controller('IndividualClientController', ['$scope', 'ClientsStore', '$routeParams',
         function($scope, ClientsStore, $routeParams) {
             $scope.forms = ClientsStore.formsConn.query({});

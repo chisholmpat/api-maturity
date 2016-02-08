@@ -5,7 +5,7 @@
         function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
 
             // URL for retrieving results as a CSV file
-            $scope.csvURL = "questions/" + $routeParams.client_id + "/" + $routeParams.form_id + "/csv";
+            $scope.csvURL = "questions/" + $routeParams.client_id + "/" + $routeParams.form_id + "/" + $routeParams.assessment_id + "/csv";
 
             $scope.results = ResultStore.scoreConn.query({
                 client_id: $routeParams.client_id,

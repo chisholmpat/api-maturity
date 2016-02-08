@@ -28,7 +28,7 @@ module.exports = function(app) {
     });
 
     // return the questions and responses for a client for in CSV
-    app.get('/questions/:client_id/:form_id/csv', dbUtils.checkAuthenticated, function(req, res) {
+    app.get('/questions/:client_id/:form_id/:assessment_id/csv', dbUtils.checkAuthenticated, function(req, res) {
 
         dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, permitted) {
             if (permitted) {
@@ -44,8 +44,7 @@ module.exports = function(app) {
                     results.unshift(headers);
                     res.csv(results);
                 };
-
-                queries.getClientAnswers(req.params.client_id, req.params.form_id, res, sendCSV);
+                queries.getClientAnswers(req.params.client_id, req.params.form_id, req.params.assessment_id, res, sendCSV);
             } else
 
                 res.send('403');
@@ -112,7 +111,7 @@ module.exports = function(app) {
         queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
     });
 
-        // get all assessments
+    // get all assessments
     app.get('/assessments/:category_id', function(req, res) {
         queries.getAllAssessments(res, req.params.category_id, dbUtils.callback);
     });

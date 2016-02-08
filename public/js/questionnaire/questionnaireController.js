@@ -5,8 +5,6 @@
     module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
            
-
-   
             // For determining which assessment we are on.
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
@@ -99,18 +97,11 @@
         }
     ]);
 
-
-
     // Controller for handling filling out the form.
     module.controller('', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
 
             $scope.forms = QuestionStore.formsConn.query({});
-
-            console.log("Calling QuestionnaireController.");
-
-
-
             $scope.client_id = $routeParams.client_id;
             $scope.form_id = $routeParams.form_id;
             $scope.assessment_id = $routeParams.assessment_id;
@@ -207,8 +198,6 @@
                     $scope.newQuestion.text = "";
                 })
             };
-
-
 
             // Sets a questions's active field to inactive
             $scope.deleteQuestion = function(question) {
