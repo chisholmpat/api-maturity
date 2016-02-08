@@ -19,12 +19,13 @@
         function($scope, ClientsStore, $routeParams) {
             $scope.forms = ClientsStore.formsConn.query({});
             $scope.category_id =  $routeParams.category_id ;
-            $scope.assesment_id = $routeParams.assessment_id
+            $scope.assesment_id = $routeParams.assessment_id;
             $scope.client_id = $routeParams.client_id;
             $scope.client_name = $routeParams.client_name;
-            console.log("category id "+ $scope.category_id );
-            console.log("assesment id "+ $scope.assesment_id );
-            console.log("client id "+ $scope.client_id );
+            $scope.assessment_date = $routeParams.assessment_date;
+            console.log($scope);
+            // console.log("assesment id "+ $scope.assesment_id );
+            // console.log("client id "+ $scope.client_id );
         }
     ]);
 
