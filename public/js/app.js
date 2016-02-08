@@ -178,7 +178,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsUser: userIsUser
         }
     }).
-    when('/:aff/questionnaire/:client_id/:assessment_id', {
+    when('/questionnaire/:aff/:client_id/:assessment_id', {
         templateUrl: '/views/questionnaire/questionnaire.html',
         controller: 'QuestionnaireController', // For testing route parameters.
         resolve: {
