@@ -170,10 +170,12 @@
         html2canvas(document.getElementById('exportthis'), {
         onrendered: function (canvas) {
               var data = canvas.toDataURL();
+              var scalingFactor = 1.1;
               var docDefinition = {
+                  // a string or { width: number, height: number }
+                  pageSize: {width: (canvas.width)*scalingFactor, height: (canvas.height)*scalingFactor},
                   content: [{
-                      image: data,
-                      width: 300
+                      image: data
                   }]
               };
 
