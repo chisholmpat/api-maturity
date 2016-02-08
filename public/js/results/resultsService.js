@@ -42,6 +42,7 @@
               }
               (categoryID == categories.SA) ? (score=valueWeightsArray[i].value) : (score = calculateAllScores(valueWeightsArray[i].value, valueWeightsArray[i].weight));
               scoresArray[categoryID][formName].push(score);
+              valueWeightsArray[i].score = score;
           }
           return scoresArray;
         }
