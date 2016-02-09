@@ -36,6 +36,8 @@
 
             // Handles editing functionality of the client.
             $scope.isOwner = false;
+            $routeParams.category_id == '31' ? $scope.isAff = false :$scope.isAff = true
+
 
             var idsToEmails = [];
             var allClientIDs = [];

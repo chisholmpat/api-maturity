@@ -14,7 +14,12 @@
             $scope.form_id = $routeParams.form_id;
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
-            $scope.isBMIX==="true" ? $scope.isBMIX=true : $scope.isBMIX=false;
+            console.log($scope.isBMIX);
+            if($scope.isBMIX==="true")
+              $scope.isBMIX=true;
+            else
+              $scope.isBMIX=false;
+            console.log($scope.isBMIX);
             $scope.results = ResultStore.scoreConn.query({
                 client_id: $scope.client_id,
                 form_id: $scope.form_id,
