@@ -1,2 +1,28 @@
+
+<div class="col-lg-12">
+<h1>Client Name - SURVEY</h1>
+<h2> {{formName}} - Date or New <h3> TESTING </h3></h2>
+
+
+<ul id="menu">
+     <button ng-click="prevForm()"> Prev </button>
+    <li ng-repeat="form in forms"> <a ng-click="loadQuestions(form.id)" > {{form.name}}  </a></li> 
+    <button ng-click="nextForm()"> Next </button>
+</ul>
+
+<form ng-submit="generateScore(questions, unansweredQuestions)">
+
+
 <div ng-if="category==31" ng-include="'views/questionnaire/api_questionnaire.html'"></div>
 <div ng-if="category==41" ng-include="'views/questionnaire/bmix_questionnaire.html'"></div>
+
+</div>
+
+</form>
+
+
+<ul id="menu">
+     <button ng-click="prevForm()"> Prev </button>
+    <li ng-repeat="form in forms"> <a ng-click="loadQuestions(form.id)" > {{form.name}}  </a></li> 
+    <button ng-click="nextForm()"> Next </button>
+</ul>
