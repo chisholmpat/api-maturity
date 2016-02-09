@@ -8,12 +8,13 @@
             // This controller is used to handle both BMIX and API
             // questionnaires. The route parameter controls whether
             // the category of form displayed.
-            
-            if ($routeParams.aff)
+            if ($routeParams.aff){
                 $scope.category = 41;
-            else
+                $scope.isAff = true;
+            } else {
                 $scope.category = 31;
-
+            }
+            
             // For determining which assessment we are on.
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;

@@ -179,7 +179,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         }
     }).
     when('/questionnaire/:aff/:client_id/:assessment_id', {
-        templateUrl: '/views/questionnaire/questionnaire.html',
+        templateUrl: '/views/questionnaire/bmix_questionnaire.html',
         controller: 'QuestionnaireController', // For testing route parameters.
         resolve: {
             loggedin: checkLoggedin,
@@ -221,7 +221,16 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin,
             userIsUser: userIsUser
         }
-    }).when('/edit_questions/:form_id', {
+    }).
+    when('/add_client/', {
+        templateUrl: '/views/clients/add_client.html',
+        controller: 'AddClientController',
+        resolve: {
+            loggedin: checkLoggedin,
+            userIsUser: userIsUser
+        }
+    }).
+    when('/edit_questions/:form_id', {
         templateUrl: '/views/questionnaire/edit_questions.html',
         controller: 'EditQuestionsController',
         resolve: {
