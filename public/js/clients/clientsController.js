@@ -23,6 +23,7 @@
             $scope.client_id = $routeParams.client_id;
             $scope.client_name = $routeParams.client_name;
             $scope.assessment_date = $routeParams.assessment_date;
+            $scope.isBMIX = $routeParams.bmix;
             console.log($scope);
             // console.log("assesment id "+ $scope.assesment_id );
             // console.log("client id "+ $scope.client_id );
@@ -33,10 +34,10 @@
     module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams',
 
         function($scope, ClientsStore, $routeParams) {
-            
+
             $scope.isAff = false;
 
-            // Check to see if this is a Bluemix survey or 
+            // Check to see if this is a Bluemix survey or
             // if it's an API maturity survey.
             if ($routeParams.aff){
                 $scope.category = 41;
