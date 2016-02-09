@@ -81,5 +81,10 @@ ul#menu li {
 
 
 
-  <input type="submit"/>
 </form></div>
+
+<ul id="menu">
+     <button ng-click="prevForm()"> Prev </button>
+    <li ng-repeat="form in forms"> <a ng-click="loadQuestions(form.id)" > {{form.name}}  </a></li> 
+    <button ng-click="nextForm()"> Next </button>
+</ul>

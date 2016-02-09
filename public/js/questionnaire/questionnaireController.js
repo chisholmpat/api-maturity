@@ -8,13 +8,13 @@
             // This controller is used to handle both BMIX and API
             // questionnaires. The route parameter controls whether
             // the category of form displayed.
-            if ($routeParams.aff){
+            if ($routeParams.aff) {
                 $scope.category = 41;
                 $scope.isAff = true;
             } else {
                 $scope.category = 31;
             }
-            
+
             // For determining which assessment we are on.
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
@@ -44,7 +44,7 @@
                     if ($scope.forms[i].id == form_id)
                         $scope.currentIndex = i;
 
-                // Set the current form name
+                    // Set the current form name
                 $scope.formName = $scope.forms[$scope.currentIndex].name;
 
                 // Get questions and responses from database
@@ -101,75 +101,11 @@
                         assessment_id: $routeParams.assessment_id
                     },
                     function() {
-                        if (!stayOnPage)
-                            $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
-
                     });
             };
         }
     ]);
 
-    // Controller for handling filling out the form.
-    module.controller('', ['$scope', 'QuestionStore', '$window', '$routeParams',
-        function($scope, QuestionStore, $window, $routeParams) {
-
-            $scope.forms = QuestionStore.formsConn.query({});
-            $scope.client_id = $routeParams.client_id;
-            $scope.form_id = $routeParams.form_id;
-            $scope.assessment_id = $routeParams.assessment_id;
-
-            // Get questions and responses from database
-            $scope.questions = QuestionStore.allQuestionConn.query({
-                client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id,
-                assessment_id: $routeParams.assessment_id
-            }, function() {});
-
-            // Get unanswered questions and responses from database
-            $scope.unansweredQuestions = QuestionStore.allUnansweredQuestionConn.query({
-                client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id,
-                assessment_id: $routeParams.assessment_id
-            }, function() {});
-
-            $scope.responses = QuestionStore.responseConn.query();
-
-            // For Creating a numeric range for the weight option
-            $scope.Range = function(start, end) {
-                var result = [];
-                for (var i = start; i <= end; i++) {
-                    result.push(i);
-                }
-                return result;
-            };
-
-            // For re-routing the request
-            $scope.changeRoute = function(url, forceReload) {
-                $scope = $scope || angular.element(document).scope();
-                if (forceReload || $scope.$$phase) { // that's right TWO dollar signs: $$phase
-                    window.location = url;
-                } else {
-                    $location.path(url);
-                    $scope.$apply();
-                }
-            };
-
-            // Persist the information to the database.
-            $scope.generateScore = function(questions, unansweredQuestions) {
-                QuestionStore.addAnswersConn.save({
-                        user_responses: questions,
-                        newly_answered_responses: unansweredQuestions,
-                        client_id: $routeParams.client_id,
-                        assessment_id: $routeParams.assessment_id
-                    },
-                    function() {
-                        console.log(url);
-                        if (!url)
-                            $scope.changeRoute('#/results/' + $routeParams.client_id + '/' + $routeParams.form_id + '/' + $routeParams.assessment_id);
-                    });
-            };
-        }
-    ]);
 
     // Controller for handling the questions editing form.
     module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams',

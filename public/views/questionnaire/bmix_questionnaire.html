@@ -9,14 +9,16 @@ ul#menu li {
     <button ng-click="nextForm()"> Next </button>
 </ul>
 
+<form ng-submit="generateScore(questions, unansweredQuestions)">
+
 <h2> SURVEY - {{formName}}</h2>
 <div class="QAtext">
   <!-- List out the Answered Questions -->
-  <div ng-repeat="question in questions |  filter: { category_id: '1' }">
+  <div ng-repeat="question in questions |  filter: { category_id: '41' }">
     <p>{{ question.text }} </p>
 
    <div class="QAcheckboxes">
-     <div ng-repeat="response in responses  | filter: { category_id: '1' }" class="QACheckboxGroup">
+     <div ng-repeat="response in responses  | filter: { category_id: '41' }" class="QACheckboxGroup">
        <label><input type="radio" ng-model="question.response_id" ng-value="response.id"><span>{{response.response}}</span></label>
      </div>
 
@@ -59,3 +61,9 @@ ul#menu li {
 <input type="submit"/>
 
 </form></div>
+
+<ul id="menu">
+     <button ng-click="prevForm()"> Prev </button>
+    <li ng-repeat="form in forms"> <a ng-click="loadQuestions(form.id)" > {{form.name}}  </a></li> 
+    <button ng-click="nextForm()"> Next </button>
+</ul>
