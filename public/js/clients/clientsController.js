@@ -20,17 +20,17 @@
             $scope.client_id = $routeParams.client_id;
             $scope.client_name = $routeParams.client_name;
             $scope.assessment_date = $routeParams.assessment_date;
+            $scope.isBMIX = $routeParams.bmix;
         }
     ]);
 
     // Controller for "clients.html", for viewing the list of clients.
     module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams', '$location',
-
         function($scope, ClientsStore, $routeParams, $location) {
-            
+
             $scope.isAff = false;
 
-            // Check to see if this is a Bluemix survey or 
+            // Check to see if this is a Bluemix survey or
             // if it's an API maturity survey.
             $scope.category = $routeParams.category_id;
 
@@ -113,22 +113,22 @@
                     }, function() {});
                 }
             };
-            
+
         $scope.newAssessment = function(clientID) {
             ClientsStore.createNewAssessmentConn.save({
                 client_id : clientID,
                 category_id : $scope.category
             }, function(result){
                 console.log(result);
-                $location.url('/questionnaire/' + $scope.category + '/'  + clientID 
+                $location.url('/questionnaire/' + $scope.category + '/'  + clientID
                 + '/' + $scope.category);
             });
         };
-            
+
         }
-        
-        
- 
+
+
+
     ]);
 
     // Controller for "add_clients.html", for adding clients to DB.

@@ -10,16 +10,39 @@
             $scope.client_name = $routeParams.client_name;
             $scope.form_name = $routeParams.form_name;
             $scope.assesment_date = $routeParams.assesment_date;
-
+            $scope.isBMIX = $routeParams.bmix;
+            $scope.form_id = $routeParams.form_id;
+            $scope.client_id = $routeParams.client_id;
+            $scope.assessment_id = $routeParams.assessment_id;
+            $scope.isBMIX==="true" ? $scope.isBMIX=true : $scope.isBMIX=false;
             $scope.results = ResultStore.scoreConn.query({
-                client_id: $routeParams.client_id,
-                form_id: $routeParams.form_id,
-                assessment_id: $routeParams.assessment_id
-            }, function(results) {
+                client_id: $scope.client_id,
+                form_id: $scope.form_id,
+                assessment_id: $scope.assessment_id
+            });
+            $scope.getPDF = function() {
+                FileFormatsConversionStore.convertToPDF();
+            };
+
+            $scope.getWordFile = function() {
+                FileFormatsConversionStore.convertToDOCX();
+            };
+
+        }
+    ]);
+    module.controller('APImaturityController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
+        function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
+
+              $scope.results = ResultStore.scoreConn.query({
+                  client_id: $scope.$parent.client_id,
+                  form_id: $scope.$parent.form_id,
+                  assessment_id: $scope.$parent.assessment_id
+              },function(results){
 
                 var QAfinalGraphData = [];
                 var SAfinalGraphData = [];
-                var valueWeightsArray = results;
+                var valueWeightsArray = results
+                console.log(valueWeightsArray);
                 var graphTitles = [];
                 var categories = {
                     QA: 1,
@@ -59,18 +82,14 @@
                 //draw gauge graphs
                 //The gauge graphs need to be more detailed then radar, use the averages values as opposed to mapping to a lower value.
                 GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
-            });
+              });
 
-            $scope.getPDF = function() {
-                FileFormatsConversionStore.convertToPDF();
-            };
-
-            $scope.getWordFile = function() {
-                FileFormatsConversionStore.convertToDOCX();
-            };
-
-        }
+          }
     ]);
+
+    module.controller('BMIXtoolController', ['$scope', function($scope){
+      console.log('BMIXtoolController');
+    }]);
 
     module.controller('ResultsListController', ['$scope', '$routeParams', '$resource',
         function($scope, $routeParams, $resource) {
