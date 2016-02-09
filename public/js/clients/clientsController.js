@@ -2,14 +2,11 @@
 
     var module = angular.module('clientsModule', ['clientsServiceModule']);
 
-
     module.controller('AssessmentController', ['$scope', 'ClientsStore', '$routeParams',
         function($scope, ClientsStore, $routeParams) {
             $scope.forms = ClientsStore.formsConn.query({});
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
-            console.log($scope.client_id);
-            console.log($scope.assessment_id);
         }
     ]);
 
@@ -23,30 +20,19 @@
             $scope.client_id = $routeParams.client_id;
             $scope.client_name = $routeParams.client_name;
             $scope.assessment_date = $routeParams.assessment_date;
-            console.log($scope);
-            // console.log("assesment id "+ $scope.assesment_id );
-            // console.log("client id "+ $scope.client_id );
         }
     ]);
 
     // Controller for "clients.html", for viewing the list of clients.
-    module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams',
+    module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams', '$location',
 
-        function($scope, ClientsStore, $routeParams) {
+        function($scope, ClientsStore, $routeParams, $location) {
             
             $scope.isAff = false;
 
             // Check to see if this is a Bluemix survey or 
             // if it's an API maturity survey.
-            if ($routeParams.aff){
-                $scope.category = 41;
-                $scope.isAff = true;
-            }
-            else{
-                $scope.category = 31;
-            }
-
-            console.log($scope.category);
+            $scope.category = $routeParams.category_id;
 
             // Handles editing functionality of the client.
             $scope.isOwner = false;
@@ -127,7 +113,22 @@
                     }, function() {});
                 }
             };
+            
+        $scope.newAssessment = function(clientID) {
+            ClientsStore.createNewAssessmentConn.save({
+                client_id : clientID,
+                category_id : $scope.category
+            }, function(result){
+                console.log(result);
+                $location.url('/questionnaire/' + $scope.category + '/'  + clientID 
+                + '/' + $scope.category);
+            });
+        };
+            
         }
+        
+        
+ 
     ]);
 
     // Controller for "add_clients.html", for adding clients to DB.

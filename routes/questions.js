@@ -138,5 +138,11 @@ module.exports = function(app) {
     app.get('/assessment_category/:assessment_id', function(req, res) {
         queries.getAssessmentCategory(req.params.assessment_id, res, dbUtils.callback); 
     });
+    
+    // create a new asssessment of the given category for the client
+    app.post("/createassessment", function(req, res) {
+        queries.createNewAssessment(res, req.body.client_id, req.body.category_id, 
+        dbUtils.callback);
+    });
 
 };

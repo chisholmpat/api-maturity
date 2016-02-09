@@ -170,16 +170,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin
         }
     }).
-    when('/questionnaire/:client_id/:assessment_id', {
+    when('/questionnaire/:category_id/:client_id/:assessment_id', {
         templateUrl: '/views/questionnaire/questionnaire.html',
-        controller: 'QuestionnaireController', // For testing route parameters.
-        resolve: {
-            loggedin: checkLoggedin,
-            userIsUser: userIsUser
-        }
-    }).
-    when('/questionnaire/:aff/:client_id/:assessment_id', {
-        templateUrl: '/views/questionnaire/bmix_questionnaire.html',
         controller: 'QuestionnaireController', // For testing route parameters.
         resolve: {
             loggedin: checkLoggedin,
@@ -194,7 +186,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsClient: userIsClient
         }
     }).
-    when('/:aff/clients/', {
+    when('/:category_id/clients/', {
         templateUrl: '/views/clients/clients.html',
         controller: 'ClientsController',
         resolve: {

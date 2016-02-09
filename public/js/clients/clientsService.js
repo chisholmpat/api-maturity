@@ -14,6 +14,7 @@
             this.allClientsOwnedByUserConn = $resource('/getAllClientsOwnedByUser');
             this.allClientInfoOwnedByUserConn = $resource('/clientDetailsOwnedByUser');
             this.getAllAssessmentsConn = $resource('/assessments/:category_id');
+            this.createNewAssessmentConn = $resource('/createassessment');
         }
     ]);
 })();

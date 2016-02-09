@@ -5,15 +5,7 @@
     module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window', '$routeParams',
         function($scope, QuestionStore, $window, $routeParams) {
 
-            // This controller is used to handle both BMIX and API
-            // questionnaires. The route parameter controls whether
-            // the category of form displayed.
-            if ($routeParams.aff) {
-                $scope.category = 41;
-                $scope.isAff = true;
-            } else {
-                $scope.category = 31;
-            }
+            $scope.category = $routeParams.category_id;
 
             // For determining which assessment we are on.
             $scope.client_id = $routeParams.client_id;

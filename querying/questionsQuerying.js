@@ -270,3 +270,12 @@ exports.getAssessmentCategory = function(assessment_id, res, callback) {
       callback(err, res, rows);
     });
 };
+
+exports.createNewAssessment = function(res, client_id, category_id, callback) {
+    knex('assessment').insert({
+        client_id : client_id,
+        category_id : category_id
+    }).asCallback(function(err, rows) {
+        callback(err, res, {id : rows[0]});
+    });
+};
