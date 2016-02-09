@@ -28,7 +28,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             // Authenticated
             if (user !== '0') {
                 deferred.resolve();
-                $rootScope.message = "Login Successful"
+                $rootScope.message = "Login Successful";
                 $rootScope.role = user.role;
                 console.log(user.role);
                 $rootScope.isIBM = user.isIBM;
@@ -72,7 +72,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         });
 
         return deferred.promise;
-    }
+    };
 
 
     // Checks if the user is an admin, used for controlling access to
@@ -96,7 +96,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         });
 
         return deferred.promise;
-    }
+    };
 
     // Checks if the user is an admin, used for controlling access to
     // resources which only an admin
@@ -119,7 +119,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         });
 
         return deferred.promise;
-    }
+    };
 
     // Checks if the user is an admin
     // INTERCEPTOR
@@ -178,6 +178,14 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsUser: userIsUser
         }
     }).
+    when('/questionnaire/:aff/:client_id/:assessment_id', {
+        templateUrl: '/views/questionnaire/bmix_questionnaire.html',
+        controller: 'QuestionnaireController', // For testing route parameters.
+        resolve: {
+            loggedin: checkLoggedin,
+            userIsUser: userIsUser
+        }
+    }).
     when('/clients', {
         templateUrl: '/views/clients/clients.html',
         controller: 'ClientsController',
@@ -194,7 +202,6 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsClient: userIsClient
         }
     }).
-
     when('/login', {
         templateUrl: '/views/user/login.html',
         controller: 'UserLoginController'
@@ -206,16 +213,24 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     when('/ibmlogin', {
         templateUrl: '/views/user/ibmlogin.html',
         controller: 'UserLoginController'
-    })
-    .when('/edit_client/:client_id', {
+    }).
+    when('/edit_client/:client_id', {
         templateUrl: '/views/clients/add_client.html',
         controller: 'AddClientController',
         resolve: {
             loggedin: checkLoggedin,
             userIsUser: userIsUser
-
         }
-    }).when('/edit_questions/:form_id', {
+    }).
+    when('/add_client/', {
+        templateUrl: '/views/clients/add_client.html',
+        controller: 'AddClientController',
+        resolve: {
+            loggedin: checkLoggedin,
+            userIsUser: userIsUser
+        }
+    }).
+    when('/edit_questions/:form_id', {
         templateUrl: '/views/questionnaire/edit_questions.html',
         controller: 'EditQuestionsController',
         resolve: {
@@ -239,13 +254,13 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
         }
-      }).when('/clientforms/:client_name/:category_id/:client_id/:assessment_id/:assessment_date', {
-          templateUrl: '/views/questionnaire/all_forms_for_client.html',
-          controller: 'IndividualClientController',
-          resolve: {
-              loggedin: checkLoggedin,
-              isAdmin: userIsClient
-          }
+    }).when('/clientforms/:client_name/:category_id/:client_id/:assessment_id/:assessment_date', {
+        templateUrl: '/views/questionnaire/all_forms_for_client.html',
+        controller: 'IndividualClientController',
+        resolve: {
+            loggedin: checkLoggedin,
+            isAdmin: userIsClient
+        }
     }).when('/howto/', {
         templateUrl: '/views/welcome/howto.html',
         controller: 'HomePageController',

@@ -52,7 +52,7 @@ exports.getAllFormsByClient = function(client_id, res, callback) {
         .where('client_id', client_id)
         .distinct('*').asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 // return a list of clients.
@@ -61,7 +61,7 @@ exports.getClients = function(email, res, callback) {
         .innerJoin('userclients', 'client.id', 'userclients.client_id')
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 // return a list of user Emails.
@@ -71,7 +71,7 @@ exports.getAllUserEmails = function(res, callback) {
         .from('userclients')
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 // return a list of user Emails and ClientIDs
@@ -80,7 +80,7 @@ exports.getAllClientIDsAndEmails = function(res, callback) {
         .from('userclients')
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 // return a list of all clients the user is allowed to view
@@ -94,7 +94,7 @@ exports.getAllClientsOwnedByUser = function(email, res, callback) {
         })
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 
@@ -106,8 +106,9 @@ exports.getAllClientInfoOwnedByUser = function(email, res, callback) {
         .where('userclients.email', email).where('isOwner', '1')
         .innerJoin('userclients', 'Client.id', 'userclients.client_id')
         .asCallback(function(err, rows) {
+            console.log("Getting user's clients: " + rows + err);
             callback(err, res, rows);
-        })
+        });
 };
 
 // Add user email and client ID
@@ -120,7 +121,7 @@ exports.addClientToUser = function(client_id, user_email, res, callback) {
         })
         .asCallback(function(err, rows) {
             callback(err, res, rows);
-        })
+        });
 };
 
 
@@ -131,4 +132,4 @@ exports.setClientInactive = function(id, isActive, res, callback) {
     }).asCallback(function(err, rows) {
         callback(err, res);
     });
-}
+};

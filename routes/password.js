@@ -40,7 +40,7 @@ module.exports = function(app) {
                                 reset_password_token: token,
                                 reset_password_expires: Date.now() + 3600000 // 1 hour     
                             }).asCallback(function(err, rows) {
-                                done(err, token, user)
+                                done(err, token, user);
                             });
 						}
                     });
@@ -84,7 +84,7 @@ module.exports = function(app) {
                     res.send(rows[0].email);
                 else
                     res.send(400);
-            })
+            });
     });
 
     // Route for updating user's password
@@ -109,4 +109,4 @@ module.exports = function(app) {
 
     });
 
-}
+};

@@ -1,6 +1,6 @@
 (function() {
 
-    var module = angular.module('clientsModule', ['clientsServiceModule'])
+    var module = angular.module('clientsModule', ['clientsServiceModule']);
 
 
     module.controller('AssessmentController', ['$scope', 'ClientsStore', '$routeParams',
@@ -33,12 +33,18 @@
     module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams',
 
         function($scope, ClientsStore, $routeParams) {
+            
+            $scope.isAff = false;
 
-
-            if ($routeParams.aff)
+            // Check to see if this is a Bluemix survey or 
+            // if it's an API maturity survey.
+            if ($routeParams.aff){
                 $scope.category = 41;
-            else
+                $scope.isAff = true;
+            }
+            else{
                 $scope.category = 31;
+            }
 
             console.log($scope.category);
 
@@ -59,6 +65,7 @@
             $scope.assessments = ClientsStore.getAllAssessmentsConn.query({
                 category_id: $scope.category
             }, function(res) {
+                console.log(res);
 
             });
 
@@ -75,7 +82,7 @@
                 ///map all the emailIDs belonging to a CliendID
                 for (var i = 0; i < allClientsOwnedByUser.length; i++) {
                     allClientIDs.push(allClientsOwnedByUser[i].client_id);
-                };
+                }
             });
 
             $scope.allClients = allClientIDs;
@@ -102,7 +109,7 @@
                         window.alert("The client is already assigned to user " + email);
                     }
                 }
-            }
+            };
 
             // Method for deleting a client from the database.
             $scope.deleteClient = function(client) {
@@ -119,7 +126,7 @@
                         status: 0
                     }, function() {});
                 }
-            }
+            };
         }
     ]);
 
@@ -142,13 +149,13 @@
                     $scope.editing = {};
                 }
 
-            }
+            };
 
             // Regex for Canadian phone number.
             // TODO: This should be moved into some sort of regex
             // service with other regexes so we can make use of it
             // elsewhere throughout the application.
-            $scope.phoneNumbr = /^\+?\d{3}[- ]?\d{3}[- ]?\d{4}$/
+            $scope.phoneNumbr = /^\+?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
 
             // Data from the form comes back in the form of an array which we
             // will pass to the back end for processing.
@@ -168,7 +175,7 @@
                         $scope.changeRoute('#/clients/');
                     });
                 }
-            }
+            };
 
 
             // For re-routing the request.
@@ -176,14 +183,14 @@
             // of the application, like the regex it should be moved
             // to a more sensible spot within the application.
             $scope.changeRoute = function(url, forceReload) {
-                $scope = $scope || angular.element(document).scope()
+                $scope = $scope || angular.element(document).scope();
                 if (forceReload || $scope.$$phase) { // that's right TWO dollar signs: $$phase
-                    window.location = url
+                    window.location = url;
                 } else {
-                    $location.path(url)
-                    $scope.$apply()
+                    $location.path(url);
+                    $scope.$apply();
                 }
-            }
+            };
         }
     ]);
 })();

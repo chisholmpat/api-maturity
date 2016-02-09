@@ -33,7 +33,7 @@ module.exports = function(app) {
                 clientQueries.updateClient(req.body.client, res, dbUtils.callbackNoReturn);
             else
                 res.send('403');
-        })
+        });
     });
 
     // get all forms for a particular client
@@ -77,7 +77,7 @@ module.exports = function(app) {
                 clientQueries.setClientInactive(req.body.id, req.body.status, res, dbUtils.callbackNoReturn);
             else
                 res.send('403');
-        })
+        });
     });
 
     // get clientID from client table

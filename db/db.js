@@ -1,6 +1,8 @@
 var opts = null;
 var devEnv = false;
 
+// Conditionally set the database connection details
+// based on whether we're in development or production.
 if(!devEnv){
    opts = {
         host: 'us-cdbr-azure-southcentral-e.cloudapp.net',
@@ -22,6 +24,8 @@ else{
   }
 }
 
+// The pool is set to min:0 due to an issue
+// with Knex's handling of pools.
 exports.knex = require('knex')({
     client: 'mysql',
     connection: opts,
