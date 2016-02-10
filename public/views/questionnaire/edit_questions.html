@@ -6,12 +6,12 @@
 
         <div class="form-group headings">
             <div> <h3>Question</h3> </div>
-            <div> <h3>Groupings</h3> </div>
+            <div ng-if="questions[0].category_id != categoryIDs.BMIX"> <h3>Groupings</h3> </div>
             <div> <input type="button" ng-click="toggleAddQuestionVisibility()" value="{{!addQuestion && 'Add'||'Cancel'}}"> </input> </div>
         </div>
         <div ng-show="addQuestion" class="form-group addQuestion">
             <div><input type="text" name="newQuestionName" class="form-control" ng-model="newQuestion.text"> </td></div>
-            <div><select ng-model="newQuestion.group_id" ng-options="grouping.id as grouping.name for grouping in groupings" ng-init="newQuestion.group_id=1"></select></div>
+            <div ng-if="questions[0].category_id != categoryIDs.BMIX"><select ng-model="newQuestion.group_id" ng-options="grouping.id as grouping.name for grouping in groupings" ng-init="newQuestion.group_id=1"></select></div>
             <div><input type="button" ng-click="saveQuestion(newQuestion)" value="Add"  ng-show="questionsForm.newQuestionName.$valid && !questionsForm.newQuestionName.$pristine"></input></div>
             <p ng-show="questionsForm.newQuestionName.$invalid || questionsForm.newQuestionName.$pristine" class="help-block">Question is required.</p>
         </div>
@@ -21,7 +21,7 @@
                 <input type="text" class="form-control" ng-model="question.text" required>
 
             </div>
-            <div>
+            <div ng-if="questions[0].category_id != categoryIDs.BMIX"> 
                 <select ng-model="question.group_id" ng-options="grouping.id as grouping.name for grouping in groupings"></select>
             </div>
             <div>

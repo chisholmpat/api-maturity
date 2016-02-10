@@ -175,14 +175,8 @@ exports.deleteForm = function(id, res, callback) {
 exports.addQuestion = function(question, res, callback) {
 
     knex('question').insert(question).asCallback(function(err, rows) {
-        if (!err) {
-            var rawSql = "INSERT INTO ClientQuestionResponse(response_id, question_id, client_id, weight)\
-            SELECT DISTINCT 1, (SELECT MAX(id) from Question), id, 0 from Client";
-
-            knex.raw(rawSql).asCallback(function(err, rows) {
-                callback(err, res);
-            });
-        }
+               console.log(err);
+               callback(err, res, rows); 
     });
 
 };
