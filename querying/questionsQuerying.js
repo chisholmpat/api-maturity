@@ -189,38 +189,53 @@ exports.addQuestion = function(question, res, callback) {
 
 // Add a new form to the form table
 //By default the form is set to isActive = true
-exports.addForm = function(formName, res, callback) {
+exports.addForm = function(formName, categoryID, isAPI, res, callback) {
 
+
+    // TODO If the form isAPI then there are a default set of questions that
+    // TODO that need to be added.
+    // TODO Category_id is hard coded, what if that's not the ID?
+
+    // The logic here is that if a form has been "deleted" (its active value set to 0)
+    // and someone tries to create a new form with the same name, we just reactivate the 
+    // old form and change the category if its been changed.
     knex('form').select('').where('name', formName).where('active', 0).asCallback(function(err, rows) {
 
-        //If the FormName already exists in the database, just Update the entry
-        if (rows.length != 0) {
-            knex('form')
-                .where('name', formName)
-                .update({
-                    active: 1
-                })
-                .asCallback(function(err, rows) {
-                    callback(err, res);
-                });
-        } else { //Form Name doesn't exist in table, add it in.
-            knex('form').insert({
-                    name: formName,
-                    active: 1
-                })
-                .asCallback(function(err, rows) {
 
+        if (rows.length != 0) {
+            knex('form').where('name', formName).update({
+                active: 1,
+                category_id: categoryID
+            }).asCallback(function(err, rows) {
+                callback(err, res);
+            });
+        } else {
+            knex('form').insert({
+                name: formName,
+                active: 1,
+                category_id: categoryID
+            }).asCallback(function(err, rows) {
+
+                if (isAPI) {
+
+                    // There are some questions all API maturity questions get, this query adds those questions
+                    // to the form if it is an API maturity form. Currently the category_id is card coded.
                     var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
-                        SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2";
+                                SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2";
 
                     knex.raw(query).asCallback(function(err, rows) {
                         callback(err, res);
                     });
-                });
-        }
-    });
 
-};
+                } else {
+                    callback(err, res);
+                }
+
+            })
+        };
+
+    });
+}
 
 
 // Checks to see if a form Name exists
@@ -240,28 +255,28 @@ exports.getAllAssessmentsForClient = function(client_id, res, callback) {
 
 // Gets all the assesments for all clients
 exports.getAllAssessments = function(res, category_id, callback) {
-  console.log(knex('assessment').select('').where('category_id', category_id).toString());
+    console.log(knex('assessment').select('').where('category_id', category_id).toString());
     knex('assessment').select('').where('category_id', category_id).asCallback(function(err, rows) {
-      console.log(err);
-      console.log(rows);
-      callback(err, res, rows);
+        console.log(err);
+        console.log(rows);
+        callback(err, res, rows);
     });
 };
 
 // Get the details of an assessment.
 exports.getAssessmentDetails = function(assessment_id, res, callback) {
     knex('assessment').select('Client.name')
-    .innerJoin('client', 'assessment.client_id', 'client.id')
-    .where('assessment.id', assessment_id).asCallback(function(err, rows) {
-      callback(err, res, rows);
-    });
+        .innerJoin('client', 'assessment.client_id', 'client.id')
+        .where('assessment.id', assessment_id).asCallback(function(err, rows) {
+            callback(err, res, rows);
+        });
 
 };
 
 // Get the category of an assessment.
 exports.getAssessmentCategory = function(assessment_id, res, callback) {
-    knex('assessment').select('category_id').where('id', assessment_id).asCallback(function(err, rows){
-      callback(err, res, rows);
+    knex('assessment').select('category_id').where('id', assessment_id).asCallback(function(err, rows) {
+        callback(err, res, rows);
     });
 };
 
@@ -270,17 +285,19 @@ exports.getAssessmentCategory = function(assessment_id, res, callback) {
 // interpretting the return as a HTTP status code.
 exports.createNewAssessment = function(res, client_id, category_id, callback) {
     knex('assessment').insert({
-        client_id : client_id,
-        category_id : category_id
+        client_id: client_id,
+        category_id: category_id
     }).asCallback(function(err, rows) {
-        callback(err, res, {id : rows[0]});
+        callback(err, res, {
+            id: rows[0]
+        });
     });
 };
 
 // Returns all categories. Used to avoid hard coded values
 // on the front application.
 exports.getAllCategories = function(res, callback) {
-    knex('category').select('').asCallback(function(err, rows){
+    knex('category').select('').asCallback(function(err, rows) {
         callback(err, res, rows);
     });
 }

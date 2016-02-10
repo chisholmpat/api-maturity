@@ -37,8 +37,6 @@
              <p ng-show="userform.email.$invalid && !userform.email.$pristine" class="help-block">Enter a valid email.</p>
         </div>
 
-        {{aUser}}
-
         <div class="form-group" ng-class="{ 'has-error': userform.password.$dirty && userform.password.$error.required }"
         ng-if="!editing.id">
             <label for="passwordConfirm">Password</label>

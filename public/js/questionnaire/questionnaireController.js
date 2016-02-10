@@ -218,8 +218,8 @@
     ]);
 
     // Controller for handling listing all the forms.
-    module.controller('ListFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
-        function($scope, QuestionStore, $window, $routeParams) {
+    module.controller('ListFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams', '$rootScope',
+        function($scope, QuestionStore, $window, $routeParams, $rootScope) {
 
             // Retrive all Forms
             $scope.forms = QuestionStore.formsConn.query({}, function() {});
@@ -235,6 +235,18 @@
                     });
                 }
             };
+
+            $scope.categories = [
+              { 
+                name: "Bluemix Affinity",
+                id: $rootScope.categoryIDs.BMIX
+              },
+              {
+                name: "API Maturity",
+                id: $rootScope.categoryIDs.API
+
+              }
+            ]
 
             // For toggling visibility of add question drop down
             $scope.addForm = false;
@@ -252,16 +264,18 @@
                 $scope.addForm = !$scope.addForm;
             };
 
-
             // Function for saving a new form
-            $scope.saveForm = function(formName) {
-                // Call to the backend
+            $scope.saveForm = function(newForm) {
+                
+              // Call to the backend
                 QuestionStore.addFormConn.save({
-                    formName: formName.text
+                    formName: newForm.text,
+                    category_id: newForm.category_id,
+                    is_api: newForm.category_id == $rootScope.categoryIDs.API
                 }, function() {
                     // Update the forms array
                     refreshForms();
-                });
+                }); 
             };
         }
     ]);
