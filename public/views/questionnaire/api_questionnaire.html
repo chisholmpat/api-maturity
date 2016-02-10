@@ -1,64 +1,38 @@
 
 <h3> Self Assesment </h3>
 <div class="SAtext">
-  <p ng-repeat="question in questions |  filter: { category_id: '2' }" ><span>{{question.text}}</span>
-    <label ng-repeat="response in responses  | filter: { category_id: '2' }"><input type="radio" ng-model="question.response_id" ng-value="response.id">
+  <p ng-repeat="question in questions |  filter: { category_id: categoryIDs.SA }" ><span>{{question.text}}</span>
+    <label ng-repeat="response in responses  | filter: { category_id: categoryIDs.SA }"><input type="radio" ng-model="question.response_id" ng-value="response.id">
         <span>{{response.response}}</span>
     </label>
 
-  </p>
-
-  <p ng-repeat="question in unansweredQuestions |  filter: { category_id: '2' }"><span>{{question.text}}</span>
-    <label ng-repeat="response in responses  | filter: { category_id: '2' }" ng-init="question.response_id = (responses | filter: {category_id: '2'} | filter: {value: '0'})[0].id">
-        <input type="radio" ng-model="question.response_id" ng-value="response.id">
-        <span>{{response.response}}</span>
-    </label>
   </p>
  </div>
 
 <h3>Quality Assesment</h3>
 <div class="QAtext">
-  <!-- List out the Answered Questions -->
-  <div ng-repeat="question in questions |  filter: { category_id: '1' }">
+
+
+  <div ng-repeat="question in questions |  filter: { category_id: categoryIDs.QA }">
     <p>{{ question.text }} </p>
 
    <div class="QAcheckboxes">
-     <div ng-repeat="response in responses  | filter: { category_id: '1' }" class="QACheckboxGroup">
+     <div ng-repeat="response in responses | byCategory:categoryIDs.QA" class="QACheckboxGroup">
        <label><input type="radio" ng-model="question.response_id" ng-value="response.id"><span>{{response.response}}</span></label>
      </div>
 
      <div class="QACheckboxGroup">
        <a ng-click="showText = !showText" >Options</a>
      </div>
+     
    </div>
+   
    <div ng-init="showText = false" class="QAoptions" ng-show="showText">
      <p>Notes</p>
      <input type="text" name="" class="form-control" ng-model="question.note">
      <p>Weight</p>
      <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
    </div>
-  </div>
-
-  <!-- List out the Unanswered Questions -->
-  <div ng-repeat="question in unansweredQuestions |  filter: { category_id: '1' }">
-     <p>{{ question.text }} </p>
-     <div class="QAcheckboxes">
-       <div ng-repeat="response in responses  | filter: { category_id: '1' }" class="QACheckboxGroup" ng-init="question.response_id = (responses | filter: {category_id: '1'} | filter: {value: '0'})[0].id">
-         <label><input type="radio" ng-model="question.response_id"  ng-value="response.id">
-            <span>{{response.response}}</span>
-         </label>
-       </div>
-
-       <div class="QACheckboxGroup">
-         <a ng-click="showText = !showText" >Options</a>
-       </div>
-     </div>
-     <div ng-init="showText = false" class="QAoptions" ng-show="showText">
-       <p>Notes</p>
-       <input type="text" name="" class="form-control" ng-model="question.note">
-       <p>Weight</p>
-       <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
-     </div>
   </div>
 
 </div>

@@ -47,3 +47,13 @@ module.filter('dateToISO', function() {
     return new Date(input).toISOString();
   };
 });
+
+module.filter('byCategory', function() {
+    return function(items ,category) {
+      var out = [];
+      for(i = 0; i < items.length; i++)
+      if(items[i].category_id == category)
+        out.push(items[i]);
+      return out;
+    }
+  });

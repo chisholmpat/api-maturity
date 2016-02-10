@@ -144,5 +144,10 @@ module.exports = function(app) {
         queries.createNewAssessment(res, req.body.client_id, req.body.category_id, 
         dbUtils.callback);
     });
+    
+    // return all category information
+    app.get('/categories', function(req, res){
+        queries.getAllCategories(res, dbUtils.callback);
+    });
 
 };

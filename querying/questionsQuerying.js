@@ -60,6 +60,19 @@ exports.getClientAnswers = function(client_id, form_id, assessment_id, res, call
 };
 
 
+// Get all the questions for a given form.
+exports.getQuestionsByForm = function(form_id, res, callback) {
+    knex.select('Question.*', 'Form.name')
+        .from('Question')
+        .innerJoin('Form', 'Question.form_id', 'Form.id')
+        .where('Question.form_id', form_id)
+        .where('Question.active', 1)
+        .asCallback(function(err, rows) {
+            callback(err, res, rows);
+        });
+};
+
+
 // Return all the possible responses to a question.
 exports.getAllResponses = function(res, callback) {
     knex.select().table('response').
@@ -80,19 +93,6 @@ exports.getAllForms = function(res, callback) {
         });
 };
 
-// Get all the questions for a given form.
-exports.getQuestionsByForm = function(form_id, res, callback) {
-    knex.select('Question.*', 'Form.name')
-        .from('Question')
-        .innerJoin('Form', 'Question.form_id', 'Form.id')
-        .where('Question.form_id', form_id)
-        .where('Question.active', 1)
-        .asCallback(function(err, rows) {
-            callback(err, res, rows);
-        });
-};
-
-
 // Return a list of groupings.
 exports.getGroupings = function(res, callback) {
     knex.select().table('grouping')
@@ -109,7 +109,6 @@ exports.getForms = function(res, callback) {
         });
 };
 
-
 // Return a list of forms by category. Used to seperate out
 // Bluemix Affinity forms from API Maturity Forms.
 exports.getFormsByCategory = function(res, category_id, callback) {
@@ -120,7 +119,6 @@ exports.getFormsByCategory = function(res, category_id, callback) {
             callback(err, res, rows);
         });
 };
-
 
 // TODO This query is rather hideous right now, there has
 // to be a more elegant way of performing multiple unique
@@ -219,8 +217,6 @@ exports.addForm = function(formName, res, callback) {
                         callback(err, res);
                     });
                 });
-
-
         }
     });
 
@@ -257,8 +253,6 @@ exports.getAssessmentDetails = function(assessment_id, res, callback) {
     knex('assessment').select('Client.name')
     .innerJoin('client', 'assessment.client_id', 'client.id')
     .where('assessment.id', assessment_id).asCallback(function(err, rows) {
-      console.log(err);
-      console.log(rows);
       callback(err, res, rows);
     });
 
@@ -271,6 +265,9 @@ exports.getAssessmentCategory = function(assessment_id, res, callback) {
     });
 };
 
+// Creates a new assessment and returns the ID.
+// ID is returned wrapped in an object to avoid 
+// interpretting the return as a HTTP status code.
 exports.createNewAssessment = function(res, client_id, category_id, callback) {
     knex('assessment').insert({
         client_id : client_id,
@@ -279,3 +276,11 @@ exports.createNewAssessment = function(res, client_id, category_id, callback) {
         callback(err, res, {id : rows[0]});
     });
 };
+
+// Returns all categories. Used to avoid hard coded values
+// on the front application.
+exports.getAllCategories = function(res, callback) {
+    knex('category').select('').asCallback(function(err, rows){
+        callback(err, res, rows);
+    });
+}

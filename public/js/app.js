@@ -265,6 +265,19 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     });
     // http://stackoverflow.com/questions/20663076/angularjs-app-run-documentation
 }).run(function($rootScope, $http) {
+
+    $rootScope.categoryIDs = {};
+
+    $http.get("/categories")
+    .then(function(response) {
+        for(i=0;i<response.data.length;i++){
+            $rootScope.categoryIDs[response.data[i].name] = response.data[i].id
+            console.log("Category Mapping: " + 
+                response.data[i].name + ":" + 
+                response.data[i].id);     
+        }     
+    });
+
     $rootScope.logout = function() {
         $http.post('/logout');
     };

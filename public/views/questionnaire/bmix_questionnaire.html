@@ -1,11 +1,11 @@
 <h2> SURVEY - {{formName}}</h2>
 <div class="QAtext">
   <!-- List out the Answered Questions -->
-  <div ng-repeat="question in questions |  filter: { category_id: '41' }">
+  <div ng-repeat="question in questions |  filter: { category_id: categoryIDs.BMIX }">
     <p>{{ question.text }} </p>
 
    <div class="QAcheckboxes">
-     <div ng-repeat="response in responses  | filter: { category_id: '41' }" class="QACheckboxGroup">
+     <div ng-repeat="response in responses  | filter: { category_id: categoryIDs.BMIX }" class="QACheckboxGroup">
        <label><input type="radio" ng-model="question.response_id" ng-value="response.id"><span>{{response.response}}</span></label>
      </div>
 
@@ -22,10 +22,10 @@
   </div>
 
   <!-- List out the Unanswered Questions -->
-  <div ng-repeat="question in unansweredQuestions |  filter: { category_id: '1' }">
+  <div ng-repeat="question in unansweredQuestions |  filter: { category_id: categoryIDs.BMIX }">
      <p>{{ question.text }} </p>
      <div class="QAcheckboxes">
-       <div ng-repeat="response in responses  | filter: { category_id: '41' }" class="QACheckboxGroup" ng-init="question.response_id = (responses | filter: {category_id: '1'} | filter: {value: '0'})[0].id">
+       <div ng-repeat="response in responses  | filter: { categoryIDs.BMIX }" class="QACheckboxGroup" ng-init="question.response_id = (responses | filter: {category_id: '1'} | filter: {value: '0'})[0].id">
          <label><input type="radio" ng-model="question.response_id"  ng-value="response.id">
             <span>{{response.response}}</span>
          </label>
