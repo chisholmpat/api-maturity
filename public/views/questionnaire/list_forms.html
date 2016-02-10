@@ -3,6 +3,9 @@
     <div class="form-group headings">
         <div>
             <h3>Form Name</h3>
+            <p> View Form Type:
+            <select ng-model="category_id" ng-options="category.id as (category.name | uppercase) for category in categories"
+                ng-init="category_id = (categories[0].id)"></select>
         </div>
         <div>
             <input type="button" ng-click="toggleAddFormVisibility()" value="{{!addForm && 'Add'||'Cancel'}}"></input>
@@ -27,7 +30,7 @@
             </div>
         </form>
     </div>
-    <div ng-repeat="form in forms" class="form-group">
+    <div ng-repeat="form in forms | filter: { category_id: category_id}  " class="form-group">
         <div><a href="/#/edit_questions/{{form.id}}"> {{form.name}} </a>
         </div>
         <div>

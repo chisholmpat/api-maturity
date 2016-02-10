@@ -223,7 +223,7 @@
     ]);
 
     // Controller for handling listing all the forms.
-    module.controller('ListFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams', '$rootScope',
+    module.controller('EditFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams', '$rootScope',
         function($scope, QuestionStore, $window, $routeParams, $rootScope) {
 
             // Retrive all Forms
@@ -251,7 +251,7 @@
                 id: $rootScope.categoryIDs.API
 
               }
-            ]
+            ];
 
             // For toggling visibility of add question drop down
             $scope.addForm = false;
