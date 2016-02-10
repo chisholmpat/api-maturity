@@ -1,4 +1,11 @@
-<div class="col-lg-12">
+<div class="col-lg-12" >
+
+    <!-- If Bluemix tool, load a separate HTML page  -->
+    <div ng-if="isBMIX" ng-include="'views/results/results_bmix.html'">HELLO!</div>
+    <span ng-if="isBMIX"><div  ng-controller="BMIXtoolController"></div></span>
+
+    <span ng-if="!isBMIX"><div ng-controller="APImaturityController"></div></span>
+
     <div id="exportResults">
       <a ng-href={{csvURL}}> CSV Export </a><br>
       <a ng-href='' ng-click='getPDF()' >PDF Export</a><br>
