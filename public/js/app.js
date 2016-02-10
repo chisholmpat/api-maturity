@@ -163,7 +163,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/user/reset_password.html',
         controller: 'PasswordResetController'
     }).
-    when('/results/:client_name/:form_name/:assesment_date/:client_id/:form_id/:assessment_id', {
+    when('/results/:client_name/:form_name/:category_id/:assesment_date/:client_id/:form_id/:assessment_id', {
         templateUrl: '/views/results/results.html',
         controller: 'ResultsController',
         resolve: {
@@ -272,10 +272,10 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     .then(function(response) {
         for(i=0;i<response.data.length;i++){
             $rootScope.categoryIDs[response.data[i].name] = response.data[i].id
-            console.log("Category Mapping: " + 
-                response.data[i].name + ":" + 
-                response.data[i].id);     
-        }     
+            console.log("Category Mapping: " +
+                response.data[i].name + ":" +
+                response.data[i].id);
+        }
     });
 
     $rootScope.logout = function() {
