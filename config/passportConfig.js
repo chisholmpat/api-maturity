@@ -79,7 +79,6 @@ module.exports = function(passport) {
                     profile.role = "user";
                     profile.isIBM = '1';
                     profile.email = profile.emailaddress;
-                    console.log(profile.emailaddress);
                     done(null, profile);
                 })
             }

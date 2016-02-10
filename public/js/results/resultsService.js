@@ -186,21 +186,24 @@
       };
 
       this.convertToDOCX = function(){
-          //convert from canvas to png to allow word to display images
-          // var canvasTags = document.getElementsByTagName('canvas');
-    			// var max_val = canvasTags.length;
+          // convert from canvas to png to allow word to display images
+          var canvasTags = document.getElementsByTagName('canvas');
+    			var max_val = canvasTags.length;
     			// for (var i=0; i<max_val; i++) {
     			// 	var canvas = canvasTags[0];
+          //   //create base64 encoded string of image
           //   var img    = canvas.toDataURL("image/png");
+          //   img = img.replace('data:image/png;base64,','');
+          //   //create <img></img>
           //   var oImg=document.createElement("img");
-          //   // <xml><image>AAECAwQFBgcICQ==</image></xml>
           //
-          //   oImg.setAttribute('src', img);
-    			// 	// canvas.parentNode.insertBefore(canvas, oImg);
+          //   // <image type="image/png">
+          //   oImg.setAttribute('type', "image/png");
+    			// 	oImg.innerHTML = img;
           //   canvas.parentNode.appendChild(oImg);
     			// 	canvas.parentNode.removeChild(canvas);
     			// }
-          // //full set of html tags to be displayed in browser
+          // // //full set of html tags to be displayed in browser
           var htmlString = document.getElementById('exportthis').innerHTML;
 
           //WORD will only know to render this as a HTML document and not plain text

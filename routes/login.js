@@ -4,10 +4,14 @@ module.exports = function(app, passport) {
     // defines the strategies for logins
     var passportConfig = require('../config/passportConfig.js')(passport);
     var queries = require('../querying/usersQuerying');
-
+    // var http = require('http');
     // route to log out
     app.post('/logout', function(req, res) {
         req.logOut();
+        req.logout();
+        console.log("LOGOUT FUNCTIONS");
+        console.log(req.logOut);
+        console.log(req.logout);
         res.send(200);
     });
 
@@ -22,7 +26,11 @@ module.exports = function(app, passport) {
     });
 
     // route to log into IBMlogin
-    app.get('/ibmlogin', passport.authenticate('openidconnect', {}));
+    app.get('/ibmlogin', passport.authenticate('openidconnect', {}), function(req,res){
+        // req.logout();
+        // console.log("REQUEST" + req);
+        // console.log("RESPONSE" + res);
+    });
 
     // route used in sso redirect
     app.get('/auth/sso/callback', function(req, res, next) {
