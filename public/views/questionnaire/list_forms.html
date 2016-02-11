@@ -31,7 +31,7 @@
         </form>
     </div>
     <div ng-repeat="form in forms | filter: { category_id: category_id}  " class="form-group">
-        <div><a href="/#/edit_questions/{{form.id}}"> {{form.name}} </a>
+      <div><a href="/#/edit_questions/{{form.category_id}}/{{form.id}}"> {{form.name}} </a>
         </div>
         <div>
             <img src="images/delete.png" height="20" width="20" ng-click="deleteForm(form)"

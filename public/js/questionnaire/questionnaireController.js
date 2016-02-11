@@ -5,8 +5,6 @@
         module.controller('QuestionnaireController', ['$scope', 'QuestionStore', '$window', '$routeParams', '$location',
             function($scope, QuestionStore, $window, $routeParams, $location) {
 
-                $scope.category = $routeParams.category_id;
-
                 // For determining which assessment we are on.
                 $scope.client_id = $routeParams.client_id;
                 $scope.assessment_id = $routeParams.assessment_id;
@@ -152,6 +150,9 @@
 
             // For toggling visibility of add question drop down
             $scope.addQuestion = false;
+            $scope.category = $routeParams.category_id;
+            console.log($scope.category);
+            
 
             // Updates the question on the form.
             var refreshQuestions = function() {
