@@ -60,22 +60,22 @@
   <!-- CLIENT MARKET CAPITILZATION -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine }">
       <label>Market Capitalization $</label>
-      <input type="text" name="market_capitalization" class="form-control" ng-model="editing.market_capitalization" required ng-pattern="integerval" >
+      <input type="number"  name="market_capitalization" class="form-control" ng-model="editing.market_capitalization" required ng-pattern="integerval" >
       <p ng-show="userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine" class="help-block">Capitlization is required. Enter only numbers.</p>
   </div>
 
   <!-- CLIENT REVUNUE SIZE  -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.revenue.$invalid && !userForm.revenue.$pristine }">
       <label>Revenue $</label>
-      <input type="text" name="revenue" class="form-control" ng-model="editing.revenue" required ng-pattern="integerval">
+      <input type="number" name="revenue" class="form-control" ng-model="editing.revenue" required ng-pattern="integerval">
       <p ng-show="userForm.revenue.$invalid && !userForm.revenue.$pristine" class="help-block">Revenue size is required. Enter only numbers.</p>
   </div>
 
   <!-- CLIENT MARKET SHARE  -->
   <div class="form-group" ng-class="{ 'has-error' : userForm.market_share.$invalid && !userForm.market_share.$pristine }">
       <label>Market Share %</label>
-      <input type="text" name="market_share" class="form-control" ng-model="editing.market_share" required  ng-pattern="integerval">
-      <p ng-show="userForm.market_share.$invalid && !userForm.market_share.$pristine" class="help-block">Market share is required. Max three numbers.</p>
+      <input type="number" min="0" max="100" name="market_share" class="form-control" ng-model="editing.market_share" required  ng-pattern="integerval">
+      <p ng-show="userForm.market_share.$invalid && !userForm.market_share.$pristine" class="help-block">0-100.</p>
   </div>
 
   <!-- SUBMIT BUTTON -->
