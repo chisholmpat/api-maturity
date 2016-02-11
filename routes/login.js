@@ -8,10 +8,8 @@ module.exports = function(app, passport) {
     // route to log out
     app.post('/logout', function(req, res) {
         req.logOut();
-        req.logout();
-        console.log("LOGOUT FUNCTIONS");
-        console.log(req.logOut);
-        console.log(req.logout);
+        // req.logout();
+        // consoßog(req.logout);
         res.send(200);
     });
 
