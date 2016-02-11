@@ -10,7 +10,6 @@
             $scope.client_name = $routeParams.client_name;
             $scope.form_name = $routeParams.form_name;
             $scope.assesment_date = $routeParams.assesment_date;
-            $scope.isBMIX = $routeParams.bmix;
             $scope.form_id = $routeParams.form_id;
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
