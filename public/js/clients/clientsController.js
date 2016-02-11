@@ -20,7 +20,6 @@
             $scope.client_id = $routeParams.client_id;
             $scope.client_name = $routeParams.client_name;
             $scope.assessment_date = $routeParams.assessment_date;
-            $scope.isBMIX = $routeParams.bmix;
         }
     ]);
 
@@ -36,8 +35,6 @@
 
             // Handles editing functionality of the client.
             $scope.isOwner = false;
-            $routeParams.category_id == '31' ? $scope.isAff = false :$scope.isAff = true
-
 
             var idsToEmails = [];
             var allClientIDs = [];
