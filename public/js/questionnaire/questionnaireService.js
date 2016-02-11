@@ -16,6 +16,7 @@
             this.addQuestionConn = $resource('/addQuestion');
             this.formsByCategoryConn = $resource('/forms/:category_id');
             this.assessmentCategoryConn = $resource('/assessment_category/:assessment_id');
+            this.assessmentDetailsConn = $resource('/assmentdetails/:assessment_id');
         }
     ]);
 

@@ -124,14 +124,14 @@ module.exports = function(app) {
         queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
     });
 
-    // get all assessments
+    // get all assessments for given category
     app.get('/assessments/:category_id', function(req, res) {
         console.log("Getting Assements for Category_ID: " + req.params.category_id);
         queries.getAllAssessments(res, req.params.category_id, dbUtils.callback);
     });
 
     // get client information given the assessment id
-    app.get('/results/:assessment_id', function(req, res) {
+    app.get('/assmentdetails/:assessment_id', function(req, res) {
         queries.getAssessmentDetails(req.params.assessment_id, res, dbUtils.callback);
     });
 

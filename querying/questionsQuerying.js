@@ -259,7 +259,7 @@ exports.getAllAssessments = function(res, category_id, callback) {
 
 // Get the details of an assessment.
 exports.getAssessmentDetails = function(assessment_id, res, callback) {
-    knex('assessment').select('Client.name')
+    knex('assessment').select('Client.name', 'assessment.date')
         .innerJoin('client', 'assessment.client_id', 'client.id')
         .where('assessment.id', assessment_id).asCallback(function(err, rows) {
             callback(err, res, rows);
