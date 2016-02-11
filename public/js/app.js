@@ -30,10 +30,9 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                 deferred.resolve();
                 $rootScope.message = "Login Successful";
                 $rootScope.role = user.role;
-                console.log(user.role);
                 $rootScope.isIBM = user.isIBM;
                 $rootScope.loggedInEmail = user.email;
-                console.log(user.email);
+                $rootScope.issuerID = user.issuer_id;
                 $rootScope.isLoggedIn = true;
             }
 

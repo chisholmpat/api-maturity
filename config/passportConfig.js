@@ -73,13 +73,19 @@ module.exports = function(passport) {
 
             function(accessToken, refreshToken, profile, done) {
                 process.nextTick(function() {
-                    profile.accessToken = accessToken;
-                    profile.refreshToken = refreshToken;
-                    profile.name = "Testing";
-                    profile.role = "user";
-                    profile.isIBM = '1';
-                    profile.email = profile.emailaddress;
-                    done(null, profile);
+                  var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
+                  var ssoConfig = services.SingleSignOn[0];
+                  var issuer_id = ssoConfig.credentials.issuerIdentifier;
+
+                  console.log("Issuer ID INSIDE Tick" + issuer_id);
+                  profile.accessToken = accessToken;
+                  profile.refreshToken = refreshToken;
+                  profile.name = "Testing";
+                  profile.role = "user";
+                  profile.isIBM = '1';
+                  profile.issuer_id = issuer_id;
+                  profile.email = profile.emailaddress;
+                  done(null, profile);
                 })
             }
         );
