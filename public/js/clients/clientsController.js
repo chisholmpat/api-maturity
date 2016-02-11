@@ -155,7 +155,7 @@
             // TODO: This should be moved into some sort of regex
             // service with other regexes so we can make use of it
             // elsewhere throughout the application.
-            $scope.phoneNumbr = /^\+?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
+            $scope.phoneNumbr = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
             // Data from the form comes back in the form of an array which we
             // will pass to the back end for processing.

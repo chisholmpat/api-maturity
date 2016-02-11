@@ -1,25 +1,27 @@
 <h2> SURVEY - {{formName}}</h2>
 <div class="QAtext">
-  <!-- List out the Answered Questions -->
-  <div ng-repeat="question in questions |  filter: { category_id: categoryIDs.BMIX }">
-    <p>{{ question.text }} </p>
+    <!-- List out the Answered Questions -->
+    <div ng-repeat="question in questions |  filter: { category_id: categoryIDs.BMIX }">
+        <p>{{ question.text }}</p>
 
-   <div class="QAcheckboxes">
-     <div ng-repeat="response in responses  | filter: { category_id: categoryIDs.BMIX }" class="QACheckboxGroup">
-       <label><input type="radio" ng-model="question.response_id" ng-value="response.id"
-         ng-init="question.response_id = (responses | filter: {category_id: categoryIDs.BMIX } | filter: {value: '0'})[0].id">
-         <span>{{response.response}}</span></label>
-     </div>
+        <div class="QAcheckboxes">
+            <div ng-repeat="response in responses  | filter: { category_id: categoryIDs.BMIX }"
+            class="QACheckboxGroup">
+                <label>
+                    <input type="radio" ng-model="question.response_id" ng-value="response.id"
+                    ng-init="question.response_id = (responses | filter: {category_id: categoryIDs.BMIX } | filter: {value: '0'})[0].id">
+                    <span>{{response.response}}</span>
+                </label>
+            </div>
 
-     <div class="QACheckboxGroup">
-       <a ng-click="showText = !showText" >Options</a>
-     </div>
-   </div>
-   <div ng-init="showText = false" class="QAoptions" ng-show="showText">
-     <p>Notes</p>
-     <input type="text" name="" class="form-control" ng-model="question.note">
-     <p>Weight</p>
-     <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
-   </div>
-  </div>
-
+            <div class="QACheckboxGroup">
+                <a ng-click="showText = !showText">Options</a>
+            </div>
+        </div>
+        <div ng-init="showText = false" class="QAoptions" ng-show="showText">
+            <p>Notes</p>
+            <input type="text" name="" class="form-control" ng-model="question.note">
+            <p>Weight</p>
+            <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
+        </div>
+    </div>
