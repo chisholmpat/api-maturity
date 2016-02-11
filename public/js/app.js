@@ -209,7 +209,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin,
             userIsUser: userIsUser
         }
-    }).when('/edit_questions/:form_id', {
+    }).when('/edit_questions/:category_id/:form_id', {
         templateUrl: '/views/questionnaire/edit_questions.html',
         controller: 'EditQuestionsController',
         resolve: {
