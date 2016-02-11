@@ -137,8 +137,8 @@
 
 
     // Controller for handling the questions editing form.
-    module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
-        function($scope, QuestionStore, $window, $routeParams) {
+    module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams', '$rootScope',
+        function($scope, QuestionStore, $window, $routeParams, $rootScope) {
 
             // For toggling visibility of add question drop down
             $scope.addQuestion = false;
@@ -158,20 +158,25 @@
             // Function for saving question
             $scope.saveQuestion = function(question) {
 
-
-                question.category_id = 1; // questions can either be SA or QA, QA = 1
                 question.form_id = $routeParams.form_id;
+
+                // Currently there are only two types of question. This will
+                // obviously become a problem when more question types are added.
+                if($scope.questions[0].category_id == $rootScope.categoryIDs.QA){
+                    question.category_id = $rootScope.categoryIDs.QA;
+                    question.group_id = 1;
+                } else {
+                    question.category_id = $rootScope.categoryIDs.BMIX;
+                }
 
                 // Call to the backend
                 QuestionStore.addQuestionConn.save({
                     question: question
-                }, function() {
 
+                }, function() {
                     // Refresh the list and clear the input box
                     refreshQuestions();
                     $scope.addQuestion = false;
-                    $scope.newQuestion.group_id = 1;
-                    $scope.newQuestion.category_id = 1;
                     $scope.newQuestion.text = "";
                 });
             };
@@ -218,8 +223,8 @@
     ]);
 
     // Controller for handling listing all the forms.
-    module.controller('ListFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams',
-        function($scope, QuestionStore, $window, $routeParams) {
+    module.controller('EditFormsController', ['$scope', 'QuestionStore', '$window', '$routeParams', '$rootScope',
+        function($scope, QuestionStore, $window, $routeParams, $rootScope) {
 
             // Retrive all Forms
             $scope.forms = QuestionStore.formsConn.query({}, function() {});
@@ -235,6 +240,18 @@
                     });
                 }
             };
+
+            $scope.categories = [
+              { 
+                name: "Bluemix Affinity",
+                id: $rootScope.categoryIDs.BMIX
+              },
+              {
+                name: "API Maturity",
+                id: $rootScope.categoryIDs.API
+
+              }
+            ];
 
             // For toggling visibility of add question drop down
             $scope.addForm = false;
@@ -252,16 +269,18 @@
                 $scope.addForm = !$scope.addForm;
             };
 
-
             // Function for saving a new form
-            $scope.saveForm = function(formName) {
-                // Call to the backend
+            $scope.saveForm = function(newForm) {
+                
+              // Call to the backend
                 QuestionStore.addFormConn.save({
-                    formName: formName.text
+                    formName: newForm.text,
+                    category_id: newForm.category_id,
+                    is_api: newForm.category_id == $rootScope.categoryIDs.API
                 }, function() {
                     // Update the forms array
                     refreshForms();
-                });
+                }); 
             };
         }
     ]);

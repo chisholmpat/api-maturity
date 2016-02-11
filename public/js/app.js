@@ -151,78 +151,66 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         resolve: {
             loggedin: checkLoggedin
         }
-    }).
-    when('/home', {
+    }).when('/home', {
         templateUrl: '/views/welcome/welcome.html',
         controller: 'HomePageController',
         resolve: {
             loggedin: checkLoggedin
         }
-    }).
-    when('/reset/:token', {
+    }).when('/reset/:token', {
         templateUrl: '/views/user/reset_password.html',
         controller: 'PasswordResetController'
-    }).
-    when('/results/:client_name/:form_name/:category_id/:assesment_date/:client_id/:form_id/:assessment_id', {
+    }).when('/results/:client_name/:form_name/:category_id/:assesment_date/:client_id/:form_id/:assessment_id', {
         templateUrl: '/views/results/results.html',
         controller: 'ResultsController',
         resolve: {
             loggedin: checkLoggedin
         }
-    }).
-    when('/questionnaire/:category_id/:client_id/:assessment_id', {
+    }).when('/questionnaire/:category_id/:client_id/:assessment_id', {
         templateUrl: '/views/questionnaire/questionnaire.html',
         controller: 'QuestionnaireController', // For testing route parameters.
         resolve: {
             loggedin: checkLoggedin,
             userIsUser: userIsUser
         }
-    }).
-    when('/clients', {
+    }).when('/clients', {
         templateUrl: '/views/clients/clients.html',
         controller: 'ClientsController',
         resolve: {
             loggedin: checkLoggedin,
             userIsClient: userIsClient
         }
-    }).
-    when('/:category_id/clients/', {
+    }).when('/:category_id/clients/', {
         templateUrl: '/views/clients/clients.html',
         controller: 'ClientsController',
         resolve: {
             loggedin: checkLoggedin,
             userIsClient: userIsClient
         }
-    }).
-    when('/login', {
+    }).when('/login', {
         templateUrl: '/views/user/login.html',
         controller: 'UserLoginController'
-    }).
-    when('/results/:assessment_id', {
+    }).when('/results/:assessment_id', {
         controller: 'ResultsListController',
         templateUrl: '/views/results/results_list.html'
-    }).
-    when('/ibmlogin', {
+    }).when('/ibmlogin', {
         templateUrl: '/views/user/ibmlogin.html',
         controller: 'UserLoginController'
-    }).
-    when('/edit_client/:client_id', {
+    }).when('/edit_client/:client_id', {
         templateUrl: '/views/clients/add_client.html',
         controller: 'AddClientController',
         resolve: {
             loggedin: checkLoggedin,
             userIsUser: userIsUser
         }
-    }).
-    when('/add_client/', {
+    }).when('/add_client/', {
         templateUrl: '/views/clients/add_client.html',
         controller: 'AddClientController',
         resolve: {
             loggedin: checkLoggedin,
             userIsUser: userIsUser
         }
-    }).
-    when('/edit_questions/:form_id', {
+    }).when('/edit_questions/:form_id', {
         templateUrl: '/views/questionnaire/edit_questions.html',
         controller: 'EditQuestionsController',
         resolve: {
@@ -241,7 +229,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         controller: 'SendPasswordController'
     }).when('/forms/', {
         templateUrl: '/views/questionnaire/list_forms.html',
-        controller: 'ListFormsController',
+        controller: 'EditFormsController',
         resolve: {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
@@ -269,14 +257,14 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     $rootScope.categoryIDs = {};
 
     $http.get("/categories")
-    .then(function(response) {
-        for(i=0;i<response.data.length;i++){
-            $rootScope.categoryIDs[response.data[i].name] = response.data[i].id
-            console.log("Category Mapping: " +
-                response.data[i].name + ":" +
-                response.data[i].id);
-        }
-    });
+        .then(function(response) {
+            for (i = 0; i < response.data.length; i++) {
+                $rootScope.categoryIDs[response.data[i].name] = response.data[i].id
+                console.log("Category Mapping: " +
+                    response.data[i].name + ":" +
+                    response.data[i].id);
+            }
+        });
 
     $rootScope.logout = function() {
         $http.post('/logout');

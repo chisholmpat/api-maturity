@@ -82,11 +82,10 @@ module.exports = function(app) {
         }
     });
 
+    // get the list of forms based on category id.
     app.get('/forms/:category_id', function(req, res) {
-       console.log("Searching for forms by category.");
        queries.getFormsByCategory(res, req.params.category_id, dbUtils.callback);
     });
-
 
     // toggles the active status of a form
     app.post('/deleteForm', dbUtils.checkAuthenticated, function(req, res) {
@@ -110,12 +109,14 @@ module.exports = function(app) {
 
     // add question to database
     app.post("/addQuestion", dbUtils.checkAuthenticated, function(req, res) {
+        console.log(req.body.question);
         queries.addQuestion(req.body.question, res, dbUtils.callbackNoReturn);
     });
 
     // add a form to the form table
     app.post("/addForm", dbUtils.checkAuthenticated, function(req, res) {
-        queries.addForm(req.body.formName, res, dbUtils.callbackNoReturn);
+        console.log(req.body);
+        queries.addForm(req.body.formName, req.body.category_id, req.body.is_api, res, dbUtils.callbackNoReturn);
     });
 
     // check if the form_name is unique
