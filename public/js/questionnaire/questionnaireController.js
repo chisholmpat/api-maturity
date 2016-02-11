@@ -8,6 +8,7 @@
                 // For determining which assessment we are on.
                 $scope.client_id = $routeParams.client_id;
                 $scope.assessment_id = $routeParams.assessment_id;
+                $scope.category = $routeParams.category_id;
                 $scope.currentIndex = 0;
 
                 // Advance to the next form.

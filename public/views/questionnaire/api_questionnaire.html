@@ -1,7 +1,8 @@
 <h3> Self Assesment </h3>
 <div class="SAtext">
     <p ng-repeat="question in questions |  filter: { category_id: categoryIDs.SA }"><span>{{question.text}}</span>
-        <label ng-repeat="response in responses  | filter: { category_id: categoryIDs.SA }">
+        <label ng-repeat="response in responses  | filter: { category_id: categoryIDs.SA }"
+          ng-init="question.response_id = (responses | filter: {category_id: categoryIDs.SA } | filter: {value: '0'})[0].id">
             <input type="radio" ng-model="question.response_id" ng-value="response.id">
             <span>{{response.response}}</span>
         </label>
