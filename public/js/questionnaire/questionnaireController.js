@@ -29,13 +29,15 @@
                 }
             };
 
-            // Loads all the questions and responses for 
+            // Loads all the questions and responses for
             // a given form id. Used to page the questions.
             $scope.loadQuestions = function(form_id) {
+                $scope.formsID = form_id;// formsID is the Model for forms Nav drop down. Updating it to reflect Prev and Next button changes
 
                 for (i = 0; i < $scope.forms.length; i++)
                     if ($scope.forms[i].id == form_id)
                         $scope.currentIndex = i;
+
 
                     // Set the current form name
                 $scope.formName = $scope.forms[$scope.currentIndex].name;
@@ -118,7 +120,7 @@
 
             // Used to determine which answers are new and which
             // are being updated. This is done by creating two lists
-            // one containing the newly answered and the other the 
+            // one containing the newly answered and the other the
             // previously answered questions.
             function separateAnswers() {
 
