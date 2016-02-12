@@ -3,17 +3,18 @@
   <h2> {{formName}} </h2>
   <h3>{{assessmentDate | date:'shortDate'}} </h3>
 
-<ul id="menu">
+<div id="menu">
      <button ng-click="prevForm()"> Prev </button>
-    <li ng-repeat="form in forms"> <a ng-click="loadQuestions(form.id)" > {{form.name}}  </a></li>
+     <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
+    <!-- <li ng-repeat="form in forms"> <a ng-click="loadQuestions(form.id)" > {{form.name}}  </a></li> -->
     <button ng-click="nextForm()"> Next </button>
-</ul>
+</div>
 {{category}}
 <form ng-submit="generateScore(questions, unansweredQuestions)">
 
 <!-- API and BMIX Questionnaires are different -->
 <div ng-include="category==categoryIDs.API ?
-    'views/questionnaire/api_questionnaire.html': 
+    'views/questionnaire/api_questionnaire.html':
     'views/questionnaire/bmix_questionnaire.html'">
 </div>
 
@@ -21,8 +22,8 @@
 
 </form>
 
-<ul id="menu">
+<div id="menu">
      <button ng-click="prevForm()"> Prev </button>
-    <li ng-repeat="form in forms"> <a ng-click="loadQuestions(form.id)" > {{form.name}}  </a></li>
+     <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
     <button ng-click="nextForm()"> Next </button>
-</ul>
+</div>
