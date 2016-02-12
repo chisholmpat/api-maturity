@@ -40,6 +40,7 @@
             $scope.result = ""; // 
             $scope.editing = {};
             $scope.defaultRoleID = "";
+            $scope.defaultEmail = "email@sample.com";
 
             // Get a list of all the available users
             $scope.allUsers = UserStore.getUsers.query();
@@ -48,6 +49,7 @@
             $scope.roles = UserStore.getUserRoles.query({}, function(results) {
                 $scope.defaultRoleID = results[0].id;
                 $scope.editing.role_id = $scope.defaultRoleID;
+                $scope.editing.email = $scope.defaultEmail = "email@sample.com";
             });
 
             // Ensure that the password is appropriate.
@@ -74,6 +76,7 @@
                 } else {
                     $scope.editing = {};
                     $scope.editing.role_id = $scope.defaultRoleID;
+                    $scope.editing.email = $scope.defaultEmail = "email@sample.com";
                 }
             };
 
@@ -144,7 +147,7 @@
                 var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/; // Number/L.Case/U.Case/Symbol!@#$%
                 return {
                     test: function(value) {
-                            return (value.length > 0) ? regex.test(value) : true;
+                        return (value.length > 0) ? regex.test(value) : true;
                     }
                 };
             })();

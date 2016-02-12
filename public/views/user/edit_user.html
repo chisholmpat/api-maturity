@@ -42,7 +42,7 @@
             <label for="passwordConfirm">Password</label>
             <input "editing.id" type="password" name="password" id="password" class="form-control" ng-pattern="handlePatternPassword"
             ng-model="editing.password" required />
-            <span ng-show="userform.password.$error.pattern" class="help-block">Password Characters: 6-30 Number/L.Case/U.Case/Symbol!@#$% </span>
+            <span ng-show="userform.password.$error.pattern" class="help-block">Password Must Contain at Least 6 Characters / 1 Number/ 1 L.Case/ 1U.Case/ 1 Symbol!@#$% </span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': userform.password.$dirty && userform.password.$error.required }"
         ng-if="!editing.id">
