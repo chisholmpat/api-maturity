@@ -15,7 +15,7 @@
     module.controller('IndividualClientController', ['$scope', 'ClientsStore', '$routeParams',
         function($scope, ClientsStore, $routeParams) {
             $scope.forms = ClientsStore.formsConn.query({});
-            $scope.category_id =  $routeParams.category_id ;
+            $scope.category_id = $routeParams.category_id;
             $scope.assesment_id = $routeParams.assessment_id;
             $scope.client_id = $routeParams.client_id;
             $scope.client_name = $routeParams.client_name;
@@ -42,7 +42,7 @@
             // For controlling the UI elements.
             $scope.oneAtATime = true;
             $scope.collapsed = true;
-            
+
             // Getting model information.
             $scope.clients = ClientsStore.getClientsConn.query({}, function() {});
             $scope.forms = ClientsStore.formsConn.query({});
@@ -113,15 +113,14 @@
                 }
             };
 
-        $scope.newAssessment = function(clientID) {
-            ClientsStore.createNewAssessmentConn.save({
-                client_id : clientID,
-                category_id : $scope.category
-            }, function(result){
-                $location.url('/questionnaire/' + $scope.category + '/'  + clientID
-                + '/' + $scope.category);
-            });
-        };
+            $scope.newAssessment = function(clientID) {
+                ClientsStore.createNewAssessmentConn.save({
+                    client_id: clientID,
+                    category_id: $scope.category
+                }, function(result) {
+                    $location.url('/questionnaire/' + $scope.category + '/' + clientID + '/' + $scope.category);
+                });
+            };
 
         }
 
@@ -130,11 +129,30 @@
     ]);
 
     // Controller for "add_clients.html", for adding clients to DB.
-    module.controller('AddClientController', ['$scope', 'ClientsStore', '$window',
-        function($scope, ClientsStore, $window) {
+    module.controller('AddClientController', ['$scope', 'ClientsStore', '$window', '$routeParams',
+        function($scope, ClientsStore, $window, $routeParams) {
 
-            $scope.clients = ClientsStore.allClientInfoOwnedByUserConn.query({});
+            $scope.client_id = $routeParams.client_id;
             $scope.editing = {}; // model to hold edited fields
+
+            $scope.clients = ClientsStore.allClientInfoOwnedByUserConn.query({},
+                function() {
+                    // Check if we've been sent here from a client link and then check
+                    // to see if the client is in the users list of clients and if it 
+                    // it is then add that client's information to the edit form.
+                    if ($routeParams.client_id) {
+                        for (i = 0; i < $scope.clients.length; i++) {
+                            if ($scope.clients[i].id == $routeParams.client_id) {
+                                $scope.client = $scope.clients[i];
+                                for (key in ($scope.client))
+                                    $scope.editing[key] = $scope.client[key];
+                            }
+                        }
+                    } else {
+
+                    }
+
+                });
             $scope.integerval = /^\d*$/;
             // Handles populating the "editing" model
             // with the proper fields from the selected
