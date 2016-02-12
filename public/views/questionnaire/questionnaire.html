@@ -4,7 +4,7 @@
 
     <div id="formNav">
         <button ng-click="prevForm()"> Prev </button>
-        <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
+        <h2><select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select></h2>
         <button ng-click="nextForm()"> Next </button>
     </div>
     
