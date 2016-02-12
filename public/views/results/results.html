@@ -15,10 +15,10 @@
      <h2>{{form_name.toUpperCase()}} - {{assesment_date | dateToISO | date:'shortDate'}} </h2>
 
      <div id="formNav">
-         <button ng-click="prevForm()"> Prev </button>
-         <div ng-repeat="form in forms"> <a href="#"> {{form.name}}  </a></div>
-         <button ng-click="nextForm()"> Next </button>
-     </div>
+        <button ng-click="prevForm()"> Prev </button>
+        <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
+        <button ng-click="nextForm()"> Next </button>
+    </div>
 
       <!-- {{graphingFunction()}} -->
       <div class="row">
@@ -89,5 +89,10 @@
               </tr>
           </table>
       </div>
+      <div id="formNav">
+         <button ng-click="prevForm()"> Prev </button>
+         <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
+         <button ng-click="nextForm()"> Next </button>
+     </div>
   </div> <!-- export this -->
 </div>

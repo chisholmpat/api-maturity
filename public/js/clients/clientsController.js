@@ -42,7 +42,7 @@
             // For controlling the UI elements.
             $scope.oneAtATime = true;
             $scope.collapsed = true;
-
+            
             // Getting model information.
             $scope.clients = ClientsStore.getClientsConn.query({}, function() {});
             $scope.forms = ClientsStore.formsConn.query({});
@@ -118,7 +118,6 @@
                 client_id : clientID,
                 category_id : $scope.category
             }, function(result){
-                console.log(result);
                 $location.url('/questionnaire/' + $scope.category + '/'  + clientID
                 + '/' + $scope.category);
             });
@@ -166,13 +165,14 @@
                     ClientsStore.updateClientsConn.save({
                         client: $scope.editing
                     }, function() {
-                        $scope.changeRoute('#/clients/');
+                        window.alert("The client has been updated.")
                     });
                 } else {
                     ClientsStore.addClientConn.save({
                         client: $scope.editing
                     }, function() {
-                        $scope.changeRoute('#/clients/');
+                        window.alert("The client has been added.")
+                        $scope.changeRoute('#/');
                     });
                 }
             };
