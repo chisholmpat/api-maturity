@@ -167,7 +167,20 @@
 
     module.service('FileFormatsConversionStore', ['$http', '$resource', function($http, $resource) {
 
+
+
       this.convertToPDF = function(){
+
+        var noteClass = "form-control";
+        var notes = document.getElementsByClassName(noteClass);
+
+        //show the note if there is content
+        for(var i=0; i<notes.length; i++){
+          //showing the note
+          if(notes[i].defaultValue != "")
+              notes[i].parentNode.className = notes[i].parentNode.className.replace('ng-hide','ng-show');
+        }
+
         html2canvas(document.getElementById('exportthis'), {
         onrendered: function (canvas) {
               var data = canvas.toDataURL();
@@ -181,6 +194,11 @@
               };
 
               pdfMake.createPdf(docDefinition).download("Result_Details.pdf");
+              //show the note if there is content
+              for(var i=0; i<notes.length; i++){
+                //hide all notes
+                notes[i].parentNode.className = notes[i].parentNode.className.replace('ng-show','ng-hide');
+              }
           }
         });
       };

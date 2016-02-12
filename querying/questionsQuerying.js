@@ -44,7 +44,7 @@ exports.getallUnansweredQuestions = function(client_id, form_id, assessment_id, 
 exports.getClientAnswers = function(client_id, form_id, assessment_id, res, callback) {
 
     knex.select('Response.response', 'Response.value', 'Question.text', 'Question.id',
-            'ClientQuestionResponse.response_id', 'ClientQuestionResponse.weight',
+            'ClientQuestionResponse.response_id','ClientQuestionResponse.note', 'ClientQuestionResponse.weight',
             'Question.category_id', 'Question.group_id', 'Grouping.name')
         .from('ClientQuestionResponse')
         .innerJoin('Question', 'ClientQuestionResponse.question_id', 'Question.id')
@@ -176,7 +176,7 @@ exports.addQuestion = function(question, res, callback) {
 
     knex('question').insert(question).asCallback(function(err, rows) {
                console.log(err);
-               callback(err, res, rows); 
+               callback(err, res, rows);
     });
 
 };
@@ -191,7 +191,7 @@ exports.addForm = function(formName, categoryID, isAPI, res, callback) {
     // TODO Category_id is hard coded, what if that's not the ID?
 
     // The logic here is that if a form has been "deleted" (its active value set to 0)
-    // and someone tries to create a new form with the same name, we just reactivate the 
+    // and someone tries to create a new form with the same name, we just reactivate the
     // old form and change the category if its been changed.
     knex('form').select('').where('name', formName).where('active', 0).asCallback(function(err, rows) {
 
@@ -275,7 +275,7 @@ exports.getAssessmentCategory = function(assessment_id, res, callback) {
 };
 
 // Creates a new assessment and returns the ID.
-// ID is returned wrapped in an object to avoid 
+// ID is returned wrapped in an object to avoid
 // interpretting the return as a HTTP status code.
 exports.createNewAssessment = function(res, client_id, category_id, callback) {
     knex('assessment').insert({
