@@ -74,12 +74,14 @@
               </thead>
               <tr ng-repeat="result in results | filter:{ category_id: 1 }">
                   <td>{{result.text }}<br>
-                    <div class="QACheckboxGroup">
-                        <a ng-click="showText = !showText">Options</a>
-                    </div>
-                    <div ng-init="showText = false" class="QAoptions" ng-show="showText">
-                        <p>Notes</p>
-                        <input type="text" name="" class="form-control" value="{{result.note}}">
+                    <div ng-if="result.note.length >0">
+                      <div class="QACheckboxGroup">
+                          <a ng-click="showText = !showText">Options</a>
+                      </div>
+                      <div ng-init="showText = false" class="QAoptions" ng-show="showText">
+                          <p>Notes</p>
+                          <input type="text" name="" class="form-control" value="{{result.note}}">
+                      </div>
                     </div>
                   </td>
                   <td>{{result.response }}</td>
