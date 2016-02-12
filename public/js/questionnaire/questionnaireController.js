@@ -245,6 +245,22 @@
             // Retrive all Forms
             $scope.forms = QuestionStore.formsConn.query({}, function() {});
 
+            $scope.isUnique = function(){
+              console.log($scope.notUniqueFormName);
+              var forms = $scope.forms
+              var isFound = false;
+              for(i = 0; i < $scope.forms.length;i++){
+                console.log($scope.newForm.text);
+                if($scope.newForm.text == $scope.forms[i].name){
+                  $scope.notUniqueFormName = true;
+                  return true;
+                }
+              }
+                $scope.notUniqueFormName = false;
+                return false;
+            }
+
+
             // Sets a form's active field to inactive
             $scope.deleteForm = function(form) {
                 if (confirm('Are you sure you want to delete this form ?')) {
@@ -263,7 +279,6 @@
             }, {
                 name: "API Maturity",
                 id: $rootScope.categoryIDs.API
-
             }];
 
             // For toggling visibility of add question drop down

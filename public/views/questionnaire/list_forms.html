@@ -14,19 +14,15 @@
     <div ng-show="addForm" class="form-group addQuestion">
         <form name="addingNewForm" ng-submit="saveForm(newForm)">
             <div>
-                <input ng-change="someFunc" type="text" class="form-control" name="newFormName"
-                ng-model="newForm.text" url="/checkUniqueFormName/" unique-value=""
-                required></input>
-                </td>
-                <span class="hide-while-in-focus" ng-show="addingNewForm.newFormName.$error.unique && !addingNewForm.newFormName.$pristine">Form Name Taken. Update and Press tab</span>
+                <input ng-change="someFunc" type="text" class="form-control" name="newFormName" ng-model="newForm.text" url="/checkUniqueFormName/" required></input>
             </div>
             <div>
                 <select ng-model="newForm.category_id" ng-options="category.id as (category.name | uppercase) for category in categories"
                 ng-init="newForm.category_id = (categories[0].id)"></select>
 
-                <input type="submit" value="Add" ng-show="addingNewForm.newFormName.$valid && !addingNewForm.newFormName.$pristine"></input>
-                <p ng-show="addingNewForm.newFormName.$invalid && !addingNewForm.newFormName.$pristine && !addingNewForm.newFormName.$error.unique "
-                class="help-block">Form Name is required.</p>
+                <input ng-disabled="isUnique()"type="submit" value="Add" ng-show="addingNewForm.newFormName.$valid && !addingNewForm.newFormName.$pristine"></input>
+                <p ng-show="notUniqueFormName" class="help-block">Form Name Taken</span>
+                <p ng-show="!addingNewForm.newFormName.$pristine && !notUniqueFormName" class="help-block">Form Name is required. </p>
             </div>
         </form>
     </div>
@@ -39,4 +35,3 @@
         </div>
     </div>
 </div>
-
