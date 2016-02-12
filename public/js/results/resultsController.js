@@ -81,7 +81,13 @@
 
                 //draw gauge graphs
                 //The gauge graphs need to be more detailed then radar, use the averages values as opposed to mapping to a lower value.
-                GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
+                // Load the Visualization API and the corechart package.
+                google.charts.load('current', {'packages':['gauge']});
+
+                // Set a callback to run when the Google Visualization API is loaded.
+                google.charts.setOnLoadCallback(function(){
+                   GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
+                });
               });
 
           }
