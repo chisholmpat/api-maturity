@@ -97,22 +97,22 @@
               datasets: [
                   {
                       label: "QA-Graph",
-                      fillColor: "rgba(220,220,220,0.2)",
-                      strokeColor: "rgba(220,220,220,1)",
-                      pointColor: "rgba(220,220,220,1)",
+                      fillColor: "rgba(0,255,255,0.2)",
+                      strokeColor: "rgba(0,255,255,1)",
+                      pointColor: "rgba(0,255,255,1)",
                       pointStrokeColor: "#fff",
                       pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(220,220,220,1)",
+                      pointHighlightStroke: "rgba(0,255,255,1)",
                       data: qaGraphData
                   },
                   {
                       label: "SA-Graph",
-                      fillColor: "rgba(151,187,205,0.2)",
-                      strokeColor: "rgba(151,187,205,1)",
-                      pointColor: "rgba(151,187,205,1)",
+                      fillColor: "rgba(0,0,0,0.2)",
+                      strokeColor: "rgba(0,0,0,1)",
+                      pointColor: "rgba(0,0,0,1)",
                       pointStrokeColor: "#fff",
                       pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(151,187,205,1)",
+                      pointHighlightStroke: "rgba(0,0,0,1)",
                       data: saGraphData
                   }
               ]
@@ -243,6 +243,7 @@
           }
 
           sendCanvasToIMGUR = function($http, canvas){
+
               try
               {
                 var img = canvas.toDataURL(
@@ -270,10 +271,16 @@
                  {
                       var src = response.data.data.link ;
                       var oImg=document.createElement("img");
+                      var max_pixel_count = 1000;
                       // <image type="image/png">
                       oImg.setAttribute('src', src);
-                      oImg.style.height = canvas.style.height;
-                      oImg.style.width = canvas.style.width;
+                      oImg.height = (canvas.height);
+                      oImg.width = (canvas.width);
+                      if(oImg.height>max_pixel_count || oImg.width>max_pixel_count){
+                        oImg.height = (canvas.height)/2;
+                        oImg.width = (canvas.width)/2;
+                      }
+
                       canvas.parentNode.appendChild(oImg);
               				canvas.parentNode.removeChild(canvas);
 
