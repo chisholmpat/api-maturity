@@ -159,7 +159,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     }).when('/reset/:token', {
         templateUrl: '/views/user/reset_password.html',
         controller: 'PasswordResetController'
-    }).when('/results/:client_name/:form_name/:category_id/:assesment_date/:client_id/:form_id/:assessment_id', {
+    }).when('/results/:client_name/:form_name/:category_id/:client_id/:form_id/:assessment_id', {
         templateUrl: '/views/results/results.html',
         controller: 'ResultsController',
         resolve: {
@@ -233,8 +233,8 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
         }
-    }).when('/clientforms/:client_name/:category_id/:client_id/:assessment_id/:assessment_date', {
-        templateUrl: '/views/questionnaire/all_forms_for_client.html',
+    }).when('/clientforms/:client_name/:category_id/:client_id/:assessment_id', {
+        templateUrl: '/views/results/client_results_list.html',
         controller: 'IndividualClientController',
         resolve: {
             loggedin: checkLoggedin,

@@ -10,11 +10,23 @@
 
             $scope.client_name = $routeParams.client_name;
             $scope.form_name = $routeParams.form_name;
-            $scope.assesment_date = $routeParams.assesment_date;
             $scope.form_id = $routeParams.form_id;
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
             $scope.category = $routeParams.category_id;
+
+            ResultStore.assessmentDetailsConn.query({
+                        assessment_id: $routeParams.assessment_id
+                    },
+                    function(res) {
+                        console.log(res);
+                        $scope.client_name = res[0].name;
+                        $scope.assessment_date = res[0].date;
+                    });
+
+
+
+
             console.log("results category " + $scope.category )
             $scope.results = ResultStore.scoreConn.query({
                 client_id: $scope.client_id,
