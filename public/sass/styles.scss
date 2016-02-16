@@ -162,6 +162,11 @@ div#formNav{
     a{
         cursor: pointer;
     }
+
+    select{
+        @include prefix((appearance: none));
+        border: 0;
+    }
 }
 //#page-content-wrapper
 table.clientStyle {

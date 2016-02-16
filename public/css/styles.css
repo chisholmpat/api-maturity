@@ -126,6 +126,13 @@ div#formNav {
     display: inline-block; }
   div#formNav a {
     cursor: pointer; }
+  div#formNav select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border: 0; }
 
 table.clientStyle {
   font-size: 1.5rem;
