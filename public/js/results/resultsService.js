@@ -211,7 +211,26 @@
 
               //WORD will only know to render this as a HTML document and not plain text
               //if the html, head and body tags are included
-              var htmlOutput = "<html><head></head><body>"+htmlString+"</body></html>";
+              var htmlOutput = '<html xmlns:v="urn:schemas-microsoft-com:vml"\
+                                xmlns:o="urn:schemas-microsoft-com:office:office"\
+                                xmlns:w="urn:schemas-microsoft-com:office:word"\
+                                xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"\
+                                xmlns="http://www.w3.org/TR/REC-html40">\
+                                <head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title></title>\
+                                  <style>\
+                                    v\:* {behavior:url(#default#VML);}\
+                                    o\:* {behavior:url(#default#VML);}\
+                                    w\:* {behavior:url(#default#VML);}\
+                                    .shape {behavior:url(#default#VML);}\
+                                  </style>\
+                                  <xml>\
+                                    <w:WordDocument>\
+                                    <w:View>Print</w:View>\
+                                    <w:Zoom>150</w:Zoom>\
+                                    <w:DoNotOptimizeForBrowser/>\
+                                    </w:WordDocument>\
+                                  </xml>\
+                                </head><body>'+htmlString+"</body></html>";
 
               var element = document.createElement('a');
               element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(htmlOutput));

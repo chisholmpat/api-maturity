@@ -1,25 +1,24 @@
 
 <div class="col-lg-12" >
 
-    <!-- If Bluemix tool, load a separate HTML page  -->
-    <div ng-if="category==categoryIDs.BMIX" ng-include="'views/results/results_bmix.html'"></div>
-    <span ng-if="category==categoryIDs.BMIX"><div  ng-controller="BMIXtoolController"></div></span>
-    <span ng-if="category==categoryIDs.API"><div ng-controller="APImaturityController"></div></span>
+   <!-- If Bluemix tool, load a separate HTML page  -->
+   <div ng-if="category==categoryIDs.BMIX" ng-include="'views/results/results_bmix.html'"></div>
+   <span ng-if="category==categoryIDs.BMIX"><div  ng-controller="BMIXtoolController"></div></span>
+   <span ng-if="category==categoryIDs.API"><div ng-controller="APImaturityController"></div></span>
 
-    <div id="exportResults">
+   <div id="exportResults">
       <a ng-href={{csvURL}}> CSV Export </a><br>
       <a ng-href='' ng-click='getPDF()' >PDF Export</a><br>
       <a ng-href='' ng-click='getWordFile()'>Word Export</a><br>
-    </div>
+   </div>
+   <div id="formNav">
+       <button ng-click="prevForm()"> Prev </button>
+       <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
+       <button ng-click="nextForm()"> Next </button>
+   </div>
    <div id="exportthis">
      <h1>{{client_name.toUpperCase()}} - RESULTS</h1>
      <h2>{{form_name.toUpperCase()}} - {{assesment_date | dateToISO | date:'shortDate'}} </h2>
-
-     <div id="formNav">
-        <button ng-click="prevForm()"> Prev </button>
-        <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
-        <button ng-click="nextForm()"> Next </button>
-    </div>
 
       <!-- {{graphingFunction()}} -->
       <div class="row">
@@ -92,14 +91,10 @@
               </tr>
           </table>
       </div>
-      <div id="formNav">
-         <button ng-click="prevForm()"> Prev </button>
-         <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
-         <button ng-click="nextForm()"> Next </button>
-     </div>
-     <button ng-click="sendCanvasToIMGUR()" id="download"> IMGUR </button>
-
   </div> <!-- export this -->
+  <div id="formNav">
+     <button ng-click="prevForm()"> Prev </button>
+     <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
+     <button ng-click="nextForm()"> Next </button>
+ </div>
 </div>
-
-<a id="dl" ng-click="downloadCanvas()">Download Canvas</a>
