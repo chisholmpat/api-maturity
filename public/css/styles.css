@@ -119,8 +119,19 @@ label {
 
 div#formNav {
   font-size: 1.2rem; }
+  div#formNav + * {
+    display: inline-block; }
   div#formNav button {
-    padding: 0 0.3rem; }
+    background-color: transparent;
+    border: 0; }
+    div#formNav button svg {
+      height: 18px; }
+      div#formNav button svg #arrow-left,
+      div#formNav button svg #arrow-right {
+        fill: #065f98; }
+  div#formNav button:hover svg #arrow-left,
+  div#formNav button:hover svg #arrow-right {
+    fill: #1f9af2; }
   div#formNav div {
     margin: 0 0.3rem;
     display: inline-block; }
@@ -132,7 +143,15 @@ div#formNav {
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
+    font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
+    font-weight: 100;
+    font-stretch: normal;
+    font-size: 2.4rem;
+    letter-spacing: 0.4rem;
     border: 0; }
+  div#formNav select:hover {
+    text-decoration: underline;
+    color: #3e5175; }
 
 table.clientStyle {
   font-size: 1.5rem;
@@ -359,7 +378,7 @@ div.form-group.radioButtons label {
   display: inline-block;
   margin: 0 1rem 0 0; }
   div.form-group.radioButtons label span {
-    padding: .6rem; }
+    padding: 0.6rem; }
 
 #loadingdiv {
   position: absolute;
@@ -369,6 +388,6 @@ div.form-group.radioButtons label {
   height: 100%;
   z-index: 1000;
   background-color: grey;
-  opacity: .8; }
+  opacity: 0.8; }
 
 /*# sourceMappingURL=styles.css.map */
