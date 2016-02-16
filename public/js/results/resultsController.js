@@ -1,8 +1,8 @@
 (function() {
 
     var module = angular.module('resultsModule', ['resultsServiceModule', 'ngResource']);
-    module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
-        function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
+    module.controller('ResultsController', ['$scope', '$http', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
+        function($scope, $http,  $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
 
             // URL for retrieving results as a CSV file
             $scope.csvURL = "questions/" + $routeParams.client_id + "/" + $routeParams.form_id + "/" + $routeParams.assessment_id + "/csv";
@@ -25,9 +25,8 @@
             };
 
             $scope.getWordFile = function() {
-                FileFormatsConversionStore.convertToDOCX();
+                FileFormatsConversionStore.convertToDOCX($http);
             };
-
         }
     ]);
     module.controller('APImaturityController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',

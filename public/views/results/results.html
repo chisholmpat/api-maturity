@@ -97,11 +97,9 @@
          <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
          <button ng-click="nextForm()"> Next </button>
      </div>
+     <button ng-click="sendCanvasToIMGUR()" id="download"> IMGUR </button>
+
   </div> <!-- export this -->
 </div>
 
 <a id="dl" ng-click="downloadCanvas()">Download Canvas</a>
-
-<button onclick="sendCanvasToIMGUR()" id="download"> IMGUR </button>
-
-

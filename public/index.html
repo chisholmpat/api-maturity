@@ -110,59 +110,7 @@
     <script src="js/directives/directives.js"></script>
     <script src=http://code.jquery.com/jquery-2.1.4.min.js></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        function sendCanvasToIMGUR()
-        {
-
-            try
-            {
-                /*srcCanvas = document.getElementById('radarGraph');
-                destinationCanvas = document.createElement("canvas");
-                destinationCanvas.width = srcCanvas.width;
-                destinationCanvas.height = srcCanvas.height;
-                destCtx = destinationCanvas.getContext('2d');
-
-                //create a rectangle with the desired color
-                destCtx.fillStyle = "#FFFFFF";
-                destCtx.fillRect(0, 0, srcCanvas.width, srcCanvas.height);
-
-                //draw the original canvas onto the destination canvas
-                destCtx.drawImage(srcCanvas, 0, 0);*/
-
-
-                var img = document.getElementById('radarGraph').toDataURL(
-                    'image/png', 0.9).split(',')[1].replace(/^data:image\/(jpg|png);base64,/, "");
-            }
-            catch (e)
-            {
-                var img = document.getElementById('radarGraph').toDataURL()
-                    .split(',')[1];
-            }
-
-            $.ajax(
-            {
-                url: 'https://api.imgur.com/3/image',
-                type: 'post',
-                headers:
-                {
-                    Authorization: 'Client-ID 1f95eb94c1011e9'
-                },
-                data:
-                {
-                    image: img
-                },
-                dataType: 'json',
-                success: function(response)
-                {
-                    if (response.success)
-                    {
-                         alert(response.data.link);
-                    }
-                }
-            });
-
-        };
-    </script>
+    <script type="text/javascript">  </script>
 
 </body>
 
