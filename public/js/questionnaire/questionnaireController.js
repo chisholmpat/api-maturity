@@ -17,7 +17,12 @@
                 if ($scope.currentIndex < $scope.forms.length - 1) {
                     $scope.generateScore($scope.questions, $scope.unansweredQuestions, 1);
                 } else {
-                    alert("WAITING FOR ROSE TO FINISH RESULTS PAGE");
+                    var resultsURL = '/clientforms/' + $scope.clientName + '/' + 
+                                      $scope.category + '/' + $scope.client_id  +'/' +
+                                      $scope.assessment_id +'/' +$scope.assessmentDate; 
+
+                    $location.url(resultsURL);
+
                 }
 
             };

@@ -1,6 +1,7 @@
 (function() {
 
     var module = angular.module('resultsModule', ['resultsServiceModule', 'ngResource']);
+    
     module.controller('ResultsController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
         function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
 
