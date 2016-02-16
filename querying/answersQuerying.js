@@ -45,13 +45,8 @@ exports.updateAnswers = function(res, responses, assessment_id, callback) {
     // TODO Handle the error in this query so that errors can 
     // appropriately be reported and sent back.
     knex.raw(updateResponseQuery).asCallback(function(err, rows) {
-        console.log(1, err);
         knex.raw(updateWeightQuery).asCallback(function(err, rows) {
-          console.log(2, err);
-
             knex.raw(updateNoteQuery).asCallback(function(err, rows) {
-              console.log(3, err);
-
                 callback('', res);
             });
         });

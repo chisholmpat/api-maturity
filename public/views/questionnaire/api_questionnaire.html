@@ -2,7 +2,7 @@
 <div class="SAtext">
     <p ng-repeat="question in questions |  filter: { category_id: categoryIDs.SA }"><span>{{question.text}}</span>
         <label ng-repeat="response in responses  | filter: { category_id: categoryIDs.SA }"
-          ng-init="question.response_id = (responses | filter: {category_id: categoryIDs.SA } | filter: {value: '0'})[0].id">
+          ng-init="question.response_id = question.response_id ? question.response_id : (responses | filter: {category_id: categoryIDs.SA } | filter: {value: '0'})[0].id">
             <input type="radio" ng-model="question.response_id" ng-value="response.id">
             <span>{{response.response}}</span>
         </label>
@@ -19,7 +19,7 @@
             <div ng-repeat="response in responses | byCategory:categoryIDs.QA" class="QACheckboxGroup">
                 <label>
                     <input type="radio" ng-model="question.response_id" ng-value="response.id"
-                    ng-init="question.response_id = (responses | filter: {category_id: categoryIDs.QA } | filter: {value: '0'})[0].id"> <span>{{response.response}}</span>
+                                                                        ng-init="question.response_id = question.response_id ? question.response_id : (responses | filter: {category_id: categoryIDs.SA } | filter: {value: '0'})[0].id"> <span>{{response.response}}</span>
                 </label>
             </div>
 
