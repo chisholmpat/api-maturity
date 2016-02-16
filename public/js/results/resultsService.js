@@ -204,39 +204,87 @@
         });
       };
 
-      this.convertToDOCX = function(){
+      this.convertToDOCX = function($http){
+
+          createWordDocument = function(){
+              // //full set of html tags to be displayed in browser
+              var htmlString = document.getElementById('exportthis').innerHTML;
+
+              //WORD will only know to render this as a HTML document and not plain text
+              //if the html, head and body tags are included
+              var htmlOutput = "<html><head></head><body>"+htmlString+"</body></html>";
+
+              var element = document.createElement('a');
+              element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(htmlOutput));
+              element.setAttribute('download', "results.doc");
+
+              element.style.display = 'none';
+              document.body.appendChild(element);
+              element.click();
+          }
+
+          sendCanvasToIMGUR = function($http, canvas){
+              try
+              {
+                var img = canvas.toDataURL(
+                      'image/png', 0.9).split(',')[1].replace(/^data:image\/(jpg|png);base64,/, "");
+              }
+              catch (e)
+              {
+                  var img = canvas.toDataURL()
+                      .split(',')[1];
+              }
+              var req = {
+                   method: 'POST',
+                   url: 'https://api.imgur.com/3/image',
+                   headers:
+                   {
+                       Authorization: 'Client-ID 1f95eb94c1011e9'
+                   },
+                   data:
+                   {
+                       image: img
+                   }
+              }
+              $http(req).then(function successCallback(response) {
+                 if (response)
+                 {
+                      var src = response.data.data.link ;
+                      var oImg=document.createElement("img");
+                      // <image type="image/png">
+                      oImg.setAttribute('src', src);
+                      oImg.style.height = canvas.style.height;
+                      oImg.style.width = canvas.style.width;
+                      canvas.parentNode.appendChild(oImg);
+              				canvas.parentNode.removeChild(canvas);
+
+                      //all canvas to image conversions done, generate WORD document
+                      if(document.getElementsByTagName('canvas').length == 0){
+                        createWordDocument();
+                      }
+                      return;
+                 }
+               }, function errorCallback(response) {
+                      return;
+              });
+
+          };
+
+
           // convert from canvas to png to allow word to display images
           var canvasTags = document.getElementsByTagName('canvas');
     			var max_val = canvasTags.length;
-    			// for (var i=0; i<max_val; i++) {
-    			// 	var canvas = canvasTags[0];
-          //   //create base64 encoded string of image
-          //   var img    = canvas.toDataURL("image/png");
-          //   img = img.replace('data:image/png;base64,','');
-          //   //create <img></img>
-          //   var oImg=document.createElement("img");
-          //
-          //   // <image type="image/png">
-          //   oImg.setAttribute('type', "image/png");
-    			// 	oImg.innerHTML = img;
-          //   canvas.parentNode.appendChild(oImg);
-    			// 	canvas.parentNode.removeChild(canvas);
-    			// }
-          // // //full set of html tags to be displayed in browser
-          var htmlString = document.getElementById('exportthis').innerHTML;
 
-          //WORD will only know to render this as a HTML document and not plain text
-          //if the html, head and body tags are included
-          var htmlOutput = "<html><head></head><body>"+htmlString+"</body></html>";
+          //no canvas exist, conversion is not needed
+          if(max_val == 0){
+            createWordDocument();
+            return;
+          }
 
-          var element = document.createElement('a');
-          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(htmlOutput));
-          element.setAttribute('download', "results.doc");
-
-          element.style.display = 'none';
-          document.body.appendChild(element);
-
-          element.click();
+    			for (var i=0; i<max_val; i++) {
+    				var canvas = canvasTags[i];
+            sendCanvasToIMGUR($http, canvas);
+    			}
       };
     }]);
 })();
