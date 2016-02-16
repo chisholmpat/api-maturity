@@ -4,6 +4,20 @@
  */
 $color-main: #575757; //main Dark text
 $color-light: #fff; //Light text on dark background
+//vendor Mixin
+//example: @include prefix(box)
+@mixin prefix($map, $vendors: webkit moz ms o) {
+    @each $prop,
+    $value in $map {
+        @if $vendors {
+            @each $vendor in $vendors {
+                #{"-" + $vendor + "-" + $prop}: #{$value};
+            }
+        }
+        // Dump regular property anyway
+        #{$prop}: #{$value};
+    }
+}
 @mixin font-Light() {
     font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
     font-weight: 300;
@@ -75,9 +89,7 @@ label {
     background-color: #3b4b54;
     color: $color-light;
     padding-top: 2rem;
-    box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
-    -moz-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
-    -webkit-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
+    @include prefix((box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38)));
     div {
         text-align: right;
         font-size: 2.2rem;
@@ -88,7 +100,6 @@ label {
     div.headerHeight a {
         color: $color-light;
     }
-
     h2 {
         margin-bottom: 1rem;
     }
@@ -126,7 +137,7 @@ label {
     div.headerHeight div {
         float: right;
     }
-    h1{
+    h1 {
         @include font-Light();
         margin-bottom: 1rem;
     }
@@ -134,18 +145,43 @@ label {
         margin-bottom: 3rem;
     }
 }
-
-div#formNav{
+div#formNav {
     font-size: 1.2rem;
-    button{
-        padding:0 0.3rem;
+    + * { //all direct childrin
+        display: inline-block;
     }
-    div{
+    button {
+        background-color: transparent;
+        border: 0;
+        svg {
+            height: 18px;
+            #arrow-left,
+            #arrow-right {
+                fill: #065f98;
+            }
+        }
+    }
+    button:hover svg #arrow-left,
+    button:hover svg #arrow-right {
+        fill: #1f9af2;
+    }
+    div {
         margin: 0 0.3rem;
         display: inline-block;
     }
-    a{
+    a {
         cursor: pointer;
+    }
+    select {
+        @include prefix((appearance: none));
+        @include font-Thin();
+        font-size: 2.4rem;
+        letter-spacing: 0.4rem;
+        border: 0;
+    }
+    select:hover {
+        text-decoration: underline;
+        color: #3e5175;
     }
 }
 //#page-content-wrapper
@@ -222,9 +258,7 @@ div.clientInfo {
     background-color: #728086;
     // width: 30%;
     float: right;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
-    -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+    @include prefix((box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25)));
     table tr td {
         margin: 1rem 0;
     }
@@ -324,10 +358,9 @@ form {
         }
     }
 }
-#exportResults{
+#exportResults {
     display: block;
     float: right;
-
 }
 /*Colour and Shadows*/
 #sideLeft {}
@@ -352,10 +385,7 @@ canvas {
         padding: 2px 8px 2px 28px;
         font-size: 14px;
         cursor: default;
-        -webkit-transition: background-color 200ms ease-in-out;
-        -moz-transition: background-color 200ms ease-in-out;
-        -o-transition: background-color 200ms ease-in-out;
-        transition: background-color 200ms ease-in-out;
+        @include prefix((transition: background-color 200ms ease-in-out));
     }
     li span {
         display: block;
@@ -374,7 +404,6 @@ form.simple-form {
 form.simple-form.questions-Form {
     width: 100%;
 }
-
 div.form-group.addQuestion {
     background-color: rgb(173, 232, 104);
 }
@@ -404,25 +433,22 @@ div.form-group {
         text-align: center;
     }
 }
-
-div.form-group.radioButtons{
-    label{
+div.form-group.radioButtons {
+    label {
         display: inline-block;
         margin: 0 1rem 0 0;
-
-        span{
-            padding: .6rem;
+        span {
+            padding: 0.6rem;
         }
     }
 }
-
 #loadingdiv {
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index:1000;
-    background-color:grey;
-    opacity: .8;
- }
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: grey;
+    opacity: 0.8;
+}
