@@ -4,7 +4,7 @@
     <!-- If Bluemix tool, load a separate HTML page  -->
     <div ng-if="category==categoryIDs.BMIX" ng-include="'views/results/results_bmix.html'"></div>
     <span ng-if="category==categoryIDs.BMIX"><div  ng-controller="BMIXtoolController"></div></span>
-    <span ng-if="category==categoryIDs.API"><div ng-controller="APImaturityController"></div></span>
+    <span ng-if="category==categoryIDs.API"><div ng-controller="APIMaturityResultsController"></div></span>
 
     <div id="exportResults">
       <a ng-href={{csvURL}}> CSV Export </a><br>
@@ -50,8 +50,6 @@
           <th> Value</th>
           <th> Weight</th>
           <th> Score</th>
-
-
           </thead>
           <tr ng-repeat="result in results | filter:{ category_id: 2 }">
               <td>{{result.text }}</td>
