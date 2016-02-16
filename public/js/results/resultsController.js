@@ -1,6 +1,7 @@
 (function() {
 
     var module = angular.module('resultsModule', ['resultsServiceModule', 'ngResource']);
+
     module.controller('ResultsController', ['$scope', '$http', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
         function($scope, $http,  $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
 
@@ -80,13 +81,17 @@
 
                 //draw gauge graphs
                 //The gauge graphs need to be more detailed then radar, use the averages values as opposed to mapping to a lower value.
-                // Load the Visualization API and the corechart package.
-                google.charts.load('current', {'packages':['gauge']});
-
-                // Set a callback to run when the Google Visualization API is loaded.
-                google.charts.setOnLoadCallback(function(){
-                   GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
-                });
+                // Load the Visualization API and the gauge charts package if it hassn't been loaded aready
+                if(!google.visualization){
+                    google.charts.load('current', {'packages':['gauge']});
+                    google.charts.setOnLoadCallback(function(){
+                      // Set a callback to run when the Google Visualization API is loaded.
+                      GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
+                    });
+                }
+                else{
+                  GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is execute
+                }
               });
 
           }

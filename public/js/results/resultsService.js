@@ -262,10 +262,8 @@
                         createWordDocument();
                       }
                       return;
-                      // return '"'+response.data.data.link+'"';
                  }
                }, function errorCallback(response) {
-                      alert(response);
                       return;
               });
 

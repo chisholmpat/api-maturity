@@ -7,15 +7,13 @@
         <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
         <button ng-click="nextForm()"> Next </button>
     </div>
-    {{category}}
+    
     <form ng-submit="generateScore(questions, unansweredQuestions)">
-
         <!-- API and BMIX Questionnaires are different -->
         <div ng-include="category==categoryIDs.API ?
         'views/questionnaire/api_questionnaire.html':
         'views/questionnaire/bmix_questionnaire.html'">
         </div>
-
     </form>
 
     <div id="formNav">
