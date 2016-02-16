@@ -19,10 +19,9 @@
                 } else {
                     var resultsURL = '/clientforms/' + $scope.clientName + '/' + 
                                       $scope.category + '/' + $scope.client_id  +'/' +
-                                      $scope.assessment_id +'/' +$scope.assessmentDate; 
+                                      $scope.assessment_id; 
 
                     $location.url(resultsURL);
-
                 }
 
             };
@@ -112,12 +111,13 @@
             $scope.generateScore = function(questions, unansweredQuestions, indexChange) {
 
                 var answers = separateAnswers(); // split into update and insert
+                console.log(answers.answersToUpdate);
 
                 QuestionStore.addAnswersConn.save({
-                    answersToUpdate: answers.answersToUpdate,
-                    answersToAdd: answers.answersToAdd,
-                    clientID: $routeParams.client_id,
-                    assessmentID: $routeParams.assessment_id
+                    updated_answers: answers.updated_answers,
+                    new_answers: answers.new_answers,
+                    client_id: $routeParams.client_id,
+                    assessment_id: $routeParams.assessment_id
                 }, function() {
                     $scope.loadQuestions($scope.forms[$scope.currentIndex + indexChange].id);
                 });
@@ -130,20 +130,20 @@
             function separateAnswers() {
 
                 var answerGroups = {};
-                answerGroups.answersToUpdate = [];
-                answerGroups.answersToAdd = [];
+                answerGroups.updated_answers = [];
+                answerGroups.new_answers = [];
 
                 for (var i = 0; i < $scope.questions.length; i++) {
                     var found = false;
                     for (var j = 0; j < $scope.unansweredQuestions.length && !found; j++) {
                         if ($scope.questions[i].id == $scope.unansweredQuestions[j].id) {
-                            answerGroups.answersToAdd.push($scope.unansweredQuestions[j]);
+                            answerGroups.new_answers.push($scope.questions[i]);
                             found = true;
                         }
                     }
 
                     if (!found)
-                        answerGroups.answersToUpdate.push($scope.questions[i]);
+                        answerGroups.updated_answers.push($scope.questions[i]);
                 }
 
                 return answerGroups;

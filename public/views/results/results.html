@@ -4,7 +4,7 @@
     <!-- If Bluemix tool, load a separate HTML page  -->
     <div ng-if="category==categoryIDs.BMIX" ng-include="'views/results/results_bmix.html'"></div>
     <span ng-if="category==categoryIDs.BMIX"><div  ng-controller="BMIXtoolController"></div></span>
-    <span ng-if="category==categoryIDs.API"><div ng-controller="APImaturityController"></div></span>
+    <span ng-if="category==categoryIDs.API"><div ng-controller="APIMaturityResultsController"></div></span>
 
     <div id="exportResults">
       <a ng-href={{csvURL}}> CSV Export </a><br>
@@ -13,7 +13,7 @@
     </div>
    <div id="exportthis">
      <h1>{{client_name.toUpperCase()}} - RESULTS</h1>
-     <h2>{{form_name.toUpperCase()}} - {{assesment_date | dateToISO | date:'shortDate'}} </h2>
+     <h2>{{form_name.toUpperCase()}} - {{assessment_date | date:'shortDate'}} </h2>
 
      <div id="formNav">
         <button ng-click="prevForm()"> Prev </button>
@@ -50,8 +50,6 @@
           <th> Value</th>
           <th> Weight</th>
           <th> Score</th>
-
-
           </thead>
           <tr ng-repeat="result in results | filter:{ category_id: 2 }">
               <td>{{result.text }}</td>
@@ -97,9 +95,7 @@
          <select ng-model="formsID" ng-options="form.id as form.name for form in forms" ng-change="loadQuestions(formsID)"></select>
          <button ng-click="nextForm()"> Next </button>
      </div>
-     <button ng-click="sendCanvasToIMGUR()" id="download"> IMGUR </button>
-
   </div> <!-- export this -->
 </div>
 
-<a id="dl" ng-click="downloadCanvas()">Download Canvas</a>
+

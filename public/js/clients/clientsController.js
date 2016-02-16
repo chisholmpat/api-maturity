@@ -19,7 +19,6 @@
             $scope.assesment_id = $routeParams.assessment_id;
             $scope.client_id = $routeParams.client_id;
             $scope.client_name = $routeParams.client_name;
-            $scope.assessment_date = $routeParams.assessment_date;
         }
     ]);
 
@@ -183,7 +182,7 @@
                     ClientsStore.updateClientsConn.save({
                         client: $scope.editing
                     }, function() {
-                        window.alert("The client has been updated.")
+                        window.alert("The client has been upd'ated.")
                     });
                 } else {
                     ClientsStore.addClientConn.save({

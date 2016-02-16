@@ -112,7 +112,7 @@ exports.getForms = function(res, callback) {
 // Return a list of forms by category. Used to seperate out
 // Bluemix Affinity forms from API Maturity Forms.
 exports.getFormsByCategory = function(res, category_id, callback) {
-    knex.select().table('form').where('category_id', category_id)
+    knex.select().table('form').where('category_id', category_id).where('active', 1)
         .asCallback(function(err, rows) {
             console.log(err);
             console.log(rows);

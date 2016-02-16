@@ -9,7 +9,8 @@
             class="QACheckboxGroup">
                 <label>
                     <input type="radio" ng-model="question.response_id" ng-value="response.id"
-                    ng-init="question.response_id = (responses | filter: {category_id: categoryIDs.BMIX } | filter: {value: '0'})[0].id">
+                    ng-init="question.response_id = question.response_id ? question.response_id : 
+                    (responses | filter: {category_id: categoryIDs.BMIX } | filter: {value: '0'})[0].id"
                     <span>{{response.response}}</span>
                 </label>
             </div>
