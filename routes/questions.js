@@ -73,10 +73,8 @@ module.exports = function(app) {
 
     // get a list of all the forms.
     app.get('/forms', dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.body);
         if (req.body.category_id) {
           queries.getFormsByCategory(res, req.body.category_id, callback);
-            console.log(req.body.category_id);
         } else {
             queries.getAllForms(res, dbUtils.callback);
         }
@@ -109,13 +107,11 @@ module.exports = function(app) {
 
     // add question to database
     app.post("/addQuestion", dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.body.question);
         queries.addQuestion(req.body.question, res, dbUtils.callbackNoReturn);
     });
 
     // add a form to the form table
     app.post("/addForm", dbUtils.checkAuthenticated, function(req, res) {
-        console.log(req.body);
         queries.addForm(req.body.formName, req.body.category_id, req.body.is_api, res, dbUtils.callbackNoReturn);
     });
 
@@ -126,7 +122,6 @@ module.exports = function(app) {
 
     // get all assessments for given category
     app.get('/assessments/:category_id', function(req, res) {
-        console.log("Getting Assements for Category_ID: " + req.params.category_id);
         queries.getAllAssessments(res, req.params.category_id, dbUtils.callback);
     });
 
@@ -150,5 +145,4 @@ module.exports = function(app) {
     app.get('/categories', function(req, res){
         queries.getAllCategories(res, dbUtils.callback);
     });
-
 };
