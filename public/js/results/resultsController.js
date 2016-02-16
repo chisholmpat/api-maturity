@@ -2,12 +2,17 @@
 
     var module = angular.module('resultsModule', ['resultsServiceModule', 'ngResource']);
 
-    module.controller('ResultsController', ['$scope', '$http', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
-        function($scope, $http,  $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
+    // Controller for handling the displaying of results.
+    module.controller('ResultsController', ['$scope', '$http', '$routeParams', 'ResultStore',
+        'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
+        function($scope, $http, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore,
+            FileFormatsConversionStore) {
 
             // URL for retrieving results as a CSV file
-            $scope.csvURL = "questions/" + $routeParams.client_id + "/" + $routeParams.form_id + "/" + $routeParams.assessment_id + "/csv";
+            $scope.csvURL = "questions/" + $routeParams.client_id + "/" +
+                $routeParams.form_id + "/" + $routeParams.assessment_id + "/csv";
 
+            // Setting properties from params.
             $scope.client_name = $routeParams.client_name;
             $scope.form_name = $routeParams.form_name;
             $scope.form_id = $routeParams.form_id;
@@ -15,24 +20,24 @@
             $scope.assessment_id = $routeParams.assessment_id;
             $scope.category = $routeParams.category_id;
 
+            // Getting display information for the page from
+            // the assessment in the database.
             ResultStore.assessmentDetailsConn.query({
-                        assessment_id: $routeParams.assessment_id
-                    },
-                    function(res) {
-                        console.log(res);
-                        $scope.client_name = res[0].name;
-                        $scope.assessment_date = res[0].date;
-                    });
+                    assessment_id: $routeParams.assessment_id
+                },
+                function(response) {
+                    $scope.client_name = response[0].name;
+                    $scope.assessment_date = response[0].date;
+                });
 
-
-
-
-            console.log("results category " + $scope.category )
+            // Get results for processing.
             $scope.results = ResultStore.scoreConn.query({
                 client_id: $scope.client_id,
                 form_id: $scope.form_id,
                 assessment_id: $scope.assessment_id
             });
+
+
             $scope.getPDF = function() {
                 FileFormatsConversionStore.convertToPDF();
             };
@@ -42,23 +47,24 @@
             };
         }
     ]);
-    module.controller('APImaturityController', ['$scope', '$routeParams', 'ResultStore', 'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
-        function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
+    module.controller('APImaturityController', ['$scope', '$routeParams', 'ResultStore',
+        'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore', '$rootScope',
+        function($scope, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore,
+            FileFormatsConversionStore, $rootScope) {
 
-              $scope.results = ResultStore.scoreConn.query({
-                  client_id: $scope.$parent.client_id,
-                  form_id: $scope.$parent.form_id,
-                  assessment_id: $scope.$parent.assessment_id
-              },function(results){
+            $scope.results = ResultStore.scoreConn.query({
+                client_id: $scope.$parent.client_id,
+                form_id: $scope.$parent.form_id,
+                assessment_id: $scope.$parent.assessment_id
+            }, function(results) {
 
                 var QAfinalGraphData = [];
                 var SAfinalGraphData = [];
                 var valueWeightsArray = results
-                console.log(valueWeightsArray);
                 var graphTitles = [];
                 var categories = {
-                    QA: 1,
-                    SA: 2
+                    QA: $rootScope.categoryIDs.QA,
+                    SA: $rootScope.categoryIDs.SA
                 };
 
                 //obtain all graph scores
@@ -94,24 +100,27 @@
                 //draw gauge graphs
                 //The gauge graphs need to be more detailed then radar, use the averages values as opposed to mapping to a lower value.
                 // Load the Visualization API and the gauge charts package if it hassn't been loaded aready
-                if(!google.visualization){
-                    google.charts.load('current', {'packages':['gauge']});
-                    google.charts.setOnLoadCallback(function(){
-                      // Set a callback to run when the Google Visualization API is loaded.
-                      GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
+                if (!google.visualization) {
+                    google.charts.load('current', {
+                        'packages': ['gauge']
                     });
+                    google.charts.setOnLoadCallback(function() {
+                        // Set a callback to run when the Google Visualization API is loaded.
+                        GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
+                    });
+                } else {
+                    GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is execute
                 }
-                else{
-                  GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is execute
-                }
-              });
+            });
 
-          }
+        }
     ]);
 
-    module.controller('BMIXtoolController', ['$scope', function($scope){
-      console.log('BMIXtoolController');
-    }]);
+    module.controller('BMIXtoolController', ['$scope',
+        function($scope) {
+            console.log('BMIXtoolController');
+        }
+    ]);
 
     module.controller('ResultsListController', ['$scope', '$routeParams', '$resource',
         function($scope, $routeParams, $resource) {

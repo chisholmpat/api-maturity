@@ -227,14 +227,14 @@
                                   <xml>\
                                     <w:WordDocument>\
                                     <w:View>Print</w:View>\
-                                    <w:Zoom>150</w:Zoom>\
+                                    <w:Zoom>120</w:Zoom>\
                                     <w:DoNotOptimizeForBrowser/>\
                                     </w:WordDocument>\
                                   </xml>\
                                 </head><body>'+htmlString+"</body></html>";
 
               var element = document.createElement('a');
-              element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(htmlOutput));
+              element.setAttribute('href', 'data:application/msword;charset=utf-8,' + encodeURIComponent(htmlOutput));
               element.setAttribute('download', "results.doc");
 
               element.style.display = 'none';
@@ -277,8 +277,8 @@
                       oImg.height = (canvas.height);
                       oImg.width = (canvas.width);
                       if(oImg.height>max_pixel_count || oImg.width>max_pixel_count){
-                        oImg.height = (canvas.height)/2;
-                        oImg.width = (canvas.width)/2;
+                        oImg.height = (canvas.height)/2.5;
+                        oImg.width = (canvas.width)/2.5;
                       }
 
                       canvas.parentNode.appendChild(oImg);
