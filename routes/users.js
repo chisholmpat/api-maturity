@@ -32,7 +32,7 @@ module.exports = function(app) {
 
     // get the user's role from the database
     app.get('/role/', function(req, res) {
-        if (req.user.isIBM) {
+        if (req.user && req.user.isIBM) {
             res.send('user');
             return;
         } else {
