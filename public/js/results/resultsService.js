@@ -118,8 +118,14 @@
               ]
           };
 
+          document.getElementById(canvasName).style.maxHeight  = "600px";
+          document.getElementById(canvasName).style.minHeight  = "500px";
+          document.getElementById(canvasName).style.maxWidth  = "1150px";
+          document.getElementById(canvasName).style.minWidth  = "1000px";
+
           var myRadarChart = new Chart(document.getElementById(canvasName).getContext("2d")).Radar(graphData);
           document.getElementById("legendDiv").innerHTML = myRadarChart.generateLegend();
+          
           return;
         };
 
