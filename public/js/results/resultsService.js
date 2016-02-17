@@ -282,6 +282,7 @@
                       Img.height = (canvas.height);
                       Img.width = (canvas.width);
                       Img.style.display = 'none';
+                      Img.align = 'center';
 
                       if(Img.height>max_pixel_count || Img.width>max_pixel_count){
                         Img.height = (canvas.height)/scalingFactor;
