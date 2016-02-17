@@ -43,7 +43,18 @@
             $scope.defaultEmail = "email@sample.com";
 
             // Get a list of all the available users
-            $scope.allUsers = UserStore.getUsers.query();
+            $scope.allUsers = UserStore.getUsers.query({}, function(response){
+                $scope.allUsernames = response.map(function(u){return u.username.toUpperCase();})
+                $scope.allEmails = response.map(function(u){ return u.email.toUpperCase();});
+            });
+
+            $scope.uniqueUsername = function(){ 
+                if($scope.editing.username && !$scope.aUser){
+                    return !($scope.allUsernames.indexOf($scope.editing.username.toUpperCase()) > -1);
+                }else{
+                    return true;
+                }
+            };
 
             // Retrieve roles for use in the dropdown
             $scope.roles = UserStore.getUserRoles.query({}, function(results) {
