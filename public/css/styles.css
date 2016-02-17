@@ -69,9 +69,11 @@ label {
   background-color: #3b4b54;
   color: #fff;
   padding-top: 2rem;
-  box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
+  -webkit-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
   -moz-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
-  -webkit-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38); }
+  -ms-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
+  -o-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
+  box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38); }
   #sidebar-wrapper div {
     text-align: right;
     font-size: 2.2rem; }
@@ -115,15 +117,41 @@ label {
 #page-content-wrapper h2 {
   margin-bottom: 3rem; }
 
-div#formNav {
+div.formsNav {
   font-size: 1.2rem; }
-  div#formNav button {
-    padding: 0 0.3rem; }
-  div#formNav div {
+  div.formsNav + * {
+    display: inline-block; }
+  div.formsNav button {
+    background-color: transparent;
+    border: 0; }
+    div.formsNav button svg {
+      height: 18px; }
+      div.formsNav button svg #arrow-left,
+      div.formsNav button svg #arrow-right {
+        fill: #065f98; }
+  div.formsNav button:hover svg #arrow-left,
+  div.formsNav button:hover svg #arrow-right {
+    fill: #1f9af2; }
+  div.formsNav div {
     margin: 0 0.3rem;
     display: inline-block; }
-  div#formNav a {
+  div.formsNav a {
     cursor: pointer; }
+  div.formsNav select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
+    font-weight: 100;
+    font-stretch: normal;
+    font-size: 2.4rem;
+    letter-spacing: 0.4rem;
+    border: 0; }
+  div.formsNav select:hover {
+    text-decoration: underline;
+    color: #3e5175; }
 
 table.clientStyle {
   font-size: 1.5rem;
@@ -188,9 +216,11 @@ div.clientInfo {
   min-height: 32rem;
   background-color: #728086;
   float: right;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
-  -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25); }
+  -ms-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+  -o-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25); }
   div.clientInfo table tr td {
     margin: 1rem 0; }
   div.clientInfo table tr > td:first-child {
@@ -301,6 +331,7 @@ canvas {
   cursor: default;
   -webkit-transition: background-color 200ms ease-in-out;
   -moz-transition: background-color 200ms ease-in-out;
+  -ms-transition: background-color 200ms ease-in-out;
   -o-transition: background-color 200ms ease-in-out;
   transition: background-color 200ms ease-in-out; }
 #legendDiv li span {
@@ -347,7 +378,7 @@ div.form-group.radioButtons label {
   display: inline-block;
   margin: 0 1rem 0 0; }
   div.form-group.radioButtons label span {
-    padding: .6rem; }
+    padding: 0.6rem; }
 
 #loadingdiv {
   position: absolute;
@@ -357,6 +388,6 @@ div.form-group.radioButtons label {
   height: 100%;
   z-index: 1000;
   background-color: grey;
-  opacity: .8; }
+  opacity: 0.8; }
 
 /*# sourceMappingURL=styles.css.map */
