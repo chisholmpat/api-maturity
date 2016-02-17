@@ -166,9 +166,7 @@
        }
     }]);
 
-    module.service('FileFormatsConversionStore', ['$http', '$resource', function($http, $resource) {
-
-
+    module.service('FileFormatsConversionStore', ['$http', '$resource', '$route', function($http, $resource, $route) {
 
       this.convertToPDF = function(){
 
@@ -240,9 +238,15 @@
               element.style.display = 'none';
               document.body.appendChild(element);
               element.click();
+              $route.reload();
           }
 
-          sendCanvasToIMGUR = function($http, canvas){
+          sendCanvasToIMGUR = function($http, canvas, iniImagesTotal){
+
+              //has to be done to persist the value of iniImagesTotal.
+              //due to asynchrounousy, the iniImagesTotal variable gets optimized out
+              sendCanvasToIMGUR.initImagesTotal = iniImagesTotal;
+              sendCanvasToIMGUR.WordDocCalled;
 
               try
               {
@@ -270,25 +274,32 @@
                  if (response)
                  {
                       var src = response.data.data.link ;
-                      var oImg=document.createElement("img");
+                      var Img=document.createElement("img");
                       var max_pixel_count = 1000;
-                      // <image type="image/png">
-                      oImg.setAttribute('src', src);
-                      oImg.height = (canvas.height);
-                      oImg.width = (canvas.width);
-                      if(oImg.height>max_pixel_count || oImg.width>max_pixel_count){
-                        oImg.height = (canvas.height)/2.5;
-                        oImg.width = (canvas.width)/2.5;
+                      var scalingFactor = 2.5;
+
+                      Img.setAttribute('src', src);
+                      Img.height = (canvas.height);
+                      Img.width = (canvas.width);
+                      Img.style.display = 'none';
+
+                      if(Img.height>max_pixel_count || Img.width>max_pixel_count){
+                        Img.height = (canvas.height)/scalingFactor;
+                        Img.width  = (canvas.width)/scalingFactor;
                       }
 
-                      canvas.parentNode.appendChild(oImg);
-              				canvas.parentNode.removeChild(canvas);
+                      //add the image to the page
+                      canvas.parentNode.appendChild(Img);
 
                       //all canvas to image conversions done, generate WORD document
-                      if(document.getElementsByTagName('canvas').length == 0){
-                        createWordDocument();
-                      }
-                      return;
+                      //ensure the Word document generation function gets called only once
+                      Img.onload = function () {
+                        if(document.getElementsByTagName('canvas').length == document.getElementsByTagName('img').length - sendCanvasToIMGUR.initImagesTotal  && !sendCanvasToIMGUR.WordDocCalled){
+                          sendCanvasToIMGUR.WordDocCalled = true;
+                          createWordDocument();
+                          return;
+                        }
+                      };
                  }
                }, function errorCallback(response) {
                       return;
@@ -299,17 +310,11 @@
 
           // convert from canvas to png to allow word to display images
           var canvasTags = document.getElementsByTagName('canvas');
+          var iniImagesTotal = document.getElementsByTagName('img').length;
     			var max_val = canvasTags.length;
-
-          //no canvas exist, conversion is not needed
-          if(max_val == 0){
-            createWordDocument();
-            return;
-          }
-
     			for (var i=0; i<max_val; i++) {
     				var canvas = canvasTags[i];
-            sendCanvasToIMGUR($http, canvas);
+            sendCanvasToIMGUR($http, canvas, iniImagesTotal);
     			}
       };
     }]);
