@@ -117,27 +117,27 @@ label {
 #page-content-wrapper h2 {
   margin-bottom: 3rem; }
 
-div#formNav {
+div.formsNav {
   font-size: 1.2rem; }
-  div#formNav + * {
+  div.formsNav + * {
     display: inline-block; }
-  div#formNav button {
+  div.formsNav button {
     background-color: transparent;
     border: 0; }
-    div#formNav button svg {
+    div.formsNav button svg {
       height: 18px; }
-      div#formNav button svg #arrow-left,
-      div#formNav button svg #arrow-right {
+      div.formsNav button svg #arrow-left,
+      div.formsNav button svg #arrow-right {
         fill: #065f98; }
-  div#formNav button:hover svg #arrow-left,
-  div#formNav button:hover svg #arrow-right {
+  div.formsNav button:hover svg #arrow-left,
+  div.formsNav button:hover svg #arrow-right {
     fill: #1f9af2; }
-  div#formNav div {
+  div.formsNav div {
     margin: 0 0.3rem;
     display: inline-block; }
-  div#formNav a {
+  div.formsNav a {
     cursor: pointer; }
-  div#formNav select {
+  div.formsNav select {
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
@@ -149,7 +149,7 @@ div#formNav {
     font-size: 2.4rem;
     letter-spacing: 0.4rem;
     border: 0; }
-  div#formNav select:hover {
+  div.formsNav select:hover {
     text-decoration: underline;
     color: #3e5175; }
 
