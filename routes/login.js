@@ -8,8 +8,6 @@ module.exports = function(app, passport) {
     // route to log out
     app.post('/logout', function(req, res) {
         req.logOut();
-        // req.logout();
-        // consoßog(req.logout);
         res.send(200);
     });
 
@@ -24,11 +22,7 @@ module.exports = function(app, passport) {
     });
 
     // route to log into IBMlogin
-    app.get('/ibmlogin', passport.authenticate('openidconnect', {}), function(req,res){
-        // req.logout();
-        // console.log("REQUEST" + req);
-        // console.log("RESPONSE" + res);
-    });
+    app.get('/ibmlogin', passport.authenticate('openidconnect', {}), function(req,res){});
 
     // route used in sso redirect
     app.get('/auth/sso/callback', function(req, res, next) {
@@ -36,17 +30,5 @@ module.exports = function(app, passport) {
             successRedirect: '/#',
             failureRedirect: 'http://bmix-essential.mybluemix.net/#/ibmlogin',
         })(req, res, next);
-    });
-
-    // route to add user to the database
-    app.post('/add_user', function(req, res) {
-        queries.addUser(req.body.user, res, function(err, res) {
-            if (err) {
-                res.send(400, err);
-            } else {
-                res.send(200);
-            }
-        });
-
     });
 };

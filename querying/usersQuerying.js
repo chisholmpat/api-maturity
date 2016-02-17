@@ -88,12 +88,7 @@ exports.checkUniqueUsername = function(username, res, callback) {
 // Checks to see if an email is already taken
 exports.checkUniqueUserEmail = function(email, res, callback){
   
-  console.log("CHECKING");
   knex('users').select('').where('email', email).asCallback(function(err, rows) {
-        
-      console.log(err);
-      console.log(rows);
-
       if (rows && rows[0])
             res.send(rows[0].username);
         else

@@ -16,7 +16,6 @@ module.exports = function(app) {
 
     // update a user in the database
     app.post("/update_user", function(req, res) {
-        console.log(req.body.user);
         queries.updateUser(req.body.user, res, dbUtils.callbackNoReturn);
     });
 
@@ -59,4 +58,15 @@ module.exports = function(app) {
         queries.checkUniqueUserEmail(req.params.email, res, dbUtils.callback);
     });
 
+    // route to add user to the database
+    app.post('/add_user', function(req, res) {
+        queries.addUser(req.body.user, res, function(err, res) {
+            if (err) {
+                res.send(400, err);
+            } else {
+                res.send(200);
+            }
+        });
+
+    });
 };
