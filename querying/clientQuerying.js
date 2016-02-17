@@ -106,7 +106,6 @@ exports.getAllClientInfoOwnedByUser = function(email, res, callback) {
         .where('userclients.email', email).where('isOwner', '1')
         .innerJoin('userclients', 'Client.id', 'userclients.client_id')
         .asCallback(function(err, rows) {
-            console.log("Getting user's clients: " + rows + err);
             callback(err, res, rows);
         });
 };

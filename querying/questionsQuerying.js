@@ -4,8 +4,6 @@ var knex = require("../db/db.js").knex; // the database connection.
 // TODO December 20th, 2015 : Reduce size/complexity of this query.
 exports.getAllQuestions = function(client_id, form_id, assessment_id, res, callback) {
 
-    console.log('ASSESSMENT_ID', assessment_id);
-
     knex.select('ClientQuestionResponse.client_id', 'ClientQuestionResponse.note',
             'Form.name as form_name', 'Question.id', 'Question.text', 'Question.category_id',
             'ClientQuestionResponse.response_id', 'ClientQuestionResponse.weight')
@@ -114,8 +112,6 @@ exports.getForms = function(res, callback) {
 exports.getFormsByCategory = function(res, category_id, callback) {
     knex.select().table('form').where('category_id', category_id).where('active', 1)
         .asCallback(function(err, rows) {
-            console.log(err);
-            console.log(rows);
             callback(err, res, rows);
         });
 };
@@ -173,9 +169,7 @@ exports.deleteForm = function(id, res, callback) {
 // dictates that there must be an entry in CQR table to
 // allow users to "answer questions".
 exports.addQuestion = function(question, res, callback) {
-
     knex('question').insert(question).asCallback(function(err, rows) {
-               console.log(err);
                callback(err, res, rows);
     });
 
@@ -249,10 +243,7 @@ exports.getAllAssessmentsForClient = function(client_id, res, callback) {
 
 // Gets all the assesments for all clients
 exports.getAllAssessments = function(res, category_id, callback) {
-    console.log(knex('assessment').select('').where('category_id', category_id).toString());
     knex('assessment').select('').where('category_id', category_id).asCallback(function(err, rows) {
-        console.log(err);
-        console.log(rows);
         callback(err, res, rows);
     });
 };

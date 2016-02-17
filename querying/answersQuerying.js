@@ -59,9 +59,6 @@ exports.updateAnswers = function(res, responses, assessment_id, callback) {
 exports.addNewlyAnswered = function(res, responses, client_id, assessment_id, callback) {
     var index = 0;
     var error = null;
-    console.log("Adding new answers.");
-    for(i = 0; i < responses.length; i++)
-      console.log(responses[i]);
     addNext(index, client_id, responses, assessment_id, callback, res, error);
 };
 
@@ -69,8 +66,6 @@ exports.addNewlyAnswered = function(res, responses, client_id, assessment_id, ca
 // is used to handle multiple records being inserted into the database.
 // TODO: Change this into a single call to the backend.
 function addNext(index, client_id, responses, assessment_id, callback, res, error) {
-
-  console.log("Response: " + responses[index]);
 
     if (index >= responses.length)
         callback(error, res);

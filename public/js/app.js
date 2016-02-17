@@ -6,6 +6,7 @@ var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource', 'ng.htt
 myApp.config(['httpMethodInterceptorProvider',
     function(httpMethodInterceptorProvider) {
         httpMethodInterceptorProvider.whitelistDomain('bmix-essential.mybluemix.net/');
+        httpMethodInterceptorProvider.whitelistDomain('https://api.imgur.com');
         httpMethodInterceptorProvider.whitelistLocalRequests();
     }
 ]);
