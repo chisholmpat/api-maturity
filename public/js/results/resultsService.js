@@ -121,11 +121,12 @@
           document.getElementById(canvasName).style.maxHeight  = "600px";
           document.getElementById(canvasName).style.minHeight  = "500px";
           document.getElementById(canvasName).style.maxWidth  = "1150px";
-          document.getElementById(canvasName).style.minWidth  = "1000px";
+          document.getElementById(canvasName).style.minWidth  = "1010px";
 
           var myRadarChart = new Chart(document.getElementById(canvasName).getContext("2d")).Radar(graphData);
           document.getElementById("legendDiv").innerHTML = myRadarChart.generateLegend();
-          
+          document.getElementById("legendDiv").
+
           return;
         };
 
@@ -281,8 +282,8 @@
                  {
                       var src = response.data.data.link ;
                       var Img=document.createElement("img");
-                      var max_pixel_count = 1000;
-                      var scalingFactor = 2.5;
+                      var max_pixel_count = 500;
+                      var scalingFactor = 3.5;
 
                       Img.setAttribute('src', src);
                       Img.height = (canvas.height);
