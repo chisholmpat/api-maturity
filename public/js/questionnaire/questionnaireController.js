@@ -20,9 +20,9 @@
                 if ($scope.currentIndex < $scope.forms.length - 1) {
                     $scope.generateScore($scope.questions, $scope.unansweredQuestions, 1);
                 } else {
-                    var resultsURL = '/clientforms/' + $scope.clientName + '/' + 
-                                      $scope.category + '/' + $scope.client_id  +'/' +
-                                      $scope.assessment_id; 
+                    var resultsURL = '/clientforms/' + $scope.clientName + '/' +
+                        $scope.category + '/' + $scope.client_id + '/' +
+                        $scope.assessment_id;
                     $location.url(resultsURL);
                 }
             };
@@ -163,6 +163,7 @@
 
             // For toggling visibility of add question drop down
             $scope.addQuestion = false;
+            $scope.newQuestion = {};
             $scope.category = $routeParams.category_id;
             console.log($scope.category);
 
@@ -192,6 +193,8 @@
                 } else {
                     question.category_id = $rootScope.categoryIDs.BMIX;
                 }
+
+                console.log(question);
 
                 // Call to the backend
                 QuestionStore.addQuestionConn.save({
@@ -256,16 +259,16 @@
             // Function for checking if the form name 
             // that someone is entering does not already
             // exist in the database.
-            $scope.isUnique = function(){
-              console.log($scope.notUniqueFormName);
-              var forms = $scope.forms
-              var isFound = false;
-              for(i = 0; i < $scope.forms.length;i++){
-                if($scope.newForm.text == $scope.forms[i].name){
-                  $scope.notUniqueFormName = true;
-                  return true;
+            $scope.isUnique = function() {
+                console.log($scope.notUniqueFormName);
+                var forms = $scope.forms
+                var isFound = false;
+                for (i = 0; i < $scope.forms.length; i++) {
+                    if ($scope.newForm.text == $scope.forms[i].name) {
+                        $scope.notUniqueFormName = true;
+                        return true;
+                    }
                 }
-              }
                 $scope.notUniqueFormName = false;
                 return false;
             }

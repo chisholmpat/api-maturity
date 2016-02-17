@@ -169,8 +169,11 @@ exports.deleteForm = function(id, res, callback) {
 // dictates that there must be an entry in CQR table to
 // allow users to "answer questions".
 exports.addQuestion = function(question, res, callback) {
+    console.log(question);
     knex('question').insert(question).asCallback(function(err, rows) {
-               callback(err, res, rows);
+        console.log(err);
+        console.log(rows);
+        callback(err, res, rows);
     });
 
 };
