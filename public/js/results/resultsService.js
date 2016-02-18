@@ -179,7 +179,7 @@
 
     module.service('FileFormatsConversionStore', ['$http', '$resource', '$route', function($http, $resource, $route) {
 
-      this.convertToPDF = function(){
+      this.convertToPDF = function(clientName, formName){
 
         var noteClass = "form-control";
         var notes = document.getElementsByClassName(noteClass);
@@ -203,7 +203,8 @@
                   }]
               };
 
-              pdfMake.createPdf(docDefinition).download("Result_Details.pdf");
+
+              pdfMake.createPdf(docDefinition).download("Result_Details_" + clientName + "_"+ formName + ".pdf");
               //show the note if there is content
               for(var i=0; i<notes.length; i++){
                 //hide all notes
@@ -213,7 +214,7 @@
         });
       };
 
-      this.convertToDOCX = function($http){
+      this.convertToDOCX = function($http, clientName, formName){
 
           createWordDocument = function(){
               // //full set of html tags to be displayed in browser
@@ -244,7 +245,7 @@
 
               var element = document.createElement('a');
               element.setAttribute('href', 'data:application/msword;charset=utf-8,' + encodeURIComponent(htmlOutput));
-              element.setAttribute('download', "results.doc");
+              element.setAttribute('download', "Result_Details_" + clientName + "_"+ formName + ".doc");
 
               element.style.display = 'none';
               document.body.appendChild(element);
