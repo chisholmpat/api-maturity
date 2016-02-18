@@ -1,8 +1,15 @@
+<div class="col-lg-12">
 
-<div class="col-lg-12" >
-   <div ng-include="category==categoryIDs.API ?
+    <div id="formNav">
+        <button ng-click="prevForm()">Prev</button>
+        <select ng-model="selectedForm" ng-options="form.id as form.name for form in forms"
+        ng-change="changeFormByID()" ng-init='selectedForm = 1'></select>
+        <button ng-click="nextForm()">Next</button>
+    </div> <br>
+
+    <div ng-include="category==categoryIDs.API ?
      'views/results/api_maturity_results.html':
      'views/results/bmix_results.html'">
-   </div>
-</div>
+    </div>
 
+</div>
