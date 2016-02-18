@@ -97,11 +97,11 @@
                   }
             });
             $scope.getPDF = function() {
-                FileFormatsConversionStore.convertToPDF();
+                FileFormatsConversionStore.convertToPDF($scope.$parent.client_name, $scope.$parent.form_name);
             };
 
             $scope.getWordFile = function() {
-                FileFormatsConversionStore.convertToDOCX($http);
+                FileFormatsConversionStore.convertToDOCX($http, $scope.$parent.client_name, $scope.$parent.form_name);
             };
         }
     ]);
