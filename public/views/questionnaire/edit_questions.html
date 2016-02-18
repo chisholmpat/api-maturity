@@ -18,13 +18,14 @@
 
         <!-- Expandable Add Question form. -->
         <div ng-show="addQuestion" class="form-group addQuestion">
-            <div>
+            <form>
+            <div> 
                 <input type="text" name="newQuestionName" class="form-control" ng-model="newQuestion.text">
-                </td>
             </div>
             <div ng-if="category != categoryIDs.BMIX">
-                <select ng-model="newQuestion.group_id" ng-options="grouping.id as grouping.name for grouping in groupings"
-                ng-init="newQuestion.group_id=1"></select>
+                <select ng-model="newQuestion.group_id" ng-options="group.id as group.name for group in groupings"
+                ng-init="newQuestion.group_id=categoryIDs.QA"></select>
+
             </div>
             <div>
                 <input type="button" ng-click="saveQuestion(newQuestion)" value="Add"
@@ -32,6 +33,7 @@
             </div>
             <p ng-show="questionsForm.newQuestionName.$invalid || questionsForm.newQuestionName.$pristine"
             class="help-block">Question is required.</p>
+            </form>
         </div>
 
         <div  class="form-group" ng-repeat="question in questions |  filter: { category_id: category == categoryIDs.API ? categoryIDs.QA :
@@ -49,7 +51,7 @@
             </div>
         </div>
         <div class="form-group">
-            <input type="submit" />
+            <input type="submit" ng-click="editQuestions(questions)" />
         </div>
     </form>
 
