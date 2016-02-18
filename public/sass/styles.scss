@@ -249,15 +249,20 @@ uib-accordion.clients {
 #clientLinks tr > td:first-child {
     width: 250px;
 }
+
+div#clientInfoColumn{
+    width: 100%;
+    clear: both;
+}
 div.clientInfo {
     padding: 1.5rem 2.5rem;
     background-color: #bbb;
     color: $color-light;
-    margin-left: 2rem;
+    margin-right: 2rem;
     min-height: 32rem;
     background-color: #728086;
-    // width: 30%;
-    float: right;
+    // width: 40%;
+    float: left;
     @include prefix((box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25)));
     table tr td {
         margin: 1rem 0;

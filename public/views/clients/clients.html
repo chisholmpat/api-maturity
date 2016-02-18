@@ -1,6 +1,6 @@
 <!-- <div class="container"> -->
 
-<div class="col-lg-12">
+<div class="col-lg-8">
 
     <uib-accordion close-others="oneAtATime" class="clients">
         <uib-accordion-group ng-repeat="client in clients">
@@ -8,7 +8,7 @@
               {{client.name}}
             </uib-accordion-heading>
             <div class="formTable">
-                <a ng-click="newAssessment(client.id)"> Start New Assessment </a>
+                <div><span><a ng-click="newAssessment(client.id)"> Start New Assessment </a></span></div>
                 <div ng-repeat="assessment in assessments | filter: { client_id: client.id} : true | filter: {category_id: category} ">
                     <span><a href="/#/questionnaire/{{category}}/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
                     <span><a href="/#/clientforms/{{client.name}}/{{category}}/{{client.id}}/{{assessment.id}}/"> Results </a> </span>
@@ -17,6 +17,13 @@
                     <span></span>
                 </div>
             </div>
+        </uib-accordion-group>
+    </uib-accordion>
+
+</div>
+<div class="col-lg-4">
+
+<div id="clientInfoColumn" ng-repeat="client in clients">
             <!-- only show if the user owns the client -->
             <div class="clientInfo" ng-show = "allClients.indexOf(client.id) >= 0" >
                 <h3>Client Tools</h3>
@@ -34,6 +41,8 @@
                     <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?" class="btn btn-danger">Delete Client:<br> {{client.name}}</button>
                 </p>
             </div>
+
+
             <div class="clientInfo">
                 <h3>
                   Client Details
@@ -69,8 +78,7 @@
                 </table>
             </div>
 
-        </uib-accordion-group>
-    </uib-accordion>
+</div>
 
     <datalist  id="usersEmailList">
          <option  ng-repeat="user in allUsers"  value="{{user.email}}">
