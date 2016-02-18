@@ -155,7 +155,7 @@
 
 
             $scope.handlePatternPassword = (function() {
-                var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/; // Number/L.Case/U.Case/Symbol!@#$%
+                var regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/; // Number/L.Case/U.Case/Symbol!@#$%
                 return {
                     test: function(value) {
                         return (value.length > 0) ? regex.test(value) : true;
