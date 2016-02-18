@@ -18,7 +18,12 @@
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
             $scope.category = $routeParams.category_id;
+        }
+    ]);
 
+    module.controller('ApiMaturityResultsController', ['$scope','$rootScope', '$http', '$routeParams', 'ResultStore',
+        'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
+        function($scope, $rootScope, $http, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
             // Getting display information for the page from
             // the assessment in the database.
             ResultStore.assessmentDetailsConn.query({
@@ -31,9 +36,9 @@
 
             // Get results for processing.
             $scope.results = ResultStore.scoreConn.query({
-                client_id: $scope.client_id,
-                form_id: $scope.form_id,
-                assessment_id: $scope.assessment_id
+                client_id: $scope.$parent.client_id,
+                form_id: $scope.$parent.form_id,
+                assessment_id: $scope.$parent.assessment_id
               }, function() {
 
                   var QAfinalGraphData = [];
@@ -91,8 +96,6 @@
                       GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is execute
                   }
             });
-
-
             $scope.getPDF = function() {
                 FileFormatsConversionStore.convertToPDF();
             };
@@ -102,6 +105,10 @@
             };
         }
     ]);
+
+    module.controller('BmixResultsController', [function(){
+        console.log('BmixResultsController');
+    }]);
 
     module.controller('ResultsListController', ['$scope', '$routeParams', '$resource',
         function($scope, $routeParams, $resource) {

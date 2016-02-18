@@ -125,8 +125,12 @@
 
           var myRadarChart = new Chart(document.getElementById(canvasName).getContext("2d")).Radar(graphData);
           document.getElementById("legendDiv").innerHTML = myRadarChart.generateLegend();
-          document.getElementById("legendDiv").
-
+          html2canvas(document.getElementById('legendDiv'), {
+          onrendered: function (canvas) {
+                canvas.style.display = 'none';
+                document.getElementById('legendDiv').parentNode.appendChild(canvas);
+            }
+          });
           return;
         };
 
