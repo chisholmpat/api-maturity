@@ -1,11 +1,11 @@
 <!-- <div class="container"> -->
 
-<div class="col-lg-8">
+<div class="col-lg-6">
 
     <uib-accordion close-others="oneAtATime" class="clients">
         <uib-accordion-group ng-repeat="client in clients">
             <uib-accordion-heading>
-              {{client.name}}
+              <span ng-click="showInfoForClient(client.id)">{{client.name}}</span>
             </uib-accordion-heading>
             <div class="formTable">
                 <div><span><a ng-click="newAssessment(client.id)"> Start New Assessment </a></span></div>
@@ -21,28 +21,9 @@
     </uib-accordion>
 
 </div>
-<div class="col-lg-4">
+<div class="col-lg-6">
 
-<div id="clientInfoColumn" ng-repeat="client in clients">
-            <!-- only show if the user owns the client -->
-            <div class="clientInfo" ng-show = "allClients.indexOf(client.id) >= 0" >
-                <h3>Client Tools</h3>
-                <p>
-                    Add Access to:
-                    <!-- validate using angluar -->
-                    <!-- autocomplete=off to prevent caching form fields , list-auto-complete will still work -->
-                    <form name="emailForm" ng-submit="addUserToClient(emailForm.$valid, client.id, client.name)" autocomplete="off" novalidate >
-                        <input type="email" id="{{client.name}}" name="email" list="usersEmailList" ng-model="emai" placeholder="example@email.com"/>
-                        <button type="submit" ng-disabled="emailForm.$invalid" class="btn btn-default">Add User to Client</button>
-                        <p ng-show="emailForm.email.$invalid && !emailForm.email$pristine">Enter a valid email.</p>
-                    </form>
-                </p>
-                <p>
-                    <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?" class="btn btn-danger">Delete Client:<br> {{client.name}}</button>
-                </p>
-            </div>
-
-
+<div id="clientInfoColumn" ng-repeat="client in clients |filter:{id:infoForClientID}:true">
             <div class="clientInfo">
                 <h3>
                   Client Details
@@ -76,6 +57,23 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <!-- only show if the user owns the client -->
+            <div class="clientInfo" ng-show = "allClients.indexOf(client.id) >= 0" >
+                <h3>Client Tools</h3>
+                <p>
+                    Add Access to:
+                    <!-- validate using angluar -->
+                    <!-- autocomplete=off to prevent caching form fields , list-auto-complete will still work -->
+                    <form name="emailForm" ng-submit="addUserToClient(emailForm.$valid, client.id, client.name)" autocomplete="off" novalidate >
+                        <input type="email" id="{{client.name}}" name="email" list="usersEmailList" ng-model="emai" placeholder="example@email.com"/>
+                        <button type="submit" ng-disabled="emailForm.$invalid" class="btn btn-default">Add User to Client</button>
+                        <p ng-show="emailForm.email.$invalid && !emailForm.email$pristine">Enter a valid email.</p>
+                    </form>
+                </p>
+                <p>
+                    <button type="button" ng-click="deleteClient(client)" confirm="Are you sure, {{name}}?" class="btn btn-danger">Delete Client:<br> {{client.name}}</button>
+                </p>
             </div>
 
 </div>

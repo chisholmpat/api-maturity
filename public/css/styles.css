@@ -29,9 +29,8 @@ body {
 a {
   text-decoration: none;
   color: #00aed1; }
-
-a:hover {
-  text-decoration: underline; }
+  a:hover {
+    text-decoration: underline; }
 
 h1 {
   font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
@@ -119,7 +118,7 @@ label {
 
 div.formsNav {
   font-size: 1.2rem; }
-  div.formsNav + * {
+  div.formsNav > * {
     display: inline-block; }
   div.formsNav button {
     background-color: transparent;
@@ -149,9 +148,9 @@ div.formsNav {
     font-size: 2.4rem;
     letter-spacing: 0.4rem;
     border: 0; }
-  div.formsNav select:hover {
-    text-decoration: underline;
-    color: #3e5175; }
+    div.formsNav select:hover {
+      text-decoration: underline;
+      color: #3e5175; }
 
 table.clientStyle {
   font-size: 1.5rem;
@@ -324,28 +323,28 @@ canvas {
 
 #legendDiv ul {
   list-style: none; }
-#legendDiv ul li {
-  display: block;
-  padding-left: 30px;
-  position: relative;
-  margin-bottom: 4px;
-  border-radius: 5px;
-  padding: 2px 8px 2px 28px;
-  font-size: 14px;
-  cursor: default;
-  -webkit-transition: background-color 200ms ease-in-out;
-  -moz-transition: background-color 200ms ease-in-out;
-  -ms-transition: background-color 200ms ease-in-out;
-  -o-transition: background-color 200ms ease-in-out;
-  transition: background-color 200ms ease-in-out; }
-#legendDiv li span {
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 100%;
-  border-radius: 5px; }
+  #legendDiv ul li {
+    display: block;
+    padding-left: 30px;
+    position: relative;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    padding: 2px 8px 2px 28px;
+    font-size: 14px;
+    cursor: default;
+    -webkit-transition: background-color 200ms ease-in-out;
+    -moz-transition: background-color 200ms ease-in-out;
+    -ms-transition: background-color 200ms ease-in-out;
+    -o-transition: background-color 200ms ease-in-out;
+    transition: background-color 200ms ease-in-out; }
+    #legendDiv ul li span {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      border-radius: 5px; }
 
 form.simple-form {
   width: 80%; }
@@ -371,18 +370,17 @@ div.form-group {
     min-width: 10.5rem;
     margin: 0.3rem 1.4rem 0.3rem 0;
     vertical-align: middle; }
-  div.form-group div:first-child {
+  div.form-group:first-child {
     width: 70%; }
-  div.form-group div:last-child {
+  div.form-group:last-child {
     margin: 0;
     width: 4.5rem;
     text-align: center; }
-
-div.form-group.radioButtons label {
-  display: inline-block;
-  margin: 0 1rem 0 0; }
-  div.form-group.radioButtons label span {
-    padding: 0.6rem; }
+  div.form-group.radioButtons label {
+    display: inline-block;
+    margin: 0 1rem 0 0; }
+    div.form-group.radioButtons label span {
+      padding: 0.6rem; }
 
 #loadingdiv {
   position: absolute;
