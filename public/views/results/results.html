@@ -3,7 +3,7 @@
     <div id="formNav">
         <button ng-click="prevForm()">Prev</button>
         <select ng-model="selectedForm" ng-options="form.id as form.name for form in forms"
-        ng-change="changeFormByID()" ng-init='selectedForm = 1'></select>
+        ng-change="changeFormByID()"></select>
         <button ng-click="nextForm()">Next</button>
     </div> <br>
 

@@ -10,56 +10,46 @@
 
             $scope.forms = [];
             $scope.form_id = $routeParams.form_id;
-            $scope.selectedForm = $scope.form_id;
-            $scope.client_name = $routeParams.client_name;
-            $scope.form_name = $routeParams.form_name;
-            $scope.form_id = $routeParams.form_id;
-            $scope.client_id = $routeParams.client_id;
-            $scope.assessment_id = $routeParams.assessment_id;
-            $scope.category = $routeParams.category_id;
+            console.log($scope.form_id);
+            $scope.selectedForm = parseInt($scope.form_id, 10);
+            console.log("selectedForm");
+            console.log($scope.selectedForm);
+
 
             // Generate forms for drop down on page and sort them.
             $resource('/forms').query({}, function(response) {
-                
-                // Parse out the forms which do not belong to 
-                // the category of the page.
                 for (form of response) {
                     if (form.category_id == $routeParams.category_id)
                         $scope.forms.push(form);
                 }
 
-                // Sort the forms so that the paging can be done
-                // in a consistent manner based on the index of 
-                // the form you're currently on.
                 $scope.forms.sort(function(a, b) {
                     return a.id - b.id;
                 });
             });
 
-            // Page back by one form.
             $scope.nextForm = function() {
                 var currentIndex = getCurrentIndex();
                 if (currentIndex < $scope.forms.length - 1)
-                    changePage(currentIndex + 1);
+                    changePage(currentIndex+1);
             };
 
-            // Page ahead by one form.
             $scope.prevForm = function() {
                 var currentIndex = getCurrentIndex();
                 if (currentIndex > 0)
-                    changePage(currentIndex - 1);
+                    changePage(currentIndex-1);
             };
+
 
             // Change the page based on the form selected
             // in the drop down box.
             $scope.changeFormByID = function() {
-                for (i = 0; i < $scope.forms.length; i++)
-                    if ($scope.forms[i].id == $scope.selectedForm)
+                for(i=0;i<$scope.forms.length;i++)
+                    if($scope.forms[i].id == $scope.selectedForm)
                         changePage(i);
             }
 
-            // Change the page based on the index of the collection of
-            // forms. Used to page forward, back and from the select menu.
+
             function changePage(newIndex) {
                 var resultsURL = '#/results/' + $scope.client_name + '/' +
                     $scope.forms[newIndex].name + '/' + $scope.category + '/' + $scope.client_id +
@@ -68,20 +58,24 @@
             }
 
 
-            // Utility function used to find out what the current index is
-            // so we know where in the collection of forms we currently are.
             function getCurrentIndex() {
                 for (i = 0; i < $scope.forms.length; i++)
                     if ($scope.forms[i].id == $routeParams.form_id)
                         return i;
-                    return 0;
             }
 
             // URL for retrieving results as a CSV file
             $scope.csvURL = "questions/" + $routeParams.client_id + "/" +
                 $routeParams.form_id + "/" + $routeParams.assessment_id + "/csv";
 
+            // Setting properties from params.
 
+            $scope.client_name = $routeParams.client_name;
+            $scope.form_name = $routeParams.form_name;
+            $scope.form_id = $routeParams.form_id;
+            $scope.client_id = $routeParams.client_id;
+            $scope.assessment_id = $routeParams.assessment_id;
+            $scope.category = $routeParams.category_id;
         }
     ]);
 
