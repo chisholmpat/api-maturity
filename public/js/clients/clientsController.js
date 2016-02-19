@@ -28,6 +28,7 @@
 
             $scope.isAff = false;
 
+            $scope.infoForClientID = null;
             // Check to see if this is a Bluemix survey or
             // if it's an API maturity survey.
             $scope.category = $routeParams.category_id;
@@ -121,6 +122,15 @@
                 });
             };
 
+            $scope.showInfoForClient = function(clientID){
+                    console.log("the thing clicked");
+                    if ($scope.infoForClientID != clientID){
+                        $scope.infoForClientID = clientID;
+                    }else{
+                        $scope.infoForClientID = null;
+                    }
+            };
+
         }
 
 
@@ -137,7 +147,7 @@
             $scope.clients = ClientsStore.allClientInfoOwnedByUserConn.query({},
                 function() {
                     // Check if we've been sent here from a client link and then check
-                    // to see if the client is in the users list of clients and if it 
+                    // to see if the client is in the users list of clients and if it
                     // it is then add that client's information to the edit form.
                     if ($routeParams.client_id) {
                         for (i = 0; i < $scope.clients.length; i++) {

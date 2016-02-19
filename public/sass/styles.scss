@@ -1,33 +1,9 @@
-/* styles.scss
-	* copiled to ./css/styles.css
- * This file provides css styles.
- */
+@import "../../bower_components/sass-support-files/_mixins";
+@import "../../bower_components/sass-support-files/_fonts";
+
 $color-main: #575757; //main Dark text
 $color-light: #fff; //Light text on dark background
-//vendor Mixin
-//example: @include prefix(box)
-@mixin prefix($map, $vendors: webkit moz ms o) {
-    @each $prop,
-    $value in $map {
-        @if $vendors {
-            @each $vendor in $vendors {
-                #{"-" + $vendor + "-" + $prop}: #{$value};
-            }
-        }
-        // Dump regular property anyway
-        #{$prop}: #{$value};
-    }
-}
-@mixin font-Light() {
-    font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-    font-weight: 300;
-    font-stretch: normal;
-}
-@mixin font-Thin() {
-    font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
-    font-weight: 100;
-    font-stretch: normal;
-}
+
 body,
 html {
     background-color: #FFFFFF;
@@ -35,7 +11,7 @@ html {
     height: 100%;
     min-width: 1000px;
     margin: 0 auto;
-    @include font-Light();
+
     // font-weight: 400;
     color: $color-main;
     font-size: 10px;
@@ -54,26 +30,22 @@ body {
 a {
     text-decoration: none;
     color: #00aed1;
-}
-a:hover {
-    text-decoration: underline;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 h1 {
     // color: #FFF;
-    @include font_Thin();
-    letter-spacing: 0.4rem;
-    font-size: 3rem;
+    @include helvetN-Thin(3rem,0.4rem);
     margin: 0 0 3rem;
 }
 h2 {
-    @include font_Thin();
+    @include helvetN-Thin(2.4rem,0.4rem);
     margin-top: 0;
-    font-size: 2.4rem;
-    letter-spacing: 0.4rem;
 }
 h3 {
-    @include font_Thin();
-    font-size: 2rem;
+    @include helvetN-Thin(2rem);
     margin-bottom: 2rem;
 }
 label {
@@ -108,11 +80,11 @@ label {
         width: inherit;
     }
     li {
-        @include font_Thin();
+        @include helvetN-Thin(inherit,0.4rem);
         cursor: pointer;
         line-height: normal;
         a {
-            padding: 0.2rem 1.5rem;
+            padding: 0.2rem 0;
         }
         ul.nav {
             margin-top: 1rem;
@@ -138,7 +110,7 @@ label {
         float: right;
     }
     h1 {
-        @include font-Light();
+        @include helvetN-Light();
         margin-bottom: 1rem;
     }
     h2 {
@@ -147,7 +119,7 @@ label {
 }
 div.formsNav {
     font-size: 1.2rem;
-    + * { //all direct childrin
+    > * { //all direct childrin
         display: inline-block;
     }
     button {
@@ -174,14 +146,13 @@ div.formsNav {
     }
     select {
         @include prefix((appearance: none));
-        @include font-Thin();
-        font-size: 2.4rem;
-        letter-spacing: 0.4rem;
+        @include helvetN-Thin(2.4rem,0.4rem);
         border: 0;
-    }
-    select:hover {
-        text-decoration: underline;
-        color: #3e5175;
+
+        &:hover {
+            text-decoration: underline;
+            color: #3e5175;
+        }
     }
 }
 //#page-content-wrapper
@@ -216,8 +187,7 @@ table.clientStyle {
 }
 uib-accordion.clients {
     h4 {
-        @include font_Light();
-        font-size: 2.8rem;
+        @include helvetN-Light(2.8rem);
         color: #3a697e;
         cursor: pointer;
     }
@@ -249,22 +219,29 @@ uib-accordion.clients {
 #clientLinks tr > td:first-child {
     width: 250px;
 }
+
+div#clientInfoColumn{
+    width: 100%;
+    clear: both;
+}
 div.clientInfo {
     padding: 1.5rem 2.5rem;
     background-color: #bbb;
     color: $color-light;
-    margin-left: 2rem;
+    margin-right: 2rem;
     min-height: 32rem;
     background-color: #728086;
-    // width: 30%;
-    float: right;
+    // width: 40%;
+    float: left;
     @include prefix((box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25)));
-    table tr td {
-        margin: 1rem 0;
-    }
-    table tr > td:first-child {
-        text-align: right;
-        padding-right: 2rem;
+    table tr {
+        td {
+            margin: 1rem 0;
+        }
+        > td:first-child {
+            text-align: right;
+            padding-right: 2rem;
+        }
     }
     h3 {
         margin-top: 0;
@@ -294,8 +271,7 @@ div.clientInfo {
 #sideLeftlinks a {
     display: block;
     color: $color-light;
-    font-size: 1.2rem;
-    @include font_Thin();
+    @include helvetN-Thin(1.2rem);
     margin-bottom: 1rem;
 }
 .SAtext,
@@ -375,8 +351,7 @@ canvas {
 #legendDiv {
     ul {
         list-style: none;
-    }
-    ul li {
+        li {
         display: block;
         padding-left: 30px;
         position: relative;
@@ -386,15 +361,17 @@ canvas {
         font-size: 14px;
         cursor: default;
         @include prefix((transition: background-color 200ms ease-in-out));
-    }
-    li span {
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 20px;
-        height: 100%;
-        border-radius: 5px;
+
+            span {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 20px;
+                height: 100%;
+                border-radius: 5px;
+            }
+        }
     }
 }
 // Forms:  Add_user, add_client,edit_questions
@@ -424,21 +401,22 @@ div.form-group {
         margin: 0.3rem 1.4rem 0.3rem 0;
         vertical-align: middle;
     }
-    div:first-child {
+    &:first-child {
         width: 70%;
     }
-    div:last-child {
+    &:last-child {
         margin: 0;
         width: 4.5rem;
         text-align: center;
     }
-}
-div.form-group.radioButtons {
-    label {
-        display: inline-block;
-        margin: 0 1rem 0 0;
-        span {
-            padding: 0.6rem;
+
+    &.radioButtons {
+        label {
+            display: inline-block;
+            margin: 0 1rem 0 0;
+            span {
+                padding: 0.6rem;
+            }
         }
     }
 }

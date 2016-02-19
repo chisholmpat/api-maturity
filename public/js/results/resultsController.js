@@ -182,9 +182,7 @@
                 client_id: $scope.$parent.client_id,
                 form_id: $scope.$parent.form_id,
                 assessment_id: $scope.$parent.assessment_id
-            }, function() {
-              console.log("please work");
-            });
+            }, function() {});
         }
     ]);
 
