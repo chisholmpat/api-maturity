@@ -65,7 +65,7 @@
 
             // Ensure that the password is appropriate.
             $scope.handlePatternPassword = (function() {
-                var regex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{6,20})/; // Number/L.Case/U.Case/Symbol!@#$%
+                var regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/; 
                 return {
                     test: function(value) {
                         if (!$scope.editing.id)
