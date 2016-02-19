@@ -28,7 +28,7 @@
 
             $scope.isAff = false;
 
-            $scope.infoForClientID = null;
+
             // Check to see if this is a Bluemix survey or
             // if it's an API maturity survey.
             $scope.category = $routeParams.category_id;
@@ -44,7 +44,10 @@
             $scope.collapsed = true;
 
             // Getting model information.
-            $scope.clients = ClientsStore.getClientsConn.query({}, function() {});
+            $scope.clients = ClientsStore.getClientsConn.query({}, function() {
+                //initalizes value for filter on client info divs to reveal first client's info.
+                $scope.infoForClientID = $scope.clients[0].id;
+            });
             $scope.forms = ClientsStore.formsConn.query({});
             $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
             $scope.assessments = ClientsStore.getAllAssessmentsConn.query({
@@ -53,6 +56,8 @@
                 console.log(res);
 
             });
+
+
 
             //use idToEmails to avoid adding duplicates of user_email-client ID combination
             $scope.allClientIDsAndEmails = ClientsStore.getAllCliendIDsAndEmailsConn.query({}, function() {
@@ -123,7 +128,6 @@
             };
 
             $scope.showInfoForClient = function(clientID){
-                    console.log("the thing clicked");
                     if ($scope.infoForClientID != clientID){
                         $scope.infoForClientID = clientID;
                     }else{
