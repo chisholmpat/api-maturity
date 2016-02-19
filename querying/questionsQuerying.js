@@ -53,6 +53,8 @@ exports.getClientAnswers = function(client_id, form_id, assessment_id, res, call
         .where('ClientQuestionResponse.client_id', client_id)
         .where('ClientQuestionResponse.assessment_id', assessment_id)
         .asCallback(function(err, rows) {
+            console.log(err);
+            console.log(rows);
             callback(err, res, rows);
         });
 };

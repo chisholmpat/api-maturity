@@ -164,10 +164,27 @@
         }
     ]);
 
-    module.controller('BmixResultsController', [
+    module.controller('BmixResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore',
+        function($scope, $rootScope, $http, $routeParams, ResultStore) {
+            // Getting display information for the page from
+            // the assessment in the database.
+            console.log("BmixResultsController");
+            ResultStore.assessmentDetailsConn.query({
+                assessment_id: $routeParams.assessment_id
+            },
+            function(response) {
+                $scope.client_name = response[0].name;
+                $scope.assessment_date = response[0].date;
+            });
 
-        function() {
-            console.log('BmixResultsController');
+            // Get results for processing.
+            $scope.results = ResultStore.scoreConn.query({
+                client_id: $scope.$parent.client_id,
+                form_id: $scope.$parent.form_id,
+                assessment_id: $scope.$parent.assessment_id
+            }, function() {
+              console.log("please work");
+            });
         }
     ]);
 
