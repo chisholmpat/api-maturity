@@ -30,8 +30,7 @@ h1 {
   font-weight: 100;
   font-stretch: normal;
   font-size: 3rem;
-  letter-spacing: 0.4rem;
-  margin: 0 0 3rem; }
+  letter-spacing: 0.4rem; }
 
 h2 {
   font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
@@ -105,11 +104,6 @@ label {
 #page-content-wrapper div.headerHeight div {
   float: right; }
 #page-content-wrapper h1 {
-  font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Tahoma", "Geneva", "Arial", sans-serif;
-  font-weight: 300;
-  font-stretch: normal;
-  font-size: inherit;
-  letter-spacing: normal;
   margin-bottom: 1rem; }
 #page-content-wrapper h2 {
   margin-bottom: 3rem; }

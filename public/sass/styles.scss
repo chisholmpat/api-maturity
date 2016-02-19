@@ -38,7 +38,7 @@ a {
 h1 {
     // color: #FFF;
     @include helvetN-Thin(3rem,0.4rem);
-    margin: 0 0 3rem;
+    // margin: 0 0 3rem;
 }
 h2 {
     @include helvetN-Thin(2.4rem,0.4rem);
@@ -98,19 +98,21 @@ label {
 }
 //#sideLeft
 #page-content-wrapper {
-    div.headerHeight h2 {
-        display: inline-block;
-        float: left;
-        margin: 0.8rem 1rem 0 0;
+    div.headerHeight {
+        h2 {
+            display: inline-block;
+            float: left;
+            margin: 0.8rem 1rem 0 0;
+        }
+        img {
+            display: inline-block;
+        }
+        div {
+            float: right;
+        }
     }
-    div.headerHeight img {
-        display: inline-block;
-    }
-    div.headerHeight div {
-        float: right;
-    }
+    
     h1 {
-        @include helvetN-Light();
         margin-bottom: 1rem;
     }
     h2 {
