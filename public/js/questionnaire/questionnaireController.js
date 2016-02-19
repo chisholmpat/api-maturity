@@ -165,8 +165,6 @@
             $scope.addQuestion = false;
             $scope.newQuestion = {};
             $scope.category = $routeParams.category_id;
-            console.log($scope.category);
-
 
             // Updates the question on the form.
             var refreshQuestions = function() {
@@ -189,12 +187,12 @@
                 // obviously become a problem when more question types are added.
                 if ($scope.questions[0].category_id == $rootScope.categoryIDs.QA) {
                     question.category_id = $rootScope.categoryIDs.QA;
-                    question.group_id = 1;
                 } else {
                     question.category_id = $rootScope.categoryIDs.BMIX;
                 }
 
-                console.log(question);
+                $scope.addQuestion = false
+
 
                 // Call to the backend
                 QuestionStore.addQuestionConn.save({
@@ -231,9 +229,10 @@
             $scope.editQuestions = function() {
                 QuestionStore.updateQuestionsConn.save({
                     questions: $scope.questions
-                }, function() {
-                    $scope.changeRoute('#/forms/');
-                });
+                }, function(){
+                    refreshQuestions();
+                    }
+                );
             };
 
             // For re-routing the request
