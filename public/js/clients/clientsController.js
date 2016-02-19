@@ -128,8 +128,8 @@
     ]);
 
     // Controller for "add_clients.html", for adding clients to DB.
-    module.controller('AddClientController', ['$scope', 'ClientsStore', '$window', '$routeParams',
-        function($scope, ClientsStore, $window, $routeParams) {
+    module.controller('AddClientController', ['$scope', 'ClientsStore', '$window', '$routeParams', '$route',
+        function($scope, ClientsStore, $window, $routeParams, $route) {
 
             $scope.client_id = $routeParams.client_id;
             $scope.editing = {}; // model to hold edited fields
@@ -182,14 +182,15 @@
                     ClientsStore.updateClientsConn.save({
                         client: $scope.editing
                     }, function() {
-                        window.alert("The client has been upd'ated.")
+                        window.alert("The client has been upd'ated.");
+                        $route.reload();
                     });
                 } else {
                     ClientsStore.addClientConn.save({
                         client: $scope.editing
                     }, function() {
-                        window.alert("The client has been added.")
-                        $scope.changeRoute('#/');
+                        window.alert("The client has been added.");
+                        $route.reload();
                     });
                 }
             };
