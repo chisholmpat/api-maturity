@@ -13,7 +13,8 @@
     "html2canvas": "*",
     "canvg": "*",
     "rgb-color": "*",
-    "pdfmake":"*"
+    "pdfmake":"*",
+    "sass-support-files":"https://github.com/terminalid/SassDepends.git"
   },
   "private": true
 }

@@ -1,33 +1,9 @@
-/* styles.scss
-	* copiled to ./css/styles.css
- * This file provides css styles.
- */
+@import "../../bower_components/sass-support-files/_mixins";
+@import "../../bower_components/sass-support-files/_fonts";
+
 $color-main: #575757; //main Dark text
 $color-light: #fff; //Light text on dark background
-//vendor Mixin
-//example: @include prefix(box)
-@mixin prefix($map, $vendors: webkit moz ms o) {
-    @each $prop,
-    $value in $map {
-        @if $vendors {
-            @each $vendor in $vendors {
-                #{"-" + $vendor + "-" + $prop}: #{$value};
-            }
-        }
-        // Dump regular property anyway
-        #{$prop}: #{$value};
-    }
-}
-@mixin font-Light() {
-    font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-    font-weight: 300;
-    font-stretch: normal;
-}
-@mixin font-Thin() {
-    font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
-    font-weight: 100;
-    font-stretch: normal;
-}
+
 body,
 html {
     background-color: #FFFFFF;
@@ -35,7 +11,7 @@ html {
     height: 100%;
     min-width: 1000px;
     margin: 0 auto;
-    @include font-Light();
+
     // font-weight: 400;
     color: $color-main;
     font-size: 10px;
@@ -61,20 +37,15 @@ a {
 }
 h1 {
     // color: #FFF;
-    @include font-Thin();
-    letter-spacing: 0.4rem;
-    font-size: 3rem;
+    @include helvetN-Thin(3rem,0.4rem);
     margin: 0 0 3rem;
 }
 h2 {
-    @include font-Thin();
+    @include helvetN-Thin(2.4rem,0.4rem);
     margin-top: 0;
-    font-size: 2.4rem;
-    letter-spacing: 0.4rem;
 }
 h3 {
-    @include font-Thin();
-    font-size: 2rem;
+    @include helvetN-Thin(2rem);
     margin-bottom: 2rem;
 }
 label {
@@ -109,7 +80,7 @@ label {
         width: inherit;
     }
     li {
-        @include font-Thin();
+        @include helvetN-Thin();
         cursor: pointer;
         line-height: normal;
         a {
@@ -139,7 +110,7 @@ label {
         float: right;
     }
     h1 {
-        @include font-Light();
+        @include helvetN-Light();
         margin-bottom: 1rem;
     }
     h2 {
@@ -175,9 +146,7 @@ div.formsNav {
     }
     select {
         @include prefix((appearance: none));
-        @include font-Thin();
-        font-size: 2.4rem;
-        letter-spacing: 0.4rem;
+        @include helvetN-Thin(2.4rem,0.4rem);
         border: 0;
 
         &:hover {
@@ -218,8 +187,7 @@ table.clientStyle {
 }
 uib-accordion.clients {
     h4 {
-        @include font_Light();
-        font-size: 2.8rem;
+        @include helvetN-Light(2.8rem);
         color: #3a697e;
         cursor: pointer;
     }
@@ -303,8 +271,7 @@ div.clientInfo {
 #sideLeftlinks a {
     display: block;
     color: $color-light;
-    font-size: 1.2rem;
-    @include font-Thin();
+    @include helvetN-Thin(1.2rem);
     margin-bottom: 1rem;
 }
 .SAtext,
