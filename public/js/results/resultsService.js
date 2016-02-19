@@ -8,7 +8,7 @@
         this.assessmentDetailsConn = $resource('/assmentdetails/:assessment_id');
     }]);
 
-    module.service('GraphScoresDataStore', ['$http', '$resource', function($http, $resource, valueWeightsArray) {
+    module.service('GraphScoresDataService', ['$http', '$resource', function($http, $resource, valueWeightsArray) {
 
         function calculateAllScores(response_value, question_weight) {
 
@@ -85,7 +85,7 @@
     }]);
 
 
-    module.service('GraphingFunctionsStore', ['$http', '$resource', function($http, $resource, qaGraphData, saGraphData, keyArray) {
+    module.service('GraphingFunctionsService', ['$http', '$resource', function($http, $resource, qaGraphData, saGraphData, keyArray) {
         this.makeRadarGraph = function(qaGraphData, saGraphData, keyArray){
 
           var showGraphId;
@@ -177,7 +177,7 @@
        }
     }]);
 
-    module.service('FileFormatsConversionStore', ['$http', '$resource', '$route', function($http, $resource, $route) {
+    module.service('FileFormatsConversionService', ['$http', '$resource', '$route', function($http, $resource, $route) {
 
       this.convertToPDF = function(clientName, formName){
 

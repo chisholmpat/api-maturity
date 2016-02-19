@@ -4,9 +4,9 @@
 
     // Controller for handling the displaying of results.
     module.controller('ResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore',
-        'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore', '$resource', '$window', '$route',
-        function($scope, $rootScope, $http, $routeParams, ResultStore, GraphScoresDataStore,
-            GraphingFunctionsStore, FileFormatsConversionStore, $resource, $window, $route) {
+        'GraphScoresDataService', 'GraphingFunctionsService', 'FileFormatsConversionService', '$resource', '$window', '$route',
+        function($scope, $rootScope, $http, $routeParams, ResultStore, GraphScoresDataService,
+            GraphingFunctionsService, FileFormatsConversionService, $resource, $window, $route) {
 
             $scope.forms = [];
             $scope.form_id = $routeParams.form_id;
@@ -80,8 +80,8 @@
     ]);
 
     module.controller('ApiMaturityResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore',
-        'GraphScoresDataStore', 'GraphingFunctionsStore', 'FileFormatsConversionStore',
-        function($scope, $rootScope, $http, $routeParams, ResultStore, GraphScoresDataStore, GraphingFunctionsStore, FileFormatsConversionStore) {
+        'GraphScoresDataService', 'GraphingFunctionsService', 'FileFormatsConversionService',
+        function($scope, $rootScope, $http, $routeParams, ResultStore, GraphScoresDataService, GraphingFunctionsService, FileFormatsConversionService) {
             // Getting display information for the page from
             // the assessment in the database.
             ResultStore.assessmentDetailsConn.query({
@@ -109,15 +109,15 @@
                 };
 
                 //obtain all graph scores
-                var allGraphScores = GraphScoresDataStore.getGraphScores(valueWeightsArray);
+                var allGraphScores = GraphScoresDataService.getGraphScores(valueWeightsArray);
                 $scope.results = valueWeightsArray;
-                var QAaverages = GraphScoresDataStore.getAverageGraphScores(allGraphScores[categories.QA]);
-                var QAmappedValues = GraphScoresDataStore.getMappedGraphScoresScores(QAaverages);
+                var QAaverages = GraphScoresDataService.getAverageGraphScores(allGraphScores[categories.QA]);
+                var QAmappedValues = GraphScoresDataService.getMappedGraphScoresScores(QAaverages);
 
                 //get final data for the graphs
                 var QAGraphData = QAmappedValues;
                 //SA does not get averaged or mapped but using the averages function will convert from single element array to just a value
-                var SAGraphData = GraphScoresDataStore.getAverageGraphScores(allGraphScores[categories.SA]);
+                var SAGraphData = GraphScoresDataService.getAverageGraphScores(allGraphScores[categories.SA]);
 
 
                 //Get a list of all possible keys
@@ -137,7 +137,7 @@
                 }
 
                 //draw radar graph
-                GraphingFunctionsStore.makeRadarGraph(QAfinalGraphData, SAfinalGraphData, graphTitles);
+                GraphingFunctionsService.makeRadarGraph(QAfinalGraphData, SAfinalGraphData, graphTitles);
 
                 //draw gauge graphs
                 //The gauge graphs need to be more detailed then radar, use the averages values as opposed to mapping to a lower value.
@@ -148,18 +148,18 @@
                     });
                     google.charts.setOnLoadCallback(function() {
                         // Set a callback to run when the Google Visualization API is loaded.
-                        GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
+                        GraphingFunctionsService.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is executed
                     });
                 } else {
-                    GraphingFunctionsStore.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is execute
+                    GraphingFunctionsService.makeGaugeGraphs(QAaverages, SAGraphData); //Only once charts loaded drawing charts is execute
                 }
             });
             $scope.getPDF = function() {
-                FileFormatsConversionStore.convertToPDF($scope.$parent.client_name, $scope.$parent.form_name);
+                FileFormatsConversionService.convertToPDF($scope.$parent.client_name, $scope.$parent.form_name);
             };
 
             $scope.getWordFile = function() {
-                FileFormatsConversionStore.convertToDOCX($http, $scope.$parent.client_name, $scope.$parent.form_name);
+                FileFormatsConversionService.convertToDOCX($http, $scope.$parent.client_name, $scope.$parent.form_name);
             };
         }
     ]);
