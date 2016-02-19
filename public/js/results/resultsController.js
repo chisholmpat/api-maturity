@@ -11,8 +11,10 @@
             $scope.forms = [];
             $scope.form_id = $routeParams.form_id;
             console.log($scope.form_id);
-            $scope.selectedForm = $scope.form_id;
-    
+            $scope.selectedForm = parseInt($scope.form_id, 10);
+            console.log("selectedForm");
+            console.log($scope.selectedForm);
+
 
             // Generate forms for drop down on page and sort them.
             $resource('/forms').query({}, function(response) {
@@ -34,7 +36,7 @@
 
             $scope.prevForm = function() {
                 var currentIndex = getCurrentIndex();
-                if (currentIndex > 0)                     
+                if (currentIndex > 0)
                     changePage(currentIndex-1);
             };
 
