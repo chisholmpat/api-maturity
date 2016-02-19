@@ -84,11 +84,11 @@ label {
     font-weight: 100;
     font-stretch: normal;
     font-size: inherit;
-    letter-spacing: normal;
+    letter-spacing: 0.4rem;
     cursor: pointer;
     line-height: normal; }
     #sidebar-wrapper li a {
-      padding: 0.2rem 1.5rem; }
+      padding: 0.2rem 0; }
     #sidebar-wrapper li ul.nav {
       margin-top: 1rem;
       margin-bottom: 2rem; }

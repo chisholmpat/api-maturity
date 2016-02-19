@@ -80,11 +80,11 @@ label {
         width: inherit;
     }
     li {
-        @include helvetN-Thin();
+        @include helvetN-Thin(inherit,0.4rem);
         cursor: pointer;
         line-height: normal;
         a {
-            padding: 0.2rem 1.5rem;
+            padding: 0.2rem 0;
         }
         ul.nav {
             margin-top: 1rem;
