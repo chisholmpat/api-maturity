@@ -32,17 +32,27 @@
         <div class="form-group" ng-class="{ 'has-error' : userform.email.$invalid && !userform.email.$pristine }">
             <!-- Last Name -->
             <label>Email</label>
-            <input  class="form-control" type="email" ng-model="editing.email" name="email" url="/checkUniqueUserEmail/" ng-attr-unique-value="aUser.email == editing.email"
+            <input class="form-control" type="email" ng-model="editing.email" name="email"
+            url="/checkUniqueUserEmail/" ng-attr-unique-value="aUser.email == editing.email"
             placeholder="email@inbox.com" required />
-             <p ng-show="userform.email.$invalid && !userform.email.$pristine" class="help-block">Enter a valid email.</p>
+            <p ng-show="userform.email.$invalid && !userform.email.$pristine" class="help-block">Enter a valid email.</p>
         </div>
 
         <div class="form-group" ng-class="{ 'has-error': userform.password.$dirty && userform.password.$error.required }"
         ng-if="!editing.id">
             <label for="passwordConfirm">Password</label>
-            <input "editing.id" type="password" name="password" id="password" class="form-control" ng-pattern="handlePatternPassword"
-            ng-model="editing.password" required />
-            <span ng-show="userform.password.$error.pattern" class="help-block">Password Must Contain at Least 6 Characters / 1 Number/ 1 L.Case/ 1U.Case/ 1 Symbol!@#$% </span>
+            <input "editing.id" type="password" name="password" id="password" class="form-control"
+            ng-pattern="handlePatternPassword" ng-model="editing.password" required
+            />
+            <span ng-show="userform.password.$error.pattern" class="help-block">
+                <ul>
+                    <li> At least one uppercase letter. </li>
+                    <li> At least one lowercase letter. </li>
+                    <li> At least one digit. </li>
+                    <li> At least one special character. </li>
+                    <li> At least 8 characters long. </li>
+                </ul>
+            </span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': userform.password.$dirty && userform.password.$error.required }"
         ng-if="!editing.id">
@@ -55,10 +65,11 @@
         <div class="form-group">
             Role:
             <select ng-model="editing.role_id" ng-options="role.id as (role.role | uppercase) for role in roles"></select>
-            <input type="checkbox" ng-model="editing.active" ng-true-value="1" ng-false-value="0"> Active </input>
+            <input type="checkbox" ng-model="editing.active" ng-true-value="1" ng-false-value="0">Active</input>
         </div>
 
-        <select ng-model="aUser" ng-options="aUser.username for aUser in allUsers | filter: {email: '!' + loggedInEmail}" ng-change="onChange()">
+        <select ng-model="aUser" ng-options="aUser.username for aUser in allUsers | filter: {email: '!' + loggedInEmail}"
+        ng-change="onChange()">
             <option value="">New User</option>
         </select>
 
