@@ -46,7 +46,7 @@ exports.getClientAnswers = function(client_id, form_id, assessment_id, res, call
             'Question.category_id', 'Question.group_id', 'Grouping.name')
         .from('ClientQuestionResponse')
         .innerJoin('Question', 'ClientQuestionResponse.question_id', 'Question.id')
-        .innerJoin('Grouping', 'Question.group_id', 'Grouping.id')
+        .leftJoin('Grouping', 'Question.group_id', 'Grouping.id')
         .leftJoin('Response', 'ClientQuestionResponse.response_id', 'Response.id')
         .where('Question.form_id', form_id)
         .where('Question.active', 1)
