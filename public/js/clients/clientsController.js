@@ -123,7 +123,7 @@
                     client_id: clientID,
                     category_id: $scope.category
                 }, function(result) {
-                    $location.url('/questionnaire/' + $scope.category + '/' + clientID + '/' + $scope.category);
+                    $location.url('/questionnaire/' + $scope.category + '/' + clientID + '/' + result.id);
                 });
             };
 
