@@ -1,5 +1,5 @@
 var opts = null;
-var devEnv = false;
+var devEnv = true;
 
 // Conditionally set the database connection details
 // based on whether we're in development or production.
