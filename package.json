@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "tar -xf passport-idaas-openidconnect.tar.gz -C ./node_modules/",
     "start": "node app.js"
   },
   "dependencies": {
