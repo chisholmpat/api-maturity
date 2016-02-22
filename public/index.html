@@ -32,9 +32,8 @@
                         </li>
                         <li>
                             <!-- TODO Remove hardcoded values from the category ID for question type.-->
-                            <a href="#/{{categoryIDs.API}}/clients" ng-show="role == 'user' || role == 'admin' ">API Maturity </a>
-                            <a href="/#/{{categoryIDs.BMIX}}/clients" ng-show="role == 'user' || role == 'admin' ">BMIX Affinity</a>
-                            <a href="#clients" ng-show="role == 'client' ">Results</a>
+                            <a href="#/{{categoryIDs.API}}/clients" >API Maturity </a>
+                            <a href="/#/{{categoryIDs.BMIX}}/clients"  >BMIX Affinity</a>
                         </li>
                         <div ng-controller="MenuController">
                             <li ng-show="role === 'admin' || role === 'user'">
