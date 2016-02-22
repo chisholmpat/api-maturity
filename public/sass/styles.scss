@@ -226,20 +226,28 @@ uib-accordion.clients {
 #clientLinks tr > td:first-child {
     width: 250px;
 }
-
-div#clientInfoColumn{
+div.clientInfoColumn{
+    margin: 0;
+    padding: 0;
+}
+div.clientInfoRepeat{
     width: 100%;
-    clear: both;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 div.clientInfo {
+    position: relative;
     padding: 1.5rem 2.5rem;
     background-color: #bbb;
     color: $color-light;
     margin-right: 2rem;
+    margin-bottom: 2rem;
     min-height: 32rem;
     background-color: #728086;
-    // width: 40%;
-    float: left;
+    flex-grow: 1;
+    margin: 1rem;
     @include prefix((box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25)));
     table tr {
         td {
@@ -258,6 +266,9 @@ div.clientInfo {
         padding: 0.3rem 1.2rem;
         float: right;
     }
+    form{
+        display: block;
+    }
     input {
         color: $color-main;
         margin-right: 0.5rem;
@@ -266,8 +277,15 @@ div.clientInfo {
         margin-bottom: 1rem;
     }
     p {
+        margin: 0 0 2rem;
         display: block;
         text-align: center;
+        width: 100%;
+    }
+    p:last-child{//contains Delete button
+        position: absolute;
+        bottom: 1.5rem;
+        margin: 0px -2.5rem;
     }
     .btn-danger {
         float: none;
