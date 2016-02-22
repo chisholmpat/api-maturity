@@ -11,7 +11,7 @@
     "angular-animate": "~1.4.8",
     "angular-http-loader": "~0.1.7",
     "html2canvas": "*",
-    "canvg": "*",
+    "canvg": "https://github.com/rosejp/canvg.git",
     "rgb-color": "*",
     "pdfmake":"*",
     "sass-support-files":"https://github.com/terminalid/SassDepends.git"

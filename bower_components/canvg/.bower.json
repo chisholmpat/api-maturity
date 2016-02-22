@@ -1,38 +1,28 @@
 {
   "name": "canvg",
-  "version": "1.3.0",
-  "homepage": "https://github.com/shprink/canvg",
-  "authors": [
-    "Gabe Lerner <gabelerner@gmail.com>"
-  ],
-  "description": "Javascript SVG parser and renderer on Canvas",
-  "main": [
-    "dist/canvg.bundle.js",
-    "dist/canvg.bundle.min.js"
-  ],
+  "main": "canvg.js",
   "keywords": [
-    "canvas",
+    "javascript",
+    "client",
+    "browser",
     "svg",
-    "convertor"
+    "canvas"
   ],
-  "license": "MIT",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "gulpfile.js",
-    "package.json",
-    "lib/",
-    "test",
-    "tests"
+    "examples",
+    "svgs"
   ],
-  "_release": "1.3.0",
-  "_resolution": {
-    "type": "version",
-    "tag": "v1.3.0",
-    "commit": "7960193ec8c528936225c0f2eaea36e9083709f3"
+  "dependencies": {
+    "rgb-color": "ariutta/rgb-color"
   },
-  "_source": "git://github.com/shprink/canvg.git",
+  "homepage": "https://github.com/rosejp/canvg",
+  "_release": "d678e64f9f",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d678e64f9fd965bc38d2e3390cc21a46346f80a7"
+  },
+  "_source": "https://github.com/rosejp/canvg.git",
   "_target": "*",
-  "_originalSource": "canvg"
+  "_originalSource": "https://github.com/rosejp/canvg.git"
 }
