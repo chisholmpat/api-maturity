@@ -8,7 +8,7 @@
             class="QACheckboxGroup">
                 <label>
                     <input type="radio" ng-model="question.response_id" ng-value="response.id"
-                    ng-init="question.response_id = question.response_id ? question.response_id : 
+                    ng-init="question.response_id = question.response_id ? question.response_id :
                     (responses | filter: {category_id: categoryIDs.BMIX } | filter: {value: '0'})[0].id"
                     <span>{{response.response}}</span>
                 </label>
@@ -21,8 +21,6 @@
         <div ng-init="showText = false" class="QAoptions" ng-show="showText">
             <p>Notes</p>
             <input type="text" name="" class="form-control" ng-model="question.note">
-            <p>Weight</p>
-            <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
         </div>
     </div>
 </div>
