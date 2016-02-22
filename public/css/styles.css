@@ -9,7 +9,14 @@ html {
   font-size: 10px; }
 
 body {
-  font-size: 1.5rem; }
+  font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Tahoma", "Geneva", "Arial", sans-serif;
+  font-weight: 300;
+  font-stretch: normal;
+  font-size: 1.5rem;
+  letter-spacing: normal; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; }
 
 [ng\:cloak],
 [ng-cloak],
