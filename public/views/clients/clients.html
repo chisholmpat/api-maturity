@@ -10,16 +10,9 @@
             <div class="formTable">
                 <div><span><a ng-if="role != 'client'" ng-click="newAssessment(client.id)"> Start New Assessment </a></span></div>
                 <div ng-repeat="assessment in assessments | filter: { client_id: client.id} : true | filter: {category_id: category} ">
-                <div ng-if="role != 'client'">
                     <span><a href="/#/questionnaire/{{category}}/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
                     <span><a href="/#/clientforms/{{client.name}}/{{category}}/{{client.id}}/{{assessment.id}}/"> Results </a> </span>
                 </div>
-                <div ng-if="role == 'client'">
-                    <span><a href="/#/clientforms/{{client.name}}/{{category}}/{{client.id}}/{{assessment.id}}/"> 
-                            Results for {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
-                </div>
-
-
               </div>
                 <div>
                     <span></span>
