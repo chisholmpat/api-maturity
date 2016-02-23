@@ -13,6 +13,8 @@
             $scope.category = $routeParams.category_id;
             $scope.currentIndex = 0;
 
+
+
             // Advance to the next form or navigate to the results page
             // for the current assessment if we're on the last survey.
             $scope.nextForm = function() {
@@ -78,16 +80,17 @@
                     });
                 });
 
-                $scope.responses = QuestionStore.responseConn.query({}, function(data) {
-
-                });
+                $scope.responses = QuestionStore.responseConn.query();
             };
 
             // Load the initial questions.
             $scope.forms = QuestionStore.formsByCategoryConn.query({
                 category_id: $scope.category
             }, function() {
-                $scope.loadQuestions($scope.forms[$scope.currentIndex].id);
+                var id = $routeParams.form_id ? $routeParams.form_id : $scope.forms[$scope.currentIndex].id;
+                $scope.loadQuestions(id);
+                $scope.currentFormID = parseInt(id, 10);
+                
             });
 
             // For Creating a numeric range for the weight option
