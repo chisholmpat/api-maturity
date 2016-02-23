@@ -271,55 +271,38 @@ div.clientInfo {
     float: none;
     font-size: 1.5rem; }
 
-/*SURVEY PAGE*/
-#sideLeftlinks a {
-  display: block;
-  color: #fff;
-  font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
-  font-weight: 100;
-  font-stretch: normal;
-  font-size: 1.2rem;
-  letter-spacing: normal;
-  margin-bottom: 1rem; }
-
-.SAtext,
-.QAtext {
+/*questionnaire PAGE*/
+div#questionnaire .SAtext,
+div#questionnaire .QAtext {
   margin-left: 4rem;
   font-size: 1.5rem; }
-
-form {
+div#questionnaire form {
   display: inline-block; }
-
-.SAtext label {
+div#questionnaire .SAtext label {
   margin-left: 8rem; }
-  .SAtext label span {
+  div#questionnaire .SAtext label span {
     width: auto;
     margin-left: 0.5rem; }
-.SAtext span {
+div#questionnaire .SAtext span {
   display: inline-block;
   width: 7rem; }
-
-.QAcheckboxes {
+div#questionnaire .QAcheckboxes {
   margin-bottom: 3.5rem; }
-
-.QACheckboxGroup {
+div#questionnaire .QACheckboxGroup {
   display: inline-block;
   text-align: center;
   font-size: 1.2rem;
   /*width: 9rem;*/
   margin-right: 4rem; }
-  .QACheckboxGroup label span {
+  div#questionnaire .QACheckboxGroup label span {
     display: block; }
-
-.QAoptions {
+div#questionnaire .QAoptions {
   /*display:none;*/
   margin: 3rem 0; }
-
-.QAoptions p {
+div#questionnaire .QAoptions p {
   font-size: 1.2rem;
   margin: 0; }
-
-.QAoptions textarea {
+div#questionnaire .QAoptions textarea {
   width: 50%; }
 
 /*RESULTS PAGE*/
@@ -369,6 +352,17 @@ canvas {
       width: 20px;
       height: 100%;
       border-radius: 5px; }
+
+div.listSelect select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: 0; }
+  div.listSelect select:hover {
+    text-decoration: underline;
+    color: #3e5175; }
 
 form.simple-form {
   width: 80%; }

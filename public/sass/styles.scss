@@ -293,57 +293,53 @@ div.clientInfo {
         font-size: 1.5rem;
     }
 }
-/*SURVEY PAGE*/
-#sideLeftlinks a {
-    display: block;
-    color: $color-light;
-    @include helvetN-Thin(1.2rem);
-    margin-bottom: 1rem;
-}
-.SAtext,
-.QAtext {
-    margin-left: 4rem;
-    font-size: 1.5rem;
-}
-form {
-    display: inline-block;
-}
-.SAtext {
-    label {
-        margin-left: 8rem;
+/*questionnaire PAGE*/
+div#questionnaire{
+    .SAtext,
+    .QAtext {
+        margin-left: 4rem;
+        font-size: 1.5rem;
+    }
+    form {
+        display: inline-block;
+    }
+    .SAtext {
+        label {
+            margin-left: 8rem;
+            span {
+                width: auto;
+                margin-left: 0.5rem;
+            }
+        }
         span {
-            width: auto;
-            margin-left: 0.5rem;
+            display: inline-block;
+            width: 7rem;
         }
     }
-    span {
+    .QAcheckboxes {
+        margin-bottom: 3.5rem;
+    }
+    .QACheckboxGroup {
         display: inline-block;
-        width: 7rem;
+        text-align: center;
+        font-size: 1.2rem;
+        /*width: 9rem;*/
+        margin-right: 4rem;
+        label span {
+            display: block;
+        }
     }
-}
-.QAcheckboxes {
-    margin-bottom: 3.5rem;
-}
-.QACheckboxGroup {
-    display: inline-block;
-    text-align: center;
-    font-size: 1.2rem;
-    /*width: 9rem;*/
-    margin-right: 4rem;
-    label span {
-        display: block;
+    .QAoptions {
+        /*display:none;*/
+        margin: 3rem 0;
     }
-}
-.QAoptions {
-    /*display:none;*/
-    margin: 3rem 0;
-}
-.QAoptions p {
-    font-size: 1.2rem;
-    margin: 0;
-}
-.QAoptions textarea {
-    width: 50%;
+    .QAoptions p {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+    .QAoptions textarea {
+        width: 50%;
+    }
 }
 /*RESULTS PAGE*/
 .sa_score {
@@ -401,6 +397,15 @@ canvas {
     }
 }
 // Forms:  Add_user, add_client,edit_questions
+div.listSelect select {
+    @include prefix((appearance: none));
+    // @include helvetN-Thin(2.4rem,0.4rem);
+    border: 0;
+    &:hover {
+        text-decoration: underline;
+        color: #3e5175;
+    }
+}
 form.simple-form {
     width: 80%;
 }
