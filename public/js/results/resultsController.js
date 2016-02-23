@@ -10,11 +10,7 @@
 
             $scope.forms = [];
             $scope.form_id = $routeParams.form_id;
-            console.log($scope.form_id);
             $scope.selectedForm = parseInt($scope.form_id, 10);
-            console.log("selectedForm");
-            console.log($scope.selectedForm);
-
 
             // Generate forms for drop down on page and sort them.
             $resource('/forms').query({}, function(response) {
@@ -31,21 +27,21 @@
             $scope.nextForm = function() {
                 var currentIndex = getCurrentIndex();
                 if (currentIndex < $scope.forms.length - 1)
-                    changePage(currentIndex+1);
+                    changePage(currentIndex + 1);
             };
 
             $scope.prevForm = function() {
                 var currentIndex = getCurrentIndex();
                 if (currentIndex > 0)
-                    changePage(currentIndex-1);
+                    changePage(currentIndex - 1);
             };
 
 
             // Change the page based on the form selected
             // in the drop down box.
             $scope.changeFormByID = function() {
-                for(i=0;i<$scope.forms.length;i++)
-                    if($scope.forms[i].id == $scope.selectedForm)
+                for (i = 0; i < $scope.forms.length; i++)
+                    if ($scope.forms[i].id == $scope.selectedForm)
                         changePage(i);
             }
 
@@ -80,8 +76,8 @@
     ]);
 
     module.controller('ApiMaturityResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore',
-        'GraphScoresDataService', 'GraphingFunctionsService', 'FileFormatsConversionService',
-        function($scope, $rootScope, $http, $routeParams, ResultStore, GraphScoresDataService, GraphingFunctionsService, FileFormatsConversionService) {
+        'GraphScoresDataService', 'GraphingFunctionsService', 'FileFormatsConversionService', '$window',
+        function($scope, $rootScope, $http, $routeParams, ResultStore, GraphScoresDataService, GraphingFunctionsService, FileFormatsConversionService, $window) {
             // Getting display information for the page from
             // the assessment in the database.
             ResultStore.assessmentDetailsConn.query({
@@ -99,6 +95,11 @@
                 assessment_id: $scope.$parent.assessment_id
             }, function() {
 
+                if ($scope.results.length === 0 && confirm('No results for form. Would you like to start the form now?')) {
+                    var url = '/#/questionnaire/' + $routeParams.category_id + '/' + $routeParams.client_id + '/' + $routeParams.assessment_id;
+                    $window.location.href = (url + "?form_id=" + $routeParams.form_id);
+                }
+                
                 var QAfinalGraphData = [];
                 var SAfinalGraphData = [];
                 var valueWeightsArray = $scope.results;
@@ -164,25 +165,33 @@
         }
     ]);
 
-    module.controller('BmixResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore',
-        function($scope, $rootScope, $http, $routeParams, ResultStore) {
+    module.controller('BmixResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore', '$location',
+        function($scope, $rootScope, $http, $routeParams, ResultStore, $location) {
+
             // Getting display information for the page from
             // the assessment in the database.
             console.log("BmixResultsController");
             ResultStore.assessmentDetailsConn.query({
-                assessment_id: $routeParams.assessment_id
-            },
-            function(response) {
-                $scope.client_name = response[0].name;
-                $scope.assessment_date = response[0].date;
-            });
+                    assessment_id: $routeParams.assessment_id
+                },
+                function(response) {
+                    $scope.client_name = response[0].name;
+                    $scope.assessment_date = response[0].date;
+                });
 
             // Get results for processing.
             $scope.results = ResultStore.scoreConn.query({
                 client_id: $scope.$parent.client_id,
                 form_id: $scope.$parent.form_id,
                 assessment_id: $scope.$parent.assessment_id
-            }, function() {});
+            }, function() {
+
+                if ($scope.results.length === 0 && confirm('No results for form. Would you like to start the form now?')) {
+                    var url = '/questionnaire/' + $routeParams.category_id + '/' + $routeParams.client_id + '/' + $routeParams.assessment_id;
+                    $location.url(url);
+                }
+
+            });
         }
     ]);
 
@@ -196,5 +205,7 @@
 
         }
     ]);
+
+
 
 })();
