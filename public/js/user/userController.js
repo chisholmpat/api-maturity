@@ -37,7 +37,7 @@
     module.controller('EditUserController', ['$scope', 'UserStore', '$window',
         function($scope, UserStore, $window) {
 
-            $scope.result = ""; // 
+            $scope.result = ""; //
             $scope.editing = {};
             $scope.defaultRoleID = "";
             $scope.defaultEmail = "email@sample.com";
@@ -48,11 +48,11 @@
                 $scope.allEmails = response.map(function(u){ return u.email.toUpperCase();});
             });
 
-            $scope.uniqueUsername = function(){ 
+            $scope.uniqueUsername = function(){
                 if($scope.editing.username && !$scope.aUser){
-                    return !($scope.allUsernames.indexOf($scope.editing.username.toUpperCase()) > -1);
+                    return ($scope.allUsernames.indexOf($scope.editing.username.toUpperCase()) > -1);
                 }else{
-                    return true;
+                    return false;
                 }
             };
 
@@ -65,7 +65,7 @@
 
             // Ensure that the password is appropriate.
             $scope.handlePatternPassword = (function() {
-                var regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/; 
+                var regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
                 return {
                     test: function(value) {
                         if (!$scope.editing.id)
