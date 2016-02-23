@@ -213,9 +213,14 @@ div.clientInfoColumn {
 
 div.clientInfoRepeat {
   width: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  -webkit-flex-flow: row wrap;
+  -moz-flex-flow: row wrap;
+  flex-flow: row wrap;
   justify-content: space-between; }
 
 div.clientInfo {

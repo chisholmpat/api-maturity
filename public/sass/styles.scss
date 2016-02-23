@@ -232,9 +232,10 @@ div.clientInfoColumn{
 }
 div.clientInfoRepeat{
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    @include flexbox(row wrap);
+    // display: flex;
+    // // flex-direction: row;
+    // // flex-wrap: wrap;
     justify-content: space-between;
 }
 div.clientInfo {
