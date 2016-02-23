@@ -99,7 +99,7 @@
                     var url = '/#/questionnaire/' + $routeParams.category_id + '/' + $routeParams.client_id + '/' + $routeParams.assessment_id;
                     $window.location.href = (url + "?form_id=" + $routeParams.form_id);
                 }
-                
+
                 var QAfinalGraphData = [];
                 var SAfinalGraphData = [];
                 var valueWeightsArray = $scope.results;
@@ -165,8 +165,8 @@
         }
     ]);
 
-    module.controller('BmixResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore', '$location',
-        function($scope, $rootScope, $http, $routeParams, ResultStore, $location) {
+    module.controller('BmixResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore', '$window',
+        function($scope, $rootScope, $http, $routeParams, ResultStore, $window) {
 
             // Getting display information for the page from
             // the assessment in the database.
@@ -187,8 +187,8 @@
             }, function() {
 
                 if ($scope.results.length === 0 && confirm('No results for form. Would you like to start the form now?')) {
-                    var url = '/questionnaire/' + $routeParams.category_id + '/' + $routeParams.client_id + '/' + $routeParams.assessment_id;
-                    $location.url(url);
+                    var url = '/#/questionnaire/' + $routeParams.category_id + '/' + $routeParams.client_id + '/' + $routeParams.assessment_id;
+                    $window.location.href = (url + "?form_id=" + $routeParams.form_id);
                 }
 
             });
