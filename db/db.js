@@ -1,5 +1,13 @@
 var opts = null;
-var devEnv = true;
+var devEnv = false;
+
+
+if(process.env.VCAP_SERVICES)
+    console.log(JSON.parse(process.env.VCAP_SERVICES));
+
+
+
+
 
 // Conditionally set the database connection details
 // based on whether we're in development or production.

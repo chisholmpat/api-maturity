@@ -23,10 +23,9 @@
 
 </div>
 
+
+
 <div class="col-lg-7 clientInfoColumn">
-    <div ng-init="allAssesments = (assessments | filter: { client_id: infoForClientID} : true | filter: {category_id: category}) ">
-        <div ng-repeat="client in clients" ng-if="allAssesments.length==0">No assesments available, contact your IBM representative to start your assessment.</div>
-    </div>
     <div class="clientInfoRepeat" ng-repeat="client in clients |filter:{id:infoForClientID}:true">
         <div class="clientInfo">
             <h3>
