@@ -226,7 +226,6 @@ div.clientInfoRepeat {
 div.clientInfo {
   position: relative;
   padding: 1.5rem 2.5rem;
-  background-color: #bbb;
   color: #fff;
   margin-right: 2rem;
   margin-bottom: 2rem;
@@ -369,9 +368,10 @@ div.listSelect select {
   div.listSelect select option:hover {
     text-decoration: underline;
     color: #3e5175; }
-
-form#userform div.form-group:first-of-type {
-  padding-top: 0; }
+  div.listSelect select option:first-of-type {
+    font-weight: 100;
+    font-size: 2rem;
+    margin-bottom: 1rem; }
 
 form.simple-form {
   width: 80%; }
@@ -401,6 +401,20 @@ div.form-group {
     margin: 0;
     width: 4.5rem;
     text-align: center; }
+  form#userform div.form-group:first-of-type {
+    padding-top: 0; }
+  form#userform div.form-group:last-child {
+    margin: 0;
+    width: 100%;
+    text-align: left; }
+    form#userform div.form-group:last-child > * {
+      display: inline-block;
+      margin-right: 1.2rem; }
+    form#userform div.form-group:last-child button {
+      float: right;
+      margin-right: 0; }
+  div.form-group label span {
+    padding: 0.6rem; }
   div.form-group.radioButtons label {
     display: inline-block;
     margin: 0 1rem 0 0; }

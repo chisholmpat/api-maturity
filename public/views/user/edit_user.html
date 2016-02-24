@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-lg-3 listSelect">
             <select size={{usersFiltered.length+1}} ng-model="aUser" ng-options="aUser.username for aUser in usersFiltered = (allUsers | filter: {email: '!' + loggedInEmail})" ng-change="onChange()">
-                <option value="">New User</option>
+                <option value=""> - New User - </option>
             </select>
         </div>
         <div class="col-lg-9">
@@ -63,13 +63,11 @@
             </div>
 
             <div class="form-group">
-                Role:
-                <select ng-model="editing.role_id" ng-options="role.id as (role.role | uppercase) for role in roles"></select>
-                <input type="checkbox" ng-model="editing.active" ng-true-value="1" ng-false-value="0">Active</input>
+                Role: <select ng-model="editing.role_id" ng-options="role.id as (role.role | uppercase) for role in roles"></select>
+                <label><input type="checkbox" ng-model="editing.active" ng-true-value="1" ng-false-value="0"><span>Active</span></input></label>
+                <button data-ng-disabled="!userform.$valid || !uniqueUsername()" class="btn btn-default" type>Submit</button>
             </div>
 
-
-            <button data-ng-disabled="!userform.$valid || !uniqueUsername()" class="btn btn-default" type>Submit</button>
         </div>
     </div>
 </form>
