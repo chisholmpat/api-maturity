@@ -420,9 +420,7 @@ form.simple-form {
 form.simple-form.questions-Form {
     width: 100%;
 }
-div.form-group.addQuestion {
-    background-color: rgb(173, 232, 104);
-}
+
 div.form-group.headings {
     padding-bottom: 0;
     h3 {
@@ -434,20 +432,30 @@ div.form-group {
     display: block;
     margin: 0;
     padding: 1rem;
+    padding-left: 0;
+
+    &.addQuestion {
+        background-color: rgb(173, 232, 104);
+        padding-left: 1rem;
+    }
+
+
     div {
         display: inline-block;
-        min-width: 10.5rem;
         margin: 0.3rem 1.4rem 0.3rem 0;
         vertical-align: middle;
+
+        &:first-child {
+            width: 85%;
+        }
+        &:last-child {
+            margin: 0;
+            width: 7.3rem;
+            text-align: center;
+            cursor: pointer;
+        }
     }
-    &:first-child {
-        // width: 70%;
-    }
-    &:last-child {
-        margin: 0;
-        width: 4.5rem;
-        text-align: center;
-    }
+
 
     form.userform &:first-of-type{
         padding-top: 0;
