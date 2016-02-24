@@ -48,12 +48,32 @@
                 $scope.allEmails = response.map(function(u){ return u.email.toUpperCase();});
             });
 
+            // Function to check if the username is unique.
             $scope.uniqueUsername = function(){
-                if($scope.editing.username && !$scope.aUser){
-                    return ($scope.allUsernames.indexOf($scope.editing.username.toUpperCase()) > -1);
-                }else{
-                    return false;
-                }
+
+                // If the name is empty return true, there are other validations
+                // in place to check for an empty username.
+                if(!$scope.editing.username || $scope.editing.username === '')
+                    return true;
+
+                // If there is no user selected in the select box ($scope.aUser) then
+                // we need to check the current entry of the textbox against the list
+                // of user names which we've retrieved from the database.
+               if($scope.editing.username && !$scope.aUser){ 
+                    // Check the list to see if the username exists in the collection of usernames
+                    // we've retrieved from the database.
+                    return !($scope.allUsernames.indexOf($scope.editing.username.toUpperCase()) > -1);
+               }
+            
+               else
+                   // The name has not changed since the user was selected
+                   if($scope.aUser.username === $scope.editing.username){
+                        return true;
+                   } else {
+                    // If there is a user selected and the name has changed, run the same check.
+                    return !($scope.allUsernames.indexOf($scope.editing.username.toUpperCase()) > -1);
+
+                   }
             };
 
             // Retrieve roles for use in the dropdown
