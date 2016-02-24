@@ -12,6 +12,7 @@ module.exports = function(app) {
     app.post('/forgot', function(req, res, next) {
 
         async.waterfall([
+
             function(done) {
                 // Generate a token for the user.
                 crypto.randomBytes(20, function(err, buf) {
@@ -32,17 +33,17 @@ module.exports = function(app) {
                             user = rows[0]; // extract the user
                             user.reset_password_token = token;
                             user.reset_password_expires = Date.now() + 3600000; // 1 hour
-                        
-                        // persist the token into the database
-                        knex('users')
-                            .where('id', user.id)
-                            .update({
-                                reset_password_token: token,
-                                reset_password_expires: Date.now() + 3600000 // 1 hour     
-                            }).asCallback(function(err, rows) {
-                                done(err, token, user);
-                            });
-						}
+
+                            // persist the token into the database
+                            knex('users')
+                                .where('id', user.id)
+                                .update({
+                                    reset_password_token: token,
+                                    reset_password_expires: Date.now() + 3600000 // 1 hour     
+                                }).asCallback(function(err, rows) {
+                                    done(err, token, user);
+                                });
+                        }
                     });
             },
             // Send the email containing the link
@@ -69,7 +70,7 @@ module.exports = function(app) {
             }
         ], function(err) {
             if (err) return next(err);
-			res.send(200);
+            res.send(200);
         });
     });
 

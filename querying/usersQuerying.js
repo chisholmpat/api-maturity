@@ -42,7 +42,7 @@ exports.updateUser = function(user, res, callback) {
         knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
             callback(err, res);
         });
-        
+
         knex('userclients').where('email', userEmail).update({
             email: user.email
         });
@@ -86,13 +86,12 @@ exports.checkUniqueUsername = function(username, res, callback) {
 };
 
 // Checks to see if an email is already taken
-exports.checkUniqueUserEmail = function(email, res, callback){
-  
-  knex('users').select('').where('email', email).asCallback(function(err, rows) {
-      if (rows && rows[0])
+exports.checkUniqueUserEmail = function(email, res, callback) {
+
+    knex('users').select('').where('email', email).asCallback(function(err, rows) {
+        if (rows && rows[0])
             res.send(rows[0].username);
         else
             res.send(404);
     });
 };
-

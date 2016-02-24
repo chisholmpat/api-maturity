@@ -14,7 +14,7 @@ module.exports = function(app) {
         var client = req.body.client;
 
         //insert client into Client table
-        clientQueries.insertClient(req.body.client, req.user.email, res, function(err, res){});
+        clientQueries.insertClient(req.body.client, req.user.email, res, function(err, res) {});
 
         //add client to user-table
         user.username = user.email = client.email;
@@ -22,7 +22,6 @@ module.exports = function(app) {
         user.role_id = 1;
         user.password = "default";
         userQueries.addUser(user, res, dbUtils.callbackNoReturn);
-
 
     });
 
@@ -61,7 +60,8 @@ module.exports = function(app) {
         clientQueries.getAllClientsOwnedByUser(req.user.email, res, dbUtils.callback);
     });
 
-    app.get('/clientDetailsOwnedByUser', dbUtils.checkAuthenticated, function(req, res){
+    // get the details of the clients associated with the email of the user logged in.
+    app.get('/clientDetailsOwnedByUser', dbUtils.checkAuthenticated, function(req, res) {
         clientQueries.getAllClientInfoOwnedByUser(req.user.email, res, dbUtils.callback);
     });
 
@@ -69,6 +69,7 @@ module.exports = function(app) {
     app.get('/addUserToClient/:client_id/:user_email', dbUtils.checkAuthenticated, function(req, res) {
         clientQueries.addClientToUser(req.params.client_id, req.params.user_email, res, dbUtils.callback);
     });
+   
     // used to set the status of the client to active or inactive
     app.post('/deleteClient', dbUtils.checkAuthenticated, function(req, res) {
 

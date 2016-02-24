@@ -24,7 +24,8 @@ exports.getAllQuestions = function(client_id, form_id, assessment_id, res, callb
 //Basically all unAnswered questions.
 exports.getallUnansweredQuestions = function(client_id, form_id, assessment_id, res, callback) {
 
-    var subQuery = knex.select('clientquestionresponse.question_id').from('clientquestionresponse').where('clientquestionresponse.client_id', client_id)
+    var subQuery = knex.select('clientquestionresponse.question_id').from('clientquestionresponse')
+        .where('clientquestionresponse.client_id', client_id)
         .where('clientquestionresponse.assessment_id', assessment_id);
 
     knex.select('Question.id', 'Question.text', 'Question.category_id', 'Form.name as form_name')
@@ -42,7 +43,7 @@ exports.getallUnansweredQuestions = function(client_id, form_id, assessment_id, 
 exports.getClientAnswers = function(client_id, form_id, assessment_id, res, callback) {
 
     knex.select('Response.response', 'Response.value', 'Question.text', 'Question.id',
-            'ClientQuestionResponse.response_id','ClientQuestionResponse.note', 'ClientQuestionResponse.weight',
+            'ClientQuestionResponse.response_id', 'ClientQuestionResponse.note', 'ClientQuestionResponse.weight',
             'Question.category_id', 'Question.group_id', 'Grouping.name')
         .from('ClientQuestionResponse')
         .innerJoin('Question', 'ClientQuestionResponse.question_id', 'Question.id')
@@ -58,7 +59,6 @@ exports.getClientAnswers = function(client_id, form_id, assessment_id, res, call
             callback(err, res, rows);
         });
 };
-
 
 // Get all the questions for a given form.
 exports.getQuestionsByForm = function(form_id, res, callback) {
@@ -112,7 +112,9 @@ exports.getForms = function(res, callback) {
 // Return a list of forms by category. Used to seperate out
 // Bluemix Affinity forms from API Maturity Forms.
 exports.getFormsByCategory = function(res, category_id, callback) {
-    knex.select().table('form').where('category_id', category_id).where('active', 1)
+    knex.select().table('form')
+        .where('category_id', category_id)
+        .where('active', 1)
         .asCallback(function(err, rows) {
             callback(err, res, rows);
         });
@@ -174,23 +176,16 @@ exports.addQuestion = function(question, res, callback) {
     knex('question').insert(question).asCallback(function(err, rows) {
         callback(err, res, rows);
     });
-
 };
 
 // Add a new form to the form table
 //By default the form is set to isActive = true
 exports.addForm = function(formName, categoryID, isAPI, res, callback) {
 
-
-    // TODO If the form isAPI then there are a default set of questions that
-    // TODO that need to be added.
-    // TODO Category_id is hard coded, what if that's not the ID?
-
     // The logic here is that if a form has been "deleted" (its active value set to 0)
     // and someone tries to create a new form with the same name, we just reactivate the
     // old form and change the category if its been changed.
     knex('form').select('').where('name', formName).where('active', 0).asCallback(function(err, rows) {
-
 
         if (rows.length != 0) {
             knex('form').where('name', formName).update({
@@ -211,7 +206,8 @@ exports.addForm = function(formName, categoryID, isAPI, res, callback) {
                     // There are some questions all API maturity questions get, this query adds those questions
                     // to the form if it is an API maturity form. Currently the category_id is card coded.
                     var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
-                                SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id, 1 FROM Question WHERE Question.category_id = 2";
+                                SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id,\
+                                1 FROM Question WHERE Question.category_id = 2";
 
                     knex.raw(query).asCallback(function(err, rows) {
                         callback(err, res);
@@ -226,7 +222,6 @@ exports.addForm = function(formName, categoryID, isAPI, res, callback) {
 
     });
 }
-
 
 // Checks to see if a form Name exists
 exports.checkUniqueFormname = function(formname, res, callback) {
@@ -257,7 +252,6 @@ exports.getAssessmentDetails = function(assessment_id, res, callback) {
         .where('assessment.id', assessment_id).asCallback(function(err, rows) {
             callback(err, res, rows);
         });
-
 };
 
 // Get the category of an assessment.

@@ -20,8 +20,17 @@ app.set('view engine', 'html');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -37,22 +46,22 @@ var password = require('./routes/password')(app);
 
 // statically serve up necessary files
 app.use(express.static(path.join(__dirname, '/public')));
-app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 // hosting config
 var appEnv = cfenv.getAppEnv();
 var port = appEnv.port || '3000';
 
 // start server on the specified port and binding host
-app.listen(appEnv.port , function() {
+app.listen(appEnv.port, function() {
     console.log("server starting on " + appEnv.url);
 });
 
 // handle DB Connections on manual shutdown
 process.on('SIGINT', function() {;
-	console.log("Exiting...");
-	db.knex.destroy();
-        process.exit();
+    console.log("Exiting...");
+    db.knex.destroy();
+    process.exit();
 });
 
 module.exports = app;
