@@ -359,12 +359,14 @@ div.listSelect select {
   -o-appearance: none;
   appearance: none;
   border: 0;
+  background-color: #E5E5F2;
   font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Tahoma", "Geneva", "Arial", sans-serif;
   font-weight: 300;
   font-stretch: normal;
   font-size: 1.8rem;
   letter-spacing: normal;
-  width: 100%; }
+  width: 100%;
+  padding: 1rem 0.3rem 1.2rem 0.3rem; }
   div.listSelect select option:hover {
     text-decoration: underline;
     color: #3e5175; }
@@ -401,16 +403,16 @@ div.form-group {
     margin: 0;
     width: 4.5rem;
     text-align: center; }
-  form#userform div.form-group:first-of-type {
+  form.userform div.form-group:first-of-type {
     padding-top: 0; }
-  form#userform div.form-group:last-child {
+  form.userform div.form-group:last-child {
     margin: 0;
     width: 100%;
     text-align: left; }
-    form#userform div.form-group:last-child > * {
+    form.userform div.form-group:last-child > * {
       display: inline-block;
       margin-right: 1.2rem; }
-    form#userform div.form-group:last-child button {
+    form.userform div.form-group:last-child button {
       float: right;
       margin-right: 0; }
   div.form-group label span {

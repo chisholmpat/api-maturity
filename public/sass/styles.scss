@@ -399,9 +399,10 @@ div.listSelect select {
     @include prefix((appearance: none));
     border: 0;
     // color: $color-light;
-    // background-color: #728086;
+    background-color: #E5E5F2;;
     @include helvetN-Light(1.8rem);
     width: 100%;
+    padding:1rem 0.3rem 1.2rem 0.3rem;
     & option:hover {
         text-decoration: underline;
         color: #3e5175;
@@ -448,11 +449,11 @@ div.form-group {
         text-align: center;
     }
 
-    form#userform &:first-of-type{
+    form.userform &:first-of-type{
         padding-top: 0;
 
     }
-    form#userform &:last-child {
+    form.userform &:last-child {
         margin: 0;
         width: 100%;
         text-align:left;
