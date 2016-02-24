@@ -17,7 +17,7 @@ if (process.env.VCAP_SERVICES) {
     // The connection details, username and password are 
     // stored locally in a properties file.
 
-    if (process.env.DEV) {
+    if (process.env.DEV_ENV) {
         opts = {
             host: 'us-cdbr-azure-southcentral-e.cloudapp.net',
             user: process.env.PROD_USER,
