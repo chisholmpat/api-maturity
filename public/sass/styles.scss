@@ -34,6 +34,7 @@ h1,h2,h3,h4,h5,h6{
 a {
     text-decoration: none;
     color: #00aed1;
+    cursor: pointer;
 
     &:hover {
         text-decoration: underline;
@@ -147,9 +148,7 @@ div.formsNav {
         margin: 0 0.3rem;
         display: inline-block;
     }
-    a {
-        cursor: pointer;
-    }
+
     select {
         @include prefix((appearance: none));
         @include helvetN-Thin(2.4rem,0.4rem);
