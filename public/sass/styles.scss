@@ -11,9 +11,8 @@ html {
     height: 100%;
     min-width: 1000px;
     margin: 0 auto;
-
-    // font-weight: 400;
     color: $color-main;
+    //sets value for rem unit
     font-size: 10px;
 }
 body {
@@ -232,15 +231,15 @@ div.clientInfoColumn{
 }
 div.clientInfoRepeat{
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    @include flexbox(row wrap);
+    // display: flex;
+    // // flex-direction: row;
+    // // flex-wrap: wrap;
     justify-content: space-between;
 }
 div.clientInfo {
     position: relative;
     padding: 1.5rem 2.5rem;
-    background-color: #bbb;
     color: $color-light;
     margin-right: 2rem;
     margin-bottom: 2rem;
@@ -292,57 +291,53 @@ div.clientInfo {
         font-size: 1.5rem;
     }
 }
-/*SURVEY PAGE*/
-#sideLeftlinks a {
-    display: block;
-    color: $color-light;
-    @include helvetN-Thin(1.2rem);
-    margin-bottom: 1rem;
-}
-.SAtext,
-.QAtext {
-    margin-left: 4rem;
-    font-size: 1.5rem;
-}
-form {
-    display: inline-block;
-}
-.SAtext {
-    label {
-        margin-left: 8rem;
+/*questionnaire PAGE*/
+div#questionnaire{
+    .SAtext,
+    .QAtext {
+        margin-left: 4rem;
+        font-size: 1.5rem;
+    }
+    form {
+        display: inline-block;
+    }
+    .SAtext {
+        label {
+            margin-left: 8rem;
+            span {
+                width: auto;
+                margin-left: 0.5rem;
+            }
+        }
         span {
-            width: auto;
-            margin-left: 0.5rem;
+            display: inline-block;
+            width: 7rem;
         }
     }
-    span {
+    .QAcheckboxes {
+        margin-bottom: 3.5rem;
+    }
+    .QACheckboxGroup {
         display: inline-block;
-        width: 7rem;
+        text-align: center;
+        font-size: 1.2rem;
+        /*width: 9rem;*/
+        margin-right: 4rem;
+        label span {
+            display: block;
+        }
     }
-}
-.QAcheckboxes {
-    margin-bottom: 3.5rem;
-}
-.QACheckboxGroup {
-    display: inline-block;
-    text-align: center;
-    font-size: 1.2rem;
-    /*width: 9rem;*/
-    margin-right: 4rem;
-    label span {
-        display: block;
+    .QAoptions {
+        /*display:none;*/
+        margin: 3rem 0;
     }
-}
-.QAoptions {
-    /*display:none;*/
-    margin: 3rem 0;
-}
-.QAoptions p {
-    font-size: 1.2rem;
-    margin: 0;
-}
-.QAoptions textarea {
-    width: 50%;
+    .QAoptions p {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+    .QAoptions textarea {
+        width: 50%;
+    }
 }
 /*RESULTS PAGE*/
 .sa_score {
@@ -400,6 +395,25 @@ canvas {
     }
 }
 // Forms:  Add_user, add_client,edit_questions
+div.listSelect select {
+    @include prefix((appearance: none));
+    border: 0;
+    // color: $color-light;
+    background-color: #E5E5F2;;
+    @include helvetN-Light(1.8rem);
+    width: 100%;
+    padding:1rem 0.3rem 1.2rem 0.3rem;
+    & option:hover {
+        text-decoration: underline;
+        color: #3e5175;
+    }
+    & option:first-of-type{
+        font-weight: 100;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+}
+
 form.simple-form {
     width: 80%;
 }
@@ -427,12 +441,34 @@ div.form-group {
         vertical-align: middle;
     }
     &:first-child {
-        width: 70%;
+        // width: 70%;
     }
     &:last-child {
         margin: 0;
         width: 4.5rem;
         text-align: center;
+    }
+
+    form.userform &:first-of-type{
+        padding-top: 0;
+
+    }
+    form.userform &:last-child {
+        margin: 0;
+        width: 100%;
+        text-align:left;
+        > *{
+            display: inline-block;
+            margin-right: 1.2rem;
+        }
+        button{
+            float:right;
+            margin-right: 0;
+        }
+    }
+
+    label span{
+        padding: 0.6rem;
     }
 
     &.radioButtons {

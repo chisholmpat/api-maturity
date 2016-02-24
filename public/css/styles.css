@@ -213,15 +213,19 @@ div.clientInfoColumn {
 
 div.clientInfoRepeat {
   width: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  -webkit-flex-flow: row wrap;
+  -moz-flex-flow: row wrap;
+  flex-flow: row wrap;
   justify-content: space-between; }
 
 div.clientInfo {
   position: relative;
   padding: 1.5rem 2.5rem;
-  background-color: #bbb;
   color: #fff;
   margin-right: 2rem;
   margin-bottom: 2rem;
@@ -266,55 +270,38 @@ div.clientInfo {
     float: none;
     font-size: 1.5rem; }
 
-/*SURVEY PAGE*/
-#sideLeftlinks a {
-  display: block;
-  color: #fff;
-  font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Arial", sans-serif;
-  font-weight: 100;
-  font-stretch: normal;
-  font-size: 1.2rem;
-  letter-spacing: normal;
-  margin-bottom: 1rem; }
-
-.SAtext,
-.QAtext {
+/*questionnaire PAGE*/
+div#questionnaire .SAtext,
+div#questionnaire .QAtext {
   margin-left: 4rem;
   font-size: 1.5rem; }
-
-form {
+div#questionnaire form {
   display: inline-block; }
-
-.SAtext label {
+div#questionnaire .SAtext label {
   margin-left: 8rem; }
-  .SAtext label span {
+  div#questionnaire .SAtext label span {
     width: auto;
     margin-left: 0.5rem; }
-.SAtext span {
+div#questionnaire .SAtext span {
   display: inline-block;
   width: 7rem; }
-
-.QAcheckboxes {
+div#questionnaire .QAcheckboxes {
   margin-bottom: 3.5rem; }
-
-.QACheckboxGroup {
+div#questionnaire .QACheckboxGroup {
   display: inline-block;
   text-align: center;
   font-size: 1.2rem;
   /*width: 9rem;*/
   margin-right: 4rem; }
-  .QACheckboxGroup label span {
+  div#questionnaire .QACheckboxGroup label span {
     display: block; }
-
-.QAoptions {
+div#questionnaire .QAoptions {
   /*display:none;*/
   margin: 3rem 0; }
-
-.QAoptions p {
+div#questionnaire .QAoptions p {
   font-size: 1.2rem;
   margin: 0; }
-
-.QAoptions textarea {
+div#questionnaire .QAoptions textarea {
   width: 50%; }
 
 /*RESULTS PAGE*/
@@ -365,6 +352,29 @@ canvas {
       height: 100%;
       border-radius: 5px; }
 
+div.listSelect select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: 0;
+  background-color: #E5E5F2;
+  font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'Roboto', "Tahoma", "Geneva", "Arial", sans-serif;
+  font-weight: 300;
+  font-stretch: normal;
+  font-size: 1.8rem;
+  letter-spacing: normal;
+  width: 100%;
+  padding: 1rem 0.3rem 1.2rem 0.3rem; }
+  div.listSelect select option:hover {
+    text-decoration: underline;
+    color: #3e5175; }
+  div.listSelect select option:first-of-type {
+    font-weight: 100;
+    font-size: 2rem;
+    margin-bottom: 1rem; }
+
 form.simple-form {
   width: 80%; }
 
@@ -389,12 +399,24 @@ div.form-group {
     min-width: 10.5rem;
     margin: 0.3rem 1.4rem 0.3rem 0;
     vertical-align: middle; }
-  div.form-group:first-child {
-    width: 70%; }
   div.form-group:last-child {
     margin: 0;
     width: 4.5rem;
     text-align: center; }
+  form.userform div.form-group:first-of-type {
+    padding-top: 0; }
+  form.userform div.form-group:last-child {
+    margin: 0;
+    width: 100%;
+    text-align: left; }
+    form.userform div.form-group:last-child > * {
+      display: inline-block;
+      margin-right: 1.2rem; }
+    form.userform div.form-group:last-child button {
+      float: right;
+      margin-right: 0; }
+  div.form-group label span {
+    padding: 0.6rem; }
   div.form-group.radioButtons label {
     display: inline-block;
     margin: 0 1rem 0 0; }
