@@ -17,9 +17,10 @@
                 <input ng-change="someFunc" type="text" class="form-control" name="newFormName" ng-model="newForm.text" url="/checkUniqueFormName/" required></input>
             </div>
             <div>
+                <!--
                 <select ng-model="newForm.category_id" ng-options="category.id as (category.name | uppercase) for category in categories"
                 ng-init="newForm.category_id = (categories[0].id)"></select>
-
+                -->
                 <input ng-disabled="isUnique()"type="submit" value="Add" ng-show="addingNewForm.newFormName.$valid && !addingNewForm.newFormName.$pristine"></input>
                 <p ng-show="notUniqueFormName" class="help-block">Form Name Taken</span>
                 <p ng-show="!addingNewForm.newFormName.$pristine && !notUniqueFormName" class="help-block">Form Name is required. </p>

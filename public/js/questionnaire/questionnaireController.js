@@ -319,7 +319,7 @@
                 // Call to the backend
                 QuestionStore.addFormConn.save({
                     formName: newForm.text,
-                    category_id: newForm.category_id,
+                    category_id: $scope.category_id,
                     is_api: newForm.category_id == $rootScope.categoryIDs.API
                 }, function() {
                     // Update the forms array
