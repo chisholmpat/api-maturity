@@ -401,10 +401,16 @@ div.listSelect select {
     @include prefix((appearance: none));
     // @include helvetN-Thin(2.4rem,0.4rem);
     border: 0;
-    &:hover {
+    @include helvetN-Light(1.8rem);
+    width: 100%;
+    & option:hover {
         text-decoration: underline;
         color: #3e5175;
     }
+}
+form#userform div.form-group:first-of-type{
+    padding-top: 0;
+
 }
 form.simple-form {
     width: 80%;
@@ -433,7 +439,7 @@ div.form-group {
         vertical-align: middle;
     }
     &:first-child {
-        width: 70%;
+        // width: 70%;
     }
     &:last-child {
         margin: 0;
