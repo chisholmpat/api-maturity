@@ -6,18 +6,18 @@ if (process.env.VCAP_SERVICES) {
 
     var services = JSON.parse(process.env.VCAP_SERVICES);
 
-    for (var svcName in services) 
-        if (svcName.match(/^user-provided/)) 
-            opts = services[svcName][0].credentials;    
+    for (var svcName in services)
+        if (svcName.match(/^user-provided/))
+            opts = services[svcName][0].credentials;
 
 } else {
 
     // Conditionally set the database connection details
     // based on whether we're in development or production.
-    // The connection details, username and password are 
+    // The connection details, username and password are
     // stored locally in a properties file.
 
-    if (process.env.DEV) {
+    if (process.env.DEV_ENV) {
         opts = {
             host: 'us-cdbr-azure-southcentral-e.cloudapp.net',
             user: process.env.PROD_USER,
