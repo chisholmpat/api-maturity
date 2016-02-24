@@ -38,7 +38,7 @@
                         <div ng-controller="MenuController">
                             <li ng-show="role === 'admin' || role === 'user'">
                                 <a class="brand" ng-click="isCollapsed = !isCollapsed">Admin</a>
-                                <div class="nav-collapse" collapse="isCollapsed">
+                                <div class="nav-collapse" uib-collapse="isCollapsed">
                                     <ul class="nav">
                                         <li ng-show="role === 'admin'"><a href="#forms">Edit Forms</a>
                                         </li>
@@ -88,7 +88,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-resource.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/angular.bootstrap/0.13.3/ui-bootstrap-tpls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.20/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.20/vfs_fonts.js"></script>
