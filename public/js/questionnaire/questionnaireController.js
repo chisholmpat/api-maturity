@@ -22,6 +22,7 @@
                 if ($scope.currentIndex < $scope.forms.length - 1) {
                     $scope.generateScore($scope.questions, $scope.unansweredQuestions, 1);
                 } else {
+                    $scope.generateScore($scope.questions, $scope.unansweredQuestions, 0);
                     var resultsURL = '/clientforms/' + $scope.clientName + '/' +
                         $scope.category + '/' + $scope.client_id + '/' +
                         $scope.assessment_id;
@@ -125,6 +126,7 @@
                     client_id: $routeParams.client_id,
                     assessment_id: $routeParams.assessment_id
                 }, function() {
+                    if(indexChange != 0)
                     $scope.loadQuestions($scope.forms[$scope.currentIndex + indexChange].id);
                 });
             };
@@ -188,7 +190,7 @@
 
                 // Currently there are only two types of question. This will
                 // obviously become a problem when more question types are added.
-                if ($scope.questions[0].category_id == $rootScope.categoryIDs.QA) {
+                if ($scope.category_id == $rootScope.categoryIDs.QA) {
                     question.category_id = $rootScope.categoryIDs.QA;
                 } else {
                     question.category_id = $rootScope.categoryIDs.BMIX;
@@ -266,7 +268,7 @@
                 var forms = $scope.forms
                 var isFound = false;
                 for (i = 0; i < $scope.forms.length; i++) {
-                    if ($scope.newForm.text == $scope.forms[i].name) {
+                    if ($scope.newForm && $scope.newForm.text == $scope.forms[i].name) {
                         $scope.notUniqueFormName = true;
                         return true;
                     }

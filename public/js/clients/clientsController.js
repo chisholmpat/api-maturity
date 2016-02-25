@@ -196,7 +196,7 @@
                     ClientsStore.updateClientsConn.save({
                         client: $scope.editing
                     }, function() {
-                        window.alert("The client has been upd'ated.");
+                        window.alert("The client has been updated.");
                         $route.reload();
                     });
                 } else {
