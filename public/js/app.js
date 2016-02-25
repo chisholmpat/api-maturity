@@ -171,7 +171,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         controller: 'QuestionnaireController', // For testing route parameters.
         resolve: {
             loggedin: checkLoggedin,
-            userIsUser: userIsUser
+            userIsUser: userIsClient
         }
     }).when('/clients', {
         templateUrl: '/views/clients/clients.html',
