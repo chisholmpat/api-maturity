@@ -8,7 +8,7 @@
                 <span ng-click="showInfoForClient(client.id)">{{client.name}}</span>
             </uib-accordion-heading>
             <div class="formTable">
-                <div><span><a ng-if="role != 'client'" ng-click="newAssessment(client.id)"> Start New Assessment </a></span></div>
+                <div ng-if="role != 'client'"><span><a  ng-click="newAssessment(client.id)"> Start New Assessment </a></span></div>
                 <div ng-repeat="assessment in assessments | filter: { client_id: client.id} : true | filter: {category_id: category} ">
                     <span><a href="/#/questionnaire/{{category}}/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
                     <span><a href="/#/clientforms/{{client.name}}/{{category}}/{{client.id}}/{{assessment.id}}/"> Results </a> </span>
@@ -87,7 +87,7 @@
              responses of previous surveys, click the date link.</br>
             If there is no information on this page, you need to add a client, or have an existing
             client assigned to you.</p>
-        <p ng-if="role == 'client'">Welcom <b>{{client.name}}</b>.To view the results of your
+        <p ng-if="role == 'client'">Welcome <b>{{client.name}}</b>.To view the results of your
             competed surveys, click the "Results" link to the left.  If there are no links to
             the left, please contact your IBM representative to complete a survey.</p>
     </div>
