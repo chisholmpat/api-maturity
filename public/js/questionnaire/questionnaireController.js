@@ -91,7 +91,7 @@
                 var id = $routeParams.form_id ? $routeParams.form_id : $scope.forms[$scope.currentIndex].id;
                 $scope.loadQuestions(id);
                 $scope.currentFormID = parseInt(id, 10);
-                
+
             });
 
             // For Creating a numeric range for the weight option
@@ -126,8 +126,8 @@
                     client_id: $routeParams.client_id,
                     assessment_id: $routeParams.assessment_id
                 }, function() {
-                    if(indexChange != 0)
-                    $scope.loadQuestions($scope.forms[$scope.currentIndex + indexChange].id);
+                    if (indexChange != 0)
+                        $scope.loadQuestions($scope.forms[$scope.currentIndex + indexChange].id);
                 });
             };
 
@@ -234,10 +234,9 @@
             $scope.editQuestions = function() {
                 QuestionStore.updateQuestionsConn.save({
                     questions: $scope.questions
-                }, function(){
+                }, function() {
                     refreshQuestions();
-                    }
-                );
+                });
             };
 
             // For re-routing the request
@@ -317,12 +316,14 @@
 
             // Function for saving a new form
             $scope.saveForm = function(newForm) {
-
+                console.log(newForm.category_id == $rootScope.categoryIDs.API);
+                console.log($scope.category_id);
+                console.log($rootScope.categoryIDs.API);
                 // Call to the backend
                 QuestionStore.addFormConn.save({
                     formName: newForm.text,
                     category_id: $scope.category_id,
-                    is_api: newForm.category_id == $rootScope.categoryIDs.API
+                    is_api: $scope.category_id == $rootScope.categoryIDs.API
                 }, function() {
                     // Update the forms array
                     refreshForms();
