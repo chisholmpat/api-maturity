@@ -209,6 +209,27 @@
                 }
             };
 
+            // Retrive all forms from the database.
+            $scope.emails = ClientsStore.emailsConn.query();
+
+            // Function for checking if the email
+            // that someone is entering does not already
+            // exist in the database.
+            $scope.isUnique = function() {
+                console.log("Reached the client's isUnique");
+                console.log($scope.editing);
+
+                for (i = 0; i < $scope.emails.length; i++) {
+                    if ($scope.editing.email == $scope.emails[i].email) {
+                        $scope.UniqueEmail = false;
+                        return false;
+                    }
+                }
+                $scope.UniqueEmail = true;
+                return true;
+
+            }
+
 
             // For re-routing the request.
             // TODO We use this routing function in other parts
