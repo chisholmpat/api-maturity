@@ -2,7 +2,6 @@
     <h1>Forms</h1>
     <div class="form-group headings">
         <div>
-            <h3>Form Name</h3>
             <p> View Form Type:
             <select ng-model="category_id" ng-options="category.id as (category.name | uppercase) for category in categories"
                 ng-init="category_id = (categories[0].id)"></select>

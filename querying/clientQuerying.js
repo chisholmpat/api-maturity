@@ -16,7 +16,7 @@ exports.insertClient = function(client, email, res, callback) {
         //this insert ensures the user adding the client is the owner of the client and is allowed to view the client
         knex('userclients').insert({
             client_id: rows[0],
-            email: email,
+            email: email.toUpperCase(),
             isOwner: true
         }).asCallback(function(err, rows) {
 
@@ -24,7 +24,7 @@ exports.insertClient = function(client, email, res, callback) {
             //this inser allows the client to be able to view their own information
             knex('userclients').insert({
                 client_id: client_id,
-                email: client_email,
+                email: client_email.toUpperCase(),
                 isOwner: false
             }).asCallback(function(err, rows) {
                 callback(err, res);

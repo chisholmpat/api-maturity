@@ -20,6 +20,7 @@ exports.userloginvalidate = function(username, password) {
 // as a parameter to this function rather than having to do a query for it.
 exports.addUser = function(user, res, callback) {
     console.log(user.password);
+    user.email = user.email.toUpperCase();
     user.salt = Math.random().toString(36).slice(2);
     passwordHelper.hash(user.password, user.salt, function(err, result) {
         user.password = result;
@@ -38,7 +39,7 @@ exports.updateUser = function(user, res, callback) {
     // against our database. When a user is updated we 
     // then have to update the userclients table.
     knex('users').select('email').where('Users.id', user.id).asCallback(function(err, rows) {
-        userEmail = rows[0].email;
+        userEmail = rows[0].email.toUpperCase();
         user.username = user.username.toUpperCase();
         knex('users').where('Users.id', user.id).update(user).asCallback(function(err, rows) {
             callback(err, res);
@@ -78,7 +79,7 @@ exports.getRoles = function(res, callback) {
 
 // Checks to see if a username exists
 exports.checkUniqueUsername = function(username, res, callback) {
-    knex('users').select('').where('username', username).asCallback(function(err, rows) {
+    knex('users').select('').where('username', username.toUpperCase()).asCallback(function(err, rows) {
         if (rows && rows[0])
             res.send(rows[0].username);
         else
