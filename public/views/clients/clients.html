@@ -80,6 +80,17 @@
         </div>
 
     </div>
+    <div class="clientInstructions">
+        <p ng-if="role == 'user'">
+            Managing client assessments:  Click "Start a new assessment" to begin a new Survey.
+             Click "Results" to view results of a completed assessment.  To review the survey
+             responses of previous surveys, click the date link.</br>
+            If there is no information on this page, you need to add a client, or have an existing
+            client assigned to you.</p>
+        <p ng-if="role == 'client'">Welcom <b>{{client.name}}</b>.To view the results of your
+            competed surveys, click the "Results" link to the left.  If there are no links to
+            the left, please contact your IBM representative to complete a survey.</p>
+    </div>
 
     <datalist id="usersEmailList">
         <option ng-repeat="user in allUsers" value="{{user.email}}">
