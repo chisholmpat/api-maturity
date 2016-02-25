@@ -19,6 +19,7 @@ exports.userloginvalidate = function(username, password) {
 // looked up when inserted. I will change this by offering the role_id
 // as a parameter to this function rather than having to do a query for it.
 exports.addUser = function(user, res, callback) {
+    console.log(user.password);
     user.salt = Math.random().toString(36).slice(2);
     passwordHelper.hash(user.password, user.salt, function(err, result) {
         user.password = result;
@@ -43,7 +44,7 @@ exports.updateUser = function(user, res, callback) {
             callback(err, res);
         });
 
-        knex('userclients').where('email', userEmail).update({
+        knex('userclients').where('email', userEmail.toUpperCase()).update({
             email: user.email
         });
     });
@@ -59,7 +60,7 @@ exports.getUsers = function(res, callback) {
 
 // Retrieve the role of the user from the database.
 exports.getUserRole = function(email, res, callback) {
-    knex('users').select('roles.role').where('users.email', email)
+    knex('users').select('roles.role').where('users.email', email.toUpperCase())
         .innerJoin('roles', 'users.role_id', 'roles.id').asCallback(function(err, rows) {
             if (rows && rows[0] && rows[0].role)
                 callback(err, res, rows[0].role);
@@ -88,7 +89,7 @@ exports.checkUniqueUsername = function(username, res, callback) {
 // Checks to see if an email is already taken
 exports.checkUniqueUserEmail = function(email, res, callback) {
 
-    knex('users').select('').where('email', email).asCallback(function(err, rows) {
+    knex('users').select('').where('email', email.toUpperCase()).asCallback(function(err, rows) {
         if (rows && rows[0])
             res.send(rows[0].username);
         else

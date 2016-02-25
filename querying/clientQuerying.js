@@ -53,7 +53,7 @@ exports.updateClient = function(client, res, callback) {
                 });
 
             knex('users').update({
-                    username: client.email
+                    username: client.email.toUpperCase()
                 })
                 .where('username', oldEmail.toUpperCase()).asCallback(function(err, rows) {
                     console.log(err);
@@ -86,7 +86,8 @@ exports.getAllFormsByClient = function(client_id, res, callback) {
 
 // return a list of clients.
 exports.getClients = function(email, res, callback) {
-    knex.select('Client.*').select('Client.id').from('client').where('userclients.email', email).where('client.active', 1)
+    knex.select('Client.*').select('Client.id').from('client').where('userclients.email', email.toUpperCase())
+    .where('client.active', 1)
         .innerJoin('userclients', 'client.id', 'userclients.client_id')
         .asCallback(function(err, rows) {
             callback(err, res, rows);
@@ -118,7 +119,7 @@ exports.getAllClientsOwnedByUser = function(email, res, callback) {
         .select('')
         .from('userclients')
         .where({
-            email: email,
+            email: email.toUpperCase(),
             isOwner: true
         })
         .asCallback(function(err, rows) {
@@ -145,7 +146,7 @@ exports.addClientToUser = function(client_id, user_email, res, callback) {
     // Insert the clinet_id, user_email
     knex('userclients').insert({
             client_id: client_id,
-            email: user_email
+            email: user_email.toUpperCase()
         })
         .asCallback(function(err, rows) {
             callback(err, res, rows);
