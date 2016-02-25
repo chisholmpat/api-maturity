@@ -31,9 +31,9 @@ module.exports = function(passport) {
 
             // Query the DB for the user.
             knex.select('username', 'email', 'password', 'salt', 'roles.role').from('users')
-            .where('username', username.toUpperCase()).where('Active', 1)
-            .innerJoin('roles', 'users.role_id', 'roles.id')
-            .asCallback(function(err, rows) {
+                .where('username', username.toUpperCase()).where('Active', 1)
+                .innerJoin('roles', 'users.role_id', 'roles.id')
+                .asCallback(function(err, rows) {
                     // If the user is found return a result for username.
                     if (rows && rows.length !== 0) {
                         user = rows[0];
@@ -57,6 +57,7 @@ module.exports = function(passport) {
         }));;
 
     if (process.env.VCAP_SERVICES) {
+
         var OpenIDConnectStrategy = require('passport-idaas-openidconnect').IDaaSOIDCStrategy;
         var Strategy = new OpenIDConnectStrategy({
 
@@ -73,20 +74,31 @@ module.exports = function(passport) {
 
             function(accessToken, refreshToken, profile, done) {
                 process.nextTick(function() {
-                  var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
-                  var ssoConfig = services.SingleSignOn[0];
-                  var issuer_id = ssoConfig.credentials.issuerIdentifier;
+                    var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
+                    var ssoConfig = services.SingleSignOn[0];
+                    var issuer_id = ssoConfig.credentials.issuerIdentifier;
 
-                  console.log("Issuer ID INSIDE Tick" + issuer_id);
-                  profile.accessToken = accessToken;
-                  profile.refreshToken = refreshToken;
-                  profile.name = "Testing";
-                  profile.role = "user";
-                  profile.isIBM = '1';
-                  profile.issuer_id = issuer_id;
-                  profile.email = profile.emailaddress;
-                  done(null, profile);
-                })
+                    knex('users').select('roles.role')
+                        .where('email', profile.emailaddress.toUpperCase())
+                        .innerJoin('roles', 'users.role_id', 'roles.id')
+                        .asCallback(function(err, rows) {
+
+                          console.log(rows);
+                          console.log(JSON.stringify(rows));  
+
+                            if (!rows || rows.length == 0 || err)
+                              profile.role = "user"
+                            else
+                              profile.role = rows[0].role;
+                            
+                            profile.accessToken = accessToken;
+                            profile.refreshToken = refreshToken;
+                            profile.name = "";
+                            profile.issuer_id = issuer_id;
+                            profile.email = profile.emailaddress;
+                            done(null, profile);
+                        });
+                });
             }
         );
         passport.use(Strategy);
