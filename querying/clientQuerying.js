@@ -113,6 +113,17 @@ exports.getAllClientIDsAndEmails = function(res, callback) {
         });
 };
 
+// return a list of user Emails from clients table
+exports.getAllClientEmails = function(res, callback) {
+    knex.select('email')
+        .from('client')
+        .asCallback(function(err, rows) {
+            console.log(err);
+            console.log(rows);
+            callback(err, res, rows);
+        });
+};
+
 // return a list of all clients the user is allowed to view
 exports.getAllClientsOwnedByUser = function(email, res, callback) {
     knex.distinct('client_id')

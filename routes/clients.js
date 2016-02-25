@@ -55,6 +55,12 @@ module.exports = function(app) {
         clientQueries.getAllClientIDsAndEmails(res, dbUtils.callback);
     });
 
+    // get all emails from clients table
+    app.get('/allClientEmails', dbUtils.checkAuthenticated, function(req, res) {
+        clientQueries.getAllClientEmails(res, dbUtils.callback);
+    });
+
+
     //get a list of all clients owned by the user_email
     app.get('/getAllClientsOwnedByUser', dbUtils.checkAuthenticated, function(req, res) {
         clientQueries.getAllClientsOwnedByUser(req.user.email, res, dbUtils.callback);
@@ -69,7 +75,7 @@ module.exports = function(app) {
     app.get('/addUserToClient/:client_id/:user_email', dbUtils.checkAuthenticated, function(req, res) {
         clientQueries.addClientToUser(req.params.client_id, req.params.user_email, res, dbUtils.callback);
     });
-   
+
     // used to set the status of the client to active or inactive
     app.post('/deleteClient', dbUtils.checkAuthenticated, function(req, res) {
 
@@ -81,7 +87,7 @@ module.exports = function(app) {
         });
     });
 
-    // get clientID from client table
+    // get clientID from user-client table
     app.get('/getClientID/:client_name/', dbUtils.checkAuthenticated, function(req, res) {
         clientQueries.getClientID(req.params.client_name, res, dbUtils.callback);
     });

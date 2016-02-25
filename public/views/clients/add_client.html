@@ -56,6 +56,7 @@
             <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
                 <label>Email</label>
                 <input type="email" name="email" class="form-control" ng-model="editing.email">
+                <p ng-show="!isUnique()" class="help-block">This email has already been selected, please enter a different email</p>
                 <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
             </div>
 
