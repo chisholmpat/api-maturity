@@ -1,10 +1,8 @@
- 
-
 <h3> Self Assesment </h3>
 <div class="SAtext">
     <p ng-repeat="question in questions |  filter: { category_id: categoryIDs.SA }"><span>{{question.text}}</span>
         <label ng-repeat="response in responses  | filter: { category_id: categoryIDs.SA }"
-          ng-init="question.response_id = question.response_id ? question.response_id : (responses | filter: {category_id: categoryIDs.SA } | filter: {value: '0'})[0].id">
+        ng-init="question.response_id = question.response_id ? question.response_id : (responses | filter: {category_id: categoryIDs.SA } | filter: {value: '0'})[0].id">
             <input type="radio" ng-model="question.response_id" ng-value="response.id">
             <span>{{response.response}}</span>
         </label>
@@ -20,9 +18,8 @@
         <div class="QAcheckboxes">
             <div ng-repeat="response in responses | byCategory:categoryIDs.QA" class="QACheckboxGroup">
                 <label>
-                    <input type="radio" ng-model="question.response_id" ng-value="response.id"
-                    ng-init="question.response_id = question.response_id ? question.response_id : 
-                    (responses | filter: {category_id: categoryIDs.QA } | filter: {value: '0'})[0].id"> 
+                    <input type="radio" ng-model="question.response_id" ng-value="response.id" ng-init="question.response_id = question.response_id ? question.response_id : 
+                    (responses | filter: {category_id: categoryIDs.QA } | filter: {value: '0'})[0].id">
                     <span>{{response.response}}</span>
                 </label>
             </div>
@@ -36,11 +33,11 @@
         <div ng-init="showText = false" class="QAoptions" ng-show="showText">
             <p>Notes</p>
             <input type="text" name="" class="form-control" ng-model="question.note">
-            <p>Weight</p>
-            <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"></select>
+            <p>Weight (<em> Weight expresses the importance of this dimension to the client.) </em> </p>
+            <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"
+            ng-init="question.weight = question.weight ? question.weight : 0"></select>
         </div>
     </div>
 
 </div>
-
 
