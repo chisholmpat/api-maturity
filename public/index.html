@@ -30,8 +30,7 @@
                         <li ng-show="role == 'user' || role == 'admin' ">
                             <a href="#howto">How-To</a>
                         </li>
-                        <li>
-                            <!-- TODO Remove hardcoded values from the category ID for question type.-->
+                        <li>                            
                             <a href="#/{{categoryIDs.API}}/clients" >API Maturity </a>
                             <a href="/#/{{categoryIDs.BMIX}}/clients">BMIX Affinity</a>
                         </li>
@@ -40,11 +39,11 @@
                                 <a class="brand" ng-click="isCollapsed = !isCollapsed">Admin</a>
                                 <div class="nav-collapse" uib-collapse="isCollapsed">
                                     <ul class="nav">
-                                        <li ng-show="role === 'admin'"><a href="#forms">Edit Forms</a>
+                                        <li ng-show="role === 'admin'"><a href="#forms">Add/Edit Forms</a>
                                         </li>
-                                        <li ng-show="role === 'admin'"><a href="#edit_users">Edit Users</a>
+                                        <li ng-show="role === 'admin'"><a href="#edit_users">Add/Edit Users</a>
                                         </li>
-                                        <li><a href="#add_client">Add Clients</a>
+                                        <li><a href="#add_client">Edit/Add Clients</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -57,9 +56,8 @@
                     <li>
                         <a href="/ibmlogin" ng-show="!isLoggedIn">IBMLogin</a>
                     </li>
-                    <li>
+                    <li> <!-- SSO is currently not able to logout. -->
                         <a ng-show="isLoggedIn && !isIBM" href="#/" ng-click="logout()"> Logout </a>
-                        <!-- <a ng-show="isLoggedIn && isIBM" href="https://{{issuerID}}/idaas/mtfim/sps/idaas/logout" ng-click="logout()">IBM LOGOUT </a> -->
                     </li>
                 </ul>
             </div>
