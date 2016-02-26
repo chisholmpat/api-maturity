@@ -216,13 +216,16 @@
             // that someone is entering does not already
             // exist in the database.
             $scope.isUnique = function() {
-                console.log("Reached the client's isUnique");
-                console.log($scope.editing);
-
+                if($scope.client)
+                  console.log($scope.client['email']);
                 for (i = 0; i < $scope.emails.length; i++) {
-                    if ($scope.editing.email == $scope.emails[i].email) {
-                        $scope.UniqueEmail = false;
-                        return false;
+                    //email does not belong to another client
+                    if($scope.editing.email == $scope.emails[i].email) {
+                        //Don't check exisiting client against themselves
+                        if(!($scope.client && ($scope.client['email'] == $scope.editing.email))){
+                          $scope.UniqueEmail = false;
+                          return false;
+                        }  
                     }
                 }
                 $scope.UniqueEmail = true;
