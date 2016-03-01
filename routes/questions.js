@@ -4,6 +4,7 @@ module.exports = function(app) {
     var csv = require('express-csv');
     var dbUtils = require('../helpers/db_util');
 
+
     // return all questions by client and form id
     //All Questions from clientQuestionsResponses, basically get the answered questions first
     app.get('/questions/:client_id/:form_id/:assessment_id', dbUtils.checkAuthenticated, function(req, res) {
@@ -24,30 +25,6 @@ module.exports = function(app) {
             } else {
                 res.send(403);
             }
-        });
-    });
-
-    // return the questions and responses for a client for in CSV
-    app.get('/questions/:client_id/:form_id/:assessment_id/csv', dbUtils.checkAuthenticated, function(req, res) {
-
-        dbUtils.userCanViewClient(req.params.client_id, req.user.email, function(err, permitted) {
-            if (permitted) {
-
-                var sendCSV = function(err, res, results) {
-                    var headers = {};
-                    for (var key in results[0]) {
-                        headers[key] = key;
-                    }
-
-                    var fileName = req.params.client_id + '_' + req.params.form_id + '.csv';
-                    res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
-                    results.unshift(headers);
-                    res.csv(results);
-                };
-                queries.getClientAnswers(req.params.client_id, req.params.form_id, req.params.assessment_id, res, sendCSV);
-            } else
-
-                res.send('403');
         });
     });
 
@@ -73,16 +50,7 @@ module.exports = function(app) {
 
     // get a list of all the forms.
     app.get('/forms', dbUtils.checkAuthenticated, function(req, res) {
-        if (req.body.category_id) {
-          queries.getFormsByCategory(res, req.body.category_id, callback);
-        } else {
             queries.getAllForms(res, dbUtils.callback);
-        }
-    });
-
-    // get the list of forms based on category id.
-    app.get('/forms/:category_id', function(req, res) {
-       queries.getFormsByCategory(res, req.params.category_id, dbUtils.callback);
     });
 
     // toggles the active status of a form
@@ -112,7 +80,7 @@ module.exports = function(app) {
 
     // add a form to the form table
     app.post("/addForm", dbUtils.checkAuthenticated, function(req, res) {
-        queries.addForm(req.body.formName, req.body.category_id, req.body.is_api, res, dbUtils.callbackNoReturn);
+        queries.addForm(req.body.formName,res, dbUtils.callbackNoReturn);
     });
 
     // check if the form_name is unique
@@ -134,9 +102,9 @@ module.exports = function(app) {
     app.post("/createassessment", function(req, res) {
         queries.createNewAssessment(res, req.body.client_id, dbUtils.callback);
     });
-    
+
     // return all category information
-    app.get('/categories', function(req, res){
+    app.get('/categories', function(req, res) {
         queries.getAllCategories(res, dbUtils.callback);
     });
 };

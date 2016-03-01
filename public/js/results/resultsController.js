@@ -14,26 +14,25 @@
 
             // Generate forms for drop down on page and sort them.
             $resource('/forms').query({}, function(response) {
-              
               $scope.forms = response;
-
               $scope.forms.sort(function(a, b) {
                     return a.id - b.id;
                 });
             });
 
+            // Page forward a form
             $scope.nextForm = function() {
                 var currentIndex = getCurrentIndex();
                 if (currentIndex < $scope.forms.length - 1)
                     changePage(currentIndex + 1);
             };
 
+            // Page backward a form
             $scope.prevForm = function() {
                 var currentIndex = getCurrentIndex();
                 if (currentIndex > 0)
                     changePage(currentIndex - 1);
             };
-
 
             // Change the page based on the form selected
             // in the drop down box.
@@ -43,7 +42,7 @@
                         changePage(i);
             }
 
-
+            // Change to a different form
             function changePage(newIndex) {
                 var resultsURL = '#/results/' + $scope.client_name + '/' +
                     $scope.forms[newIndex].name + '/' + $scope.client_id +
@@ -51,19 +50,15 @@
                 $window.location.assign(resultsURL);
             }
 
-
+            // Determine where in the sequence of forms we are
             function getCurrentIndex() {
                 for (i = 0; i < $scope.forms.length; i++)
                     if ($scope.forms[i].id == $routeParams.form_id)
                         return i;
             }
 
-            // URL for retrieving results as a CSV file
-            $scope.csvURL = "questions/" + $routeParams.client_id + "/" +
-                $routeParams.form_id + "/" + $routeParams.assessment_id + "/csv";
 
             // Setting properties from params.
-
             $scope.client_name = $routeParams.client_name;
             $scope.form_name = $routeParams.form_name;
             $scope.form_id = $routeParams.form_id;
@@ -76,6 +71,7 @@
     module.controller('ApiMaturityResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore',
         'GraphScoresDataService', 'GraphingFunctionsService', 'FileFormatsConversionService', '$window',
         function($scope, $rootScope, $http, $routeParams, ResultStore, GraphScoresDataService, GraphingFunctionsService, FileFormatsConversionService, $window) {
+            
             // Getting display information for the page from
             // the assessment in the database.
             ResultStore.assessmentDetailsConn.query({
@@ -117,7 +113,6 @@
                 var QAGraphData = QAmappedValues;
                 //SA does not get averaged or mapped but using the averages function will convert from single element array to just a value
                 var SAGraphData = GraphScoresDataService.getAverageGraphScores(allGraphScores[categories.SA]);
-
 
                 //Get a list of all possible keys
                 var qaKeys = Object.keys(QAGraphData);

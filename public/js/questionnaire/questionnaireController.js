@@ -1,4 +1,3 @@
-// Collection of controllers related to questionnaires and forms.
 // Feb 17 TODO: Make casing consistent; only database fields should be using underscore casing.
 (function() {
     var module = angular.module('questionnaireModule', ['questionnaireServiceModule']);
@@ -11,8 +10,6 @@
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
             $scope.currentIndex = 0;
-
-
 
             // Advance to the next form or navigate to the results page
             // for the current assessment if we're on the last survey.
@@ -163,7 +160,6 @@
             // For toggling visibility of add question drop down
             $scope.addQuestion = false;
             $scope.newQuestion = {};
-            $scope.category = $routeParams.category_id;
 
             // Updates the question on the form.
             var refreshQuestions = function() {
@@ -181,9 +177,7 @@
             $scope.saveQuestion = function(question) {
 
                 question.form_id = $routeParams.form_id;
-
                 $scope.addQuestion = false
-
 
                 // Call to the backend
                 QuestionStore.addQuestionConn.save({
@@ -273,14 +267,6 @@
                 }
             };
 
-            // The categories available in the form creation menu.
-            $scope.categories = [{
-                name: "Bluemix Affinity",
-                id: $rootScope.categoryIDs.BMIX
-            }, {
-                name: "API Maturity",
-                id: $rootScope.categoryIDs.API
-            }];
 
             // For toggling visibility of add question drop down
             $scope.addForm = false;
@@ -300,13 +286,10 @@
 
             // Function for saving a new form
             $scope.saveForm = function(newForm) {
-                console.log(newForm.category_id == $rootScope.categoryIDs.API);
-                console.log($scope.category_id);
-                console.log($rootScope.categoryIDs.API);
+
                 // Call to the backend
                 QuestionStore.addFormConn.save({
                     formName: newForm.text,
-                    category_id: $scope.category_id,
                     is_api: $scope.category_id == $rootScope.categoryIDs.API
                 }, function() {
                     // Update the forms array
@@ -315,22 +298,5 @@
             };
         }
     ]);
-
-    // For handling key presses.
-    module.directive("select", function() {
-        return {
-            restrict: "E",
-            require: "?ngModel",
-            scope: false,
-            link: function(scope, element, attrs, ngModel) {
-                if (!ngModel) {
-                    return;
-                }
-                element.bind("keyup", function() {
-                    element.triggerHandler("change");
-                });
-            }
-        };
-    });
 
 })();

@@ -179,8 +179,9 @@ exports.addQuestion = function(question, res, callback) {
 };
 
 // Add a new form to the form table
-//By default the form is set to isActive = true
-exports.addForm = function(formName, categoryID, isAPI, res, callback) {
+// By default the form is set to isActive = true
+// TODO Remove hard coded category ID
+exports.addForm = function(formName, res, callback) {
 
     // The logic here is that if a form has been "deleted" (its active value set to 0)
     // and someone tries to create a new form with the same name, we just reactivate the
@@ -190,7 +191,6 @@ exports.addForm = function(formName, categoryID, isAPI, res, callback) {
         if (rows.length != 0) {
             knex('form').where('name', formName).update({
                 active: 1,
-                category_id: categoryID
             }).asCallback(function(err, rows) {
                 callback(err, res);
             });
@@ -198,25 +198,19 @@ exports.addForm = function(formName, categoryID, isAPI, res, callback) {
             knex('form').insert({
                 name: formName,
                 active: 1,
-                category_id: categoryID
+
             }).asCallback(function(err, rows) {
 
-                if (isAPI) {
-
                     // There are some questions all API maturity questions get, this query adds those questions
-                    // to the form if it is an API maturity form. Currently the category_id is card coded.
+                    // to the form if it is an API maturity form. Currently the category_id is hard coded.
                     var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
-                                SELECT DISTINCT " + rows[0] + " , category_id, Question.text, Question.group_id,\
+                                SELECT DISTINCT " + rows[0] + " ,category_id, Question.text, Question.group_id,\
                                 1 FROM Question WHERE Question.category_id = 2";
 
                     knex.raw(query).asCallback(function(err, rows) {
                         callback(err, res);
                     });
-
-                } else {
-                    callback(err, res);
-                }
-
+                 
             })
         };
 
