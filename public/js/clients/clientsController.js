@@ -26,13 +26,6 @@
     module.controller('ClientsController', ['$scope', 'ClientsStore', '$routeParams', '$location',
         function($scope, ClientsStore, $routeParams, $location) {
 
-            $scope.isAff = false;
-
-
-            // Check to see if this is a Bluemix survey or
-            // if it's an API maturity survey.
-            $scope.category = $routeParams.category_id;
-
             // Handles editing functionality of the client.
             $scope.isOwner = false;
 
@@ -50,14 +43,7 @@
             });
             $scope.forms = ClientsStore.formsConn.query({});
             $scope.allUsers = ClientsStore.getUserEmailsConn.query({});
-            $scope.assessments = ClientsStore.getAllAssessmentsConn.query({
-                category_id: $scope.category
-            }, function(res) {
-                console.log(res);
-
-            });
-
-
+            $scope.assessments = ClientsStore.getAllAssessmentsConn.query();
 
             //use idToEmails to avoid adding duplicates of user_email-client ID combination
             $scope.allClientIDsAndEmails = ClientsStore.getAllCliendIDsAndEmailsConn.query({}, function() {
@@ -120,10 +106,9 @@
 
             $scope.newAssessment = function(clientID) {
                 ClientsStore.createNewAssessmentConn.save({
-                    client_id: clientID,
-                    category_id: $scope.category
+                    client_id: clientID
                 }, function(result) {
-                    $location.url('/questionnaire/' + $scope.category + '/' + clientID + '/' + result.id);
+                    $location.url('/questionnaire/' + '/' + clientID + '/' + result.id);
                 });
             };
 

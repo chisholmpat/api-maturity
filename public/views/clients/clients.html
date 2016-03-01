@@ -9,9 +9,9 @@
             </uib-accordion-heading>
             <div class="formTable">
                 <div ng-if="role != 'client'"><span><a  ng-click="newAssessment(client.id)"> Start New Assessment </a></span></div>
-                <div ng-repeat="assessment in assessments | filter: { client_id: client.id} : true | filter: {category_id: category} ">
-                    <span><a href="/#/questionnaire/{{category}}/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
-                    <span><a href="/#/clientforms/{{client.name}}/{{category}}/{{client.id}}/{{assessment.id}}/"> Results </a> </span>
+                <div ng-repeat="assessment in assessments | filter: { client_id: client.id} : true">
+                    <span><a href="/#/questionnaire/{{client.id}}/{{assessment.id}}"> {{assessment.date | dateToISO | date:'shortDate'}} </a> </span>
+                    <span><a href="/#/clientforms/{{client.name}}/{{client.id}}/{{assessment.id}}/"> Results </a> </span>
                 </div>
                 <div>
                     <!-- Blank div and span used as padding for bottom of form -->
@@ -22,8 +22,6 @@
     </uib-accordion>
 
 </div>
-
-
 
 <div class="col-lg-7 clientInfoColumn">
     <div class="clientInfoRepeat" ng-repeat="client in clients |filter:{id:infoForClientID}:true">

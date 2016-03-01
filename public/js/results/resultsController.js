@@ -14,12 +14,10 @@
 
             // Generate forms for drop down on page and sort them.
             $resource('/forms').query({}, function(response) {
-                for (form of response) {
-                    if (form.category_id == $routeParams.category_id)
-                        $scope.forms.push(form);
-                }
+              
+              $scope.forms = response;
 
-                $scope.forms.sort(function(a, b) {
+              $scope.forms.sort(function(a, b) {
                     return a.id - b.id;
                 });
             });
@@ -48,7 +46,7 @@
 
             function changePage(newIndex) {
                 var resultsURL = '#/results/' + $scope.client_name + '/' +
-                    $scope.forms[newIndex].name + '/' + $scope.category + '/' + $scope.client_id +
+                    $scope.forms[newIndex].name + '/' + $scope.client_id +
                     '/' + $scope.forms[newIndex].id + '/' + $scope.assessment_id;
                 $window.location.assign(resultsURL);
             }
@@ -71,7 +69,7 @@
             $scope.form_id = $routeParams.form_id;
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
-            $scope.category = $routeParams.category_id;
+
         }
     ]);
 
@@ -96,7 +94,7 @@
             }, function() {
 
                 if ($scope.results.length === 0 && confirm('No results for form. Would you like to start the form now?')) {
-                    var url = '/#/questionnaire/' + $routeParams.category_id + '/' + $routeParams.client_id + '/' + $routeParams.assessment_id;
+                    var url = '/#/questionnaire/' + $routeParams.client_id + '/' + $routeParams.assessment_id;
                     $window.location.href = (url + "?form_id=" + $routeParams.form_id);
                 }
 
@@ -162,36 +160,6 @@
             $scope.getWordFile = function() {
                 FileFormatsConversionService.convertToDOCX($http, $scope.$parent.client_name, $scope.$parent.form_name);
             };
-        }
-    ]);
-
-    module.controller('BmixResultsController', ['$scope', '$rootScope', '$http', '$routeParams', 'ResultStore', '$window',
-        function($scope, $rootScope, $http, $routeParams, ResultStore, $window) {
-
-            // Getting display information for the page from
-            // the assessment in the database.
-            console.log("BmixResultsController");
-            ResultStore.assessmentDetailsConn.query({
-                    assessment_id: $routeParams.assessment_id
-                },
-                function(response) {
-                    $scope.client_name = response[0].name;
-                    $scope.assessment_date = response[0].date;
-                });
-
-            // Get results for processing.
-            $scope.results = ResultStore.scoreConn.query({
-                client_id: $scope.$parent.client_id,
-                form_id: $scope.$parent.form_id,
-                assessment_id: $scope.$parent.assessment_id
-            }, function() {
-
-                if ($scope.results.length === 0 && confirm('No results for form. Would you like to start the form now?')) {
-                    var url = '/#/questionnaire/' + $routeParams.category_id + '/' + $routeParams.client_id + '/' + $routeParams.assessment_id;
-                    $window.location.href = (url + "?form_id=" + $routeParams.form_id);
-                }
-
-            });
         }
     ]);
 

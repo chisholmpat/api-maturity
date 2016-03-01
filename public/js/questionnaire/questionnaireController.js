@@ -10,7 +10,6 @@
             // For determining which assessment we are on.
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
-            $scope.category = $routeParams.category_id;
             $scope.currentIndex = 0;
 
 
@@ -23,9 +22,7 @@
                     $scope.generateScore($scope.questions, $scope.unansweredQuestions, 1);
                 } else {
                     $scope.generateScore($scope.questions, $scope.unansweredQuestions, 0);
-                    var resultsURL = '/clientforms/' + $scope.clientName + '/' +
-                        $scope.category + '/' + $scope.client_id + '/' +
-                        $scope.assessment_id;
+                    var resultsURL = '/clientforms/' + $scope.clientName + '/' + $scope.client_id + '/' + $scope.assessment_id;
                     $location.url(resultsURL);
                 }
             };
@@ -85,13 +82,10 @@
             };
 
             // Load the initial questions.
-            $scope.forms = QuestionStore.formsByCategoryConn.query({
-                category_id: $scope.category
-            }, function() {
+            $scope.forms = QuestionStore.formsConn.query({}, function() {
                 var id = $routeParams.form_id ? $routeParams.form_id : $scope.forms[$scope.currentIndex].id;
                 $scope.loadQuestions(id);
                 $scope.currentFormID = parseInt(id, 10);
-
             });
 
             // For Creating a numeric range for the weight option
@@ -188,14 +182,6 @@
 
                 question.form_id = $routeParams.form_id;
 
-                // Currently there are only two types of question. This will
-                // obviously become a problem when more question types are added.
-                if ($scope.category_id == $rootScope.categoryIDs.QA) {
-                    question.category_id = $rootScope.categoryIDs.QA;
-                } else {
-                    question.category_id = $rootScope.categoryIDs.BMIX;
-                }
-
                 $scope.addQuestion = false
 
 
@@ -226,9 +212,7 @@
             refreshQuestions();
 
             // Get the potential groupings for the grouping select.
-            $scope.groupings = QuestionStore.groupingsConn.query({}, function() {
-
-            });
+            $scope.groupings = QuestionStore.groupingsConn.query();
 
             // Function for handling submission of form.
             $scope.editQuestions = function() {

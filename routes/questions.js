@@ -120,9 +120,9 @@ module.exports = function(app) {
         queries.checkUniqueFormname(req.params.formname, res, dbUtils.callback);
     });
 
-    // get all assessments for given category
-    app.get('/assessments/:category_id', function(req, res) {
-        queries.getAllAssessments(res, req.params.category_id, dbUtils.callback);
+    // get all assessments 
+    app.get('/assessments/', dbUtils.checkAuthenticated, function(req, res) {
+        queries.getAllAssessments(res, dbUtils.callback);
     });
 
     // get client information given the assessment id
@@ -130,15 +130,9 @@ module.exports = function(app) {
         queries.getAssessmentDetails(req.params.assessment_id, res, dbUtils.callback);
     });
 
-    // get the category of the id.
-    app.get('/assessment_category/:assessment_id', function(req, res) {
-        queries.getAssessmentCategory(req.params.assessment_id, res, dbUtils.callback); 
-    });
-    
     // create a new asssessment of the given category for the client
     app.post("/createassessment", function(req, res) {
-        queries.createNewAssessment(res, req.body.client_id, req.body.category_id, 
-        dbUtils.callback);
+        queries.createNewAssessment(res, req.body.client_id, dbUtils.callback);
     });
     
     // return all category information

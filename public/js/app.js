@@ -160,13 +160,13 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     }).when('/reset/:token', {
         templateUrl: '/views/user/reset_password.html',
         controller: 'PasswordResetController'
-    }).when('/results/:client_name/:form_name/:category_id/:client_id/:form_id/:assessment_id', {
+    }).when('/results/:client_name/:form_name/:client_id/:form_id/:assessment_id', {
         templateUrl: '/views/results/results.html',
         controller: 'ResultsController',
         resolve: {
             loggedin: checkLoggedin
         }
-    }).when('/questionnaire/:category_id/:client_id/:assessment_id', {
+    }).when('/questionnaire/:client_id/:assessment_id', {
         templateUrl: '/views/questionnaire/questionnaire.html',
         controller: 'QuestionnaireController', // For testing route parameters.
         resolve: {
@@ -174,13 +174,6 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             userIsUser: userIsClient
         }
     }).when('/clients', {
-        templateUrl: '/views/clients/clients.html',
-        controller: 'ClientsController',
-        resolve: {
-            loggedin: checkLoggedin,
-            userIsClient: userIsClient
-        }
-    }).when('/:category_id/clients/', {
         templateUrl: '/views/clients/clients.html',
         controller: 'ClientsController',
         resolve: {
@@ -234,7 +227,7 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
         }
-    }).when('/clientforms/:client_name/:category_id/:client_id/:assessment_id', {
+    }).when('/clientforms/:client_name/:client_id/:assessment_id', {
         templateUrl: '/views/results/client_results_list.html',
         controller: 'IndividualClientController',
         resolve: {

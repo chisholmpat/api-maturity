@@ -1,5 +1,5 @@
 var opts = null;
-var devEnv = false;
+var devEnv = true;
 
 // Check to see if we're in Bluemix environment.
 if (process.env.VCAP_SERVICES) {
@@ -17,7 +17,8 @@ if (process.env.VCAP_SERVICES) {
     // The connection details, username and password are
     // stored locally in a properties file.
 
-    if (process.env.DEV_ENV) {
+    if (!process.env.DEV_ENV) {
+        console.log("Using development environment DB!");
         opts = {
             host: 'us-cdbr-azure-southcentral-e.cloudapp.net',
             user: process.env.PROD_USER,
@@ -27,6 +28,7 @@ if (process.env.VCAP_SERVICES) {
             connectionLimit: 1
         }
     } else {
+        console.log("Using production environment DB!");
         opts = {
             host: 'us-cdbr-iron-east-03.cleardb.net',
             user: process.env.DEV_USER,

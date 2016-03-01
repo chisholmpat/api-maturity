@@ -239,8 +239,8 @@ exports.getAllAssessmentsForClient = function(client_id, res, callback) {
 };
 
 // Gets all the assesments for all clients
-exports.getAllAssessments = function(res, category_id, callback) {
-    knex('assessment').select('').where('category_id', category_id).asCallback(function(err, rows) {
+exports.getAllAssessments = function(res, callback) {
+    knex('assessment').select('').asCallback(function(err, rows) {
         callback(err, res, rows);
     });
 };
@@ -264,11 +264,11 @@ exports.getAssessmentCategory = function(assessment_id, res, callback) {
 // Creates a new assessment and returns the ID.
 // ID is returned wrapped in an object to avoid
 // interpretting the return as a HTTP status code.
-exports.createNewAssessment = function(res, client_id, category_id, callback) {
+exports.createNewAssessment = function(res, client_id, callback) {
     knex('assessment').insert({
-        client_id: client_id,
-        category_id: category_id
+        client_id: client_id
     }).asCallback(function(err, rows) {
+      console.log(err, rows);
         callback(err, res, {
             id: rows[0]
         });

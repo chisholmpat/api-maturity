@@ -13,7 +13,7 @@
             this.getAllCliendIDsAndEmailsConn = $resource('/getAllCliendIDsAndEmails');
             this.allClientsOwnedByUserConn = $resource('/getAllClientsOwnedByUser');
             this.allClientInfoOwnedByUserConn = $resource('/clientDetailsOwnedByUser');
-            this.getAllAssessmentsConn = $resource('/assessments/:category_id');
+            this.getAllAssessmentsConn = $resource('/assessments/');
             this.createNewAssessmentConn = $resource('/createassessment');
             this.emailsConn = $resource('/allClientEmails');
         }
