@@ -31,7 +31,7 @@
                 <p ng-show="userForm.industry.$invalid && !userForm.industry.$pristine" class="help-block">Industry is required.</p>
             </div>
 
-            <!-- CLIENT INDUSTRY -->
+            <!-- CLIENT INDUSTRY SEGMENT -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.industry_segment.$invalid && !userForm.industry_segment.$pristine }">
                 <label>Industry Segment</label>
                 <input type="text" name="industry_segment" class="form-control" ng-model="editing.industry_segment" required>
@@ -75,15 +75,15 @@
             <!-- CLIENT MARKET CAPITILZATION -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine }">
                 <label>Market Capitalization $</label>
-                <input type="number" name="market_capitalization" class="form-control" ng-model="editing.market_capitalization" required ng-pattern="integerval">
-                <p ng-show="userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine" class="help-block">Capitlization is required. Enter only numbers.</p>
+                <input type="number" name="market_capitalization" class="form-control" ng-model="editing.market_capitalization" ng-maxlength="12" required ng-pattern="integerval">
+                <p ng-show="userForm.market_capitalization.$invalid && !userForm.market_capitalization.$pristine" class="help-block">Capitlization is required. Enter only numbers (12 Digit Max).</p>
             </div>
 
             <!-- CLIENT REVUNUE SIZE  -->
             <div class="form-group" ng-class="{ 'has-error' : userForm.revenue.$invalid && !userForm.revenue.$pristine }">
                 <label>Revenue $</label>
-                <input type="number" name="revenue" class="form-control" ng-model="editing.revenue" required ng-pattern="integerval">
-                <p ng-show="userForm.revenue.$invalid && !userForm.revenue.$pristine" class="help-block">Revenue size is required. Enter only numbers.</p>
+                <input type="number" name="revenue" class="form-control" ng-model="editing.revenue" ng-maxlength="12" required ng-pattern="integerval">
+                <p ng-show="userForm.revenue.$invalid && !userForm.revenue.$pristine" class="help-block">Revenue size is required. Enter only numbers (12 Digit Max).</p>
             </div>
 
             <!-- CLIENT MARKET SHARE  -->
