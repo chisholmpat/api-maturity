@@ -17,8 +17,8 @@ if (process.env.VCAP_SERVICES) {
     // The connection details, username and password are
     // stored locally in a properties file.
 
-    if (!process.env.DEV_ENV) {
-        console.log("Using development environment DB!");
+    if (process.env.DEV_ENV != "true") {
+        console.log("Using production environment DB!");
         opts = {
             host: 'us-cdbr-azure-southcentral-e.cloudapp.net',
             user: process.env.PROD_USER,
@@ -28,7 +28,7 @@ if (process.env.VCAP_SERVICES) {
             connectionLimit: 1
         }
     } else {
-        console.log("Using production environment DB!");
+        console.log("Using development environment DB!");
         opts = {
             host: 'us-cdbr-iron-east-03.cleardb.net',
             user: process.env.DEV_USER,
