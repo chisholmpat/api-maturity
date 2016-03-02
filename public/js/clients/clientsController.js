@@ -104,11 +104,14 @@
                 }
             };
 
+            http://localhost:6001/#/questionnaire/1/332
+
             $scope.newAssessment = function(clientID) {
                 ClientsStore.createNewAssessmentConn.save({
                     client_id: clientID
                 }, function(result) {
-                    $location.url('/questionnaire/' + '/' + clientID + '/' + result.id);
+                    console.log('/questionnaire/' + '/' + clientID + '/' + result.id);
+                    $location.url('/questionnaire' + '/' + clientID + '/' + result.id);
                 });
             };
 
