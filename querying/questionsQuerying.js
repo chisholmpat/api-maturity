@@ -173,8 +173,15 @@ exports.deleteForm = function(id, res, callback) {
 // dictates that there must be an entry in CQR table to
 // allow users to "answer questions".
 exports.addQuestion = function(question, res, callback) {
-    knex('question').insert(question).asCallback(function(err, rows) {
-        callback(err, res, rows);
+
+    knex('category').select('id').where('name', 'QA').asCallback(function(err, rows) {
+        question.category_id = rows[0].id;
+        knex('question').insert(question).asCallback(function(err, rows) {
+            console.log(err);
+            console.log(rows);
+            callback(err, res, rows);
+        });
+
     });
 };
 
@@ -201,16 +208,16 @@ exports.addForm = function(formName, res, callback) {
 
             }).asCallback(function(err, rows) {
 
-                    // There are some questions all API maturity questions get, this query adds those questions
-                    // to the form if it is an API maturity form. Currently the category_id is hard coded.
-                    var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
+                // There are some questions all API maturity questions get, this query adds those questions
+                // to the form if it is an API maturity form. Currently the category_id is hard coded.
+                var query = "INSERT INTO Question (form_id, category_id, text, group_id, active)\
                                 SELECT DISTINCT " + rows[0] + " ,category_id, Question.text, Question.group_id,\
                                 1 FROM Question WHERE Question.category_id = 2";
 
-                    knex.raw(query).asCallback(function(err, rows) {
-                        callback(err, res);
-                    });
-                 
+                knex.raw(query).asCallback(function(err, rows) {
+                    callback(err, res);
+                });
+
             })
         };
 
@@ -262,7 +269,7 @@ exports.createNewAssessment = function(res, client_id, callback) {
     knex('assessment').insert({
         client_id: client_id
     }).asCallback(function(err, rows) {
-      console.log(err, rows);
+        console.log(err, rows);
         callback(err, res, {
             id: rows[0]
         });

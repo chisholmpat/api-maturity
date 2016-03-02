@@ -19,27 +19,29 @@
         <!-- Expandable Add Question form. -->
         <div ng-show="addQuestion" class="form-group addQuestion">
             <!-- <form> -->
-            <div>
-                <input type="text" name="newQuestionName" class="form-control" ng-model="newQuestion.text">
-            </div>
-            <div>
-                <input type="button" ng-click="saveQuestion(newQuestion)" value="Add" ng-show="questionsForm.newQuestionName.$valid && !questionsForm.newQuestionName.$pristine"></input>
-            </div>
-            <p ng-show="questionsForm.newQuestionName.$invalid || questionsForm.newQuestionName.$pristine"
-            class="help-block">Question is required.</p>
+                <div>
+                    <input type="text" name="newQuestionName" class="form-control" ng-model="newQuestion.text">
+                </div>
+                <div>
+                    <select ng-model="newQuestion.group_id" ng-options="group.id as group.name for group in groupings" ng-init="newQuestion.group_id=categoryIDs.QA"></select>
+
+                </div>
+                <div>
+                    <input type="button" ng-click="saveQuestion(newQuestion)" value="Add" ng-show="questionsForm.newQuestionName.$valid && !questionsForm.newQuestionName.$pristine"></input>
+                </div>
+                <p ng-show="questionsForm.newQuestionName.$invalid || questionsForm.newQuestionName.$pristine" class="help-block">Question is required.</p>
             <!-- </form> -->
         </div>
 
         <div class="form-group" ng-repeat="question in questions |  filter: { category_id: categoryIDs.QA, active: '1' } ">
             <div>
                 <input type="text" class="form-control" ng-model="question.text" required>
-
             </div>
+            <div>
                 <select ng-model="question.group_id" ng-options="grouping.id as grouping.name for grouping in groupings"></select>
             </div>
             <div>
-                <img src="images/delete.png" height="32" width="32" ng-click="deleteQuestion(question)"
-                />
+                <img src="images/delete.png" height="32" width="32" ng-click="deleteQuestion(question)" />
             </div>
         </div>
         <div class="form-group">
@@ -52,3 +54,4 @@
 </div>
 
 </br>
+
