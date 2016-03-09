@@ -224,6 +224,13 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
         }
+    }).when('/clientforms/:client_name/:client_id/:assessment_id', {
+        templateUrl: '/views/results/client_results_list.html',
+        controller: 'IndividualClientController',
+        resolve: {
+            loggedin: checkLoggedin,
+            isAdmin: userIsClient
+        }
     }).when('/howto/', {
         templateUrl: '/views/welcome/howto.html',
         controller: 'HomePageController',
