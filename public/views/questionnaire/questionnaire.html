@@ -1,87 +1,82 @@
 <div id="questionnaire" class="col-lg-12">
     <h1>{{clientName}} - {{assessmentDate | date:'shortDate'}}</h1>
-    <!-- <h2> {{formName}}  </h2> -->
-    Form {{currentIndex + 1}} of {{forms.length}}.
 
+    <!-- <h2> {{formName}}  </h2> -->
+    <uib-progressbar class="progress-striped active" max="forms.length" value="currentIndex+1" type="danger"><i></i></uib-progressbar>
+    Form {{currentIndex + 1}} of {{forms.length}}.
     <div class="formsNav">
-        <button ng-click="prevForm()">
+        <button ng-click="handleFormNavigation(-1)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 100">
                 <path id="arrow-left" d="M40,100A5,5,0,0,1,36,97.9L0.8,50,36,2.1a5.1,5.1,0,0,1,8.1,6L13.3,50,44.1,92A5.1,5.1,0,0,1,40,100Z"
                 />
             </svg>
         </button>
-        <select ng-model="currentFormID" ng-options="form.id as form.name for form in forms"
-        ng-change="loadQuestions(currentFormID)"></select>
-        <button ng-click="nextForm()">
+        <select  id="slectedFormID"   ng-model="currentFormID" ng-options="form.id as form.name for form in forms"
+        ng-change="handleFormNavigation(0)"></select>
+        <button ng-click="handleFormNavigation(1)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 100">
-                <path id="arrow-right" d="M5.4,100a5,5,0,0,0,4.1-2.1L44.7,50,9.5,2.1A5.1,5.1,0,0,0,1.3,8L32.1,50,1.3,92A5.1,5.1,0,0,0,5.4,100Z"
-                />
+                <path id="arrow-right" d="M5.4,100a5,5,0,0,0,4.1-2.1L44.7,50,9.5,2.1A5.1,5.1,0,0,0,1.3,8L32.1,50,1.3,92A5.1,5.1,0,0,0,5.4,100Z"/>
             </svg>
         </button>
     </div>
 
-    <br>
+    <h3> Self Assesment </h3>
+    <div class="SAtext">
+        <p ng-repeat="question in questions |  filter: { category_id: categoryIDs.SA }"><span>{{question.text}}</span>
+            <label ng-repeat="response in responses  | filter: { category_id: categoryIDs.SA }"
+            ng-init="question.response_id = question.response_id ? question.response_id : (responses | filter: {category_id: categoryIDs.SA } | filter: {value: '0'})[0].id">
+                <input type="radio" ng-model="question.response_id" ng-value="response.id">
+                <span>{{response.response}}</span>
+            </label>
 
-    <form ng-submit="generateScore(questions, unansweredQuestions)">
-        
-        <h3> Self Assesment </h3>
-        <div class="SAtext">
-            <p ng-repeat="question in questions |  filter: { category_id: categoryIDs.SA }"><span>{{question.text}}</span>
-                <label ng-repeat="response in responses  | filter: { category_id: categoryIDs.SA }"
-                ng-init="question.response_id = question.response_id ? question.response_id : (responses | filter: {category_id: categoryIDs.SA } | filter: {value: '0'})[0].id">
-                    <input type="radio" ng-model="question.response_id" ng-value="response.id">
-                    <span>{{response.response}}</span>
-                </label>
+        </p>
+    </div>
 
-            </p>
-        </div>
+    <h3>Quality Assesment</h3>
+    <div class="QAtext">
 
-        <h3>Quality Assesment</h3>
-        <div class="QAtext">
-
-            <div ng-repeat="question in questions |  filter: { category_id: categoryIDs.QA }">
-                <p>{{ question.text }}</p>
-                <div class="QAcheckboxes">
-                    <div ng-repeat="response in responses | byCategory:categoryIDs.QA" class="QACheckboxGroup">
-                        <label>
-                            <input type="radio" ng-model="question.response_id" ng-value="response.id" ng-init="question.response_id = question.response_id ? question.response_id : 
-                    (responses | filter: {category_id: categoryIDs.QA } | filter: {value: '0'})[0].id">
-                            <span>{{response.response}}</span>
-                        </label>
-                    </div>
-
-                    <div class="QACheckboxGroup">
-                        <a ng-click="showText = !showText">Options</a>
-                    </div>
-
+        <div ng-repeat="question in questions |  filter: { category_id: categoryIDs.QA }">
+            <p>{{ question.text }}</p>
+            <div class="QAcheckboxes">
+                <div ng-repeat="response in responses | byCategory:categoryIDs.QA" class="QACheckboxGroup">
+                    <label>
+                        <input type="radio" ng-model="question.response_id" ng-value="response.id" ng-init="question.response_id = question.response_id ? question.response_id :
+                (responses | filter: {category_id: categoryIDs.QA } | filter: {value: '0'})[0].id">
+                        <span>{{response.response}}</span>
+                    </label>
                 </div>
 
-                <div ng-init="showText = false" class="QAoptions" ng-show="showText">
-                    <p>Notes</p>
-                    <input type="text" name="" class="form-control" ng-model="question.note">
-                    <p>Weight (<em> Weight expresses the importance of this dimension to the client.) </em> 
-                    </p>
-                    <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"
-                    ng-init="question.weight = question.weight ? question.weight : 0"></select>
+                <div class="QACheckboxGroup">
+                    <a ng-click="showText = !showText">Options</a>
                 </div>
+
             </div>
 
+            <div ng-init="showText = false" class="QAoptions" ng-show="showText">
+                <p>Notes</p>
+                <input type="text" name="" class="form-control" ng-model="question.note">
+                <p>Weight (<em> Weight expresses the importance of this dimension to the client.) </em>
+                </p>
+                <select ng-model="question.weight" ng-name="page" ng-options="page for page in Range(0, 3)"
+                ng-init="question.weight = question.weight ? question.weight : 0"></select>
+            </div>
         </div>
 
-        <div class="formsNav">
-            <button ng-click="prevForm()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 100">
-                    <path id="arrow-left" d="M40,100A5,5,0,0,1,36,97.9L0.8,50,36,2.1a5.1,5.1,0,0,1,8.1,6L13.3,50,44.1,92A5.1,5.1,0,0,1,40,100Z"
-                    />
-                </svg>
-            </button>
-            <select ng-model="currentFormID" ng-options="form.id as form.name for form in forms"
-            ng-change="loadQuestions(currentFormID)"></select>
-            <button ng-click="nextForm()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 100">
-                    <path id="arrow-right" d="M5.4,100a5,5,0,0,0,4.1-2.1L44.7,50,9.5,2.1A5.1,5.1,0,0,0,1.3,8L32.1,50,1.3,92A5.1,5.1,0,0,0,5.4,100Z"
-                    />
-                </svg>
-            </button>
-        </div>
+    </div>
+
+
+    <div class="formsNav">
+        <button ng-click="handleFormNavigation(-1)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 100">
+                <path id="arrow-left" d="M40,100A5,5,0,0,1,36,97.9L0.8,50,36,2.1a5.1,5.1,0,0,1,8.1,6L13.3,50,44.1,92A5.1,5.1,0,0,1,40,100Z"
+                />
+            </svg>
+        </button>
+        <select ng-model="currentFormID" ng-options="form.id as form.name for form in forms" ng-change="handleAllNavigation(0)"></select>
+        <button ng-click="handleFormNavigation(1)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 100">
+                <path id="arrow-right" d="M5.4,100a5,5,0,0,0,4.1-2.1L44.7,50,9.5,2.1A5.1,5.1,0,0,0,1.3,8L32.1,50,1.3,92A5.1,5.1,0,0,0,5.4,100Z"/>
+            </svg>
+        </button>
+    </div>
 </div>
