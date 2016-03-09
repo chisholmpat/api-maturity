@@ -183,9 +183,6 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     }).when('/login', {
         templateUrl: '/views/user/login.html',
         controller: 'UserLoginController'
-    }).when('/results/:assessment_id', {
-        controller: 'ResultsListController',
-        templateUrl: '/views/results/results_list.html'
     }).when('/ibmlogin', {
         templateUrl: '/views/user/ibmlogin.html',
         controller: 'UserLoginController'
@@ -226,13 +223,6 @@ myApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         resolve: {
             loggedin: checkLoggedin,
             isAdmin: userIsAdmin
-        }
-    }).when('/clientforms/:client_name/:client_id/:assessment_id', {
-        templateUrl: '/views/results/client_results_list.html',
-        controller: 'IndividualClientController',
-        resolve: {
-            loggedin: checkLoggedin,
-            isAdmin: userIsClient
         }
     }).when('/howto/', {
         templateUrl: '/views/welcome/howto.html',
