@@ -30,7 +30,7 @@
                         <li ng-show="role == 'user' || role == 'admin' ">
                             <a href="#howto">How-To</a>
                         </li>
-                        <li>                            
+                        <li>
                             <a href="#/clients">Clients</a>
                         </li>
                         <div ng-controller="MenuController">
@@ -55,7 +55,8 @@
                     <li>
                         <a href="/ibmlogin" ng-show="!isLoggedIn">IBMLogin</a>
                     </li>
-                    <li> <!-- SSO is currently not able to logout. -->
+                    <li>
+                        <!-- SSO is currently not able to logout. -->
                         <a ng-show="isLoggedIn && !isIBM" href="#/" ng-click="logout()"> Logout </a>
                     </li>
                 </ul>
@@ -106,7 +107,8 @@
     <script src="js/directives/directives.js"></script>
     <script src=http://code.jquery.com/jquery-2.1.4.min.js></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">  </script>
+    <script type="text/javascript">
+    </script>
 
 </body>
 
