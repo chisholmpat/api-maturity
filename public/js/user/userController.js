@@ -108,6 +108,8 @@
                     $scope.editing = {};
                     $scope.editing.role_id = $scope.defaultRoleID;
                     $scope.editing.email = $scope.defaultEmail = "email@sample.com";
+                    $scope.userForm.$setPristine();
+                    $scope.userForm.$setValidity();
                 }
             };
 
@@ -137,6 +139,7 @@
                         $scope.editing.role_id = $scope.defaultRoleID;
                         $scope.passwordConfirm = "";
                         $scope.userform.$setPristine();
+                        $scope.userForm.$setValidity();
                         // Refresh from the database
                         $scope.allUsers = UserStore.getUsers.query();
 
