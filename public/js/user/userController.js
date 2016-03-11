@@ -109,9 +109,9 @@
                     $scope.editing.role_id = $scope.defaultRoleID;
                     $scope.editing.email = $scope.defaultEmail = "email@sample.com";
                     $scope.userForm.$setPristine();
-                    $scope.userForm.$setValidity();
                 }
             };
+
 
 
             // Add or Update a client based on the content
@@ -138,9 +138,7 @@
                         $scope.editing = {};
                         $scope.editing.role_id = $scope.defaultRoleID;
                         $scope.passwordConfirm = "";
-                        $scope.userform.$setPristine();
-                        $scope.userForm.$setValidity();
-                        // Refresh from the database
+                        $scope.userForm.$setPristine();
                         $scope.allUsers = UserStore.getUsers.query();
 
                     });

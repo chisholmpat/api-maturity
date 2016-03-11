@@ -164,7 +164,9 @@
                     for (key in ($scope.client))
                         $scope.editing[key] = $scope.client[key];
                 } else {
+                    // Reset the form after submission
                     $scope.editing = {};
+                    $scope.clientForm.$setPristine();
                 }
 
             };
