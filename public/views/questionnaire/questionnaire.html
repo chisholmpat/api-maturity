@@ -1,9 +1,10 @@
 <div id="questionnaire" class="col-lg-12">
     <h1>{{clientName}} - {{assessmentDate | date:'shortDate'}}</h1>
     <!-- <h2> {{formName}}  </h2> -->
-    <uib-progressbar class="progress-striped active" max="forms.length" value="currentIndex+1"
-    type="danger"><i></i>
-    </uib-progressbar> Form {{currentIndex + 1}} of {{forms.length}}.
+
+    <uib-progressbar class="progress-striped active" max="forms.length" value="currentIndex+1">
+        <i> Form {{currentIndex + 1}} of {{forms.length}}</i>
+    </uib-progressbar> 
 
 
 
