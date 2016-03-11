@@ -10,33 +10,53 @@
             $scope.client_id = $routeParams.client_id;
             $scope.assessment_id = $routeParams.assessment_id;
             $scope.currentIndex = 0;
+            $scope.currentCategoryIndex = 0;
 
             // Advance to the next form or navigate to the results page
             // for the current assessment if we're on the last survey.
-            $scope.nextForm = function() {
-                console.log("Checking");
-                if ($scope.currentIndex < $scope.forms.length - 1) {
-                    $scope.generateScore($scope.questions, $scope.unansweredQuestions, 1);
-                } else {
-                    $scope.generateScore($scope.questions, $scope.unansweredQuestions, 0);
-                    var resultsURL = '/clientforms/' + $scope.clientName + '/' + $scope.client_id + '/' + $scope.assessment_id;
-                    $location.url(resultsURL);
-                }
-            };
 
-            // Go to a previous form if we're not on the first form.
-            $scope.prevForm = function() {
-                if ($scope.currentIndex > 0) {
-                    $scope.generateScore($scope.questions, $scope.unansweredQuestions, -1);
-                }
-            };
+            $scope.handleFormNavigation = function(formIndexIncrement){
+                console.log("In handleFormNavigation");
+                $scope.currentCategoryIndex = 0;
+                //Save the responses to the current set of questions
+                $scope.saveAnswers($scope.questions, $scope.unansweredQuestions);
 
-            // Loads all the questions and responses for a given form id. 
+                //Navigation
+                switch($scope.currentIndex+formIndexIncrement) {
+                    case -1:
+                        //at first form, don't navigate back
+                        console.log("-1 case");
+                        formIndexIncrement =0;
+                        break;
+                    case $scope.forms.length:
+                        //reached the last form, navigate to the list of resultsURL
+                        console.log("forms.length case");
+                        formIndexIncrement =0;
+                        var resultsURL = '/clientforms/' + $scope.clientName + '/' + $scope.client_id + '/' + $scope.assessment_id;
+                        $location.url(resultsURL);
+                        break;
+                    case $scope.currentIndex:
+                        //an element picked from the list
+                        console.log("form picekd at random");
+                        $scope.currentIndex = document.getElementById("slectedFormID").selectedIndex;
+                        break;
+                    default:
+                        //can navigate :)
+                        console.log("default case");
+                }
+
+                //Update form to new form and category_id to new category_id
+                var form_id = $scope.forms[$scope.currentIndex + formIndexIncrement].id;
+                console.log(form_id);
+                $scope.loadQuestions(form_id);
+            }
+
+            // Loads all the questions and responses for a given form id.
             // Used to page the questions using the arrow buttons on page.
             $scope.loadQuestions = function(form_id) {
-                $scope.currentFormID = form_id;
 
-                // Find out which index we're on based on the ID 
+                $scope.currentFormID = form_id;
+                // Find out which index we're on based on the ID
                 // of the requested form (form_id) matching up
                 // to the array of forms in the controller.
                 for (i = 0; i < $scope.forms.length; i++)
@@ -55,11 +75,11 @@
                     }
                 );
 
-                // Get questions and responses from database. There is a 
-                // distinction between answered and unanswered questions 
+                // Get questions and responses from database. There is a
+                // distinction between answered and unanswered questions
                 // currently such that we need to pull them seperately
                 // from the database and then combine them into a single
-                // array of questions. Later they are split apart to 
+                // array of questions. Later they are split apart to
                 // determine if the query is an update or insert query.
                 $scope.questions = QuestionStore.allQuestionConn.query({
                     client_id: $scope.client_id,
@@ -75,7 +95,11 @@
                     });
                 });
 
-                $scope.responses = QuestionStore.responseConn.query();
+                $scope.responses = QuestionStore.responseConn.query({},function(data){
+                  $scope.responseIDs ={};
+                  for (i = 0; i < data.length; i++)
+                      $scope.responseIDs[data[i].response] = data[i].id;
+                });
             };
 
             // Load the initial questions.
@@ -106,19 +130,14 @@
             };
 
             // Persist the information to the database.
-            $scope.generateScore = function(questions, unansweredQuestions, indexChange) {
-
+            $scope.saveAnswers = function(questions, unansweredQuestions) {
                 var answers = separateAnswers(); // split into update and insert
-                console.log(answers.answersToUpdate);
 
                 QuestionStore.addAnswersConn.save({
                     updated_answers: answers.updated_answers,
                     new_answers: answers.new_answers,
                     client_id: $routeParams.client_id,
                     assessment_id: $routeParams.assessment_id
-                }, function() {
-                    if (indexChange != 0)
-                        $scope.loadQuestions($scope.forms[$scope.currentIndex + indexChange].id);
                 });
             };
 
@@ -140,26 +159,25 @@
                             found = true;
                         }
                     }
-
                     if (!found)
                         answerGroups.updated_answers.push($scope.questions[i]);
                 }
 
                 return answerGroups;
             }
-
-
         }
     ]);
 
 
     // Controller for handling the questions editing form.
-    module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams', '$rootScope',
-        function($scope, QuestionStore, $window, $routeParams, $rootScope) {
+    module.controller('EditQuestionsController', ['$scope', 'QuestionStore', '$window', '$routeParams', '$rootScope','$route',
+        function($scope, QuestionStore, $window, $routeParams, $rootScope, $route) {
 
             // For toggling visibility of add question drop down
-            $scope.addQuestion = false;
+            $scope.addQuestion = {};
+            $scope.addCategory = false;
             $scope.newQuestion = {};
+            $scope.currentCategoryID = "";
 
             // Updates the question on the form.
             var refreshQuestions = function() {
@@ -169,23 +187,35 @@
             };
 
             // Onclick method for toggling visibility
-            $scope.toggleAddQuestionVisibility = function() {
-                $scope.addQuestion = !$scope.addQuestion;
+            $scope.toggleAddQuestionVisibility = function(category_id) {
+                $scope.addQuestion[category_id] = !$scope.addQuestion[category_id];
             };
 
-            // Function for saving question
-            $scope.saveQuestion = function(question) {
+            $scope.setCurrentCategory = function(currentCategoryID) {
+                console.log(currentCategoryID);
+                for(var i =0; i < $scope.categories.length;i++){
+                    if($scope.categories[i].id == currentCategoryID){
+                        $scope.category = $scope.categories[i];
+                        break
+                    }
+                }
+            }
 
-                question.form_id = $routeParams.form_id;
-                $scope.addQuestion = false
+            // Function for saving question
+            $scope.saveQuestion = function(question, questionCategory) {
 
                 // Call to the backend
                 QuestionStore.addQuestionConn.save({
-                    question: question
-
+                    question: {
+                        location : question.location,
+                        text: question.text,
+                        questioncategory_id: questionCategory,
+                        recommendation: question.recommendation
+                    }
                 }, function() {
                     // Refresh the list and clear the input box
                     refreshQuestions();
+                    alert("Question added!");
                     $scope.addQuestion = false;
                     $scope.newQuestion.text = "";
                 });
@@ -205,15 +235,14 @@
 
             refreshQuestions();
 
-            // Get the potential groupings for the grouping select.
-            $scope.groupings = QuestionStore.groupingsConn.query();
-
             // Function for handling submission of form.
-            $scope.editQuestions = function() {
+            $scope.editQuestions = function(questions) {
+                console.log(questions);
                 QuestionStore.updateQuestionsConn.save({
                     questions: $scope.questions
                 }, function() {
                     refreshQuestions();
+                    alert("Question(s) updated.");
                 });
             };
 
@@ -227,6 +256,18 @@
                     $scope.$apply();
                 }
             };
+
+            // For adding new categories to the form.
+            $scope.addCategory = function(){
+                QuestionStore.addQuestionCategoryConn.save({
+                    form_id: $routeParams.form_id,
+                    category: $scope.newCategory
+                }, function(response) {
+                    alert("Category added!");
+                    $route.reload();
+                });
+            }
+
         }
     ]);
 
@@ -237,7 +278,7 @@
             // Retrive all forms from the database.
             $scope.forms = QuestionStore.formsConn.query();
 
-            // Function for checking if the form name 
+            // Function for checking if the form name
             // that someone is entering does not already
             // exist in the database.
             $scope.isUnique = function() {
@@ -290,7 +331,6 @@
                 // Call to the backend
                 QuestionStore.addFormConn.save({
                     formName: newForm.text,
-                    is_api: $scope.category_id == $rootScope.categoryIDs.API
                 }, function() {
                     // Update the forms array
                     refreshForms();
