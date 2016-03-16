@@ -1,6 +1,6 @@
 // The other controllers have to be defined in the HTML document which houses
 // the angular application, index.html, or you'll get a missing controller error.
-var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource', 'ng.httpLoader', 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule', 'directives']);
+var myApp = angular.module('app', ['ngRoute', 'ngAnimate', 'ngResource', 'ng.httpLoader', 'ui.bootstrap', 'questionnaireModule', 'clientsModule', 'resultsModule', 'userModule', 'directives','angular-click-outside']);
 
 
 myApp.config(['httpMethodInterceptorProvider',
@@ -268,4 +268,10 @@ myApp.controller('MenuController', function($scope) {
 // Example of a controller in the same file.
 myApp.controller('HomePageController', function($scope) {
     $scope.message = 'This is the welcome page.';
+    //state of isSideBarVisible only has effect on screens below 768px
+    $scope.isSideBarVisible = false;
+    $scope.hideSideBar = function(){
+        // console.log(sideBarTog);
+        $scope.isSideBarVisible = false;
+    }
 });
