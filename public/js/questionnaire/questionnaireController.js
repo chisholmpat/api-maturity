@@ -186,6 +186,8 @@
                 });
             };
 
+            $scope.groupings =  QuestionStore.groupingsConn.query();
+
             // Onclick method for toggling visibility
             $scope.toggleAddQuestionVisibility = function(category_id) {
                 $scope.addQuestion[category_id] = !$scope.addQuestion[category_id];
