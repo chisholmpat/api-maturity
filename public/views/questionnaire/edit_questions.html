@@ -22,9 +22,8 @@
                 <div>
                     <input type="text" name="newQuestionName" class="form-control" ng-model="newQuestion.text">
                 </div>
-                <div>
+                <div>                     
                     <select ng-model="newQuestion.group_id" ng-options="group.id as group.name for group in groupings" ng-init="newQuestion.group_id=categoryIDs.QA"></select>
-
                 </div>
                 <div>
                     <input type="button" ng-click="saveQuestion(newQuestion)" value="Add" ng-show="questionsForm.newQuestionName.$valid && !questionsForm.newQuestionName.$pristine"></input>

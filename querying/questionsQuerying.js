@@ -97,6 +97,7 @@ exports.getAllForms = function(res, callback) {
 exports.getGroupings = function(res, callback) {
     knex.select().table('grouping')
         .asCallback(function(err, rows) {
+            console.log(err, res);
             callback(err, res, rows);
         });
 };
