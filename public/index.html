@@ -4,8 +4,7 @@
 <head>
     <title>API Maturity</title>
     <!-- <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' /> -->
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <!-- <link href="css/simple-sidebar.css" rel="stylesheet"> -->
     <link rel='stylesheet' href='css/styles.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -16,33 +15,36 @@
     <div ng-http-loader template="views/loader/loading.html"></div>
 
 
-    <div id="wrapper">
+    <div id="wrapper" ng-controller="HomePageController">
 
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-
+        <div id="sidebar-wrapper" ng-class="{'toggled':isSideBarVisible}" click-outside="hideSideBar()" outside-if-not="HBMenuIcon">
             <div class="headerHeight">
-                <a href="#home"><h1>API Maturity</h1></a>
+                <a href="#home" ng-click="hideSideBar()">
+                    <h1>API Maturity</h1>
+                    <!-- alt link text hidden until sidebar collapse -->
+                    <span>Home</span>
+                </a>
             </div>
             <div>
                 <ul class="sidebar-nav">
                     <div ng-show="isLoggedIn">
                         <li ng-show="role == 'user' || role == 'admin' ">
-                            <a href="#howto">How-To</a>
+                            <a href="#howto" ng-click="hideSideBar()">How-To</a>
                         </li>
                         <li>
-                            <a href="#/clients">Clients</a>
+                            <a href="#/clients" ng-click="hideSideBar()">Clients</a>
                         </li>
                         <div ng-controller="MenuController">
                             <li ng-show="role === 'admin' || role === 'user'">
                                 <a class="brand" ng-click="isCollapsed = !isCollapsed">Admin</a>
                                 <div class="nav-collapse" uib-collapse="isCollapsed">
                                     <ul class="nav">
-                                        <li ng-show="role === 'admin'"><a href="#forms">Add/Edit Forms</a>
+                                        <li ng-show="role === 'admin'"><a href="#forms" ng-click="hideSideBar()">Add/Edit Forms</a>
                                         </li>
-                                        <li ng-show="role === 'admin'"><a href="#edit_users">Add/Edit Users</a>
+                                        <li ng-show="role === 'admin'"><a href="#edit_users" ng-click="hideSideBar()">Add/Edit Users</a>
                                         </li>
-                                        <li><a href="#add_client">Edit/Add Clients</a>
+                                        <li><a href="#add_client" ng-click="hideSideBar()">Edit/Add Clients</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -50,14 +52,14 @@
                         </div>
                     </div>
                     <li>
-                        <a href="#login" ng-show="!isLoggedIn">Login</a>
+                        <a href="#login" ng-show="!isLoggedIn" ng-click="hideSideBar()">Login</a>
                     </li>
                     <li>
-                        <a href="/ibmlogin" ng-show="!isLoggedIn">IBMLogin</a>
+                        <a href="/ibmlogin" ng-show="!isLoggedIn" ng-click="hideSideBar()">IBMLogin</a>
                     </li>
                     <li>
                         <!-- SSO is currently not able to logout. -->
-                        <a ng-show="isLoggedIn && !isIBM" href="#/" ng-click="logout()"> Logout </a>
+                        <a ng-show="isLoggedIn && !isIBM" href="#/" ng-click="logout()" ng-click="hideSideBar()"> Logout </a>
                     </li>
                 </ul>
             </div>
@@ -67,9 +69,38 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="headerHeight">
+                <div class="altHeading">
+                <svg id="HBMenuIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 20" ng-click="isSideBarVisible = true">
+                  <g>
+                    <line class="a" x1="2" y1="2" x2="24.9" y2="2"/>
+                    <line class="a" x1="2" y1="9.7" x2="24.9" y2="9.7"/>
+                    <line class="a" x1="2" y1="17.3" x2="24.9" y2="17.3"/>
+                  </g>
+                </svg>
+                <h5>API Maturity</h5>
+            </div>
                 <div>
                     <h2>Welcome, Practitioner </h2>
-                    <img src="./images/API Maturity_avatar.png" alt="" />
+                    <!-- <img src="./images/API Maturity_avatar.png" alt="" /> -->
+                    <svg  height=40px xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46">
+                      <defs>
+                        <style>
+                          .a, .b, .c {
+                            fill: none;
+                            stroke-miterlimit: 10;
+                            stroke: #4d90ab;
+                          }
+
+                          .c {
+                            stroke-width: 2px;
+                          }
+                        </style>
+                      </defs>
+                      <title>BMixAva</title>
+                      <circle class="a" cx="22.6" cy="15.1" r="7"/>
+                      <polyline class="b" points="10.6 40.6 10.6 22.6 34.6 22.6 34.6 40.3"/>
+                      <circle class="c" cx="22.6" cy="22.6" r="21.5"/>
+                    </svg>
                 </div>
             </div>
 
@@ -82,7 +113,11 @@
         <!-- /#page-content-wrapper -->
 
     </div>
-
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 100" style="display:none">
+        <symbol id="arrow" >
+            <path id="arrow-left"  d="M40,100A5,5,0,0,1,36,97.9L0.8,50,36,2.1a5.1,5.1,0,0,1,8.1,6L13.3,50,44.1,92A5.1,5.1,0,0,1,40,100Z" />
+        </symbol>
+    </svg>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-resource.min.js"></script>
@@ -95,6 +130,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
     <script src="bower_components/canvg/canvg.js"></script>
     <script src="bower_components/angular-http-loader/app/package/js/angular-http-loader.min.js"></script>
+    <script src="../bower_components/angular-click-outside/clickoutside.directive.js"></script>
     <script src="js/app.js"></script>
     <script src="js/questionnaire/questionnaireController.js"></script>
     <script src="js/questionnaire/questionnaireService.js"></script>
