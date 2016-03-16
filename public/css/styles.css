@@ -2367,7 +2367,7 @@ div.altHeading {
   height: 20px; }
   #HBMenuIcon .a {
     fill: none;
-    stroke: #264A60;
+    stroke: #008571;
     stroke-linecap: round;
     stroke-miterlimit: 10;
     stroke-width: 4px; }
@@ -2458,7 +2458,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   text-decoration: none;
-  color: #00aed1;
+  color: #41D6C3;
   cursor: pointer; }
   a:hover {
     text-decoration: underline; }
@@ -2503,7 +2503,7 @@ label {
   height: 7.5rem; }
 
 #sidebar-wrapper {
-  background-color: #264A60;
+  background-color: #008571;
   color: #fff;
   padding-top: 2rem;
   -ms-box-shadow: 4px 0 10px rgba(79, 89, 92, 0.38);
@@ -2531,7 +2531,7 @@ label {
     line-height: normal; }
     #sidebar-wrapper li a {
       padding: 0.2rem 0;
-      color: #959F9F; }
+      color: #003C32; }
     #sidebar-wrapper li ul.nav {
       margin-top: 1rem;
       margin-bottom: 2rem; }

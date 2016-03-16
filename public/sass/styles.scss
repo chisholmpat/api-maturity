@@ -7,9 +7,10 @@
 //text colours:
 $color-main: #575757; //main Dark text
 $color-light: #fff; //Light text on dark background
-$TC-sideBarNav: IBMcolor('cool-gray',40);
+$TC-sideBarNav: IBMcolor('teal',8);
+$TC-link: IBMcolor('teal',3 );
 /*/background Colours:*/
-$BGC-SideBar-Wrapper: IBMcolor('blue',70);
+$BGC-SideBar-Wrapper: IBMcolor('teal',5);
 $BGC-ClientInfo-box: IBMcolor('cool-gray',40);
 $BGC-ListSelector-box: IBMcolor('neutral-white',30);
 /*Layout Variables*/
@@ -47,7 +48,7 @@ h1,h2,h3,h4,h5,h6{
 }
 a {
     text-decoration: none;
-    color: #00aed1;
+    color: $TC-link;
     cursor: pointer;
 
     &:hover {
