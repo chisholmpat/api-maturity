@@ -179,7 +179,6 @@
             $scope.newQuestion = {};
             $scope.currentCategoryID = "";
 
-            $scope.groupings =  QuestionStore.groupingsConn.query(); 
 
             // Updates the question on the form.
             var refreshQuestions = function() {
