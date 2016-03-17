@@ -267,7 +267,7 @@ myApp.controller('MenuController', function($scope) {
 });
 // Example of a controller in the same file.
 myApp.controller('HomePageController', function($scope) {
-    $scope.message = 'This is the welcome page.';
+    // $scope.message = 'This is the welcome page.';
     //state of isSideBarVisible only has effect on screens below 768px
     $scope.isSideBarVisible = false;
     $scope.hideSideBar = function(){
