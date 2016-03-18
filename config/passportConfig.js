@@ -84,17 +84,18 @@ module.exports = function(passport) {
                         .asCallback(function(err, rows) {
 
                           console.log(rows);
-                          console.log(JSON.stringify(rows));  
+                          console.log(JSON.stringify(rows));
 
                             if (!rows || rows.length == 0 || err)
                               profile.role = "user"
                             else
                               profile.role = rows[0].role;
-                            
+
                             profile.accessToken = accessToken;
                             profile.refreshToken = refreshToken;
                             profile.name = "";
                             profile.issuer_id = issuer_id;
+                            profile.isIBM = 1;
                             profile.email = profile.emailaddress;
                             done(null, profile);
                         });
